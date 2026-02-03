@@ -10,6 +10,7 @@
 사용자가 명시적으로 "이것을 지식 문서로 작성해줘"라고 요청할 때만 문서를 작성합니다.
 
 ### 문서 작성 프로세스
+
 1. 사용자가 특정 내용을 지식 문서로 요청
 2. 해당 프로젝트의 `prj-docs/knowledge/` 폴더에 `.md` 파일 생성
 3. 이 인덱스 파일에 링크 추가
@@ -24,6 +25,7 @@
 > `management/ai-context/`에 위치합니다.
 
 ### Payments
+
 - [Toss Payments 가이드](../management/ai-context/integrations/payment/tosspayments/tosspayments-guide.md)
 - [Toss Payments 기술 블로그 인덱스](../management/ai-context/integrations/payment/tosspayments/tosspayments-llms.md)
 
@@ -31,5 +33,6 @@
 
 ## 지식 문서 목록
 
-(사용자 요청 시 여기에 추가됩니다)
+### Backend Architecture
 
+- [MSA 데이터 분리 및 동기화 전략](../workspace/apps/backend/default-service/prj-docs/knowledge/msa-data-strategy.md) - 서비스 분리 시 데이터 정합성 유지 방법 (Kafka, Replica)
