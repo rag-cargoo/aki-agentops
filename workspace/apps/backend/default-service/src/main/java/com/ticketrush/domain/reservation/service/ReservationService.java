@@ -1,11 +1,11 @@
 package com.ticketrush.domain.reservation.service;
 
 import com.ticketrush.domain.concert.entity.Seat;
-import com.ticketrush.domain.concert.repository.SeatRepository;
+import com.ticketrush.domain.concert.service.ConcertService;
 import com.ticketrush.domain.reservation.entity.Reservation;
 import com.ticketrush.domain.reservation.repository.ReservationRepository;
 import com.ticketrush.domain.user.User;
-import com.ticketrush.domain.user.UserRepository;
+import com.ticketrush.domain.user.service.UserService;
 import com.ticketrush.interfaces.dto.ReservationRequest;
 import com.ticketrush.interfaces.dto.ReservationResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final SeatRepository seatRepository;
-    private final UserRepository userRepository;
+    private final ConcertService concertService;
+    private final UserService userService;
 
     @Transactional
     public ReservationResponse createReservation(ReservationRequest request) {
-        // 1. 유저 조회
-        User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        // 1. 유저 조회 (UserService 위임)
+        User user = userService.getUser(request.userId());
 
-        // 2. 좌석 조회 (Lock은 추후 적용)
-        Seat seat = seatRepository.findById(request.seatId())
-                .orElseThrow(() -> new IllegalArgumentException("Seat not found"));
+        // 2. 좌석 조회 (ConcertService 위임)
+        Seat seat = concertService.getSeat(request.seatId());
 
         // 3. 좌석 점유 시도
         seat.reserve();
