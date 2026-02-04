@@ -1,7 +1,6 @@
-# 📘 문서화 시스템 구축 가이드 (Docsify Setup Guide)
+# 📘 GitHub Pages 배포 및 운영 가이드
 
-> **Goal**: 이 가이드를 따라 하면 5분 안에 현재와 같은 문서 웹사이트를 구축할 수 있습니다.
-> **Tools**: GitHub Pages + Docsify
+> **Goal**: GitHub Pages와 Docsify를 사용하여 5분 안에 프로젝트 문서 사이트를 구축하는 방법을 설명합니다.
 
 ---
 
