@@ -1,31 +1,54 @@
-# 🏗️ 프로젝트 구조 및 문서화 표준 (Project Structure & Documentation Standard)
+# 🏗️ 프로젝트 구조 및 표준 (Project Structure & Standards)
 
 > **Core Philosophy**: "사람과 AI가 모두 이해할 수 있는 명확한 구조를 지향한다."
-> 이 문서는 프로젝트의 폴더 구조 원칙, 문서 분류 체계, 그리고 AI 에이전트와의 협업 방식을 정의합니다.
+> 이 문서는 프로젝트의 물리적 폴더 구조, 문서 분류 체계, 그리고 AI 에이전트와의 협업 방식을 정의합니다.
 
 ---
 
 ## 1. 폴더 구조 원칙 (Directory Structure)
 
-이 프로젝트는 **불변의 규칙 영역**과 **가변의 작업 영역**을 엄격히 분리합니다.
+이 프로젝트는 **불변의 규칙 영역(Management)**과 **가변의 작업 영역(Workspace)**을 엄격히 분리합니다.
 
-### 📂 `management/` (Governance Layer)
-*   **성격**: 프로젝트의 **'헌법'**이자 **'AI의 두뇌'**.
-*   **내용**: 워크플로우, 코딩 컨벤션, 아키텍처 원칙.
-*   **규칙**: 새 프로젝트를 시작할 때 **이 폴더만 복사해 넣으면**, AI 에이전트가 즉시 팀의 규칙을 이해하고 따릅니다.
-*   **절대 수정 주의**: 프로젝트별 특수성이 아닌, 전사 공통 규칙만 담습니다.
+### 0. Management 구조 (Global)
+이 폴더는 프로젝트의 **'헌법'**이자 **'AI의 두뇌'**입니다. 새 프로젝트를 시작할 때 **이 폴더만 복사**하면 팀의 규칙이 즉시 이식됩니다.
 
-### 📂 `workspace/` (Operational Layer)
-*   **성격**: 실제 코드가 살아 숨 쉬는 **'작업장'**.
-*   **구조**: `apps/{domain}/{service-name}` 형태로 계층화.
-    *   예: `apps/backend/ticket-core-service`
-*   **문서 위치**: 각 서비스 폴더 내 `prj-docs/`에 해당 서비스만의 문서를 둡니다.
+```
+management/
+├── rules/               # [불변] 프로젝트 규칙
+│   ├── WORKFLOW.md      # 협업 및 커밋 규칙
+│   ├── STRUCTURE.md     # (본 문서) 구조 및 문서 표준
+│   ├── ARCHITECTURE_RULES.md # 설계 원칙
+│   └── CODING_STANDARD.md    # 코드 스타일
+├── ai-context/          # [Global] AI가 참고할 기술 지식 (Language, Framework...)
+│   ├── backend/         
+│   ├── frontend/        
+│   ├── infra/           
+│   └── integrations/    
+├── knowledge-index.md   # 전체 지식 문서 색인
+└── task.md              # (Optional) 전사 레벨 태스크
+```
+
+### 1. Workspace 구조 (Operational)
+실제 비즈니스 코드가 살아 숨 쉬는 작업 공간입니다.
+
+```
+workspace/
+└── apps/
+    └── {domain}/
+        └── {service-name}/       # 예: backend/ticket-core-service
+            ├── src/              # 소스 코드
+            ├── prj-docs/         # [Project] 해당 서비스 전용 문서
+            │   ├── ROADMAP.md    # 로드맵
+            │   ├── task.md       # 서비스별 태스크
+            │   └── knowledge/    # 기술 지식 (동시성 전략 등)
+            └── build.gradle
+```
 
 ---
 
 ## 2. 문서 분류 및 사이드바 운영 표준 (Sidebar Policy)
 
-Docsify 사이드바는 단순한 목차가 아니라, **정보의 위계(Hierarchy)**를 나타내야 합니다.
+Docsify 사이드바(`sidebar-manifest.md`)는 정보의 위계(Hierarchy)를 명확히 표현해야 합니다.
 
 ### 📐 3단 계층 구조 (The 3-Tier Hierarchy)
 
@@ -39,10 +62,6 @@ Docsify 사이드바는 단순한 목차가 아니라, **정보의 위계(Hierar
     *   **목적**: 실제 개발 진행 상황(Roadmap, Task)과 기술적 의사결정(Knowledge) 공유.
     *   **구조**: `Backend Applications` > `Service Name` > `Status` / `Knowledge`
 
-3.  **📚 OPERATIONS & MANUALS (Level 3)**
-    *   **대상**: 시스템 운영 및 도구 사용법.
-    *   **목적**: 이 문서 시스템 자체의 유지보수 가이드.
-
 ### 🎨 스타일 가이드 (Visual Style)
 *   **Clean Style**: 사이드바 메뉴에는 **이모지를 사용하지 않습니다.** (텍스트 중심의 깔끔한 트리 유지)
 *   **Separator**: 대분류 사이에는 반드시 구분선(`---`)을 넣어 시각적으로 분리합니다.
@@ -51,8 +70,6 @@ Docsify 사이드바는 단순한 목차가 아니라, **정보의 위계(Hierar
 ---
 
 ## 3. AI 협업 가이드 (AI Collaboration Context)
-
-이 프로젝트 구조는 **AI 에이전트의 컨텍스트 로딩**을 최적화하기 위해 설계되었습니다.
 
 ### 🚀 새 프로젝트 부트스트랩 (New Project Bootstrap)
 새로운 레포지토리를 만들 때, 아래 항목만 복사하면 **"TicketRush 팀의 개발 문화"**가 즉시 이식됩니다.
