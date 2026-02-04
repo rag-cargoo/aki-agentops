@@ -40,31 +40,20 @@ management/
 1. 모든 에이전트 세션의 마지막 단계에서, 수행한 작업 내용을 **`prj-docs/task.md`의 상태 및 세부 진행 상황에 반드시 기록**해야 합니다. 업데이트 없이는 작업을 종료하지 마십시오.
 2. **커밋 메시지 규칙**: **커밋 메시지는 반드시 한글로 작성**합니다. 제목은 작업 내용을 명확히 요약하고, 본문에 상세 변경 내역을 기술합니다.
 3. **`management/task.md`는 건드리지 않습니다.** (프로젝트 전환 시에만 수정)
-3. **지식/트러블슈팅 문서**는 **사용자가 명시적으로 요청할 때만** 작성합니다.
-    * 예: "이것을 지식 문서로 작성해줘" / "이것을 트러블슈팅 문서로 작성해줘"
-    * 작성 위치: `prj-docs/knowledge/` 또는 `prj-docs/troubleshooting/`
-    * 작성 후: 해당 인덱스 파일(`management/knowledge-index.md` 또는 `troubleshooting-index.md`)에 링크 추가
 
-4. **AI 컨텍스트 문서 (AI Context)** 규칙
-    * **Global Context (`management/ai-context/`)**:
-        * 라이브러리 공식 문서, API 스펙, 프레임워크 가이드 등
-        * **모든 프로젝트에서 재사용** 가능한 정보
-    * **Local Context (`prj-docs/ai-context/`)**:
-        * 해당 프로젝트 고유의 설계, 레거시 설명 등
-        * **재사용 불가능**한 정보
-    * **통통 작성 규칙**:
-        * 원본이 외국어인 경우: `파일명-original.md` (원본) + `파일명-ko.md` (한글 번역/요약)
-        * 원본이 한글인 경우: `파일명.md`
-    * **메타데이터 필수 (한글 문서 상단)**:
+### 4단계: 문서화 표준 (Documentation Policy)
 
-        ```markdown
-        > **Source**: [URL 또는 출처]
-        > **Purpose**: [이 문서가 필요한 이유]
-        > **Date**: [작성일]
-        ```
+1. **지식/트러블슈팅 문서**는 **사용자가 명시적으로 요청할 때** 또는 **중요한 기술적 의사결정(실험, 설계)**이 있을 때 작성합니다.
+    * 작성 위치: `prj-docs/knowledge/`
+2. **웹사이트 동기화 (Sync Rule) - 중요 ⭐**:
+    * 새로운 마크다운 문서(`*.md`)를 생성했다면, 반드시 루트의 **`sidebar-manifest.md`에도 링크를 추가**해야 합니다.
+    * 이는 Docsify 웹사이트에 문서를 노출시키기 위함입니다.
+3. **인덱스 업데이트**:
+    * `management/knowledge-index.md`에도 링크를 추가하여 백업 인덱스를 유지합니다.
 
 ## 3. 새로운 프로젝트 추가 방법
 
 1. 성격에 따라 `workspace/apps`, `workspace/infra` 중 알맞은 곳에 폴더를 만듭니다.
 2. 내부에 `prj-docs` 폴더를 만들고 필수 문서 3종(`task.md`, `TODO.md`, `ROADMAP.md`)을 생성합니다.
 3. `management/task.md`의 `Project Index`에 새 프로젝트를 등록합니다.
+4. `sidebar-manifest.md`에 새 프로젝트 섹션을 추가합니다.
