@@ -17,5 +17,6 @@
         * [Roadmap](workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
         * [Current Tasks](workspace/apps/backend/ticket-core-service/prj-docs/task.md)
       * **Engineering Knowledge**
+        * [Backend Architecture Rules](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/backend-architecture-rules.md)
         * [Concurrency Control Strategy](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
         * [MSA Data Strategy](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
