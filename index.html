@@ -14,7 +14,10 @@
     window.docsify = {
       name: 'TicketRush Tech Docs',
       repo: 'https://github.com/rag-cargoo/2602',
-      loadSidebar: 'toc.md',
+      loadSidebar: true,
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      },
       subMaxLevel: 2,
       auto2top: true
     }
