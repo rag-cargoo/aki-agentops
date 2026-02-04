@@ -25,4 +25,4 @@
 ---
 
 * **OPERATIONS & MANUALS**
-  * [Documentation System Guide](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/문서화-시스템-구축-가이드.md)
+  * [Structure & Documentation Guide](management/rules/STRUCTURE.md)
