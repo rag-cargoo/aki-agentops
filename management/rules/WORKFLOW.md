@@ -13,7 +13,7 @@
 management/
 ├── rules/               # 워크플로우 및 대원칙 (불변)
 ├── guides/              # 프로젝트 운영 가이드 (Manuals)
-├── ai-context/          # 전역 AI 컨텍스트
+├── ai-context/          # [Global] 전역 AI 컨텍스트
 ├── knowledge-index.md   
 └── troubleshooting-index.md
 ```
@@ -32,11 +32,32 @@ management/
 
 ### 3단계: 완료 및 문서 현행화 (Sync & Review) ⭐
 모든 구현이 끝난 후, **커밋(Commit) 전**에 반드시 아래 사항을 점검합니다.
-1. **문서 동기화**: 구현된 코드가 `README`, `knowledge` 등 기존 문서의 설명과 일치하는가? 일치하지 않는다면 문서를 수정하십시오.
-2. **규칙 현행화**: 기존 규칙(`RULES`)이 현재의 최적화된 개발 방식과 충돌한다면, **규칙 문서를 먼저 수정**하여 현실을 반영하십시오. (규칙은 팀과 함께 발전합니다.)
+
+1. **문서 동기화**: 구현된 코드가 `README`, `knowledge` 등 기존 문서의 설명과 일치하는가?
+2. **규칙 현행화**: 기존 규칙(`RULES`)이 현실과 맞지 않다면, **규칙 문서를 먼저 수정**하십시오.
 3. **사이드바 갱신**: 새 문서(`.md`)가 생성되었다면 반드시 `sidebar-manifest.md`에 링크를 추가하십시오.
 
-### 4단계: 보고 및 커밋
+### 4단계: 문서화 표준 (Documentation Policy)
+
+#### 📝 일반 지식 문서
+*   작성 위치: `prj-docs/knowledge/` 또는 `prj-docs/troubleshooting/`
+*   트리거: 사용자가 요청하거나 중요한 기술적 의사결정을 기록할 때.
+
+#### 🤖 AI 컨텍스트 문서 (AI Context Rules)
+*   **Global Context (`management/ai-context/`)**:
+    *   라이브러리 공식 문서, API 스펙 등 **재사용 가능한 정보**.
+*   **Local Context (`prj-docs/ai-context/`)**:
+    *   해당 프로젝트 고유의 설계, 레거시 설명 등 **재사용 불가능한 정보**.
+*   **작성 규칙**:
+    *   원본이 외국어인 경우: `파일명-original.md` + `파일명-ko.md` (요약)
+    *   메타데이터 필수 (한글 문서 상단):
+        ```markdown
+        > **Source**: [URL/출처]
+        > **Purpose**: [이 문서가 필요한 이유]
+        > **Date**: [작성일]
+        ```
+
+### 5단계: 보고 및 커밋
 1. **커밋 메시지**: 반드시 **한글**로 작성하며, 변경 이유와 내역을 명확히 요약합니다.
 2. **진행 상황 기록**: 작업 내용을 프로젝트의 `prj-docs/task.md`에 상세히 기록하고 상태를 업데이트합니다.
 
