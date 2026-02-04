@@ -25,4 +25,5 @@
 ---
 
 * **OPERATIONS & MANUALS**
-  * [Structure & Documentation Guide](/management/rules/STRUCTURE.md)
+  * [Structure & Standards](/management/rules/STRUCTURE.md)
+  * [Docsify Setup Guide](/management/guides/docsify-setup.md)
