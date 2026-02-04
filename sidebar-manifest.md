@@ -8,11 +8,11 @@
 * **🏗️ Applications**
   * **Ticket Core Service**
     * **Status**
-      * [개발 로드맵 (Roadmap)](workspace/apps/backend/default-service/prj-docs/ROADMAP.md)
-      * [현재 작업 (Tasks)](workspace/apps/backend/default-service/prj-docs/task.md)
+      * [개발 로드맵 (Roadmap)](workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
+      * [현재 작업 (Tasks)](workspace/apps/backend/ticket-core-service/prj-docs/task.md)
     * **Knowledge**
-      * [동시성 제어 전략](workspace/apps/backend/default-service/prj-docs/knowledge/동시성-제어-전략.md)
-      * [MSA 데이터 분리/동기화](workspace/apps/backend/default-service/prj-docs/knowledge/msa-data-strategy.md)
+      * [동시성 제어 전략](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
+      * [MSA 데이터 분리/동기화](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
 
 * **Infrastructure & Guides**
-  * [문서화 시스템 가이드](workspace/apps/backend/default-service/prj-docs/knowledge/문서화-시스템-구축-가이드.md)
+  * [문서화 시스템 가이드](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/문서화-시스템-구축-가이드.md)
