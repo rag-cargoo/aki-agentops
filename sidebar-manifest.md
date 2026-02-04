@@ -6,6 +6,8 @@
   * **Backend**
     * [동시성 제어 전략](workspace/apps/backend/default-service/prj-docs/knowledge/동시성-제어-전략.md)
     * [MSA 데이터 분리 및 동기화 전략](workspace/apps/backend/default-service/prj-docs/knowledge/msa-data-strategy.md)
+  * **DevOps & Tools**
+    * [문서화 시스템 구축 가이드](workspace/apps/backend/default-service/prj-docs/knowledge/문서화-시스템-구축-가이드.md)
 
 * **📝 Guidelines**
   * [워크플로우 (Workflow)](management/rules/WORKFLOW.md)
