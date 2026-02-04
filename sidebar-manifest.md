@@ -1,12 +1,12 @@
-* [Home](README.md)
+* [Home](/README.md)
 
 ---
 
 * **PROJECT GOVERNANCE**
-  * [Workflow](management/rules/WORKFLOW.md)
-  * [Structure & Standards](management/rules/STRUCTURE.md)
-  * [Architecture Rules](management/rules/ARCHITECTURE_RULES.md)
-  * [Coding Standard](management/rules/CODING_STANDARD.md)
+  * [Workflow](/management/rules/WORKFLOW.md)
+  * [Structure & Standards](/management/rules/STRUCTURE.md)
+  * [Architecture Rules](/management/rules/ARCHITECTURE_RULES.md)
+  * [Coding Standard](/management/rules/CODING_STANDARD.md)
 
 ---
 
@@ -14,15 +14,15 @@
   * **Backend Applications**
     * **Ticket Core Service**
       * **Status & Planning**
-        * [Roadmap](workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
-        * [Current Tasks](workspace/apps/backend/ticket-core-service/prj-docs/task.md)
+        * [Roadmap](/workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
+        * [Current Tasks](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
       * **Rules & Standards**
-        * [Architecture](workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)
+        * [Architecture](/workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)
       * **Engineering Knowledge**
-        * [Concurrency Control Strategy](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
-        * [MSA Data Strategy](workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
+        * [Concurrency Control Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
+        * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
 
 ---
 
 * **OPERATIONS & MANUALS**
-  * [Structure & Documentation Guide](management/rules/STRUCTURE.md)
+  * [Structure & Documentation Guide](/management/rules/STRUCTURE.md)
