@@ -25,5 +25,4 @@
 ---
 
 * **OPERATIONS & MANUALS**
-  * [Structure & Standards](/management/rules/STRUCTURE.md)
   * [GitHub Pages 배포 가이드](/management/guides/docsify-setup.md)
