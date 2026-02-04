@@ -2,11 +2,11 @@
   * [소개](README.md)
   * [프로젝트 로드맵](workspace/apps/backend/default-service/prj-docs/ROADMAP.md)
 
-* **Backend Architecture**
-  * [동시성 제어 전략](workspace/apps/backend/default-service/prj-docs/knowledge/동시성-제어-전략.md)
-  * [동시성 제어 (Eng Test)](workspace/apps/backend/default-service/prj-docs/knowledge/concurrency-control.md)
-  * [MSA 데이터 전략](workspace/apps/backend/default-service/prj-docs/knowledge/msa-data-strategy.md)
+* **📚 Tech Knowledge**
+  * **Backend**
+    * [동시성 제어 전략](workspace/apps/backend/default-service/prj-docs/knowledge/동시성-제어-전략.md)
+    * [MSA 데이터 분리 및 동기화 전략](workspace/apps/backend/default-service/prj-docs/knowledge/msa-data-strategy.md)
 
-* **Rules**
-  * [워크플로우](management/rules/WORKFLOW.md)
-  * [아키텍처 규칙](management/rules/ARCHITECTURE_RULES.md)
+* **📝 Guidelines**
+  * [워크플로우 (Workflow)](management/rules/WORKFLOW.md)
+  * [아키텍처 규칙 (Architecture Rules)](management/rules/ARCHITECTURE_RULES.md)
