@@ -41,6 +41,10 @@ public class Seat {
         if (this.status != SeatStatus.AVAILABLE) {
             throw new IllegalStateException("Seat is already reserved.");
         }
+        
+        // Race Condition 유도를 위한 인위적 지연 (테스트 시에만 사용)
+        try { Thread.sleep(50); } catch (InterruptedException e) {}
+        
         this.status = SeatStatus.RESERVED;
     }
 

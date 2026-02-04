@@ -36,3 +36,4 @@
 ### Backend Architecture
 
 - [MSA 데이터 분리 및 동기화 전략](../workspace/apps/backend/default-service/prj-docs/knowledge/msa-data-strategy.md) - 서비스 분리 시 데이터 정합성 유지 방법 (Kafka, Replica)
+- [동시성 제어 전략](../workspace/apps/backend/default-service/prj-docs/knowledge/동시성-제어-전략.md) - 선착순 좌석 예약 동시성 이슈 해결 방안 (Optimistic/Pessimistic Lock)
