@@ -3,8 +3,9 @@
   * [프로젝트 로드맵](workspace/apps/backend/default-service/prj-docs/ROADMAP.md)
 
 * **Backend Architecture**
-  * [동시성 제어 전략](workspace/apps/backend/default-service/prj-docs/knowledge/동시성-제어-전략.md)
-  * [MSA 데이터 전략](workspace/apps/backend/default-service/prj-docs/knowledge/msa-data-strategy.md)
+  * [동시성 제어 전략](/workspace/apps/backend/default-service/prj-docs/knowledge/동시성-제어-전략.md)
+  * [동시성 제어 (Eng Test)](/workspace/apps/backend/default-service/prj-docs/knowledge/concurrency-control.md)
+  * [MSA 데이터 전략](/workspace/apps/backend/default-service/prj-docs/knowledge/msa-data-strategy.md)
 
 * **Rules**
   * [워크플로우](management/rules/WORKFLOW.md)
