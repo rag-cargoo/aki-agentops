@@ -15,14 +15,17 @@
       name: 'TicketRush Tech Docs',
       repo: 'https://github.com/rag-cargoo/2602',
       loadSidebar: 'sidebar-manifest.md', // 고유한 파일명 사용
-      subMaxLevel: 2,
-      auto2top: true,
       alias: {
         '/.*/sidebar-manifest.md': '/sidebar-manifest.md'
-      }
+      },
+      sidebarDisplayLevel: 1, // 1레벨(최상위)만 펼침, 나머지는 접음
+      subMaxLevel: 3,
+      auto2top: true
     }
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Sidebar Collapse Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
 </html>
