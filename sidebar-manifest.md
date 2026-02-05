@@ -3,11 +3,11 @@
 ---
 
 * **PROJECT GOVERNANCE**
-  * [Workflow](/management/rules/WORKFLOW.md)
-  * [Structure & Standards](/management/rules/STRUCTURE.md)
-  * [Operations & Automation](/management/rules/OPERATIONS.md)
-  * [Architecture Rules](/management/rules/ARCHITECTURE_RULES.md)
-  * [Coding Standard](/management/rules/CODING_STANDARD.md)
+  * [Workflow](/skills/workspace-governance/references/WORKFLOW.md)
+  * [Structure & Standards](/skills/workspace-governance/references/STRUCTURE.md)
+  * [Operations & Automation](/skills/workspace-governance/references/OPERATIONS.md)
+  * [Architecture Rules](/skills/workspace-governance/references/ARCHITECTURE_RULES.md)
+  * [Coding Standard](/skills/workspace-governance/references/CODING_STANDARD.md)
 
 ---
 
@@ -30,4 +30,4 @@
 ---
 
 * **OPERATIONS & MANUALS**
-  * [GitHub Pages 배포 가이드](/management/guides/docsify-setup.md)
+  * [GitHub Pages 배포 가이드](/skills/workspace-governance/references/guides/docsify-setup.md)
