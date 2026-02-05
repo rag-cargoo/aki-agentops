@@ -85,9 +85,14 @@ Docsify 사이드바(`sidebar-manifest.md`)는 정보의 위계(Hierarchy)를 �
 *   **엔지니어링 철학(The Why) 기술**: 하드코딩 배제, 자율적 시스템 설계 등 기술 선택 뒤에 숨겨진 설계 의도와 철학을 반드시 포함한다.
 - **생략 없는 코드 박제**: 문서 내 예시 코드는 생략(`...`) 없이 100% 동작하는 형태를 유지하여 즉시 참조 가능하게 한다.
 - **서사적 연결**: 현재 기술의 한계를 짚고, 왜 다음 기술(예: 락 → 대기열)로 나아가야 하는지에 대한 논리적 서사를 남긴다.
-- **API 명세서 현행화 (Mandatory)**: 
-    - 새로운 API 구현 또는 기존 API 변경 시, 반드시 `prj-docs/api-specs/` 내의 해당 문서를 즉시 업데이트한다.
-    - 프론트엔드 및 외부 협업자가 즉시 개발에 착수할 수 있도록 **Endpoint, Method, Request/Response Body**를 명확히 기술한다.
+- **API 명세서 표준 템플릿 (Rigid Template)**: 
+    프론트엔드 작업자와의 원활한 협업을 위해 모든 API 문서는 아래 **6단계 구조**를 반드시 준수해야 한다.
+    1. **Endpoint**: `[METHOD] /url` 명시.
+    2. **Description**: 기능의 비즈니스 목적 설명.
+    3. **Parameters (Table)**: Location, Field, Type, Required, Description 필수 포함.
+    4. **Request Example**: 실제 호출 가능한 JSON 예시 수록.
+    5. **Response Summary (Table)**: HTTP 상태 코드 및 각 응답 필드 명세.
+    6. **Response Example**: 성공 및 실패 상황의 실제 JSON 응답 예시 수록.
 
 ---
 
