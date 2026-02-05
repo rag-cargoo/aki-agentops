@@ -22,13 +22,13 @@
 
 **현재 에이전트가 작업 중인 프로젝트**:
 
-* 👉 **[Backend Service](workspace/apps/backend/default-service/prj-docs/task.md)** (`workspace/apps/backend/default-service`)
+* 👉 **[Ticket Core Service](workspace/apps/backend/ticket-core-service/prj-docs/task.md)** (Architecture Refined ✅)
 
 ---
 
 ### 🗂️ 프로젝트 목록 (Project Index)
 
-* [Backend Service](workspace/apps/backend/default-service/prj-docs/task.md) - Spring Boot Service
+* [Ticket Core Service](workspace/apps/backend/ticket-core-service/prj-docs/task.md) - High-performance Ticketing API (Kafka/Redis/SSE)
 
 **[새 프로젝트 시작하기]**
 
