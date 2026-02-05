@@ -26,8 +26,8 @@ spring:
 # Logging Settings
 logging:
   level:
-    org.hibernate.orm.jdbc.bind: TRACE
-    org.hibernate.SQL: DEBUG
+    org.hibernate.SQL: INFO
+    org.hibernate.orm.jdbc.bind: INFO
 
   # Redis (Local)
   data:
@@ -47,7 +47,7 @@ logging:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: "com.ticketrush.domain.reservation.event"
+        spring.json.trusted.packages: "*"
 
 # Custom App Properties
 app:
