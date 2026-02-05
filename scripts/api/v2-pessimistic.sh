@@ -12,10 +12,13 @@ source "$(dirname "$0")/../common/env.sh"
 
 echo -e "${BLUE}====================================================${NC}"
 echo -e "${BLUE}[v2] Pessimistic Lock Reservation Test${NC}"
-echo -e "${BLUE}Target URL: ${BASE_URL}/v2/pessimistic${NC}"
+echo -e "${GREEN}[Current Config]${NC}"
+echo -e " - Target URL: ${BASE_URL}/v2/pessimistic"
+echo -e " - Test User:  ID=${DEFAULT_USER_ID}"
+echo -e " - Test Seat:  ID=${DEFAULT_SEAT_ID}"
 echo -e "${BLUE}====================================================${NC}"
 
-curl -X POST "${BASE_URL}/v2/pessimistic" \
+curl -s -X POST "${BASE_URL}/v2/pessimistic" \
      -H "${CONTENT_TYPE}" \
      -d "{\"userId\": ${DEFAULT_USER_ID}, \"seatId\": ${DEFAULT_SEAT_ID}}" \
      -w "\n\n${GREEN}Result Status: %{http_code}${NC}\n"
