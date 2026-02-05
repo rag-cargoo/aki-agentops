@@ -25,6 +25,7 @@
         * [Reservation API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/reservation-api.md)
       * **Engineering Knowledge**
         * [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
+        * [Kafka 비동기 큐 설계](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/kafka-queue-strategy.md)
         * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
 
 ---
