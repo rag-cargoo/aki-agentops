@@ -6,16 +6,15 @@
 에이전트는 **글로벌 컨텍스트(Root)**와 **로컬 컨텍스트(Sub-Project)**를 명확히 구분해야 합니다.
 
 ### 🏛️ 디렉토리 구조 표준
-* 상세 구조는 **[STRUCTURE.md](/management/rules/STRUCTURE.md)**를 참조하십시오.
+* 상세 구조는 **[STRUCTURE.md](/skills/workspace-governance/references/STRUCTURE.md)**를 참조하십시오.
 
 ### 📚 Management 구조
 ```
-management/
-├── rules/               # 워크플로우 및 대원칙 (불변)
-├── guides/              # 프로젝트 운영 가이드 (Manuals)
-├── ai-context/          # [Global] 전역 AI 컨텍스트
-├── knowledge-index.md   
-└── troubleshooting-index.md
+skills/workspace-governance/
+├── references/          # 워크플로우 및 대원칙 (불변)
+│   ├── guides/          # 프로젝트 운영 가이드 (Manuals)
+│   └── ...
+└── scripts/             # 동기화 및 관리 스크립트
 ```
 
 ---
@@ -23,11 +22,11 @@ management/
 ## 2. 작업 프로세스 (Standard Process)
 
 ### 1단계: 타겟 설정 및 컨텍스트 로딩
-1. `AGENTS.md`와 `management/task.md`를 읽어 작업 대상 프로젝트를 확인합니다.
+1. `AGENTS.md`와 `workspace/apps/backend/ticket-core-service/prj-docs/task.md`를 읽어 작업 대상 프로젝트를 확인합니다.
 2. 해당 프로젝트의 `prj-docs/task.md`와 `TODO.md`를 읽어 현재 상태와 우선순위를 파악합니다.
 
 ### 2단계: 구현 및 기록
-1. **[코딩 표준](/management/rules/CODING_STANDARD.md)**을 엄수하여 기능을 구현합니다.
+1. **[코딩 표준](/skills/workspace-governance/references/CODING_STANDARD.md)**을 엄수하여 기능을 구현합니다.
 2. 작업 중 발생하는 중요한 결정 사항은 즉시 메모합니다.
 
 ### 3단계: 실행 및 기록 (Execution & Reporting)

@@ -61,10 +61,11 @@
 *   왼쪽 메뉴를 정의합니다.
 *   **중요**: 링크는 반드시 **루트 기준 절대 경로(`/`)**를 사용하세요.
 ```markdown
-* [Home](/README.md)
+* [Home](/HOME.md)
 
-* **GUIDES**
-  * [Setup Guide](/management/guides/docsify-setup.md)
+* **WORKSPACE**
+  * [Roadmap](/workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
+  * [Current Tasks](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
 ```
 
 ### Step 2: GitHub Pages 배포 설정
