@@ -5,6 +5,7 @@
 * **PROJECT GOVERNANCE**
   * [Workflow](/management/rules/WORKFLOW.md)
   * [Structure & Standards](/management/rules/STRUCTURE.md)
+  * [Operations & Automation](/management/rules/OPERATIONS.md)
   * [Architecture Rules](/management/rules/ARCHITECTURE_RULES.md)
   * [Coding Standard](/management/rules/CODING_STANDARD.md)
 
