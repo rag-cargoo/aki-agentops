@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - 동시성_테스트_1_낙관적_락</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>동시성_테스트_1_낙관적_락</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ticketrush.domain.reservation.service.html">com.ticketrush.domain.reservation.service</a> &gt; 동시성_테스트_1_낙관적_락</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.209s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">낙관적 락 동작 확인: 30명 동시 예약 시 1명만 성공</td>
+<td class="success">concurrentTest()</td>
+<td class="success">0.209s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2026-02-05T21:09:04.145+09:00  INFO 1221775 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ticketrush.domain.reservation.service.동시성_테스트_1_낙관적_락]: 동시성_테스트_1_낙관적_락 does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-05T21:09:04.150+09:00  INFO 1221775 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ticketrush.BackendApiApplication for test class com.ticketrush.domain.reservation.service.동시성_테스트_1_낙관적_락
+2026-02-05T21:09:04.168+09:00 DEBUG 1221775 --- [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.?[34muser?[0m.?[34mUser?[0m */?[34minsert?[0m 
+    ?[34minto?[0m
+        users (username, id) 
+    ?[34mvalues?[0m
+        (?, ?[34mdefault?[0m)
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.?[34muser?[0m.?[34mUser?[0m */?[34minsert?[0m 
+    ?[34minto?[0m
+        users (username, id) 
+    ?[34mvalues?[0m
+        (?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.169+09:00 TRACE 1221775 --- [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:VARCHAR) &lt;- [testUser_1770293344165]
+2026-02-05T21:09:04.177+09:00 DEBUG 1221775 --- [    Test worker] org.hibernate.SQL                        : 
+    /* &lt;criteria&gt; */ ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0
+?[35m[Hibernate]?[0m 
+    /* &lt;criteria&gt; */ ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0
+2026-02-05T21:09:04.203+09:00 DEBUG 1221775 --- [pool-5-thread-1] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.205+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.209+09:00 DEBUG 1221775 --- [pool-5-thread-5] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.209+09:00 DEBUG 1221775 --- [pool-5-thread-1] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+2026-02-05T21:09:04.209+09:00 DEBUG 1221775 --- [pool-5-thread-2] org.hibernate.SQL                        : 
+        s1_0.id,
+    ?[34mselect?[0m
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.209+09:00 DEBUG 1221775 --- [pool-5-thread-3] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+    ?[34mfrom?[0m
+2026-02-05T21:09:04.210+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.211+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.211+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.211+09:00 DEBUG 1221775 --- [pool-5-thread-9] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.212+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.212+09:00 DEBUG 1221775 --- [pool-5-thread-6] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+2026-02-05T21:09:04.212+09:00 DEBUG 1221775 --- [pool-5-thread-5] org.hibernate.SQL                        : 
+        u1_0.username 
+    ?[34mfrom?[0m
+    ?[34mselect?[0m
+        users u1_0 
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+    ?[34mwhere?[0m
+        seats s1_0 
+        u1_0.id=?
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.212+09:00 DEBUG 1221775 --- [pool-5-thread-3] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.212+09:00 DEBUG 1221775 --- [pool-5-thread-8] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.213+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.212+09:00 DEBUG 1221775 --- [pool-5-thread-2] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.213+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+    ?[34mselect?[0m
+2026-02-05T21:09:04.213+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.213+09:00 DEBUG 1221775 --- [pool-5-thread-4] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.213+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.214+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.214+09:00 DEBUG 1221775 --- [pool-5-thread-6] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+2026-02-05T21:09:04.214+09:00 DEBUG 1221775 --- [pool-5-thread-9] org.hibernate.SQL                        : 
+    ?[34mwhere?[0m
+        s1_0.id=?
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+2026-02-05T21:09:04.215+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.215+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.215+09:00 DEBUG 1221775 --- [ool-5-thread-13] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.215+09:00 DEBUG 1221775 --- [ool-5-thread-11] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.215+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.216+09:00 DEBUG 1221775 --- [pool-5-thread-4] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+2026-02-05T21:09:04.216+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.217+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.216+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.217+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.218+09:00 DEBUG 1221775 --- [ool-5-thread-11] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.219+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.219+09:00 DEBUG 1221775 --- [ool-5-thread-13] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.220+09:00 DEBUG 1221775 --- [pool-5-thread-8] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.222+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.222+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.264+09:00 DEBUG 1221775 --- [pool-5-thread-1] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.264+09:00 DEBUG 1221775 --- [pool-5-thread-3] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.265+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.262991597]
+2026-02-05T21:09:04.265+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.264040861]
+2026-02-05T21:09:04.265+09:00 DEBUG 1221775 --- [pool-5-thread-5] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.265+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.265+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.265+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.265091678]
+2026-02-05T21:09:04.265+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.266+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.266+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.266+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.266+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.265+09:00 DEBUG 1221775 --- [pool-5-thread-2] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.266+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.266+09:00 DEBUG 1221775 --- [pool-5-thread-6] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.266+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.264784617]
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.266+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.266+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.267+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.265917262]
+2026-02-05T21:09:04.267+09:00 DEBUG 1221775 --- [pool-5-thread-9] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.267+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.267+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.267+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.267+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.267+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.267+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.266755450]
+2026-02-05T21:09:04.268+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.268+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.268+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.269+09:00 DEBUG 1221775 --- [pool-5-thread-4] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.269+09:00 DEBUG 1221775 --- [pool-5-thread-6] org.hibernate.SQL                        : 
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+    ?[34mset?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+    ?[34mvalues?[0m
+2026-02-05T21:09:04.269+09:00 DEBUG 1221775 --- [pool-5-thread-1] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+2026-02-05T21:09:04.269+09:00 DEBUG 1221775 --- [pool-5-thread-3] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+2026-02-05T21:09:04.270+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.268452353]
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+2026-02-05T21:09:04.270+09:00 DEBUG 1221775 --- [pool-5-thread-9] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.271+09:00 DEBUG 1221775 --- [pool-5-thread-5] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.271+09:00 DEBUG 1221775 --- [ool-5-thread-11] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.272+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.272+09:00 DEBUG 1221775 --- [pool-5-thread-2] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+2026-02-05T21:09:04.273+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.273+09:00 TRACE 1221775 --- [pool-5-thread-3] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+2026-02-05T21:09:04.273+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.271+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+        ?[34mand?[0m version=?
+2026-02-05T21:09:04.272+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.270227288]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.272+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+2026-02-05T21:09:04.272+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+2026-02-05T21:09:04.273+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.273+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.275+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.275+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.274+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+2026-02-05T21:09:04.275+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.275+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.275+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+2026-02-05T21:09:04.275+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.275+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.275+09:00 DEBUG 1221775 --- [ool-5-thread-13] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.276+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+2026-02-05T21:09:04.276+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.276+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+2026-02-05T21:09:04.276+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.275+09:00 DEBUG 1221775 --- [pool-5-thread-8] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+?[35m[Hibernate]?[0m 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.ticketrush.domain.reservation.entity.Reservation */?[34minsert?[0m 
+    ?[34minto?[0m
+        reservations (reserved_at, seat_id, status, user_id, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?[34mdefault?[0m)
+2026-02-05T21:09:04.276+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.274983555]
+2026-02-05T21:09:04.276+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (1:TIMESTAMP) &lt;- [2026-02-05T21:09:04.274585758]
+2026-02-05T21:09:04.277+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.277+09:00 DEBUG 1221775 --- [ool-5-thread-11] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+2026-02-05T21:09:04.277+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.277+09:00 DEBUG 1221775 --- [pool-5-thread-4] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+2026-02-05T21:09:04.277+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.277+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.277+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+2026-02-05T21:09:04.278+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.278+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.278+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.277+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.277+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.278+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [PENDING]
+2026-02-05T21:09:04.278+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.278+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+2026-02-05T21:09:04.278+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.278+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+2026-02-05T21:09:04.278+09:00 DEBUG 1221775 --- [pool-5-thread-7] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.279+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.279+09:00 TRACE 1221775 --- [pool-5-thread-7] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.279+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.279+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+2026-02-05T21:09:04.280+09:00 DEBUG 1221775 --- [pool-5-thread-8] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+2026-02-05T21:09:04.280+09:00 DEBUG 1221775 --- [ool-5-thread-13] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+?[35m[Hibernate]?[0m 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.ticketrush.domain.concert.entity.Seat */?[34mupdate?[0m seats 
+    ?[34mset?[0m
+        concert_option_id=?,
+        seat_number=?,
+        status=?,
+        version=? 
+    ?[34mwhere?[0m
+        id=? 
+        ?[34mand?[0m version=?
+2026-02-05T21:09:04.281+09:00 DEBUG 1221775 --- [pool-5-thread-7] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.281+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.281+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.281+09:00 TRACE 1221775 --- [pool-5-thread-7] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.281+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.281+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) &lt;- [A-3]
+2026-02-05T21:09:04.281+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+2026-02-05T21:09:04.282+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) &lt;- [RESERVED]
+2026-02-05T21:09:04.283+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.282+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (4:BIGINT) &lt;- [1]
+2026-02-05T21:09:04.283+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.283+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+2026-02-05T21:09:04.283+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (5:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.284+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (6:BIGINT) &lt;- [0]
+2026-02-05T21:09:04.286+09:00 DEBUG 1221775 --- [ool-5-thread-14] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.288+09:00 TRACE 1221775 --- [ool-5-thread-14] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.290+09:00 DEBUG 1221775 --- [ool-5-thread-14] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.291+09:00 TRACE 1221775 --- [ool-5-thread-14] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.294+09:00 DEBUG 1221775 --- [ool-5-thread-12] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.296+09:00 TRACE 1221775 --- [ool-5-thread-12] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.298+09:00 DEBUG 1221775 --- [ool-5-thread-12] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.299+09:00 TRACE 1221775 --- [ool-5-thread-12] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.303+09:00 DEBUG 1221775 --- [ool-5-thread-11] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.303+09:00 DEBUG 1221775 --- [pool-5-thread-8] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+?[35m[Hibernate]?[0m 
+    ?[34mwhere?[0m
+    ?[34mselect?[0m
+        s1_0.id=?
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.302+09:00 DEBUG 1221775 --- [pool-5-thread-4] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+?[35m[Hibernate]?[0m 
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+    ?[34mselect?[0m
+        s1_0.status,
+        s1_0.id,
+        s1_0.version 
+    ?[34mfrom?[0m
+        s1_0.concert_option_id,
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.seat_number,
+        s1_0.id=?
+        s1_0.status,
+2026-02-05T21:09:04.303+09:00 DEBUG 1221775 --- [pool-5-thread-1] org.hibernate.SQL                        : 
+        s1_0.version 
+    ?[34mselect?[0m
+    ?[34mfrom?[0m
+        s1_0.id,
+        seats s1_0 
+        s1_0.concert_option_id,
+    ?[34mwhere?[0m
+        s1_0.seat_number,
+        s1_0.id=?
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+2026-02-05T21:09:04.302+09:00 DEBUG 1221775 --- [pool-5-thread-2] org.hibernate.SQL                        : 
+        s1_0.version 
+    ?[34mselect?[0m
+        s1_0.id,
+    ?[34mfrom?[0m
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+2026-02-05T21:09:04.303+09:00 DEBUG 1221775 --- [ool-5-thread-10] org.hibernate.SQL                        : 
+        s1_0.id,
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.302+09:00 DEBUG 1221775 --- [pool-5-thread-5] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+2026-02-05T21:09:04.304+09:00 TRACE 1221775 --- [pool-5-thread-1] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.303+09:00 DEBUG 1221775 --- [pool-5-thread-6] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+?[35m[Hibernate]?[0m 
+        s1_0.concert_option_id,
+    ?[34mselect?[0m
+        s1_0.seat_number,
+        u1_0.id,
+        u1_0.username 
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+2026-02-05T21:09:04.303+09:00 DEBUG 1221775 --- [ool-5-thread-13] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.id=?
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.304+09:00 TRACE 1221775 --- [ool-5-thread-11] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.304+09:00 DEBUG 1221775 --- [pool-5-thread-9] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.304+09:00 TRACE 1221775 --- [pool-5-thread-4] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.305+09:00 TRACE 1221775 --- [ool-5-thread-13] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.304+09:00 TRACE 1221775 --- [pool-5-thread-8] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.305+09:00 TRACE 1221775 --- [ool-5-thread-10] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.304+09:00 TRACE 1221775 --- [pool-5-thread-5] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+2026-02-05T21:09:04.305+09:00 TRACE 1221775 --- [pool-5-thread-9] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.305+09:00 TRACE 1221775 --- [pool-5-thread-6] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.307+09:00 DEBUG 1221775 --- [ool-5-thread-10] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.308+09:00 DEBUG 1221775 --- [ool-5-thread-18] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.308+09:00 DEBUG 1221775 --- [ool-5-thread-16] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.308+09:00 DEBUG 1221775 --- [ool-5-thread-20] org.hibernate.SQL                        : 
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.308+09:00 DEBUG 1221775 --- [ool-5-thread-15] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        u1_0.id,
+        s1_0.seat_number,
+        u1_0.username 
+    ?[34mfrom?[0m
+        s1_0.status,
+        users u1_0 
+        s1_0.version 
+    ?[34mwhere?[0m
+    ?[34mfrom?[0m
+        u1_0.id=?
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.309+09:00 TRACE 1221775 --- [ool-5-thread-16] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.308+09:00 TRACE 1221775 --- [pool-5-thread-2] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.308+09:00 DEBUG 1221775 --- [ool-5-thread-19] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.309+09:00 TRACE 1221775 --- [ool-5-thread-20] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.308+09:00 DEBUG 1221775 --- [ool-5-thread-17] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.308+09:00 DEBUG 1221775 --- [ool-5-thread-22] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.308+09:00 DEBUG 1221775 --- [ool-5-thread-21] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.323+09:00 DEBUG 1221775 --- [ool-5-thread-16] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.324+09:00 TRACE 1221775 --- [ool-5-thread-22] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.324+09:00 TRACE 1221775 --- [ool-5-thread-21] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.324+09:00 TRACE 1221775 --- [ool-5-thread-16] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.309+09:00 TRACE 1221775 --- [ool-5-thread-18] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.309+09:00 TRACE 1221775 --- [ool-5-thread-10] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.309+09:00 TRACE 1221775 --- [ool-5-thread-15] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.310+09:00 TRACE 1221775 --- [ool-5-thread-19] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.325+09:00 DEBUG 1221775 --- [ool-5-thread-21] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.323+09:00 DEBUG 1221775 --- [ool-5-thread-20] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mselect?[0m
+    ?[34mwhere?[0m
+        s1_0.id,
+        s1_0.id=?
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+2026-02-05T21:09:04.324+09:00 TRACE 1221775 --- [ool-5-thread-17] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+        s1_0.id=?
+2026-02-05T21:09:04.326+09:00 TRACE 1221775 --- [ool-5-thread-21] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.324+09:00 DEBUG 1221775 --- [ool-5-thread-23] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.325+09:00 DEBUG 1221775 --- [ool-5-thread-22] org.hibernate.SQL                        : 
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+2026-02-05T21:09:04.325+09:00 DEBUG 1221775 --- [ool-5-thread-18] org.hibernate.SQL                        : 
+        seats s1_0 
+    ?[34mwhere?[0m
+    ?[34mselect?[0m
+        s1_0.id=?
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.326+09:00 TRACE 1221775 --- [ool-5-thread-22] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.326+09:00 TRACE 1221775 --- [ool-5-thread-20] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.326+09:00 DEBUG 1221775 --- [ool-5-thread-25] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.326+09:00 DEBUG 1221775 --- [ool-5-thread-19] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.326+09:00 DEBUG 1221775 --- [ool-5-thread-15] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.327+09:00 TRACE 1221775 --- [ool-5-thread-19] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.327+09:00 TRACE 1221775 --- [ool-5-thread-25] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+2026-02-05T21:09:04.327+09:00 DEBUG 1221775 --- [ool-5-thread-17] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+    ?[34mfrom?[0m
+        seats s1_0 
+        seats s1_0 
+    ?[34mwhere?[0m
+    ?[34mwhere?[0m
+        s1_0.id=?
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+2026-02-05T21:09:04.326+09:00 DEBUG 1221775 --- [ool-5-thread-24] org.hibernate.SQL                        : 
+        s1_0.concert_option_id,
+    ?[34mselect?[0m
+        s1_0.seat_number,
+        u1_0.id,
+        s1_0.status,
+        u1_0.username 
+        s1_0.version 
+    ?[34mfrom?[0m
+    ?[34mfrom?[0m
+        users u1_0 
+        seats s1_0 
+    ?[34mwhere?[0m
+    ?[34mwhere?[0m
+        u1_0.id=?
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+2026-02-05T21:09:04.326+09:00 TRACE 1221775 --- [ool-5-thread-18] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+        u1_0.id=?
+2026-02-05T21:09:04.327+09:00 TRACE 1221775 --- [ool-5-thread-23] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.328+09:00 TRACE 1221775 --- [ool-5-thread-17] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.327+09:00 DEBUG 1221775 --- [ool-5-thread-26] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.329+09:00 DEBUG 1221775 --- [ool-5-thread-27] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+2026-02-05T21:09:04.328+09:00 TRACE 1221775 --- [ool-5-thread-15] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+        u1_0.id=?
+2026-02-05T21:09:04.329+09:00 TRACE 1221775 --- [ool-5-thread-26] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.329+09:00 DEBUG 1221775 --- [ool-5-thread-29] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.330+09:00 TRACE 1221775 --- [ool-5-thread-27] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.330+09:00 TRACE 1221775 --- [ool-5-thread-29] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.330+09:00 DEBUG 1221775 --- [ool-5-thread-26] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+2026-02-05T21:09:04.328+09:00 TRACE 1221775 --- [ool-5-thread-24] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.329+09:00 DEBUG 1221775 --- [ool-5-thread-25] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+2026-02-05T21:09:04.329+09:00 DEBUG 1221775 --- [ool-5-thread-23] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.330+09:00 DEBUG 1221775 --- [ool-5-thread-30] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.332+09:00 TRACE 1221775 --- [ool-5-thread-25] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.330+09:00 DEBUG 1221775 --- [ool-5-thread-29] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+2026-02-05T21:09:04.331+09:00 TRACE 1221775 --- [ool-5-thread-26] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.331+09:00 DEBUG 1221775 --- [ool-5-thread-27] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+2026-02-05T21:09:04.331+09:00 DEBUG 1221775 --- [ool-5-thread-24] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.334+09:00 TRACE 1221775 --- [ool-5-thread-27] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.334+09:00 TRACE 1221775 --- [ool-5-thread-24] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.332+09:00 TRACE 1221775 --- [ool-5-thread-23] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.333+09:00 TRACE 1221775 --- [ool-5-thread-30] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+2026-02-05T21:09:04.333+09:00 DEBUG 1221775 --- [ool-5-thread-28] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        u1_0.id,
+        u1_0.username 
+    ?[34mfrom?[0m
+        users u1_0 
+    ?[34mwhere?[0m
+        u1_0.id=?
+2026-02-05T21:09:04.333+09:00 TRACE 1221775 --- [ool-5-thread-29] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.337+09:00 DEBUG 1221775 --- [ool-5-thread-30] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+2026-02-05T21:09:04.336+09:00 TRACE 1221775 --- [ool-5-thread-28] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [103]
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.339+09:00 TRACE 1221775 --- [ool-5-thread-30] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.341+09:00 DEBUG 1221775 --- [ool-5-thread-28] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    ?[34mselect?[0m
+        s1_0.id,
+        s1_0.concert_option_id,
+        s1_0.seat_number,
+        s1_0.status,
+        s1_0.version 
+    ?[34mfrom?[0m
+        seats s1_0 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.342+09:00 TRACE 1221775 --- [ool-5-thread-28] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+2026-02-05T21:09:04.349+09:00 DEBUG 1221775 --- [    Test worker] org.hibernate.SQL                        : 
+    /* &lt;criteria&gt; */ ?[34mselect?[0m
+        r1_0.id,
+        r1_0.reserved_at,
+        r1_0.seat_id,
+        r1_0.status,
+        r1_0.user_id 
+    ?[34mfrom?[0m
+        reservations r1_0 
+    ?[34mleft?[0m ?[34mjoin?[0m
+        seats s1_0 
+            ?[34mon?[0m s1_0.id=r1_0.seat_id 
+    ?[34mwhere?[0m
+        s1_0.id=?
+?[35m[Hibernate]?[0m 
+    /* &lt;criteria&gt; */ ?[34mselect?[0m
+        r1_0.id,
+        r1_0.reserved_at,
+        r1_0.seat_id,
+        r1_0.status,
+        r1_0.user_id 
+    ?[34mfrom?[0m
+        reservations r1_0 
+    ?[34mleft?[0m ?[34mjoin?[0m
+        seats s1_0 
+            ?[34mon?[0m s1_0.id=r1_0.seat_id 
+    ?[34mwhere?[0m
+        s1_0.id=?
+2026-02-05T21:09:04.351+09:00 TRACE 1221775 --- [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) &lt;- [3]
+================ 실험 결과 (낙관적 락) ================
+성공 유저 수: 1
+실패 유저 수: 29
+해당 좌석 예약 건수: 1
+=========================================
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.5</a> at Feb 5, 2026, 9:09:04 PM</p>
+</div>
+</div>
+</body>
+</html>
