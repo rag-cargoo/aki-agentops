@@ -2,8 +2,8 @@
 name: github-pages-expert
 description: |
   GitHub Pages(Docsify) 기술 문서 구조화 및 시각 표준 전문 스킬.
-  데이터 유실 0% 보장 및 YAML형 시각적 위계 적용을 강제합니다.
-  (최신 업데이트: 2026-02-07 20:05:15 | 실시간 버전 증명 및 YAML 깊은 들여쓰기 표준)
+  데이터 무결성 사수(replace 필수) 및 STRUCTURE.md 5번 지식 문서 표준을 강제합니다.
+  (최신 업데이트: 2026-02-07 00:10:57 | 실시간 버전 증명 및 거버넌스 원칙 동기화)
 ---
 
 # 깃헙 페이지스 기술 문서 전문가 (GitHub Pages Expert)
@@ -11,9 +11,9 @@ description: |
 GitHub Pages와 Docsify를 활용하여 기술 지식을 고품질 웹 문서로 변환하고 관리합니다.
 
 ## 1. 핵심 미션
-- 무손실 정책: 리팩토링 중 라인 수 및 바이트 수를 물리적으로 검증하여 데이터 유실 차단.
-- 시각 표준화: Docsify Alert 박스와 다크 테마 코드 블록을 사용하여 가독성 극대화.
-- 들여쓰기 표준: 중첩 리스트에 대해 YAML 스타일의 깊은 들여쓰기 강제 적용.
+- 무손실 정책: 리팩토링 중 데이터 유실을 차단하기 위해 반드시 replace 도구를 활용.
+- 시각 표준화: Docsify Alert 박스(H3+구분선)와 YAML 스타일의 깊은 들여쓰기를 적용.
+- 지식 표준화: [STRUCTURE.md 5번](/skills/workspace-governance/references/STRUCTURE.md)의 지식 문서 관리 표준(Failure-First, Before & After, Philosophy)을 필수 적용.
 
 ## 2. 가이드라인
 - 이모티콘 금지: 기술 문서의 신뢰도를 위해 모든 유니코드 이모티콘 사용을 절대 금지.
