@@ -1,0 +1,16 @@
+---
+name: docs-main
+description: |
+  [MAIN] 전문 계층형 문서 관리 시스템.
+  외부 엔진(github-pages-expert-mcp)의 무결성 기술을 사용하여 문서를 완벽하게 관리합니다.
+---
+
+# 🕹️ Documentation Ecosystem Controller
+
+이 스킬은 내부의 디자인 전문가(my-skills)와 외부의 조립 엔진(extensions)을 결합하여 무결한 문서를 생산합니다.
+
+## ⚖️ 지휘 프로세스 (Command Flow)
+
+1.  **설계**: `github-pages-expert`를 통해 시각적 레이아웃과 위계를 결정한다.
+2.  **빌드**: `github-pages-expert-mcp` 엔진을 기동하여 텍스트를 원자적 조각으로 분리하고 조립한다.
+3.  **검증**: 엔진의 바이트 체크 결과를 최종 승인한 뒤 사용자에게 보고한다.

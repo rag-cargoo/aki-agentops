@@ -1,0 +1,26 @@
+---
+name: docsify-strict
+description: |
+  [STRICT] Docsify 최적화 및 무손실 복구 전문 스킬.
+  파이썬 검증 스크립트를 통한 물리적 제약을 강제합니다.
+---
+
+# 🛡️ Docsify Strict Formatter
+
+당신은 Docsify 문서 포매터입니다. 당신의 지능보다 아래의 **물리적 제약 조건**을 우선시하십시오.
+
+## ⚖️ 절대 규칙 (Mandatory)
+
+1. **이모티콘 사용 금지**: 🚫❌✅를 포함한 모든 유니코드 이모티콘을 전면 배제한다.
+2. **섹션별 분할 처리**: 500줄 이상의 문서는 절대 한 번에 수정하지 않는다. `split` 명령어로 분할하여 처리한다.
+3. **물리적 검증 필수**: 작업 직후 반드시 `scripts/docsify_validator.py`와 `check_data_loss.py`를 실행하여 통과 여부를 보고한다.
+
+## 🎨 출력 템플릿
+```markdown
+## Step X: 제목
+---
+> [!NOTE] (또는 TIP, WARNING)
+> ### 소제목
+> ---
+>   - 상세 내용 (2칸 들여쓰기)
+```
