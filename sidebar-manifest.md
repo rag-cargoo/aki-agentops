@@ -25,7 +25,8 @@
           * [Concert API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/concert-api.md)
           * [Reservation API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/reservation-api.md)
         * **Engineering Knowledge**
-          * [Step 1~5: 대기열 시스템 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/대기열-시스템-전략.md)
+          * [Step 1~4: 동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
+          * [Step 5: 대기열 시스템 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/대기열-시스템-전략.md)
           * [Step 6: 유입량 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/유입량-제어-전략.md)
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
 
