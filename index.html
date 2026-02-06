@@ -2,48 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ticket-Rush Workspace</title>
+  <title>Ticket-Rush | Electric Neon Docs</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  
+  <!-- Base Dark Theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
+  
   <style>
-    /* Active Link Highlight */
+    :root {
+      --theme-color: #00D4FF;
+      --background: #050505;
+      --text-main: #FFFFFF;
+      --text-muted: #B0B0B0;
+      --code-bg: #1A1A1B;
+      --accent-red: #FF2E63;
+      --accent-blue: #00D4FF;
+      --accent-green: #08FFC8;
+    }
+
+    body {
+      background-color: var(--background) !important;
+      color: var(--text-main) !important;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .sidebar {
+      background-color: #0F0F0F !important;
+      border-right: 1px solid #222 !important;
+    }
+
     .sidebar-nav li.active > a {
-      color: #42b983 !important;
-      font-weight: bold !important;
-      background-color: #f3fcf8;
-      border-left: 4px solid #42b983;
-      padding-left: 10px;
+      color: var(--theme-color) !important;
+      font-weight: 800 !important;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
     }
 
-    /* 코드 블록 다크 테마 및 선명도 강화 */
-    code {
-      background-color: #f8f8f8 !important; /* 인라인 코드는 연한 배경 */
-      color: #e96900 !important;
+    h1, h2, h3 { color: #FFFFFF !important; font-weight: 700 !important; }
+    h2 { border-bottom: 2px solid #222; padding-bottom: 10px; }
+
+    /* --- [핵심 시인성 패치] --- */
+    
+    /* 1. 알림창(Alerts) 발광 효과 */
+    .callout {
+      border-left-width: 6px !important;
+      background-color: #111 !important;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8) !important;
+      margin: 2rem 0 !important;
     }
+    .callout.note { border-left-color: var(--accent-blue) !important; filter: drop-shadow(0 0 5px var(--accent-blue)); }
+    .callout.tip { border-left-color: var(--accent-green) !important; filter: drop-shadow(0 0 5px var(--accent-green)); }
+    .callout.warning { border-left-color: var(--accent-red) !important; filter: drop-shadow(0 0 5px var(--accent-red)); }
+
+    /* 2. 테이블 전광판 격자 디자인 */
+    table {
+      border-collapse: collapse !important;
+      width: 100% !important;
+      border: 1px solid #333 !important;
+      background-color: #0A0A0A !important;
+    }
+    th {
+      background-color: #1A1A1B !important;
+      color: var(--accent-blue) !important;
+      border: 1px solid #333 !important;
+      font-weight: 800 !important;
+    }
+    td {
+      border: 1px solid #333 !important;
+      color: #FFFFFF !important; /* 글자색을 최고 밝기로 */
+      padding: 12px !important;
+    }
+    tr:nth-child(2n) { background-color: #0D0D0D !important; }
+
+    /* 3. 코드 블록 선명도 */
     pre[data-lang] {
-      background-color: #282c34 !important; /* 코드 블록은 다크 배경 */
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      background-color: var(--code-bg) !important;
+      border: 1px solid #333 !important;
     }
-    pre[data-lang] code {
-      background-color: transparent !important;
-      color: #abb2bf !important; /* 텍스트는 연한 회색 */
-      font-family: 'Fira Code', 'Courier New', Courier, monospace;
-    }
+    code { color: var(--accent-green) !important; font-weight: 600; }
 
-    /* 구분선 및 박스 테두리 강화 */
-    hr {
-      border: 0;
-      border-top: 2px solid #ddd; /* 더 굵고 진한 수평선 */
-      margin: 2rem 0;
-    }
-    blockquote {
-      border-left: 5px solid #42b983 !important; /* 인용구(박스) 왼쪽 라인 강조 */
-      background-color: #fafafa;
-      padding: 1.5rem !important;
-      margin: 1rem 0 !important;
+    /* 강조 스팬 태그 */
+    span[style*="color"] {
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid currentColor;
+      text-shadow: 0 0 8px currentColor;
     }
   </style>
 </head>
@@ -51,25 +96,23 @@
   <div id="app"></div>
   <script>
     window.$docsify = {
-      name: 'Ticket-Rush Workspace',
+      name: 'Ticket-Rush Engine',
       repo: 'https://github.com/rag-cargoo/2602',
-      loadSidebar: 'sidebar-manifest.md', // 고유한 파일명 사용
-      alias: {
-        '/.*/sidebar-manifest.md': '/sidebar-manifest.md'
-      },
-      sidebarDisplayLevel: 1, // 1레벨(최상위)만 펼침, 나머지는 접음
-      subMaxLevel: 0, // 페이지 내부 목차는 사이드바에 표시 안 함
+      loadSidebar: 'sidebar-manifest.md',
       auto2top: true,
+      maxLevel: 1,
+      subMaxLevel: 0,
+      search: 'auto',
       'flexible-alerts': {
-        style: 'flat' // 'callout' 또는 'flat' 스타일 선택 가능
+        style: 'callout'
       }
     }
   </script>
-  <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- Docsify Alerts Plugin (Background colors for Note/Tip) -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://unpkg.com/docsify-plugin-flexible-alerts"></script>
-  <!-- Sidebar Collapse Plugin -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-java.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 </body>
 </html>
