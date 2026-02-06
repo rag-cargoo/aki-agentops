@@ -9,3 +9,8 @@ management/task.md
 
 # Gemini CLI runtime
 .gemini/
+
+# Build artifacts
+**/build/
+**/out/
+.gradle/
