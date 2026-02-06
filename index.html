@@ -30,11 +30,16 @@
       },
       sidebarDisplayLevel: 1, // 1레벨(최상위)만 펼침, 나머지는 접음
       subMaxLevel: 0, // 페이지 내부 목차는 사이드바에 표시 안 함
-      auto2top: true
+      auto2top: true,
+      'flexible-alerts': {
+        style: 'flat' // 'callout' 또는 'flat' 스타일 선택 가능
+      }
     }
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Docsify Alerts Plugin (Background colors for Note/Tip) -->
+  <script src="https://unpkg.com/docsify-plugin-flexible-alerts"></script>
   <!-- Sidebar Collapse Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
