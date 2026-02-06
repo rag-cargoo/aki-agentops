@@ -1,10 +1,10 @@
-# <span style="color: #FFFFFF;">Ticket-Rush: 고성능 선착순 티켓팅 시스템</span>
+# <span style="color: #FFFFFF;">Ticket-Rush: High-Performance Reservation System</span>
 
 > 대규모 트래픽 발생 시 데이터 정합성을 보장하고 시스템의 안정성을 유지하기 위한 동시성 제어 및 비동기 처리 시스템 프로젝트입니다.
 
 ---
 
-## <span style="color: #00D4FF;">시스템 아키텍처 (Architecture)</span>
+## <span style="color: #00D4FF;">System Architecture</span>
 ---
 > [!NOTE]
 >
@@ -19,17 +19,17 @@
 
 ---
 
-## <span style="color: #08FFC8;">주요 구현 기능 (Key Features)</span>
+## <span style="color: #08FFC8;">Key Features</span>
 ---
 > [!TIP]
 >
-> ### 1. 동시성 제어 전략 (Concurrency Control)
+> ### 1. Concurrency Control Strategy
 > ---
 >   - **Step 1: 낙관적 락(Optimistic Lock)** - JPA @Version 활용
 >   - **Step 2: 비관적 락(Pessimistic Lock)** - DB FOR UPDATE 쿼리 활용
 >   - **Step 3: 분산 락(Distributed Lock)** - Redis(Redisson) Facade 패턴 적용
 >
-> ### 2. 고성능 비동기 대기열 (Queue System)
+> ### 2. High-Performance Queue System
 > ---
 >   - **Kafka 기반 요청 수집**: 초당 수만 건의 요청을 안전하게 완충
 >   - **실시간 상태 추적**: Redis를 통한 PENDING -> SUCCESS 상태 전이 관리
@@ -37,7 +37,7 @@
 
 ---
 
-## <span style="color: #FF2E63;">핵심 기술 문서 (Engineering Docs)</span>
+## <span style="color: #FF2E63;">Engineering Docs</span>
 ---
 > [!WARNING]
 >
@@ -49,22 +49,22 @@
 
 ---
 
-## <span style="color: #00D4FF;">기동 및 테스트 방법 (Quick Start)</span>
+## <span style="color: #00D4FF;">Quick Start Guide</span>
 ---
-> ### 1. 인프라 실행 (Docker)
+> ### 1. Infrastructure Setup
 > ---
 > ```bash
 > docker-compose up -d
 > ```
 >
-> ### 2. 서버 실행
+> ### 2. Application Startup
 > ---
 > ```bash
 > cd workspace/apps/backend/ticket-core-service
 > ./gradlew bootRun --args='--spring.profiles.active=local'
 > ```
 >
-> ### 3. 테스트 자동화 (Admin Setup & Verify)
+> ### 3. Verification & Setup
 > ---
 > ```bash
 > # 1. 테스트 공연 및 좌석 자동 생성
@@ -76,7 +76,7 @@
 
 ---
 
-## <span style="color: #FFFFFF;">개발 로드맵 (Roadmap)</span>
+## <span style="color: #FFFFFF;">Development Roadmap</span>
 ---
 >   - [x] Step 1~3: 락 전략 구축 및 정합성 검증
 >   - [x] Step 4: Kafka 기반 비동기 대기열 및 SSE 알림 시스템
