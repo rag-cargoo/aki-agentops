@@ -216,10 +216,11 @@
 <body>
   <div id="app"></div>
   <script>
+    var sidebarManifestPath = 'sidebar-manifest.md?v=' + Date.now();
     window.$docsify = {
       name: 'Ticket-Rush Engine',
       repo: 'https://github.com/rag-cargoo/2602',
-      loadSidebar: 'sidebar-manifest.md',
+      loadSidebar: sidebarManifestPath,
       auto2top: true,
       maxLevel: 1,
       subMaxLevel: 0,
