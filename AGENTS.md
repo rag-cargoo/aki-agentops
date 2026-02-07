@@ -3,6 +3,11 @@
 ## 1) Single Entry Rule
 이 저장소는 세션 시작 시 `AGENTS.md`만 읽고 진입한다.
 
+권장 트리거 문구:
+1. `AGENTS.md만 읽고 시작해`
+2. `AGENTS.md 확인해줘`
+3. 세션 중 갱신: `스킬스 리로드해줘`
+
 필수 시작 순서:
 1. `git status --short`
 2. `./skills/bin/codex_skills_reload/session_start.sh`

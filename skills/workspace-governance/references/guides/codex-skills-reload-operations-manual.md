@@ -7,14 +7,23 @@
 
 ## 0. 30초 요약 (초보자용)
 
-1. 시작할 때 이것만 실행:
+### 자동(권장, 대화형)
+
+1. 새 세션 시작:
+`AGENTS.md만 읽고 시작해` 또는 `AGENTS.md 확인해줘`
+2. 세션 중 스킬 변경 후:
+`스킬스 리로드해줘`
+3. 코덱스는 위 트리거를 받으면 `session_start.sh` 실행 흐름으로 진입해 상태를 보고한다.
+4. 완전 자동 무지시 실행은 아니며, 트리거 한 줄이 필요하다.
+
+### 수동(터미널 직접 실행)
+
+1. 리로드:
 `./skills/bin/codex_skills_reload/session_start.sh`
-2. 멀티 프로젝트면 먼저 선택:
+2. 멀티 프로젝트 선택:
 `./skills/bin/codex_skills_reload/set_active_project.sh --list`
 `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
-3. 스킬 수정/추가 후에도 동일:
-`스킬스 리로드해줘` 또는 `./skills/bin/codex_skills_reload/session_start.sh` 재실행
-4. 상태 확인 파일:
+3. 상태 확인 파일:
 `.codex/runtime/codex_session_start.md`
 
 ---
@@ -36,6 +45,14 @@
 `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
 3. 리로드 요청 문구:
 `스킬스 리로드해줘`
+
+---
+
+## 2.1 자동 vs 수동 실행 기준
+
+1. 자동(트리거 기반): 코덱스에게 `AGENTS.md 확인해줘`, `AGENTS.md만 읽고 시작해`, `스킬스 리로드해줘`처럼 요청한다.
+2. 수동(직접 실행): 터미널에서 `session_start.sh`를 직접 실행한다.
+3. 기본 권장: 자동(트리거 기반). 장애/인터럽트 시 수동 실행으로 즉시 복구.
 
 ---
 
@@ -66,9 +83,9 @@
 `.codex/runtime/codex_session_start.md`
 
 ### 4.2 에이전트가 스킬을 수정한 경우
-1. 수정 직후 동일하게 `session_start.sh` 재실행
-2. `Startup Checks`가 모두 `OK`인지 보고
-3. 경고가 있으면 즉시 해결 명령을 같이 제시
+1. 기본 동작: 코덱스가 같은 턴에서 `session_start.sh`를 자동 재실행하고 결과를 보고한다.
+2. 보고 항목: `Startup Checks`, `Loaded Skills`, `Active Project`.
+3. 예외(턴 중단/실패/인터럽트): 사용자가 `스킬스 리로드해줘`를 다시 지시하거나 수동 실행으로 복구한다.
 
 ---
 
