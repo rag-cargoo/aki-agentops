@@ -8,12 +8,14 @@ if [[ -z "$repo_root" ]]; then
 fi
 bin_root="$repo_root/skills/bin"
 
-skills_snapshot="$repo_root/skills/codex_skills_reload.md"
-project_snapshot="$repo_root/workspace/codex_project_reload.md"
-session_snapshot="$repo_root/workspace/codex_session_start.md"
+runtime_dir="$repo_root/.codex/runtime"
+skills_snapshot="$runtime_dir/codex_skills_reload.md"
+project_snapshot="$runtime_dir/codex_project_reload.md"
+session_snapshot="$runtime_dir/codex_session_start.md"
 
 "$script_dir/skills_reload.sh" >/dev/null
 "$script_dir/project_reload.sh" >/dev/null
+mkdir -p "$runtime_dir"
 
 mapfile -t loaded_skills < <(find "$repo_root/skills" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
 
@@ -111,12 +113,12 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo
   echo "## Quick Remind"
   echo "- 시작 문구: \`AGENTS.md만 읽고 시작해.\`"
-  echo "- 세션 상태 문서: \`workspace/codex_session_start.md\`"
+  echo "- 세션 상태 문서: \`.codex/runtime/codex_session_start.md\`"
   echo "- 문제 시 재동기화: \`./skills/bin/codex_skills_reload/session_start.sh\`"
   echo
   echo "## Usage"
   echo "1. 세션 시작 시 \`./skills/bin/codex_skills_reload/session_start.sh\` 실행"
-  echo "2. \`workspace/codex_session_start.md\` 기준으로 세션 첫 상태를 보고"
+  echo "2. \`.codex/runtime/codex_session_start.md\` 기준으로 세션 첫 상태를 보고"
 } > "$session_snapshot"
 
 echo "updated: ${session_snapshot#$repo_root/}"

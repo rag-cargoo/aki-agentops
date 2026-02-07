@@ -8,7 +8,8 @@ if [[ -z "$repo_root" ]]; then
 fi
 workspace_dir="$repo_root/workspace"
 active_file="$workspace_dir/.active_project"
-output_file="$workspace_dir/codex_project_reload.md"
+runtime_dir="$repo_root/.codex/runtime"
+output_file="$runtime_dir/codex_project_reload.md"
 
 version="$(date +%Y%m%d-%H%M%S)"
 updated_at="$(date '+%Y-%m-%d %H:%M:%S')"
@@ -17,6 +18,7 @@ if [[ ! -d "$workspace_dir" ]]; then
   echo "error: workspace directory not found: $workspace_dir" >&2
   exit 1
 fi
+mkdir -p "$runtime_dir"
 
 mapfile -t task_files < <(find "$workspace_dir/apps" -type f -path "*/prj-docs/task.md" 2>/dev/null | sort || true)
 project_count="${#task_files[@]}"

@@ -10,6 +10,9 @@ management/task.md
 # Gemini CLI runtime
 .gemini/
 
+# Codex runtime snapshots
+.codex/runtime/
+
 # Build artifacts
 **/build/
 **/out/

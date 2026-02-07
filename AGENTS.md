@@ -6,8 +6,8 @@
 필수 시작 순서:
 1. `git status --short`
 2. `./skills/bin/codex_skills_reload/session_start.sh`
-3. `workspace/codex_session_start.md` 확인 후, 나열된 `SKILL.md` + Active Project의 `PROJECT_AGENT.md` + `task.md` 로드
-4. 필요 시 `skills/codex_skills_reload.md`, `workspace/codex_project_reload.md` 상세 확인
+3. `.codex/runtime/codex_session_start.md` 확인 후, 나열된 `SKILL.md` + Active Project의 `PROJECT_AGENT.md` + `task.md` 로드
+4. 필요 시 `.codex/runtime/codex_skills_reload.md`, `.codex/runtime/codex_project_reload.md` 상세 확인
 5. `sidebar-manifest.md` 확인
 
 멀티 프로젝트에서 Active Project가 비어 있으면 먼저 실행:
@@ -17,9 +17,9 @@
 - Workspace Root: `workspace`
 - Governance Root: `skills/workspace-governance`
 - Reload Runtime: `skills/bin/codex_skills_reload`
-- Skills Snapshot: `skills/codex_skills_reload.md`
-- Project Snapshot: `workspace/codex_project_reload.md`
-- Session Snapshot: `workspace/codex_session_start.md`
+- Skills Snapshot: `.codex/runtime/codex_skills_reload.md`
+- Project Snapshot: `.codex/runtime/codex_project_reload.md`
+- Session Snapshot: `.codex/runtime/codex_session_start.md`
 - Sidebar Index: `sidebar-manifest.md`
 
 ## 3) Safety Rules
@@ -39,7 +39,7 @@
 ## 5) Reload Trigger (Critical)
 아래 파일이 바뀌면 다음 작업 전에 반드시 다시 실행:
 1. `./skills/bin/codex_skills_reload/session_start.sh`
-2. `skills/codex_skills_reload.md` + `workspace/codex_project_reload.md` + `workspace/codex_session_start.md` 재확인
+2. `.codex/runtime/codex_skills_reload.md` + `.codex/runtime/codex_project_reload.md` + `.codex/runtime/codex_session_start.md` 재확인
 
 대상 파일:
 - `AGENTS.md`

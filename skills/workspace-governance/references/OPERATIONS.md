@@ -59,7 +59,7 @@
 
 *   **시스템 인식**: 런타임은 일반적으로 프로젝트 로컬의 `.gemini/skills/` 경로를 참조한다.
 *   **실시간 동기화 (Symbolic Link)**: 개발 소스(`skills/`)와 런타임 경로를 심볼릭 링크로 연결하면 수정사항 반영이 빠르다.
-*   **지식 갱신 제어**: 링크와 별개로, 실제 세션에서 어떤 스킬을 읽을지는 리로드 문서(`codex_skills_reload.md`) 기준으로 제어한다.
+*   **지식 갱신 제어**: 링크와 별개로, 실제 세션에서 어떤 스킬을 읽을지는 리로드 문서(`.codex/runtime/codex_skills_reload.md`) 기준으로 제어한다.
 
 
 
@@ -80,7 +80,7 @@
 
 
 4. **반영 (Reload)**: `./skills/bin/codex_skills_reload/session_start.sh`를 실행한다. (권장 단일 진입점)
-5. **확인 (Report)**: `workspace/codex_session_start.md`에서 Skills/Project 상태와 안내문을 확인한다.
+5. **확인 (Report)**: `.codex/runtime/codex_session_start.md`에서 Skills/Project 상태와 안내문을 확인한다.
 
 
 

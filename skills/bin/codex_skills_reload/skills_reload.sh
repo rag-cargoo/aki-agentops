@@ -7,12 +7,14 @@ if [[ -z "$repo_root" ]]; then
   repo_root="$(cd "$script_dir/../../.." && pwd)"
 fi
 skills_dir="$repo_root/skills"
-output_file="$skills_dir/codex_skills_reload.md"
+runtime_dir="$repo_root/.codex/runtime"
+output_file="$runtime_dir/codex_skills_reload.md"
 
 version="$(date +%Y%m%d-%H%M%S)"
 updated_at="$(date '+%Y-%m-%d %H:%M:%S')"
 
 mapfile -t skill_files < <(find "$skills_dir" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
+mkdir -p "$runtime_dir"
 
 {
   echo "# Codex Skills Reload"
