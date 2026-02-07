@@ -31,4 +31,5 @@
 ---
 
 * **OPERATIONS & MANUALS**
+  * [에이전트 사고 시 Git 백업/복구 플레이북](/skills/workspace-governance/references/guides/agent-incident-git-backup-restore-playbook.md)
   * [GitHub Pages 배포 가이드](/skills/workspace-governance/references/guides/docsify-setup.md)
