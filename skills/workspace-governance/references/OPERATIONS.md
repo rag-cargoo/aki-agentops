@@ -48,6 +48,12 @@
 
 에이전트 지능을 확장하는 스킬(Skill)은 개발 소스와 런타임 연결을 분리하여 관리한다.
 
+### 스크립트 배치 원칙 (중요)
+
+*   **공용 운영 스크립트**: `skills/bin/`에만 둔다. (예: `session_start.sh`, `set_active_project.sh`)
+*   **스킬 내부 전용 스크립트**: 각 스킬의 `skills/<skill-name>/scripts/`에 둔다.
+*   **삭제/수정 안전성**: 세션 시작 시 `./skills/bin/session_start.sh`가 `skills/bin` 무결성을 자동 점검한다.
+
 ### 런타임 분리의 이유
 
 *   **시스템 인식**: 런타임은 일반적으로 프로젝트 로컬의 `.gemini/skills/` 경로를 참조한다.
@@ -72,7 +78,8 @@
 
 
 
-4. **반영 (Reload)**: `./skills/bin/skills_reload.sh`를 실행해 `skills/codex_skills_reload.md`를 갱신한다.
+4. **반영 (Reload)**: `./skills/bin/session_start.sh`를 실행한다. (권장 단일 진입점)
+5. **확인 (Report)**: `workspace/codex_session_start.md`에서 Skills/Project 상태와 안내문을 확인한다.
 
 
 

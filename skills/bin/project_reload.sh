@@ -97,7 +97,7 @@ fi
   fi
   echo
   echo "## Usage"
-  echo "1. 세션 시작 시 \`./skills/bin/project_reload.sh\` 실행"
+  echo "1. 기본 리로드는 \`./skills/bin/session_start.sh\` 사용 (권장)"
   echo "2. 신규/다중 프로젝트면 \`./skills/bin/set_active_project.sh <project-root>\` 실행"
   echo "3. 이 문서를 읽고 Active Project의 \`PROJECT_AGENT.md\` + \`task.md\`를 로드"
 } > "$output_file"

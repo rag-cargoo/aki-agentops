@@ -48,7 +48,7 @@
 ## 6) First Reply Contract
 세션 첫 응답에서 아래 항목을 반드시 사용자에게 보고한다.
 
-1. `Startup Checks` 결과 (`Skills Snapshot`, `Project Snapshot`)
+1. `Startup Checks` 결과 (`Skills Snapshot`, `Project Snapshot`, `Skills Bin Integrity`)
 2. `Loaded Skills` 전체 목록
 3. `Active Project` (`Project Root`, `Task Doc`, `Project Agent`)
 4. `How It Works` 3줄 요약 (전역 규칙 vs 프로젝트 규칙 vs Active Project 개념)

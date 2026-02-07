@@ -31,8 +31,8 @@ mapfile -t skill_files < <(find "$skills_dir" -mindepth 2 -maxdepth 2 -type f -n
   fi
   echo
   echo "## Usage"
-  echo "1. 세션 시작 시 \`./skills/bin/skills_reload.sh\` 실행"
-  echo "2. 이 문서를 읽고 나열된 \`SKILL.md\`를 로드"
+  echo "1. 기본 리로드는 \`./skills/bin/session_start.sh\` 사용 (권장)"
+  echo "2. 이 파일은 내부 단계로 갱신되며, 필요 시 단독 실행 가능"
 } > "$output_file"
 
 echo "updated: $output_file"

@@ -24,6 +24,23 @@ fi
 
 skills_status="OK"
 project_status="OK"
+bin_status="OK"
+
+required_bin_scripts=(
+  "create-backup-point.sh"
+  "session_start.sh"
+  "skills_reload.sh"
+  "project_reload.sh"
+  "set_active_project.sh"
+  "sync-skill.sh"
+)
+
+missing_bin_scripts=()
+for s in "${required_bin_scripts[@]}"; do
+  if [[ ! -x "$script_dir/$s" ]]; then
+    missing_bin_scripts+=("$s")
+  fi
+done
 
 if [[ ! -f "$skills_snapshot" || "${#loaded_skills[@]}" -eq 0 ]]; then
   skills_status="WARN"
@@ -31,6 +48,10 @@ fi
 
 if [[ -z "$active_project" || "$active_project" == "(not selected)" ]]; then
   project_status="WARN"
+fi
+
+if [[ "${#missing_bin_scripts[@]}" -gt 0 ]]; then
+  bin_status="WARN"
 fi
 
 now_human="$(date '+%Y-%m-%d %H:%M:%S')"
@@ -46,6 +67,11 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "## Startup Checks"
   echo "- Skills Snapshot: \`$skills_status\`"
   echo "- Project Snapshot: \`$project_status\`"
+  echo "- Skills Bin Integrity: \`$bin_status\`"
+  if [[ "$bin_status" == "WARN" ]]; then
+    echo "- Missing/Non-Executable: \`$(IFS=', '; echo "${missing_bin_scripts[*]}")\`"
+    echo "- Action: \`chmod +x skills/bin/*.sh\` 또는 누락 스크립트 복구"
+  fi
   echo
   echo "## Loaded Skills"
   if [[ "${#loaded_skills[@]}" -eq 0 ]]; then

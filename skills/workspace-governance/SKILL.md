@@ -3,7 +3,7 @@ name: workspace-governance
 description: |
   워크스페이스 전역 거버넌스 및 개발 표준 수호 스킬.
   프로젝트 구조 관리 및 문서 전문 작업을 github-pages-expert에 위임합니다.
-  (최신 업데이트: 2026-02-07 00:23:16 | 실시간 버전 증명 및 완료 정의(DoD) 강화)
+  (최신 업데이트: 2026-02-07 16:02:15 | session_start 기반 리로드/보고 규칙 강화)
 ---
 
 # 워크스페이스 전역 거버넌스 (Global Governance)
@@ -30,4 +30,7 @@ description: |
 - 3단계: [코드+문서+테스트] 패키지 완결성 검증.
 
 ##  세션 시작 가이드
-- "스킬스 싱크?" 요청 시, 반드시 테이블 형식으로 현재 로드된 모든 스킬의 **타임스탬프**를 보고해야 합니다.
+- "스킬스 리로드해줘" 요청 시, `./skills/bin/session_start.sh`를 실행하고 `workspace/codex_session_start.md` 기준으로 아래를 보고해야 합니다.
+- `Startup Checks` (Skills Snapshot / Project Snapshot / Skills Bin Integrity)
+- `Loaded Skills` 전체 목록
+- `Active Project` 정보와 멀티 프로젝트 전환 안내
