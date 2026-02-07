@@ -6,6 +6,7 @@
 * **SKILLS**
   * [Codex Skills Reload](/skills/codex_skills_reload.md)
   * [Codex Project Reload](/workspace/codex_project_reload.md)
+  * [Codex Session Start](/workspace/codex_session_start.md)
   * **Workspace Governance**
     * [Workflow](/skills/workspace-governance/references/WORKFLOW.md)
     * [Structure & Standards](/skills/workspace-governance/references/STRUCTURE.md)
