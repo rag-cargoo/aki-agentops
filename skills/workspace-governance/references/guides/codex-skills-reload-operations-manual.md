@@ -6,7 +6,7 @@
 ---
 
 먼저 읽기:
-1. 개념/배경 설명: `skills/workspace-governance/references/guides/codex-skills-reload-explained.md`
+1. 도입 배경/변경 내역: `skills/workspace-governance/references/guides/codex-skills-reload-automation-rationale-and-changes.md`
 
 ---
 

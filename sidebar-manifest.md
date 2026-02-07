@@ -33,7 +33,7 @@
 ---
 
 * **OPERATIONS & MANUALS**
-  * [Codex Skills Reload 이해 가이드](/skills/workspace-governance/references/guides/codex-skills-reload-explained.md)
+  * [Codex Skills Reload 자동화 도입 배경 및 변경 내역](/skills/workspace-governance/references/guides/codex-skills-reload-automation-rationale-and-changes.md)
   * [Codex Skills Reload 운영 매뉴얼](/skills/workspace-governance/references/guides/codex-skills-reload-operations-manual.md)
   * [에이전트 사고 시 Git 백업/복구 플레이북](/skills/workspace-governance/references/guides/agent-incident-git-backup-restore-playbook.md)
   * [GitHub Pages 배포 가이드](/skills/workspace-governance/references/guides/docsify-setup.md)
