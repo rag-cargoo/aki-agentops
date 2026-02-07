@@ -1,4 +1,4 @@
-# 🏗️ 프로젝트 구조 및 표준 (Project Structure & Standards)
+#  프로젝트 구조 및 표준 (Project Structure & Standards)
 
 > **Core Philosophy**: "사람과 AI가 모두 이해할 수 있는 명확한 계층 구조를 지향한다."
 > 이 문서는 전사 관리 영역(Management), 표준 계층(Layers), 그리고 문서화 운영 표준을 정의합니다.
@@ -29,9 +29,9 @@ management/
 ### 1. 표준 계층 (Standard Layers)
 모든 프로젝트는 `workspace/` 하위에서 아래 분류 중 하나에 속해야 합니다.
 
-*   **📱 Apps (`apps/`)**: 최종 사용자용 서비스 및 API 서버 (예: `ticket-core-service`).
-*   **🏛️ Infra (`infra/`)**: 클라우드 리소스 및 인프라 프로비저닝 코드 (Terraform, Docker 등).
-*   **☸️ Manifests (`manifests/`)**: K8s, Helm 등 배포 설정 파일.
+*   ** Apps (`apps/`)**: 최종 사용자용 서비스 및 API 서버 (예: `ticket-core-service`).
+*   ** Infra (`infra/`)**: 클라우드 리소스 및 인프라 프로비저닝 코드 (Terraform, Docker 등).
+*   ** Manifests (`manifests/`)**: K8s, Helm 등 배포 설정 파일.
 
 ### 2. 프로젝트 내부 표준 구조 (Project Internal)
 각 서비스(Apps) 폴더 내부는 반드시 다음 구조를 따릅니다.
@@ -63,7 +63,7 @@ Docsify 사이드바(`sidebar-manifest.md`)는 프로젝트의 **실제 물리�
 
 ## 3. AI 협업 및 복제 가이드 (AI Context Porting)
 
-### 🚀 새 프로젝트 부트스트랩 (Bootstrap)
+###  새 프로젝트 부트스트랩 (Bootstrap)
 새로운 레포지토리에 아래 항목을 복사하면 별도의 프롬프트 없이도 일관된 개발 문화가 이식됩니다.
 1.  **`management/` 폴더 전체**: AI가 규칙과 지식을 로드함.
 2.  **`index.html`, `.nojekyll`, `sidebar-manifest.md`**: 문서화 시스템.

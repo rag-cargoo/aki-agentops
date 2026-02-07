@@ -1,10 +1,10 @@
-# 🎟️ Ticket-Rush (고성능 선착순 티켓팅 시스템)
+#  Ticket-Rush (고성능 선착순 티켓팅 시스템)
 
 대규모 트래픽 발생 시 데이터 정합성을 보장하고 시스템의 안정성을 유지하기 위한 **동시성 제어 및 비동기 처리 시스템** 프로젝트입니다.
 
 ---
 
-## 🏗️ 시스템 아키텍처 (Architecture)
+##  시스템 아키텍처 (Architecture)
 
 - **Language**: Java 17
 - **Framework**: Spring Boot 3.4.1
@@ -15,7 +15,7 @@
 
 ---
 
-## 🚀 주요 구현 기능
+##  주요 구현 기능
 
 ### 1. 동시성 제어 전략 (Concurrency Control)
 - **Step 1: 낙관적 락(Optimistic Lock)** - JPA `@Version` 활용
@@ -29,7 +29,7 @@
 
 ---
 
-## 📋 핵심 기술 문서 (Engineering Docs)
+##  핵심 기술 문서 (Engineering Docs)
 
 모든 설계 결정과 실험 기록은 `prj-docs/` 하위에 상세히 기록되어 있습니다.
 - **[동시성 제어 전략 (Step 1~4)](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)**: 기술적 진화 과정 및 코드 대조 가이드.
@@ -37,7 +37,7 @@
 
 ---
 
-## 🛠️ 기동 및 테스트 방법 (Quick Start)
+##  기동 및 테스트 방법 (Quick Start)
 
 ### 1. 인프라 실행 (Docker)
 ```bash
@@ -61,7 +61,7 @@ cd workspace/apps/backend/ticket-core-service
 
 ---
 
-## ✅ 개발 로드맵
+##  개발 로드맵
 - [x] Step 1~3: 락 전략 구축 및 정합성 검증
 - [x] Step 4: Kafka 기반 비동기 대기열 및 SSE 알림 시스템
 - [ ] **Next: Step 5: Redis Sorted Set 기반 실시간 순번 피드백 시스템**

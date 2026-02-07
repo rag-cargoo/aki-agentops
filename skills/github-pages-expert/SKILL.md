@@ -15,7 +15,7 @@ GitHub Pages와 Docsify를 활용하여 기술 지식을 고품질 웹 문서로
 - 시각 표준화: Docsify Alert 박스(H3+구분선) 및 YAML 스타일의 깊은 들여쓰기 적용.
 - 지식 콘텐츠 표준: [STRUCTURE.md 5번] 지침에 따라 "학습 가능한 고품질 문서" 작성.
 
-## 🚨 2. 에이전트 강제 체크리스트 (Mandatory Checklist)
+##  2. 에이전트 강제 체크리스트 (Mandatory Checklist)
 모든 기술 문서 작업 완료 전, 에이전트는 반드시 아래 항목을 스스로 검증하고 사용자에게 보고해야 한다.
 
 1. **[Failure-First]**: 기존 방식의 한계와 기술적 함정(Trap)이 서두에 명시되었는가?

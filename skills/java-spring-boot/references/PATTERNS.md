@@ -46,7 +46,7 @@ def load_config(config_path):
 
 ## Anti-Patterns to Avoid
 
-### ❌ Don't: Swallow Exceptions
+###  Don't: Swallow Exceptions
 
 ```python
 # BAD
@@ -56,7 +56,7 @@ except:
     pass
 ```
 
-### ✅ Do: Handle Explicitly
+###  Do: Handle Explicitly
 
 ```python
 # GOOD

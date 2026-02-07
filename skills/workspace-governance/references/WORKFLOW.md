@@ -5,10 +5,10 @@
 이 워크스페이스는 **멀티 프로젝트(Multi-Project)** 구조를 지원하도록 설계되었습니다.
 에이전트는 **글로벌 컨텍스트(Root)**와 **로컬 컨텍스트(Sub-Project)**를 명확히 구분해야 합니다.
 
-### 🏛️ 디렉토리 구조 표준
+###  디렉토리 구조 표준
 * 상세 구조는 **[STRUCTURE.md](/skills/workspace-governance/references/STRUCTURE.md)**를 참조하십시오.
 
-### 📚 Management 구조
+###  Management 구조
 ```
 skills/workspace-governance/
 ├── references/          # 워크플로우 및 대원칙 (불변)
@@ -31,7 +31,7 @@ skills/workspace-governance/
 
 ### 3단계: 실행 및 기록 (Execution & Reporting)
 
-#### ⚠️ 에이전트 안전 수칙 (Safety Protocol) - 기본 원칙
+####  에이전트 안전 수칙 (Safety Protocol) - 기본 원칙
 1. **파괴적 변경 전 검사 (Check Before Overwrite)**:
     *   기존 파일을 `write_file`로 덮어쓰기 전에, 반드시 `read_file`로 **전체 내용을 먼저 읽어야 합니다.**
     *   기존 내용 중 보존해야 할 핵심 정보(규칙, 다이어그램, 히스토리 등)가 누락되지 않도록 주의하십시오.
@@ -39,7 +39,7 @@ skills/workspace-governance/
 2. **변경 내역 보고**:
     *   주요 문서나 설정을 변경할 때는 "무엇을 삭제하고 무엇을 남겼는지" 사용자에게 명확히 보고해야 합니다.
 
-#### 완료 및 문서 현행화 (Sync & Review) ⭐
+#### 완료 및 문서 현행화 (Sync & Review) 
 모든 구현이 끝난 후, **커밋(Commit) 전**에 반드시 아래 사항을 점검합니다.
 1. **문서 동기화**: 구현된 코드가 `README`, `knowledge` 등 기존 문서의 설명과 일치하는가?
 2. **규칙 현행화**: 기존 규칙(`RULES`)이 현실과 맞지 않다면, **규칙 문서를 먼저 수정**하십시오.
@@ -47,11 +47,11 @@ skills/workspace-governance/
 
 ### 4단계: 문서화 표준 (Documentation Policy)
 
-#### 📝 일반 지식 문서
+####  일반 지식 문서
 *   작성 위치: `prj-docs/knowledge/` 또는 `prj-docs/troubleshooting/`
 *   트리거: 사용자가 요청하거나 중요한 기술적 의사결정을 기록할 때.
 
-#### 🤖 AI 컨텍스트 문서 (AI Context Rules)
+####  AI 컨텍스트 문서 (AI Context Rules)
 *   **Global Context (`management/ai-context/`)**:
     *   라이브러리 공식 문서, API 스펙 등 **재사용 가능한 정보**.
 *   **Local Context (`prj-docs/ai-context/`)**:

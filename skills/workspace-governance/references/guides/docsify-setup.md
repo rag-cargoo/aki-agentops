@@ -1,4 +1,4 @@
-# 📘 GitHub Pages 배포 및 운영 가이드
+#  GitHub Pages 배포 및 운영 가이드
 
 > **Goal**: GitHub Pages와 Docsify를 사용하여 5분 안에 프로젝트 문서 사이트를 구축하는 방법을 설명합니다.
 

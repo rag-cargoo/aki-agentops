@@ -1,4 +1,4 @@
-# ⚙️ 운영 및 자동화 표준 (Operations & Automation Standards)
+#  운영 및 자동화 표준 (Operations & Automation Standards)
 
 > **Core Philosophy**: "복잡한 수동 명령어를 지양하고, 모든 운영 작업은 명문화된 스크립트와 Makefile을 통해 수행한다."
 
@@ -90,7 +90,7 @@ Gemini CLI의 지능을 확장하는 '스킬(Skill)'은 개발 소스와 런타�
 
 
 
-## 7. 🚨 파일 무결성 보호 프로토콜 (File Integrity Protection)
+## 7.  파일 무결성 보호 프로토콜 (File Integrity Protection)
 
 
 

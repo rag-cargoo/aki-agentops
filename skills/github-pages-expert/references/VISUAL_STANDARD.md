@@ -1,4 +1,4 @@
-# 🎨 문서 시각 표준 (Visual Standard)
+#  문서 시각 표준 (Visual Standard)
 
 > **Core Philosophy**: "일관된 위계와 박스 구조를 통해 엔지니어링 지식의 전달력을 극대화한다."
 

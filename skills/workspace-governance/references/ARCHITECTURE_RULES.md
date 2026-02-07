@@ -1,4 +1,4 @@
-# 🏛️ 전사 아키텍처 원칙 (Global Architecture Principles)
+#  전사 아키텍처 원칙 (Global Architecture Principles)
 
 이 문서는 모든 프로젝트(서비스)가 공통적으로 지향해야 할 아키텍처 대원칙을 정의합니다.
 구체적인 구현 기술 및 레이어링 전략은 **각 서비스별 문서(`prj-docs/knowledge/`)**에 정의합니다.

@@ -1,13 +1,13 @@
-# 🤖 AGENTS.md (Smart Entry & Config)
+#  AGENTS.md (Smart Entry & Config)
 
-## ⚙️ 환경 설정 (Configuration)
+##  환경 설정 (Configuration)
 
 이 프로젝트는 유연한 구조를 지원하기 위해 경로를 설정으로 관리합니다.
 
 * **Management Root**: `management` (규칙 및 전역 관리)
 * **Workspace Root**: `workspace` (실제 소스 코드 위치)
 
-## 📚 참조 문서 (Rule Book)
+##  참조 문서 (Rule Book)
 
 작업을 시작하기 전에 아래의 4대 원칙을 반드시 로드하십시오.
 
@@ -16,7 +16,7 @@
 3. **[코딩 표준](management/rules/CODING_STANDARD.md)**: **하드코딩 금지** 등 코드 품질 원칙
 4. **[아키텍처 규칙](management/rules/ARCHITECTURE_RULES.md)**: **모듈 간 경계(MSA 준비)** 및 의존성 규칙 [CRITICAL]
 
-## 🚦 시작 가이드
+##  시작 가이드
 
 1. `management/task.md`를 열어 현재 `Active Target`을 확인하십시오.
 2. 해당 Target의 `workspace/.../prj-docs/task.md`로 이동하여 작업을 시작하십시오.
