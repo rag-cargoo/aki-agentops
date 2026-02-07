@@ -23,7 +23,7 @@ skills/
 ## 2. 작업 프로세스 (Standard Process)
 
 ### 1단계: 타겟 설정 및 컨텍스트 로딩
-1. `AGENTS.md`를 읽고 `./skills/bin/session_start.sh`를 실행해 Skills/Project 상태를 동기화합니다.
+1. `AGENTS.md`를 읽고 `./skills/bin/codex_skills_reload/session_start.sh`를 실행해 Skills/Project 상태를 동기화합니다.
 2. `workspace/codex_session_start.md`와 `workspace/codex_project_reload.md`의 Active Project를 기준으로 `prj-docs/PROJECT_AGENT.md`, `task.md`, `TODO.md`를 읽어 현재 상태와 우선순위를 파악합니다.
 
 ### 2단계: 구현 및 기록
@@ -75,4 +75,4 @@ skills/
 ## 3. 새로운 프로젝트 추가 방법
 1. `workspace/apps` 하위에 서비스 폴더를 생성합니다.
 2. `prj-docs` 폴더를 만들고 필수 문서 4종(`PROJECT_AGENT.md`, `task.md`, `TODO.md`, `ROADMAP.md`)을 생성합니다.
-3. `./skills/bin/set_active_project.sh <project-root>` 및 `sidebar-manifest.md` 등록으로 활성 타겟과 문서 링크를 동기화합니다.
+3. `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>` 및 `sidebar-manifest.md` 등록으로 활성 타겟과 문서 링크를 동기화합니다.

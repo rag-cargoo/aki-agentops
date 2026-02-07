@@ -5,13 +5,13 @@
 
 필수 시작 순서:
 1. `git status --short`
-2. `./skills/bin/session_start.sh`
+2. `./skills/bin/codex_skills_reload/session_start.sh`
 3. `workspace/codex_session_start.md` 확인 후, 나열된 `SKILL.md` + Active Project의 `PROJECT_AGENT.md` + `task.md` 로드
 4. 필요 시 `skills/codex_skills_reload.md`, `workspace/codex_project_reload.md` 상세 확인
 5. `sidebar-manifest.md` 확인
 
 멀티 프로젝트에서 Active Project가 비어 있으면 먼저 실행:
-`./skills/bin/set_active_project.sh <project-root>`
+`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
 
 ## 2) Active Paths
 - Workspace Root: `workspace`
@@ -38,7 +38,7 @@
 
 ## 5) Reload Trigger (Critical)
 아래 파일이 바뀌면 다음 작업 전에 반드시 다시 실행:
-1. `./skills/bin/session_start.sh`
+1. `./skills/bin/codex_skills_reload/session_start.sh`
 2. `skills/codex_skills_reload.md` + `workspace/codex_project_reload.md` + `workspace/codex_session_start.md` 재확인
 
 대상 파일:

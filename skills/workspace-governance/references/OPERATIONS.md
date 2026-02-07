@@ -53,7 +53,7 @@
 *   **공용 운영 스크립트**: `skills/bin/`에만 둔다. (예: `session_start.sh`, `set_active_project.sh`)
 *   **리로드 런타임 구현**: `skills/bin/codex_skills_reload/`에 집중 배치한다.
 *   **스킬 내부 전용 스크립트**: 각 스킬의 `skills/<skill-name>/scripts/`에 둔다.
-*   **삭제/수정 안전성**: 세션 시작 시 `./skills/bin/session_start.sh`가 `skills/bin` 무결성을 자동 점검한다.
+*   **삭제/수정 안전성**: 세션 시작 시 `./skills/bin/codex_skills_reload/session_start.sh`가 `skills/bin` 무결성을 자동 점검한다.
 
 ### 런타임 분리의 이유
 
@@ -79,7 +79,7 @@
 
 
 
-4. **반영 (Reload)**: `./skills/bin/session_start.sh`를 실행한다. (권장 단일 진입점)
+4. **반영 (Reload)**: `./skills/bin/codex_skills_reload/session_start.sh`를 실행한다. (권장 단일 진입점)
 5. **확인 (Report)**: `workspace/codex_session_start.md`에서 Skills/Project 상태와 안내문을 확인한다.
 
 

@@ -9,5 +9,5 @@
 4. `set_active_project.sh` - 활성 프로젝트 지정/조회
 
 ## Notes
-1. 사용자는 기본적으로 `./skills/bin/session_start.sh`를 호출한다.
-2. `skills/bin/*.sh` 리로드 엔트리는 이 디렉토리로 위임하는 래퍼다.
+1. 기본 진입점은 `./skills/bin/codex_skills_reload/session_start.sh`다.
+2. 멀티 프로젝트 전환은 `./skills/bin/codex_skills_reload/set_active_project.sh`를 사용한다.

@@ -30,7 +30,7 @@ description: |
 - 3단계: [코드+문서+테스트] 패키지 완결성 검증.
 
 ##  세션 시작 가이드
-- "스킬스 리로드해줘" 요청 시, `./skills/bin/session_start.sh`를 실행하고 `workspace/codex_session_start.md` 기준으로 아래를 보고해야 합니다.
+- "스킬스 리로드해줘" 요청 시, `./skills/bin/codex_skills_reload/session_start.sh`를 실행하고 `workspace/codex_session_start.md` 기준으로 아래를 보고해야 합니다.
 - `Startup Checks` (Skills Snapshot / Project Snapshot / Skills Bin Integrity)
 - `Loaded Skills` 전체 목록
 - `Active Project` 정보와 멀티 프로젝트 전환 안내

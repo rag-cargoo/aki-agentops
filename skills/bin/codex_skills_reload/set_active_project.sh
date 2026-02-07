@@ -12,12 +12,12 @@ active_file="$workspace_dir/.active_project"
 usage() {
   cat <<'EOF'
 Usage:
-  ./skills/bin/set_active_project.sh <project-root>
-  ./skills/bin/set_active_project.sh --list
+  ./skills/bin/codex_skills_reload/set_active_project.sh <project-root>
+  ./skills/bin/codex_skills_reload/set_active_project.sh --list
 
 Examples:
-  ./skills/bin/set_active_project.sh workspace/apps/backend/ticket-core-service
-  ./skills/bin/set_active_project.sh --list
+  ./skills/bin/codex_skills_reload/set_active_project.sh workspace/apps/backend/ticket-core-service
+  ./skills/bin/codex_skills_reload/set_active_project.sh --list
 EOF
 }
 
