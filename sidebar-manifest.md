@@ -5,12 +5,14 @@
 
 * **SKILLS**
   * [Codex Skills Reload](/skills/codex_skills_reload.md)
+  * [Codex Project Reload](/workspace/codex_project_reload.md)
   * **Workspace Governance**
     * [Workflow](/skills/workspace-governance/references/WORKFLOW.md)
     * [Structure & Standards](/skills/workspace-governance/references/STRUCTURE.md)
     * [Operations & Automation](/skills/workspace-governance/references/OPERATIONS.md)
     * [Architecture Rules](/skills/workspace-governance/references/ARCHITECTURE_RULES.md)
     * [Coding Standard](/skills/workspace-governance/references/CODING_STANDARD.md)
+    * [Project Agent Template](/skills/workspace-governance/references/templates/PROJECT_AGENT_TEMPLATE.md)
 
 ---
 
@@ -18,6 +20,7 @@
   * **Apps**
     * **Backend**
       * **Ticket Core Service**
+        * [Project Agent Scope](/workspace/apps/backend/ticket-core-service/prj-docs/PROJECT_AGENT.md)
         * [Roadmap](/workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
         * [Current Tasks](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
         * [Architecture](/workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)

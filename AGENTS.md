@@ -6,14 +6,19 @@
 필수 시작 순서:
 1. `git status --short`
 2. `./skills/bin/skills_reload.sh`
-3. `skills/codex_skills_reload.md` 확인 후, 나열된 `SKILL.md` 로드
-4. `workspace/apps/backend/ticket-core-service/prj-docs/task.md` 확인
-5. `sidebar-manifest.md` 확인
+3. `./skills/bin/project_reload.sh`
+4. `skills/codex_skills_reload.md` 확인 후, 나열된 `SKILL.md` 로드
+5. `workspace/codex_project_reload.md` 확인 후, Active Project의 `PROJECT_AGENT.md` + `task.md` 로드
+6. `sidebar-manifest.md` 확인
+
+멀티 프로젝트에서 Active Project가 비어 있으면 먼저 실행:
+`./skills/bin/set_active_project.sh <project-root>`
 
 ## 2) Active Paths
 - Workspace Root: `workspace`
 - Governance Root: `skills/workspace-governance`
 - Skills Snapshot: `skills/codex_skills_reload.md`
+- Project Snapshot: `workspace/codex_project_reload.md`
 - Sidebar Index: `sidebar-manifest.md`
 
 ## 3) Safety Rules
@@ -28,12 +33,15 @@
 1. 요청이 스킬 범위와 일치하면 해당 `SKILL.md`를 먼저 로드
 2. 문서 렌더링/Pages/무손실 점검은 `skills/github-pages-expert` 우선 사용
 3. 워크플로우/구조/표준/운영 규칙은 `skills/workspace-governance` 기준 적용
+4. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
 
 ## 5) Reload Trigger (Critical)
 아래 파일이 바뀌면 다음 작업 전에 반드시 다시 실행:
 1. `./skills/bin/skills_reload.sh`
-2. `skills/codex_skills_reload.md` 재확인
+2. `./skills/bin/project_reload.sh`
+3. `skills/codex_skills_reload.md` + `workspace/codex_project_reload.md` 재확인
 
 대상 파일:
 - `AGENTS.md`
 - `skills/*/SKILL.md`
+- `workspace/**/prj-docs/PROJECT_AGENT.md`

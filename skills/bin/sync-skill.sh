@@ -1,22 +1,26 @@
-#!/bin/bash
-# [Skill Link Tool v3] 통합된 전문 스킬 구조를 런타임에 연결합니다.
+#!/usr/bin/env bash
+set -euo pipefail
 
-SOURCE_ROOT="/home/aki/2602/skills"
-TARGET_ROOT="/home/aki/2602/.gemini/skills"
+# Link local skills/* directories into the runtime skill folder.
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo_root="$(cd "$script_dir/../.." && pwd)"
+source_root="$repo_root/skills"
+target_root="${TARGET_ROOT:-$repo_root/.gemini/skills}"
 
-echo ">>>> 🔗 통합 전문 스킬 심볼릭 링크 연결 시작..."
+echo ">>>> skill link start"
+echo "source: $source_root"
+echo "target: $target_root"
 
-# 타겟 루트 디렉토리 생성
-mkdir -p "$TARGET_ROOT"
+mkdir -p "$target_root"
 
-# skills/ 하위의 각 스킬 디렉토리를 순회하며 링크 생성
-find "$SOURCE_ROOT" -maxdepth 1 -mindepth 1 -type d | while read -r skill_dir; do
-    skill_name=$(basename "$skill_dir")
-    target_path="$TARGET_ROOT/$skill_name"
+while IFS= read -r skill_file; do
+  skill_dir="$(dirname "$skill_file")"
+  skill_name="$(basename "$skill_dir")"
+  target_path="$target_root/$skill_name"
 
-    rm -rf "$target_path"
-    ln -s "$skill_dir" "$target_path"
-    echo "  - [LINKED] $skill_name"
-done
+  rm -rf "$target_path"
+  ln -s "$skill_dir" "$target_path"
+  echo "  - linked: $skill_name"
+done < <(find "$source_root" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
 
-echo ">>>> [SUCCESS] 모든 스킬이 통합 및 연결되었습니다."
+echo ">>>> success"

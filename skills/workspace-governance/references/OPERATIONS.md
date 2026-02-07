@@ -46,15 +46,13 @@
 
 ## 4. 스킬 관리 및 동기화 표준 (Skill Management & Sync)
 
-Gemini CLI의 지능을 확장하는 '스킬(Skill)'은 개발 소스와 런타임 환경을 분리하여 관리한다.
+에이전트 지능을 확장하는 스킬(Skill)은 개발 소스와 런타임 연결을 분리하여 관리한다.
 
 ### 런타임 분리의 이유
 
-*   **시스템 인식**: Gemini CLI는 프로젝트 로컬의 `.gemini/skills/` 디렉토리를 스킬 로드 경로로 우선 참조한다.
-
-*   **실시간 동기화 (Symbolic Link)**: 개발 소스(`skills/`)와 런타임(`.gemini/skills/`)을 심볼릭 링크로 연결하여, 문서 수정 시 즉시 제미나이가 인식할 수 있도록 한다.
-
-*   **지식 갱신 제어**: 링크를 통해 파일은 즉시 동기화되지만, 실제 에이전트의 지능에 반영되는 시점은 `/skills reload` 명령어로 제어한다.
+*   **시스템 인식**: 런타임은 일반적으로 프로젝트 로컬의 `.gemini/skills/` 경로를 참조한다.
+*   **실시간 동기화 (Symbolic Link)**: 개발 소스(`skills/`)와 런타임 경로를 심볼릭 링크로 연결하면 수정사항 반영이 빠르다.
+*   **지식 갱신 제어**: 링크와 별개로, 실제 세션에서 어떤 스킬을 읽을지는 리로드 문서(`codex_skills_reload.md`) 기준으로 제어한다.
 
 
 
@@ -62,7 +60,7 @@ Gemini CLI의 지능을 확장하는 '스킬(Skill)'은 개발 소스와 런타�
 
 
 
-1.  **연결 (Link)**: `skills/workspace-governance/scripts/sync-skill.sh`를 실행한다. (최초 1회 또는 신규 스킬 추가 시)
+1.  **연결 (Link)**: `./skills/bin/sync-skill.sh`를 실행한다. (최초 1회 또는 신규 스킬 추가 시)
 
 
 
@@ -74,7 +72,7 @@ Gemini CLI의 지능을 확장하는 '스킬(Skill)'은 개발 소스와 런타�
 
 
 
-4. **반영 (Reload)**: Gemini CLI 대화창에서 `/skills reload`를 입력한다.
+4. **반영 (Reload)**: `./skills/bin/skills_reload.sh`를 실행해 `skills/codex_skills_reload.md`를 갱신한다.
 
 
 
@@ -263,4 +261,3 @@ Gemini CLI의 지능을 확장하는 '스킬(Skill)'은 개발 소스와 런타�
 *   **프로젝트 단위 그룹화**: 각 마이크로서비스나 독립 모듈별로 섹션을 분리한다.
 *   **중요도 순 배치**: Roadmap, Task 등 현재 진행 상황을 알 수 있는 문서를 상단에 배치한다.
 *   **계층 구조**: 들여쓰기(2 spaces)를 사용하여 논리적 깊이를 표현한다.
-

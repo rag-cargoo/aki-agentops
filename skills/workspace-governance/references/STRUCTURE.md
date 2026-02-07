@@ -1,29 +1,21 @@
 #  프로젝트 구조 및 표준 (Project Structure & Standards)
 
 > **Core Philosophy**: "사람과 AI가 모두 이해할 수 있는 명확한 계층 구조를 지향한다."
-> 이 문서는 전사 관리 영역(Management), 표준 계층(Layers), 그리고 문서화 운영 표준을 정의합니다.
+> 이 문서는 전역 거버넌스 영역(Skills), 표준 계층(Layers), 그리고 문서화 운영 표준을 정의합니다.
 
 ---
 
 ## 1. 폴더 구조 원칙 (Directory Structure)
 
-### 0. Management 구조 (Global)
-이 폴더는 프로젝트의 **'헌법'**이자 **'AI의 두뇌'**입니다. 새 프로젝트를 시작할 때 **이 폴더만 복사**하면 팀의 규칙이 즉시 이식됩니다.
+### 0. Governance/Skills 구조 (Global)
+이 폴더는 프로젝트의 **'헌법'**이자 **'AI의 두뇌'**입니다. 새 프로젝트를 시작할 때 **`AGENTS.md` + `skills/`**를 함께 복사하면 규칙이 즉시 이식됩니다.
 
 ```
-management/
-├── rules/               # [불변] 프로젝트 규칙
-│   ├── WORKFLOW.md      # 협업 및 커밋 규칙
-│   ├── STRUCTURE.md     # (본 문서) 구조 및 문서 표준
-│   ├── ARCHITECTURE_RULES.md # 설계 원칙
-│   └── CODING_STANDARD.md    # 코드 스타일 표준
-├── ai-context/          # [Global] 재사용 가능한 AI 리소스 (Library, Framework)
-│   ├── backend/         # 백엔드 (Java, Spring, DB...)
-│   ├── frontend/        # 프론트엔드 (React, TS...)
-│   ├── infra/           # 인프라 (Docker, AWS...)
-│   └── integrations/    # 외부 연동 (Payment, Auth...)
-├── knowledge-index.md   # 전체 지식 문서 색인
-└── troubleshooting-index.md # 트러블슈팅 사례 색인
+skills/
+├── workspace-governance/      # 전역 워크플로우/표준
+├── github-pages-expert/       # 문서 렌더링/무결성
+├── java-spring-boot/          # 기술 스택 전용 스킬
+└── bin/                        # reload, backup, target 전환 스크립트
 ```
 
 ### 1. 표준 계층 (Standard Layers)
@@ -65,7 +57,7 @@ Docsify 사이드바(`sidebar-manifest.md`)는 프로젝트의 **실제 물리�
 
 ###  새 프로젝트 부트스트랩 (Bootstrap)
 새로운 레포지토리에 아래 항목을 복사하면 별도의 프롬프트 없이도 일관된 개발 문화가 이식됩니다.
-1.  **`management/` 폴더 전체**: AI가 규칙과 지식을 로드함.
+1.  **`AGENTS.md` + `skills/`**: AI가 규칙과 스킬 지식을 로드함.
 2.  **`index.html`, `.nojekyll`, `sidebar-manifest.md`**: 문서화 시스템.
 
 ---
@@ -92,4 +84,4 @@ Docsify 사이드바(`sidebar-manifest.md`)는 프로젝트의 **실제 물리�
 
 ## 6. [부록] 기술 가이드 (Docsify Spec)
 *   **사이드바 로딩**: `loadSidebar: true` (파일명 `sidebar-manifest.md` 추천).
-*   **경로 규칙**: 404 방지를 위해 반드시 **상대 경로**를 사용하십시오.
+*   **경로 규칙**: 404 방지를 위해 반드시 **루트 기준 절대 경로(`/` 시작)**를 사용하십시오.

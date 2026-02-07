@@ -64,8 +64,8 @@
 * [Home](/HOME.md)
 
 * **WORKSPACE**
-  * [Roadmap](/workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
-  * [Current Tasks](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
+  * [Roadmap](/workspace/apps/<domain>/<service>/prj-docs/ROADMAP.md)
+  * [Current Tasks](/workspace/apps/<domain>/<service>/prj-docs/task.md)
 ```
 
 ### Step 2: GitHub Pages 배포 설정
@@ -89,7 +89,7 @@
 
 ### Q2. 메뉴를 눌렀는데 깨진 페이지가 나와요.
 *   **원인**: 링크 경로 문제.
-*   **해결**: `sidebar-manifest.md`에서 모든 링크 앞에 `/`를 붙였는지 확인하세요. (예: `management/...` -> `/management/...`)
+*   **해결**: `sidebar-manifest.md`에서 모든 링크 앞에 `/`를 붙였는지 확인하세요. (예: `workspace/apps/...` -> `/workspace/apps/...`)
 
 ### Q3. 사이드바가 안 보여요.
 *   **해결**: `.nojekyll` 파일이 있는지 확인하고, `index.html`의 `loadSidebar` 설정이 올바른 파일명을 가리키는지 확인하세요.

@@ -8,13 +8,14 @@
 ###  디렉토리 구조 표준
 * 상세 구조는 **[STRUCTURE.md](/skills/workspace-governance/references/STRUCTURE.md)**를 참조하십시오.
 
-###  Management 구조
+###  Governance 구조
 ```
-skills/workspace-governance/
-├── references/          # 워크플로우 및 대원칙 (불변)
-│   ├── guides/          # 프로젝트 운영 가이드 (Manuals)
-│   └── ...
-└── scripts/             # 동기화 및 관리 스크립트
+skills/
+├── workspace-governance/
+│   ├── references/      # 워크플로우 및 대원칙 (불변)
+│   │   ├── guides/      # 프로젝트 운영 가이드 (Manuals)
+│   │   └── ...
+└── bin/                 # 동기화 및 관리 스크립트
 ```
 
 ---
@@ -22,8 +23,8 @@ skills/workspace-governance/
 ## 2. 작업 프로세스 (Standard Process)
 
 ### 1단계: 타겟 설정 및 컨텍스트 로딩
-1. `AGENTS.md`와 `workspace/apps/backend/ticket-core-service/prj-docs/task.md`를 읽어 작업 대상 프로젝트를 확인합니다.
-2. 해당 프로젝트의 `prj-docs/task.md`와 `TODO.md`를 읽어 현재 상태와 우선순위를 파악합니다.
+1. `AGENTS.md`를 읽고 `./skills/bin/project_reload.sh`를 실행해 Active Project를 확인합니다.
+2. `workspace/codex_project_reload.md`의 Active Project를 기준으로 `prj-docs/PROJECT_AGENT.md`, `task.md`, `TODO.md`를 읽어 현재 상태와 우선순위를 파악합니다.
 
 ### 2단계: 구현 및 기록
 1. **[코딩 표준](/skills/workspace-governance/references/CODING_STANDARD.md)**을 엄수하여 기능을 구현합니다.
@@ -52,8 +53,8 @@ skills/workspace-governance/
 *   트리거: 사용자가 요청하거나 중요한 기술적 의사결정을 기록할 때.
 
 ####  AI 컨텍스트 문서 (AI Context Rules)
-*   **Global Context (`management/ai-context/`)**:
-    *   라이브러리 공식 문서, API 스펙 등 **재사용 가능한 정보**.
+*   **Global Context (`skills/workspace-governance/references/`)**:
+    *   라이브러리/워크플로우/표준 등 **재사용 가능한 정보**.
 *   **Local Context (`prj-docs/ai-context/`)**:
     *   해당 프로젝트 고유의 설계, 레거시 설명 등 **재사용 불가능한 정보**.
 *   **작성 규칙**:
@@ -73,5 +74,5 @@ skills/workspace-governance/
 
 ## 3. 새로운 프로젝트 추가 방법
 1. `workspace/apps` 하위에 서비스 폴더를 생성합니다.
-2. `prj-docs` 폴더를 만들고 필수 문서 3종(`task.md`, `TODO.md`, `ROADMAP.md`)을 생성합니다.
-3. `management/task.md` 및 `sidebar-manifest.md`에 새 프로젝트를 등록합니다.
+2. `prj-docs` 폴더를 만들고 필수 문서 4종(`PROJECT_AGENT.md`, `task.md`, `TODO.md`, `ROADMAP.md`)을 생성합니다.
+3. `./skills/bin/set_active_project.sh <project-root>` 및 `sidebar-manifest.md` 등록으로 활성 타겟과 문서 링크를 동기화합니다.
