@@ -64,4 +64,6 @@ cd workspace/apps/backend/ticket-core-service
 ##  개발 로드맵
 - [x] Step 1~3: 락 전략 구축 및 정합성 검증
 - [x] Step 4: Kafka 기반 비동기 대기열 및 SSE 알림 시스템
-- [ ] **Next: Step 5: Redis Sorted Set 기반 실시간 순번 피드백 시스템**
+- [x] Step 5: Redis Sorted Set 기반 실시간 대기 순번 시스템
+- [x] Step 6: 대기열 진입 제한(Throttling) 및 유입량 제어
+- [ ] **Next: Step 7: SSE 기반 실시간 순번 자동 푸시 시스템**
