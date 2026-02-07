@@ -4,7 +4,6 @@
 ---
 
 * **SKILLS**
-  * [Reload Runtime Guide](/skills/bin/codex_skills_reload/README.md)
   * **Workspace Governance**
     * [Workflow](/skills/workspace-governance/references/WORKFLOW.md)
     * [Structure & Standards](/skills/workspace-governance/references/STRUCTURE.md)
@@ -34,5 +33,6 @@
 ---
 
 * **OPERATIONS & MANUALS**
+  * [Codex Skills Reload 운영 매뉴얼](/skills/workspace-governance/references/guides/codex-skills-reload-operations-manual.md)
   * [에이전트 사고 시 Git 백업/복구 플레이북](/skills/workspace-governance/references/guides/agent-incident-git-backup-restore-playbook.md)
   * [GitHub Pages 배포 가이드](/skills/workspace-governance/references/guides/docsify-setup.md)
