@@ -5,14 +5,18 @@
 
 ---
 
-## 0. 30초 요약 (초보자용)
+## 0. 운영 플로우 요약 (세션 시작/세션 중)
 
-1. 기본은 자동(대화형)으로 운영한다:
-`AGENTS.md만 읽고 시작해` 또는 `스킬스 리로드해줘`
-2. 완전 자동 무지시 실행은 아니며, 트리거 한 줄이 필요하다.
-3. 수동(터미널 직접 실행) 명령은 **2.2 수동 실행**을 기준으로 한다.
-4. 상태 확인 파일:
-`.codex/runtime/codex_session_start.md`
+| 구분 | 코덱스 자동 트리거(권장) | 수동 실행(터미널) |
+|---|---|---|
+| 세션 시작 | `AGENTS.md만 읽고 시작해` 또는 `AGENTS.md 확인해줘` | `./skills/bin/codex_skills_reload/session_start.sh` |
+| 세션 진행 중(스킬 수정/추가 후) | `스킬스 리로드해줘` | `./skills/bin/codex_skills_reload/session_start.sh` |
+
+공통:
+1. 완전 자동 무지시 실행은 아니며, 트리거 한 줄이 필요하다.
+2. 상태 확인 파일: `.codex/runtime/codex_session_start.md`
+3. 에이전트가 같은 턴에서 스킬을 수정하면 기본적으로 자동 재실행/보고한다.
+4. 예외(턴 중단/실패/인터럽트) 시 위 트리거나 수동 실행으로 복구한다.
 
 ---
 
@@ -24,28 +28,7 @@
 
 ---
 
-## 2. 표준 운영 절차 (자동/수동 통합)
-
-### 2.1 자동 실행 (권장, 트리거 기반)
-1. 새 세션 시작:
-`AGENTS.md만 읽고 시작해` 또는 `AGENTS.md 확인해줘`
-2. 세션 중 스킬 변경 후:
-`스킬스 리로드해줘`
-3. 코덱스는 위 트리거를 받으면 `session_start.sh` 실행 흐름으로 진입해 상태를 보고한다.
-4. 기본 권장: 자동 실행. 장애/인터럽트 시 2.2 수동 실행으로 즉시 복구한다.
-
-### 2.2 수동 실행 (터미널 직접 실행)
-1. 리로드:
-`./skills/bin/codex_skills_reload/session_start.sh`
-2. 멀티 프로젝트 타겟 선택:
-`./skills/bin/codex_skills_reload/set_active_project.sh --list`
-`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
-3. 상태 확인:
-`.codex/runtime/codex_session_start.md`
-
----
-
-## 3. 스크립트 역할 (건드리기 전 반드시 확인)
+## 2. 스크립트 역할 (건드리기 전 반드시 확인)
 
 | 스크립트 | 역할 | 임의 수정/삭제 리스크 |
 |---|---|---|
@@ -62,21 +45,7 @@
 
 ---
 
-## 4. 세션 중 운영 규칙
-
-### 4.1 사용자가 스킬을 수정/추가한 경우
-1. 기준 절차: **2.1 자동 실행** 또는 **2.2 수동 실행**을 그대로 따른다.
-2. 권장 문구: `스킬스 리로드해줘`
-3. 확인 파일: `.codex/runtime/codex_session_start.md`
-
-### 4.2 에이전트가 스킬을 수정한 경우
-1. 기본 동작: 코덱스가 같은 턴에서 `session_start.sh`를 자동 재실행하고 결과를 보고한다.
-2. 보고 항목: `Startup Checks`, `Loaded Skills`, `Active Project`.
-3. 예외(턴 중단/실패/인터럽트): 사용자가 `스킬스 리로드해줘`를 다시 지시하거나 수동 실행으로 복구한다.
-
----
-
-## 5. 내부 동작 원리
+## 3. 내부 동작 원리
 
 1. `session_start.sh`가 내부적으로 `skills_reload.sh` + `project_reload.sh`를 순서대로 호출
 2. 결과를 `.codex/runtime/`에 생성
@@ -90,7 +59,7 @@
 
 ---
 
-## 6. 멀티 프로젝트 표준 절차
+## 4. 멀티 프로젝트 표준 절차
 
 1. 목록 확인:
 `./skills/bin/codex_skills_reload/set_active_project.sh --list`
@@ -101,7 +70,7 @@
 
 ---
 
-## 7. 런타임 스냅샷 파일 정책
+## 5. 런타임 스냅샷 파일 정책
 
 1. 위치: `.codex/runtime/`
 2. 성격: 일회성/재생성 가능 캐시
@@ -110,7 +79,7 @@
 
 ---
 
-## 8. 변경 시 체크리스트
+## 6. 변경 시 체크리스트
 
 1. 경로 변경 시 `AGENTS.md`와 관련 가이드 경로를 함께 수정했는가?
 2. `bash -n skills/bin/codex_skills_reload/*.sh` 통과했는가?
@@ -120,7 +89,7 @@
 
 ---
 
-## 9. 권장 추가 개선
+## 7. 권장 추가 개선
 
 1. `pre-commit` 훅으로 스킬 변경 시 `session_start.sh` 자동 실행
 2. CI에서 `session_start.sh` dry-run 검증
