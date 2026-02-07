@@ -4,6 +4,7 @@
 ---
 
 * **SKILLS**
+  * [Skills Manifest](/skills/_manifest.md)
   * **Workspace Governance**
     * [Workflow](/skills/workspace-governance/references/WORKFLOW.md)
     * [Structure & Standards](/skills/workspace-governance/references/STRUCTURE.md)
