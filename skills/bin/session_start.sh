@@ -69,6 +69,21 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
     echo "- Action: \`./skills/bin/set_active_project.sh <project-root>\`"
   fi
   echo
+  echo "## How It Works"
+  echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\`에서 로드"
+  echo "2. 프로젝트 규칙은 Active Project의 \`prj-docs/PROJECT_AGENT.md\`에서만 로드"
+  echo "3. 멀티 프로젝트에서는 Active Project를 명시적으로 전환해서 충돌 방지"
+  echo
+  echo "## Multi Project Guide"
+  echo "1. 프로젝트 목록 확인: \`./skills/bin/set_active_project.sh --list\`"
+  echo "2. 활성 프로젝트 지정: \`./skills/bin/set_active_project.sh <project-root>\`"
+  echo "3. 지정 후 \`./skills/bin/session_start.sh\` 재실행"
+  echo
+  echo "## Quick Remind"
+  echo "- 시작 문구: \`AGENTS.md만 읽고 시작해.\`"
+  echo "- 세션 상태 문서: \`workspace/codex_session_start.md\`"
+  echo "- 문제 시 재동기화: \`./skills/bin/session_start.sh\`"
+  echo
   echo "## Usage"
   echo "1. 세션 시작 시 \`./skills/bin/session_start.sh\` 실행"
   echo "2. \`workspace/codex_session_start.md\` 기준으로 세션 첫 상태를 보고"

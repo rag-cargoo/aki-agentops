@@ -51,4 +51,6 @@
 1. `Startup Checks` 결과 (`Skills Snapshot`, `Project Snapshot`)
 2. `Loaded Skills` 전체 목록
 3. `Active Project` (`Project Root`, `Task Doc`, `Project Agent`)
-4. 누락/경고 항목이 있으면 즉시 후속 액션 1줄 제시
+4. `How It Works` 3줄 요약 (전역 규칙 vs 프로젝트 규칙 vs Active Project 개념)
+5. 멀티 프로젝트 사용법 2줄 (`--list`, `set_active_project`)
+6. 누락/경고 항목이 있으면 즉시 후속 액션 1줄 제시
