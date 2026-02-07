@@ -5,6 +5,20 @@
 
 ---
 
+## 0. 30초 요약 (초보자용)
+
+1. 시작할 때 이것만 실행:
+`./skills/bin/codex_skills_reload/session_start.sh`
+2. 멀티 프로젝트면 먼저 선택:
+`./skills/bin/codex_skills_reload/set_active_project.sh --list`
+`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
+3. 스킬 수정/추가 후에도 동일:
+`스킬스 리로드해줘` 또는 `session_start.sh` 재실행
+4. 상태 확인 파일:
+`.codex/runtime/codex_session_start.md`
+
+---
+
 ## 1. 왜 이 구조를 만들었나
 
 1. 세션이 바뀌면 대화 메모리가 끊길 수 있어, 규칙/스킬을 매번 일관되게 재로딩하기 위해.
