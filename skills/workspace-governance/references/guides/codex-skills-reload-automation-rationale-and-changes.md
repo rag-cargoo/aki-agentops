@@ -18,9 +18,13 @@
 
 다음 리스크를 줄이기 위해서다.
 
-1. 스크립트/경로가 깨진 상태로 커밋되는 문제
-2. 세션마다 로딩 상태가 달라지는 문제
+1. 문서/규칙 훼손을 늦게 발견해 복구 비용이 커지는 문제
+2. 세션마다 로딩 상태가 달라져 같은 요청인데 결과가 달라지는 문제
 3. 신규 프로젝트마다 `prj-docs` 구조가 제각각이 되는 문제
+
+사고 사례 근거:
+1. `skills/workspace-governance/references/guides/agent-incident-git-backup-restore-playbook.md`
+2. 2026-02-07 사고에서 `main` 최신 포인터가 훼손 구간을 가리켜 대량 복구가 필요했음
 
 핵심 목표는 "사고 후 복구"가 아니라 "사고 전 예방"이다.
 
@@ -33,30 +37,63 @@
 파일:
 - `./.githooks/pre-commit`
 
+사고 예시:
+1. 리로드 스크립트를 수정했지만 문법 오류를 놓친 채 커밋
+2. 다음 세션에서 `session_start.sh`가 실패해 스킬/프로젝트 로딩이 깨짐
+
 변경 내용:
 1. `AGENTS.md`, `skills/**`, `workspace/**/prj-docs/PROJECT_AGENT.md` 변경이 스테이징되면 자동 검증 실행
 2. `bash -n skills/bin/codex_skills_reload/*.sh`
 3. `./skills/bin/codex_skills_reload/session_start.sh`
+
+미적용 시:
+1. 로컬에서 막을 수 있는 오류가 원격까지 전파됨
+2. 문제 발견 시점이 "커밋 전"이 아니라 "세션 시작 후"로 늦어짐
+
+예방 목적:
+1. 커밋 이전 실패 노출로 깨진 상태 유입 차단
 
 ## 2.2 원격 CI 검증 추가
 
 파일:
 - `.github/workflows/codex-skills-reload.yml`
 
+사고 예시:
+1. 로컬 환경에서는 통과하지만 클린 환경에서는 실패하는 변경이 merge됨
+2. 이후 팀원이 pull 후 동일 스크립트 실행 시 실패
+
 변경 내용:
 1. push/PR 시 리로드 스크립트 문법 점검
 2. `session_start.sh` 실행 검증
 3. `.codex/runtime/*` 스냅샷 생성/형식 확인
+
+미적용 시:
+1. "내 로컬만 정상" 상태가 기준이 되어 품질 편차 누적
+2. 장애가 리뷰 이후에 발견되어 롤백 비용 증가
+
+예방 목적:
+1. 원격 기준 공통 품질 게이트 확보
 
 ## 2.3 신규 프로젝트 문서 자동 초기화 추가
 
 파일:
 - `skills/bin/codex_skills_reload/init_project_docs.sh`
 
+사고 예시:
+1. 신규 프로젝트에서 `PROJECT_AGENT.md` 또는 `task.md`가 누락된 채 시작
+2. Active Project 전환 후 로딩 기준이 불완전해 규칙 적용이 흔들림
+
 변경 내용:
 1. `prj-docs` 기본 폴더 자동 생성
 2. `PROJECT_AGENT.md` 템플릿 자동 주입
 3. `task.md`, `TODO.md`, `ROADMAP.md`, `rules/architecture.md` 기본 문서 생성
+
+미적용 시:
+1. 프로젝트마다 문서 시작점이 달라지고 누락 파일이 반복 발생
+2. 온보딩/핸드오버 시 해석 비용 증가
+
+예방 목적:
+1. 신규 프로젝트 최소 운영 품질을 생성 시점에 강제
 
 ---
 
