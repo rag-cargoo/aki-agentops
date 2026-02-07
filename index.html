@@ -192,6 +192,25 @@
       padding: 0.1rem 0.32rem;
       font-weight: 600;
     }
+
+    /* callout이 없는 섹션(H2 단위)에 적용되는 기본 NOTE 박스 */
+    .markdown-section .auto-section-box {
+      margin: 1.1rem 0 1.6rem;
+      padding: 0.65rem 1rem 0.95rem;
+      border-left: 4px solid rgba(0, 212, 255, 0.72);
+      border: 1px solid rgba(0, 212, 255, 0.24);
+      background: linear-gradient(180deg, rgba(0, 212, 255, 0.08), rgba(0, 212, 255, 0.03));
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.42);
+      border-radius: 8px;
+    }
+
+    .markdown-section .auto-section-box > h2:first-child {
+      margin-top: 0.1rem !important;
+    }
+
+    .markdown-section .auto-section-box > :last-child {
+      margin-bottom: 0.2rem !important;
+    }
   </style>
 </head>
 <body>
@@ -207,7 +226,62 @@
       search: 'auto',
       'flexible-alerts': {
         style: 'callout'
-      }
+      },
+      plugins: [
+        function(hook) {
+          function hasCalloutInSegment(nodes) {
+            for (var i = 0; i < nodes.length; i++) {
+              var el = nodes[i];
+              if (!(el instanceof HTMLElement)) continue;
+              if (el.classList.contains('callout')) return true;
+              if (el.matches('blockquote.callout, blockquote.note, blockquote.tip, blockquote.warning, blockquote.important')) return true;
+              if (el.querySelector('.callout, blockquote.callout, blockquote.note, blockquote.tip, blockquote.warning, blockquote.important')) return true;
+              if (el.tagName === 'BLOCKQUOTE') {
+                var text = (el.textContent || '').trim();
+                if (text.indexOf('[!') === 0) return true;
+              }
+            }
+            return false;
+          }
+
+          function unwrapExisting(section) {
+            var boxes = section.querySelectorAll('.auto-section-box');
+            boxes.forEach(function(box) {
+              var parent = box.parentNode;
+              while (box.firstChild) parent.insertBefore(box.firstChild, box);
+              parent.removeChild(box);
+            });
+          }
+
+          function wrapNeutralSections() {
+            var section = document.querySelector('.markdown-section');
+            if (!section) return;
+
+            unwrapExisting(section);
+
+            var children = Array.prototype.slice.call(section.children);
+            for (var i = 0; i < children.length; i++) {
+              var node = children[i];
+              if (!node || node.tagName !== 'H2') continue;
+
+              var end = i + 1;
+              while (end < children.length && children[end].tagName !== 'H2') end++;
+              var segment = children.slice(i, end);
+
+              if (hasCalloutInSegment(segment)) continue;
+
+              var box = document.createElement('div');
+              box.className = 'auto-section-box callout note';
+              section.insertBefore(box, segment[0]);
+              segment.forEach(function(el) { box.appendChild(el); });
+            }
+          }
+
+          hook.doneEach(function() {
+            wrapNeutralSections();
+          });
+        }
+      ]
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
