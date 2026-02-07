@@ -16,6 +16,7 @@
 ## 2) Active Paths
 - Workspace Root: `workspace`
 - Governance Root: `skills/workspace-governance`
+- Reload Runtime: `skills/bin/codex_skills_reload`
 - Skills Snapshot: `skills/codex_skills_reload.md`
 - Project Snapshot: `workspace/codex_project_reload.md`
 - Session Snapshot: `workspace/codex_session_start.md`
