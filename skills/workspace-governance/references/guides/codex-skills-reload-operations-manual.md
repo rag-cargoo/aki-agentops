@@ -6,7 +6,8 @@
 ---
 
 먼저 읽기:
-1. 도입 배경/변경 내역: `skills/workspace-governance/references/guides/codex-skills-reload-automation-rationale-and-changes.md`
+1. 시작 절차: `skills/workspace-governance/references/guides/codex-skills-reload-start-guide.md`
+2. 도입 배경/변경 내역: `skills/workspace-governance/references/guides/codex-skills-reload-automation-rationale-and-changes.md`
 
 ---
 
