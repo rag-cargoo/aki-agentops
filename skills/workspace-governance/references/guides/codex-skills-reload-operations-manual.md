@@ -5,6 +5,11 @@
 
 ---
 
+먼저 읽기:
+1. 개념/배경 설명: `skills/workspace-governance/references/guides/codex-skills-reload-explained.md`
+
+---
+
 ## 0. 운영 플로우 요약 (세션 시작/세션 중)
 
 | 구분 | 코덱스 자동 트리거(권장) | 수동 실행(터미널) |
