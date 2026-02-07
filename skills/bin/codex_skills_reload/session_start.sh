@@ -39,6 +39,7 @@ required_bin_scripts=(
   "codex_skills_reload/skills_reload.sh"
   "codex_skills_reload/project_reload.sh"
   "codex_skills_reload/set_active_project.sh"
+  "codex_skills_reload/init_project_docs.sh"
 )
 
 missing_bin_scripts=()

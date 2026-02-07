@@ -1,0 +1,39 @@
+name: codex-skills-reload
+
+on:
+  push:
+    paths:
+      - "AGENTS.md"
+      - "skills/**"
+      - "workspace/**/prj-docs/PROJECT_AGENT.md"
+      - ".github/workflows/codex-skills-reload.yml"
+  pull_request:
+    paths:
+      - "AGENTS.md"
+      - "skills/**"
+      - "workspace/**/prj-docs/PROJECT_AGENT.md"
+      - ".github/workflows/codex-skills-reload.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure executable permissions
+        run: chmod +x skills/bin/*.sh skills/bin/codex_skills_reload/*.sh
+
+      - name: Shell syntax check
+        run: bash -n skills/bin/codex_skills_reload/*.sh
+
+      - name: Session start dry-run
+        run: ./skills/bin/codex_skills_reload/session_start.sh
+
+      - name: Validate runtime snapshots
+        run: |
+          test -f .codex/runtime/codex_skills_reload.md
+          test -f .codex/runtime/codex_project_reload.md
+          test -f .codex/runtime/codex_session_start.md
+          grep -q "## Startup Checks" .codex/runtime/codex_session_start.md
+          grep -q "## Loaded Skills" .codex/runtime/codex_session_start.md

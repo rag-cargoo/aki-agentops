@@ -74,5 +74,5 @@ skills/
 
 ## 3. 새로운 프로젝트 추가 방법
 1. `workspace/apps` 하위에 서비스 폴더를 생성합니다.
-2. `prj-docs` 폴더를 만들고 필수 문서 4종(`PROJECT_AGENT.md`, `task.md`, `TODO.md`, `ROADMAP.md`)을 생성합니다.
+2. `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`를 실행해 `prj-docs` 골격과 `PROJECT_AGENT.md` 템플릿을 자동 생성합니다.
 3. `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>` 및 `sidebar-manifest.md` 등록으로 활성 타겟과 문서 링크를 동기화합니다.

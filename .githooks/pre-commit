@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+staged_files="$(git diff --cached --name-only --diff-filter=ACMR || true)"
+if [[ -z "$staged_files" ]]; then
+  exit 0
+fi
+
+requires_reload="false"
+while IFS= read -r file_path; do
+  [[ -z "$file_path" ]] && continue
+  if [[ "$file_path" == "AGENTS.md" ]]; then
+    requires_reload="true"
+    break
+  fi
+  if [[ "$file_path" == skills/* ]]; then
+    requires_reload="true"
+    break
+  fi
+  if [[ "$file_path" =~ ^workspace/.+/prj-docs/PROJECT_AGENT\.md$ ]]; then
+    requires_reload="true"
+    break
+  fi
+done <<< "$staged_files"
+
+if [[ "$requires_reload" != "true" ]]; then
+  exit 0
+fi
+
+echo "[pre-commit] codex skills reload validation"
+bash -n skills/bin/codex_skills_reload/*.sh
+./skills/bin/codex_skills_reload/session_start.sh >/dev/null
+echo "[pre-commit] ok"

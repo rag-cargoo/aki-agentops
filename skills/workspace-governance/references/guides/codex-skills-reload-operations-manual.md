@@ -36,6 +36,7 @@
 | `skills/bin/codex_skills_reload/skills_reload.sh` | 로드된 `SKILL.md` 목록 스냅샷 생성 | 스킬 목록 검증 불가 |
 | `skills/bin/codex_skills_reload/project_reload.sh` | 프로젝트 탐색 + Active Project 스냅샷 생성 | 프로젝트 규칙 오적용 가능 |
 | `skills/bin/codex_skills_reload/set_active_project.sh` | Active Project 지정/조회 | 멀티 프로젝트 운영 실패 |
+| `skills/bin/codex_skills_reload/init_project_docs.sh` | 신규 프로젝트 `prj-docs` 기본 골격 + `PROJECT_AGENT.md` 템플릿 주입 | 초기 프로젝트 문서 누락/편차 발생 |
 | `skills/bin/create-backup-point.sh` | 위험 작업 전 백업 브랜치/태그 생성 | 복구 지점 상실 |
 | `skills/bin/sync-skill.sh` | 런타임 스킬 링크 동기화 | 런타임이 최신 스킬을 못 읽을 수 있음 |
 
@@ -86,11 +87,17 @@
 3. `./skills/bin/codex_skills_reload/session_start.sh` 실행 결과가 `OK`인가?
 4. 멀티 프로젝트 전환 명령이 여전히 동작하는가?
 5. 사이드바 링크가 사람 기준으로 찾기 쉬운 위치에 있는가?
+6. 로컬 훅 경로가 `.githooks`로 설정되었는가? (`git config core.hooksPath .githooks`)
 
 ---
 
-## 7. 권장 추가 개선
+## 7. 자동화 적용 상태
 
-1. `pre-commit` 훅으로 스킬 변경 시 `session_start.sh` 자동 실행
-2. CI에서 `session_start.sh` dry-run 검증
-3. 신규 프로젝트 생성 스크립트에 `PROJECT_AGENT.md` 템플릿 자동 주입
+1. `pre-commit` 훅 적용:
+`./.githooks/pre-commit`
+2. 훅 활성화(로컬 1회):
+`git config core.hooksPath .githooks`
+3. CI dry-run 검증:
+`.github/workflows/codex-skills-reload.yml`
+4. 신규 프로젝트 문서 초기화:
+`./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`
