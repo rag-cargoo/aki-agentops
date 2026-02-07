@@ -13,7 +13,7 @@
 `./skills/bin/codex_skills_reload/set_active_project.sh --list`
 `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
 3. 스킬 수정/추가 후에도 동일:
-`스킬스 리로드해줘` 또는 `session_start.sh` 재실행
+`스킬스 리로드해줘` 또는 `./skills/bin/codex_skills_reload/session_start.sh` 재실행
 4. 상태 확인 파일:
 `.codex/runtime/codex_session_start.md`
 
