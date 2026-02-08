@@ -107,3 +107,25 @@
 `.github/workflows/codex-skills-reload.yml`
 4. 신규 프로젝트 문서 초기화:
 `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`
+
+---
+
+## 8. pre-commit 모드 정책 (Quick / Strict)
+
+1. 기본 모드는 `quick`이다. 일상 커밋은 속도를 우선한다.
+2. `strict`는 중요 구간에서만 사용한다.
+- 마일스톤 완료 직전
+- 릴리즈/배포 직전
+- API 체인 변경 마무리 커밋
+3. `strict` 전환은 사용자 승인 후 수행한다.
+4. `strict` 검증 완료 뒤 기본값은 다시 `quick`으로 복구한다.
+5. 에이전트 완료 보고 시 현재 모드와 변경 명령을 함께 고지한다.
+
+운영 명령:
+1. 현재 기본 모드 확인:
+`./skills/bin/precommit_mode.sh status`
+2. 기본 모드 변경:
+`./skills/bin/precommit_mode.sh quick`
+`./skills/bin/precommit_mode.sh strict`
+3. 1회성 strict 강제:
+`CHAIN_VALIDATION_MODE=strict git commit -m "..."`

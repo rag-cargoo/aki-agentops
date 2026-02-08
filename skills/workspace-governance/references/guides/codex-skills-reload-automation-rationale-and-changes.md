@@ -8,7 +8,7 @@
 
 이번 변경은 아래 3가지를 도입해 세션/문서/프로젝트 컨텍스트 품질을 안정화한 작업이다.
 
-1. `pre-commit` 로컬 차단
+1. `pre-commit` 로컬 차단(quick/strict 모드)
 2. GitHub Actions CI 원격 검증
 3. 신규 프로젝트 문서 템플릿 자동 주입
 
@@ -45,6 +45,8 @@
 1. `AGENTS.md`, `skills/**`, `workspace/**/prj-docs/PROJECT_AGENT.md` 변경이 스테이징되면 자동 검증 실행
 2. `bash -n skills/bin/codex_skills_reload/*.sh`
 3. `./skills/bin/codex_skills_reload/session_start.sh`
+4. 프로젝트 체인 검증은 기본 `quick`, 중요 커밋은 `strict`로 운영
+5. `strict` 전환은 사용자 승인 후 수행하도록 운영 정책 고정
 
 미적용 시:
 1. 로컬에서 막을 수 있는 오류가 원격까지 전파됨

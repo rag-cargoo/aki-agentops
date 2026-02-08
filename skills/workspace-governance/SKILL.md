@@ -3,7 +3,7 @@ name: workspace-governance
 description: |
   워크스페이스 전역 거버넌스 및 개발 표준 수호 스킬.
   프로젝트 구조 관리 및 문서 전문 작업을 github-pages-expert에 위임합니다.
-  (최신 업데이트: 2026-02-08 06:27:35 | Codex 도구체계 기준 무결성/검증 문구 정합화)
+  (최신 업데이트: 2026-02-08 19:16:33 | 완료 보고 시 pre-commit 모드 고지 규칙 추가)
 ---
 
 # 워크스페이스 전역 거버넌스 (Global Governance)
@@ -34,3 +34,9 @@ description: |
 - `Startup Checks` (Skills Snapshot / Project Snapshot / Skills Bin Integrity)
 - `Loaded Skills` 전체 목록
 - `Active Project` 정보와 멀티 프로젝트 전환 안내
+
+##  pre-commit 운영 원칙
+- 기본 모드는 `quick`이며, 일상 커밋에서 개발 속도를 우선한다.
+- 중요 커밋(마일스톤/릴리즈/대규모 리팩토링 완료)은 사용자 확인 후 `strict` 모드로 전환해 강한 체인 검증을 수행한다.
+- 모드 전환은 `skills/bin/precommit_mode.sh` 또는 `CHAIN_VALIDATION_MODE=strict git commit ...`로 수행한다.
+- 작업 완료 보고에는 반드시 `현재 pre-commit 모드`와 `모드 변경 명령`을 함께 안내한다.

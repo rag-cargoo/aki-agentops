@@ -35,6 +35,13 @@ else
   echo "[pre-commit] ok"
 fi
 
-echo "[pre-commit] ticket-core chain validation"
-bash skills/bin/validate-ticket-core-chain.sh
-echo "[pre-commit] ticket-core chain ok"
+runtime_mode_file=".codex/runtime/precommit_mode"
+chain_mode="${CHAIN_VALIDATION_MODE:-}"
+if [[ -z "$chain_mode" ]] && [[ -f "$runtime_mode_file" ]]; then
+  chain_mode="$(tr -d '[:space:]' < "$runtime_mode_file")"
+fi
+chain_mode="${chain_mode:-quick}"
+
+echo "[pre-commit] ticket-core chain validation (mode: ${chain_mode})"
+bash skills/bin/validate-ticket-core-chain.sh --mode "$chain_mode"
+echo "[pre-commit] ticket-core chain ok (${chain_mode})"

@@ -82,6 +82,22 @@
 4. **반영 (Reload)**: `./skills/bin/codex_skills_reload/session_start.sh`를 실행한다. (권장 단일 진입점)
 5. **확인 (Report)**: `.codex/runtime/codex_session_start.md`에서 Skills/Project 상태와 안내문을 확인한다.
 
+### pre-commit 모드 운영 (Quick / Strict)
+
+*   **기본값**: `quick`
+    *   routine 커밋에서 문법/경량 검증 중심으로 진행한다.
+*   **강화 모드**: `strict`
+    *   마일스톤 완료, 릴리즈 직전, API 체인 변경 종료 시 사용한다.
+    *   문서/HTTP/API 스크립트/실행 리포트까지 강제 검증한다.
+*   **운영 규칙**:
+    1. 중요 커밋 전에는 사용자에게 `strict` 전환 여부를 확인한다.
+    2. 사용자 승인 후에만 `strict`를 적용한다.
+    3. 완료 후 기본값을 `quick`으로 복귀한다.
+*   **명령어**:
+    *   상태 확인: `./skills/bin/precommit_mode.sh status`
+    *   기본 모드 설정: `./skills/bin/precommit_mode.sh quick|strict`
+    *   1회성 강제 실행: `CHAIN_VALIDATION_MODE=strict git commit -m "..."`
+
 
 
 
