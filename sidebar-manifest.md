@@ -19,7 +19,7 @@
     * **Backend**
       * **Ticket Core Service**
         * [Project README](/workspace/apps/backend/ticket-core-service/README.md)
-        * [Project Agent Scope](/workspace/apps/backend/ticket-core-service/prj-docs/PROJECT_AGENT.md)
+        * [Project Agent (Rules)](/workspace/apps/backend/ticket-core-service/prj-docs/PROJECT_AGENT.md)
         * [Roadmap](/workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
         * [Current Tasks](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
         * [Architecture](/workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)

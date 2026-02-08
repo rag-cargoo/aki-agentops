@@ -1,9 +1,9 @@
-# Project Agent Scope: <Service Name>
+# Project Agent: <Service Name> (Rules)
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-09 01:11:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
