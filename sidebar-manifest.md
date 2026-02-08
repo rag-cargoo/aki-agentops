@@ -43,7 +43,7 @@
     * [자동화 도입 배경 및 변경 내역](/skills/workspace-governance/references/guides/codex-skills-reload-automation-rationale-and-changes.md)
   * **MCP Runtime Ops**
     * [MCP Workspace Guide](/mcp/README.md)
-    * [MCP Manifest](/mcp/manifest/mcp-manifest.sh)
+    * [MCP Manifest](/mcp/manifest/mcp-manifest.md)
     * [MCP TODO](/mcp/TODO.md)
     * [MCP Experience Log](/mcp/references/experience-log.md)
   * [에이전트 사고 시 Git 백업/복구 플레이북](/skills/workspace-governance/references/guides/agent-incident-git-backup-restore-playbook.md)
