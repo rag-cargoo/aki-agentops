@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-09 01:16:49`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -51,7 +51,6 @@ skills/
 ├── prj-docs/             # [필수] 프로젝트 전용 관리 문서
 │   ├── task.md           # 현재 작업 현황판
 │   ├── TODO.md           # 단기 할 일 목록
-│   ├── ROADMAP.md        # 장기 발전 계획
 │   ├── knowledge/        # [선택] 기술 지식 기록 (사용자 요청 시)
 │   ├── troubleshooting/  # [선택] 트러블슈팅 사례 (사용자 요청 시)
 │   └── ai-context/       # [선택] 서비스 전용 AI 컨텍스트

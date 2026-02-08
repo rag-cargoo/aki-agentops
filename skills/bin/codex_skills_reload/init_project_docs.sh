@@ -156,18 +156,6 @@ todo_content="# TODO ($service_name)
 - [ ] Choose the first implementation slice
 "
 
-roadmap_content="# ROADMAP ($service_name)
-
-## Phase 1
-- Align project skeleton and engineering rules
-
-## Phase 2
-- Implement and validate core features
-
-## Phase 3
-- Strengthen documentation and operations automation
-"
-
 architecture_content="# Architecture Rules ($service_name)
 
 ## Boundaries
@@ -183,7 +171,6 @@ architecture_content="# Architecture Rules ($service_name)
 write_file "$project_abs/prj-docs/PROJECT_AGENT.md" "$project_agent_content"
 write_file "$project_abs/prj-docs/task.md" "$task_content"
 write_file "$project_abs/prj-docs/TODO.md" "$todo_content"
-write_file "$project_abs/prj-docs/ROADMAP.md" "$roadmap_content"
 write_file "$project_abs/prj-docs/rules/architecture.md" "$architecture_content"
 
 echo "project-root: $target_path"
