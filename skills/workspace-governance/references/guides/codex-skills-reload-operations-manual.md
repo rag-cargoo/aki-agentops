@@ -107,6 +107,10 @@
 `.github/workflows/codex-skills-reload.yml`
 4. 신규 프로젝트 문서 초기화:
 `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`
+5. pre-commit 정책 엔진:
+`./skills/bin/validate-precommit-chain.sh`
+6. 프로젝트별 정책 레지스트리:
+`skills/precommit/policies/*.sh`
 
 ---
 
@@ -119,7 +123,8 @@
 - API 체인 변경 마무리 커밋
 3. `strict` 전환은 사용자 승인 후 수행한다.
 4. `strict` 검증 완료 뒤 기본값은 다시 `quick`으로 복구한다.
-5. 에이전트 완료 보고 시 현재 모드와 변경 명령을 함께 고지한다.
+5. `strict`는 정책 레지스트리에 없는(미커버) staged 경로를 실패 처리한다.
+6. 에이전트 완료 보고 시 현재 모드와 변경 명령을 함께 고지한다.
 
 운영 명령:
 1. 현재 기본 모드 확인:

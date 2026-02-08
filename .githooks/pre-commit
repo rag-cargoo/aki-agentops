@@ -42,6 +42,6 @@ if [[ -z "$chain_mode" ]] && [[ -f "$runtime_mode_file" ]]; then
 fi
 chain_mode="${chain_mode:-quick}"
 
-echo "[pre-commit] ticket-core chain validation (mode: ${chain_mode})"
-bash skills/bin/validate-ticket-core-chain.sh --mode "$chain_mode"
-echo "[pre-commit] ticket-core chain ok (${chain_mode})"
+echo "[pre-commit] policy chain validation (mode: ${chain_mode})"
+bash skills/bin/validate-precommit-chain.sh --mode "$chain_mode"
+echo "[pre-commit] policy chain ok (${chain_mode})"
