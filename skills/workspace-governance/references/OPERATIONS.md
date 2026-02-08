@@ -93,7 +93,7 @@
     1. 중요 커밋 전에는 사용자에게 `strict` 전환 여부를 확인한다.
     2. 사용자 승인 후에만 `strict`를 적용한다.
     3. 완료 후 기본값을 `quick`으로 복귀한다.
-    4. `strict`는 `skills/precommit/policies/*.sh` 정책에 없는 staged 경로를 실패 처리한다.
+    4. `strict`는 정책 파일(`skills/precommit/policies/*.sh`, `<project-root>/prj-docs/precommit-policy.sh`)에 없는 staged 경로를 실패 처리한다.
     5. `strict`는 문서 품질 규칙(지식 문서 Failure-First/Before&After/Execution Log, API 명세 6-Step)을 함께 검증한다.
 *   **명령어**:
     *   상태 확인: `./skills/bin/precommit_mode.sh status`
@@ -101,7 +101,8 @@
     *   1회성 강제 실행: `CHAIN_VALIDATION_MODE=strict git commit -m "..."`
 *   **정책 엔진/레지스트리**:
     *   엔진: `skills/bin/validate-precommit-chain.sh`
-    *   레지스트리: `skills/precommit/policies/*.sh`
+    *   전역 레지스트리: `skills/precommit/policies/*.sh`
+    *   프로젝트 레지스트리: `<project-root>/prj-docs/precommit-policy.sh`
 
 
 

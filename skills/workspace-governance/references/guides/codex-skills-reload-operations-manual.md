@@ -109,8 +109,10 @@
 `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`
 5. pre-commit 정책 엔진:
 `./skills/bin/validate-precommit-chain.sh`
-6. 프로젝트별 정책 레지스트리:
+6. 전역 정책 레지스트리:
 `skills/precommit/policies/*.sh`
+7. 프로젝트 정책 레지스트리:
+`<project-root>/prj-docs/precommit-policy.sh`
 
 ---
 

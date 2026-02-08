@@ -46,7 +46,7 @@
 2. `bash -n skills/bin/codex_skills_reload/*.sh`
 3. `./skills/bin/codex_skills_reload/session_start.sh`
 4. 정책 엔진 `skills/bin/validate-precommit-chain.sh`로 프로젝트별 규칙을 실행
-5. 프로젝트 규칙은 `skills/precommit/policies/*.sh`로 분리
+5. 전역 규칙은 `skills/precommit/policies/*.sh`, 프로젝트 규칙은 `<project-root>/prj-docs/precommit-policy.sh`로 분리
 6. 프로젝트 체인 검증은 기본 `quick`, 중요 커밋은 `strict`로 운영
 7. `strict` 전환은 사용자 승인 후 수행하도록 운영 정책 고정
 8. `strict`에서 정책 미커버 staged 경로는 실패 처리

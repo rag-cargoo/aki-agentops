@@ -1,46 +1,53 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_root="$(git rev-parse --show-toplevel)"
-cd "$repo_root"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+project_abs="$(cd "$script_dir/../.." && pwd)"
+repo_root="$(git -C "$project_abs" rev-parse --show-toplevel)"
+project_root="${project_abs#$repo_root/}"
 
-project_root="workspace/apps/backend/ticket-core-service"
 scripts_root="${project_root}/scripts/api"
+scripts_abs_root="${project_abs}/scripts/api"
 report_path="${project_root}/prj-docs/api-test/latest.md"
+report_abs_path="${project_abs}/prj-docs/api-test/latest.md"
 tmp_root="$(mktemp -d)"
 trap 'rm -rf "$tmp_root"' EXIT
 
-health_url="${TICKETRUSH_HEALTH_URL:-http://127.0.0.1:8080/api/concerts}"
+health_url="${API_SCRIPT_HEALTH_URL:-${TICKETRUSH_HEALTH_URL:-http://127.0.0.1:8080/api/concerts}}"
 
 declare -a scripts_to_run=()
 
 if [[ "$#" -gt 0 ]]; then
-  for script_path in "$@"; do
-    script_name="$(basename "$script_path")"
-    if [[ "$script_path" != ${scripts_root}/* ]]; then
+  for candidate in "$@"; do
+    script_abs=""
+    if [[ "$candidate" == /* ]]; then
+      script_abs="$candidate"
+    elif [[ -f "$scripts_abs_root/$candidate" ]]; then
+      script_abs="$scripts_abs_root/$candidate"
+    elif [[ -f "$candidate" ]]; then
+      script_abs="$(cd "$(dirname "$candidate")" && pwd)/$(basename "$candidate")"
+    fi
+
+    [[ -n "$script_abs" ]] || continue
+    [[ -f "$script_abs" ]] || continue
+
+    script_rel="${script_abs#$repo_root/}"
+    if [[ "$script_rel" != ${scripts_root}/* ]]; then
       continue
     fi
+
+    script_name="$(basename "$script_abs")"
     if [[ ! "$script_name" =~ ^v[0-9].*\.sh$ ]]; then
       continue
     fi
-    if [[ ! -f "$script_path" ]]; then
-      continue
-    fi
-    scripts_to_run+=("$script_path")
+
+    scripts_to_run+=("$script_abs")
   done
 else
-  while IFS= read -r line; do
-    [[ -z "$line" ]] && continue
-    scripts_to_run+=("${scripts_root}/${line}")
-  done <<'EOF'
-v1-optimistic.sh
-v2-pessimistic.sh
-v3-distributed.sh
-v4-polling-test.sh
-v5-waiting-queue.sh
-v6-throttling-test.sh
-v7-sse-rank-push.sh
-EOF
+  while IFS= read -r script_abs; do
+    [[ -z "$script_abs" ]] && continue
+    scripts_to_run+=("$script_abs")
+  done < <(find "$scripts_abs_root" -maxdepth 1 -type f -name 'v*.sh' | sort)
 fi
 
 if [[ "${#scripts_to_run[@]}" -eq 0 ]]; then
@@ -55,8 +62,8 @@ fi
 
 health_code="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 3 "$health_url" || true)"
 if [[ ! "$health_code" =~ ^2[0-9][0-9]$ ]]; then
-  mkdir -p "$(dirname "$report_path")"
-  cat >"$report_path" <<EOF
+  mkdir -p "$(dirname "$report_abs_path")"
+  cat >"$report_abs_path" <<EOF
 # API Script Test Report
 
 - Result: FAIL
@@ -73,19 +80,19 @@ EOF
   exit 1
 fi
 
-mkdir -p "$(dirname "$report_path")"
+mkdir -p "$(dirname "$report_abs_path")"
 
 pass_count=0
 fail_count=0
 table_rows=""
 failure_blocks=""
 
-for script_path in "${scripts_to_run[@]}"; do
-  script_name="$(basename "$script_path")"
+for script_abs in "${scripts_to_run[@]}"; do
+  script_name="$(basename "$script_abs")"
   log_path="${tmp_root}/${script_name%.sh}.log"
 
   set +e
-  bash "$script_path" >"$log_path" 2>&1
+  bash "$script_abs" >"$log_path" 2>&1
   rc=$?
   set -e
 
@@ -110,7 +117,7 @@ if [[ "$fail_count" -gt 0 ]]; then
   overall="FAIL"
 fi
 
-cat >"$report_path" <<EOF
+cat >"$report_abs_path" <<EOF
 # API Script Test Report
 
 - Result: ${overall}
@@ -126,7 +133,7 @@ ${table_rows}
 EOF
 
 if [[ "$fail_count" -gt 0 ]]; then
-  cat >>"$report_path" <<EOF
+  cat >>"$report_abs_path" <<EOF
 
 ## Troubleshooting Notes
 ${failure_blocks}
@@ -135,7 +142,9 @@ fi
 
 if [[ "$fail_count" -gt 0 ]]; then
   echo "[script-test] failed (${fail_count})"
+  echo "[script-test] report: ${report_path}"
   exit 1
 fi
 
 echo "[script-test] all passed (${pass_count})"
+echo "[script-test] report: ${report_path}"

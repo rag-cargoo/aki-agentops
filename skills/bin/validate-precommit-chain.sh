@@ -10,7 +10,8 @@ Modes:
   strict  Full policy-driven validation. Fails on uncovered staged paths.
 
 Policies:
-  Load order: skills/precommit/policies/*.sh (sorted)
+  Global:  skills/precommit/policies/*.sh
+  Project: */prj-docs/precommit-policy.sh
 EOF
 }
 
@@ -100,22 +101,23 @@ if [[ -z "$staged_files" ]]; then
   exit 0
 fi
 
-policy_dir="skills/precommit/policies"
-if [[ ! -d "$policy_dir" ]]; then
-  if [[ "$mode" == "strict" ]]; then
-    echo "[chain-check] strict mode failed: policy directory is missing"
-    echo "  - $policy_dir"
-    exit 1
-  fi
-  echo "[chain-check] quick mode: policy directory missing, skip"
-  exit 0
+global_policy_dir="skills/precommit/policies"
+mapfile -t global_policy_files < <(find "$global_policy_dir" -maxdepth 1 -type f -name '*.sh' 2>/dev/null | sort)
+mapfile -t project_policy_files < <(find . -type f -path './*/prj-docs/precommit-policy.sh' 2>/dev/null | sort | sed 's#^\./##')
+
+policy_files=()
+if [[ "${#global_policy_files[@]}" -gt 0 ]]; then
+  policy_files+=("${global_policy_files[@]}")
+fi
+if [[ "${#project_policy_files[@]}" -gt 0 ]]; then
+  policy_files+=("${project_policy_files[@]}")
 fi
 
-mapfile -t policy_files < <(find "$policy_dir" -maxdepth 1 -type f -name '*.sh' | sort)
 if [[ "${#policy_files[@]}" -eq 0 ]]; then
   if [[ "$mode" == "strict" ]]; then
     echo "[chain-check] strict mode failed: no policy files found"
-    echo "  - $policy_dir/*.sh"
+    echo "  - ${global_policy_dir}/*.sh"
+    echo "  - */prj-docs/precommit-policy.sh"
     exit 1
   fi
   echo "[chain-check] quick mode: no policy files found, skip"
@@ -171,7 +173,9 @@ if [[ "$mode" == "strict" ]]; then
 
   if [[ "${#uncovered_files[@]}" -gt 0 ]]; then
     echo "[chain-check] strict mode failed: uncovered staged paths detected"
-    echo "[chain-check] add/update policy in: ${policy_dir}"
+    echo "[chain-check] add/update policy:"
+    echo "  - global: ${global_policy_dir}/*.sh"
+    echo "  - project: */prj-docs/precommit-policy.sh"
     for path in "${uncovered_files[@]}"; do
       echo "  - $path"
     done

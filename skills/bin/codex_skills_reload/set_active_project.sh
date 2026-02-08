@@ -16,7 +16,7 @@ Usage:
   ./skills/bin/codex_skills_reload/set_active_project.sh --list
 
 Examples:
-  ./skills/bin/codex_skills_reload/set_active_project.sh workspace/apps/backend/ticket-core-service
+  ./skills/bin/codex_skills_reload/set_active_project.sh workspace/apps/<domain>/<project>
   ./skills/bin/codex_skills_reload/set_active_project.sh --list
 EOF
 }

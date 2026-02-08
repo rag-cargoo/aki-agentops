@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 
-POLICY_ID="ticket-core-service"
+policy_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo_root="$(git -C "$policy_dir" rev-parse --show-toplevel)"
+project_abs="$(cd "$policy_dir/.." && pwd)"
+project_root="${project_abs#$repo_root/}"
+project_name="$(basename "$project_abs")"
+
+POLICY_ID="project:${project_name}"
 POLICY_ROOTS=(
-  "workspace/apps/backend/ticket-core-service"
+  "$project_root"
 )
 
-validate_knowledge_doc_quality() {
+project_validate_knowledge_doc_quality() {
   local file_path="$1"
   [[ -f "$file_path" ]] || return 0
 
@@ -48,7 +54,7 @@ validate_knowledge_doc_quality() {
   return 0
 }
 
-validate_api_spec_quality() {
+project_validate_api_spec_quality() {
   local file_path="$1"
   [[ -f "$file_path" ]] || return 0
 
@@ -81,11 +87,22 @@ validate_api_spec_quality() {
   return 0
 }
 
+is_runtime_api_script_change() {
+  local file_path="$1"
+  case "$file_path" in
+    "${project_root}/scripts/api/v"*.sh|\
+    "${project_root}/scripts/api/common.sh"|\
+    "${project_root}/scripts/api/setup-test-data.sh")
+      return 0
+      ;;
+  esac
+  return 1
+}
+
 policy_validate() {
   local mode="$1"
   local staged_files="$2"
 
-  local project_root="workspace/apps/backend/ticket-core-service"
   local sidebar_file="sidebar-manifest.md"
 
   local generated_artifacts=()
@@ -126,17 +143,17 @@ policy_validate() {
 
   if [[ "$mode" == "strict" ]]; then
     for file_path in "${staged_knowledge_docs[@]}"; do
-      validate_knowledge_doc_quality "$file_path" || return 1
+      project_validate_knowledge_doc_quality "$file_path" || return 1
     done
     for file_path in "${staged_api_specs[@]}"; do
-      validate_api_spec_quality "$file_path" || return 1
+      project_validate_api_spec_quality "$file_path" || return 1
     done
   fi
 
   local project_change_patterns=(
     "^${project_root}/src/main/java/.+\\.java$"
     "^${project_root}/src/main/resources/.+\\.ya?ml$"
-    "^${project_root}/scripts/api/.+\\.sh$"
+    "^${project_root}/scripts/api/(v[0-9].*\\.sh|common\\.sh|setup-test-data\\.sh)$"
   )
 
   local needs_chain="false"
@@ -165,7 +182,7 @@ policy_validate() {
   local has_api_script_change="false"
   while IFS= read -r file_path; do
     [[ -z "$file_path" ]] && continue
-    if [[ "$file_path" == "${project_root}/scripts/api/"*.sh ]]; then
+    if is_runtime_api_script_change "$file_path"; then
       has_api_script_change="true"
       break
     fi
@@ -267,7 +284,7 @@ policy_validate() {
 
   if [[ "$has_api_script_change" == "true" ]]; then
     echo "[chain-check][${POLICY_ID}] running API script tests"
-    bash skills/bin/run-ticket-core-api-script-tests.sh
+    bash "${project_root}/scripts/api/run-api-script-tests.sh"
 
     local report_file="${project_root}/prj-docs/api-test/latest.md"
     if ! grep -Fxq "$report_file" <<< "$staged_files"; then

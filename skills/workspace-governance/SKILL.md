@@ -39,5 +39,5 @@ description: |
 - 기본 모드는 `quick`이며, 일상 커밋에서 개발 속도를 우선한다.
 - 중요 커밋(마일스톤/릴리즈/대규모 리팩토링 완료)은 사용자 확인 후 `strict` 모드로 전환해 강한 체인 검증을 수행한다.
 - 모드 전환은 `skills/bin/precommit_mode.sh` 또는 `CHAIN_VALIDATION_MODE=strict git commit ...`로 수행한다.
-- 프로젝트별 strict 규칙은 `skills/precommit/policies/*.sh`에 등록하며, `strict`에서 정책 미커버 경로가 있으면 커밋을 차단한다.
+- 프로젝트별 strict 규칙은 `<project-root>/prj-docs/precommit-policy.sh`에 등록하며, `strict`에서 정책 미커버 경로가 있으면 커밋을 차단한다.
 - 작업 완료 보고에는 반드시 `현재 pre-commit 모드`와 `모드 변경 명령`을 함께 안내한다.
