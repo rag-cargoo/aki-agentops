@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:11:27`
+> - **Updated At**: `2026-02-08 23:32:34`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -13,7 +13,6 @@
 > - Step 1: 낙관적 락(Optimistic Lock) - JPA @Version 활용
 > - Step 2: 비관적 락(Pessimistic Lock) - DB FOR UPDATE 쿼리 활용
 > - Step 3: 분산 락(Distributed Lock) - Redis(Redisson) Facade 패턴 적용
-> - Step 1~7
 > - Step 1~3: 락 전략 구축 및 정합성 검증
 > - Step 4: Kafka 기반 비동기 대기열 및 SSE 알림 시스템
 > - Step 5: Redis Sorted Set 기반 실시간 대기 순번 시스템

@@ -3,15 +3,16 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:11:27`
+> - **Updated At**: `2026-02-08 23:32:34`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
-## 단계 목차 (Step Index)
+## 문서 목차 (Quick Index)
 ---
 > [!TIP]
-> - Step 1~4, 작성 시점 기준)
-> - Step 5(Redis Sorted Set) 최적화 설계 가이드 적용.
+> - 롤백용 지점 (Commit Hash)
+> - 현재 프로젝트 상태 요약 (Current Status)
+> - 향후 시도 사항 (Planned with MCP/Skills, 작성 시점 기준)
 <!-- DOC_TOC_END -->
 
 > **Purpose**: MCP 및 Skills 도입 과정에서 기대 이하의 결과가 발생할 경우, 프로젝트를 가장 안정적인 상태로 롤백하기 위한 기록

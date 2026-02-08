@@ -62,42 +62,79 @@ def extract_created_at(raw: str) -> str | None:
     return match.group(1).strip()
 
 
-def extract_step_entries(lines: list[str]) -> list[str]:
+STEP_PREFIX = r"Step\s*\d+(?:\s*[-~]\s*\d+)?"
+HEADING_STEP_RE = re.compile(
+    rf"^\s*(?:>\s*)?#{{2,6}}\s+({STEP_PREFIX}[^\n#]*)$",
+    re.IGNORECASE,
+)
+BULLET_STEP_RE = re.compile(
+    rf"^\s*(?:>\s*)?[-*]\s*(?:\[[ xX]\]\s*)?(?:\*\*)?({STEP_PREFIX}(?:\s*[:\-]\s*|\s*\().+)$",
+    re.IGNORECASE,
+)
+LINK_WHOLE_RE = re.compile(r"^\[([^\]]+)\]\([^)]+\)$")
+CODE_FENCE_RE = re.compile(r"^\s*(?:>\s*)?```")
+
+
+def normalize_step_entry(raw_entry: str) -> str:
+    entry = raw_entry.strip()
+    link_match = LINK_WHOLE_RE.match(entry)
+    if link_match:
+        entry = link_match.group(1).strip()
+
+    entry = entry.replace("**", "").replace("`", "")
+    entry = re.sub(r"</?[^>]+>", "", entry)
+    entry = re.sub(r"\s+", " ", entry).strip(" -")
+    entry = entry.rstrip(".,;")
+    if len(entry) > 160:
+        entry = entry[:157].rstrip() + "..."
+    return entry
+
+
+def extract_step_key(entry: str) -> str | None:
+    match = re.match(r"(?i)^Step\s*(\d+(?:\s*[-~]\s*\d+)?)", entry)
+    if not match:
+        return None
+    key = re.sub(r"\s+", "", match.group(1))
+    return key.lower()
+
+
+def collect_step_entries(lines: list[str], pattern: re.Pattern[str]) -> list[str]:
     entries: list[str] = []
-    seen: set[str] = set()
+    seen_entries: set[str] = set()
+    seen_step_keys: set[str] = set()
     in_code = False
+
     for line in lines:
         stripped = line.rstrip("\n")
-        if stripped.strip().startswith("```"):
+        if CODE_FENCE_RE.match(stripped):
             in_code = not in_code
             continue
         if in_code:
             continue
 
-        # Remove common markdown prefixes first.
-        cleaned = re.sub(r"^\s*>\s*", "", stripped)
-        cleaned = re.sub(r"^\s*[-*]\s*", "", cleaned)
-        cleaned = re.sub(r"^\[[ xX]\]\s*", "", cleaned)
-        cleaned = cleaned.strip()
-
-        match = re.search(r"(Step\s*\d+(?:\s*~\s*\d+)?[^\n]*)", cleaned)
+        match = pattern.match(stripped)
         if not match:
             continue
-
-        entry = re.sub(r"\s+", " ", match.group(1)).strip(" -")
-        entry = entry.replace("**", "").replace("`", "")
-        if ")](" in entry:
-            entry = entry.split(")](", 1)[0]
-        if "](" in entry:
-            entry = entry.split("](", 1)[0]
-        entry = re.sub(r"\s*\|\s*.*$", "", entry)
-        entry = re.sub(r"\s+", " ", entry).strip()
-        if len(entry) > 160:
-            entry = entry[:157].rstrip() + "..."
-        if entry and entry not in seen:
-            seen.add(entry)
+        entry = normalize_step_entry(match.group(1))
+        key = extract_step_key(entry) if entry else None
+        if (
+            entry
+            and entry not in seen_entries
+            and (key is None or key not in seen_step_keys)
+        ):
+            seen_entries.add(entry)
+            if key is not None:
+                seen_step_keys.add(key)
             entries.append(entry)
+
     return entries
+
+
+def extract_step_entries(lines: list[str]) -> list[str]:
+    heading_entries = collect_step_entries(lines, HEADING_STEP_RE)
+    if heading_entries:
+        return heading_entries
+    return collect_step_entries(lines, BULLET_STEP_RE)
 
 
 def extract_h2_entries(lines: list[str]) -> list[str]:
