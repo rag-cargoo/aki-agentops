@@ -38,6 +38,8 @@
 ---
 
 * **OPERATIONS & MANUALS**
+  * **Pre-commit Guides**
+    * [Pre-commit Start Guide](/skills/workspace-governance/references/guides/precommit-start-guide.md)
   * **Codex Skills Reload Guides**
     * [Start Guide](/skills/workspace-governance/references/guides/codex-skills-reload-start-guide.md)
     * [Operations Manual](/skills/workspace-governance/references/guides/codex-skills-reload-operations-manual.md)
