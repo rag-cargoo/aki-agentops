@@ -1,6 +1,7 @@
-#  Welcome to Ticket-Rush Workspace
+#  Welcome to 홍구 Workspace
 
-이곳은 **고성능 선착순 티켓팅 시스템(Ticket-Rush)** 프로젝트의 통합 관제탑이자 기술 저장소입니다.
+이곳은 **고성능 선착순 티켓팅 시스템(홍구, Ticket-Rush)** 프로젝트의 통합 관제탑이자 기술 저장소입니다.
+현재 기준 구현 상태는 **Step 7(SSE 기반 실시간 순번 자동 푸시) 완료**입니다.
 
 ##  탐색 가이드 (Navigation)
 

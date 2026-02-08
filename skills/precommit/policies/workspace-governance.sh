@@ -3,6 +3,9 @@
 POLICY_ID="workspace-governance"
 POLICY_ROOTS=(
   "AGENTS.md"
+  "HOME.md"
+  "README.md"
+  "index.html"
   ".githooks"
   "skills"
   "sidebar-manifest.md"
