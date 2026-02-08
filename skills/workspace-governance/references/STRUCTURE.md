@@ -1,5 +1,22 @@
 #  프로젝트 구조 및 표준 (Project Structure & Standards)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1. 폴더 구조 원칙 (Directory Structure)
+> - 3. API 명세 표준 규격 (API Documentation Standard)
+> - 3. AI 협업 및 복제 가이드 (AI Context Porting)
+> - 5. 지식 문서 관리 표준 (Engineering Knowledge Standard)
+> - 6. [부록] 기술 가이드 (Docsify Spec)
+<!-- DOC_TOC_END -->
+
 > **Core Philosophy**: "사람과 AI가 모두 이해할 수 있는 명확한 계층 구조를 지향한다."
 > 이 문서는 전역 거버넌스 영역(Skills), 표준 계층(Layers), 그리고 문서화 운영 표준을 정의합니다.
 

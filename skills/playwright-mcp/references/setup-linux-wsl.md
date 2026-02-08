@@ -1,5 +1,24 @@
 # Playwright MCP Setup (Linux / WSL)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1. Baseline Check
+> - 2. Installation Policy Gate
+> - 3. WSL GUI Enablement
+> - 4. GUI Smoke Test
+> - 5. MCP Functional Check
+> - 6. Optional: Install Recipe (Only If Allowed)
+> - 7. Optional: Code-Based Playwright Runtime
+<!-- DOC_TOC_END -->
+
 ## 1. Baseline Check
 
 ```bash

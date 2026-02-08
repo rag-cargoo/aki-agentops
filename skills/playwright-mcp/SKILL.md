@@ -5,6 +5,25 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 
 # Playwright MCP
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 목표
+> - 기본 원칙
+> - 실행 절차
+> - 핵심 구분
+> - 산출물 규칙
+> - 리소스 안내
+> - 운영 원칙
+<!-- DOC_TOC_END -->
+
 ## 목표
 
 - Linux/WSL에서 Playwright MCP를 재현 가능하게 세팅한다.

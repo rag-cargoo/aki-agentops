@@ -3,10 +3,27 @@ name: workspace-governance
 description: |
   워크스페이스 전역 거버넌스 및 개발 표준 수호 스킬.
   프로젝트 구조 관리 및 문서 전문 작업을 github-pages-expert에 위임합니다.
-  (최신 업데이트: 2026-02-08 19:34:04 | pre-commit 정책 엔진 및 strict 미커버 경로 차단 규칙 추가)
+  (최신 업데이트: 2026-02-08 23:06:35 | 문서 메타(생성/수정 시각) 및 상단 목차 표준 추가)
 ---
 
 # 워크스페이스 전역 거버넌스 (Global Governance)
+
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 핵심 5대 원칙 (Core Principles)
+> - 완료 정의 (Definition of Done)
+> - 작업 워크플로우
+> - 세션 시작 가이드
+> - pre-commit 운영 원칙
+<!-- DOC_TOC_END -->
 
 이 스킬은 워크스페이스 내 모든 프로젝트의 일관된 품질과 거버넌스를 보장합니다.
 
@@ -17,6 +34,7 @@ description: |
 3. **문서 전문성 위임**: 시각적 스타일링 및 무손실 복구 작업은 `github-pages-expert`에 위임.
 4. **하드코딩 금지**: 모든 설정은 환경 변수나 설정 파일을 통해 주입.
 5. **계층 구조 엄수**: 패키지 경계(`api`, `domain`, `global`)를 엄격히 유지.
+6. **문서 추적성 필수**: 관리 대상 문서는 상단에 `Created At`/`Updated At`과 상단 목차를 유지하고, 변경 시 `Updated At`을 즉시 갱신한다.
 
 ##  완료 정의 (Definition of Done)
 에이전트는 모든 작업을 마무리하기 전 아래 3단계를 완수했는지 스스로 검증해야 한다.

@@ -1,5 +1,19 @@
 #  MCP & Skills 도입 전 안전 체크포인트 (Checkpoint)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 단계 목차 (Step Index)
+---
+> [!TIP]
+> - Step 1~4, 작성 시점 기준)
+> - Step 5(Redis Sorted Set) 최적화 설계 가이드 적용.
+<!-- DOC_TOC_END -->
+
 > **Purpose**: MCP 및 Skills 도입 과정에서 기대 이하의 결과가 발생할 경우, 프로젝트를 가장 안정적인 상태로 롤백하기 위한 기록
 > **Checkpoint Date**: 2026-02-06
 > **Scope Note**: 이 문서는 2026-02-06 시점의 히스토리 스냅샷이다. 현재 상태는 `workspace/apps/backend/ticket-core-service/prj-docs/task.md`, `workspace/apps/backend/ticket-core-service/prj-docs/TODO.md`, `workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md`를 기준으로 확인한다.

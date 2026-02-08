@@ -1,5 +1,23 @@
 # MCP Workspace Ops
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Tree
+> - 1) MCP 목록 선언
+> - 2) 설치 정책 게이트
+> - 3) 세션 재시작 핸드오프
+> - 4) 운영 TODO
+> - 5) 경험 로그
+<!-- DOC_TOC_END -->
+
 이 디렉토리는 MCP 설치/점검과 세션 재시작 핸드오프를 한 곳에서 관리한다.
 
 ## Tree

@@ -1,5 +1,19 @@
 # Codex Skills Reload Runtime
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Scripts
+> - Notes
+<!-- DOC_TOC_END -->
+
 `skills/bin/codex_skills_reload/`는 리로드 로직의 실제 구현 디렉토리다.
 
 ## Scripts

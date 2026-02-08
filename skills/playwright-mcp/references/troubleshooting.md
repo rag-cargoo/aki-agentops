@@ -1,5 +1,25 @@
 # Playwright MCP Troubleshooting
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1. Browser Opens Then Closes Immediately
+> - 2. `Trace/breakpoint trap` or `setsockopt: Operation not permitted`
+> - 3. `DISPLAY` or `WAYLAND_DISPLAY` Missing
+> - 4. DBus Warning Flood in Logs
+> - 5. Browser Missing But Installation Is Prohibited
+> - 6. MCP Works But GUI Is Not Visible
+> - 7. MCP Tools Fail But GUI Is Visible
+> - 8. Optional Only: Playwright Module Not Found
+<!-- DOC_TOC_END -->
+
 ## 1. Browser Opens Then Closes Immediately
 
 증상:

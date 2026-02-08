@@ -1,5 +1,18 @@
 # MCP Manifest
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - (목차 대상 섹션 없음)
+<!-- DOC_TOC_END -->
+
 운영/검토용 문서 페이지입니다. 실제 소스 파일은 아래 경로입니다.
 
 - source: `mcp/manifest/mcp-manifest.sh`

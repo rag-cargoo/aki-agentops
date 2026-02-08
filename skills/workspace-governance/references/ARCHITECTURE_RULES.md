@@ -1,5 +1,19 @@
 #  전사 아키텍처 원칙 (Global Architecture Principles)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1. 아키텍처 지향점
+> - 2. 서비스별 아키텍처 정의 위치
+<!-- DOC_TOC_END -->
+
 이 문서는 모든 프로젝트(서비스)가 공통적으로 지향해야 할 아키텍처 대원칙을 정의합니다.
 구체적인 구현 기술 및 레이어링 전략은 **각 서비스별 문서(`prj-docs/knowledge/`)**에 정의합니다.
 

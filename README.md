@@ -1,5 +1,26 @@
 #  Ticket-Rush (고성능 선착순 티켓팅 시스템)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 단계 목차 (Step Index)
+---
+> [!TIP]
+> - Step 1: 낙관적 락(Optimistic Lock) - JPA @Version 활용
+> - Step 2: 비관적 락(Pessimistic Lock) - DB FOR UPDATE 쿼리 활용
+> - Step 3: 분산 락(Distributed Lock) - Redis(Redisson) Facade 패턴 적용
+> - Step 1~7
+> - Step 1~3: 락 전략 구축 및 정합성 검증
+> - Step 4: Kafka 기반 비동기 대기열 및 SSE 알림 시스템
+> - Step 5: Redis Sorted Set 기반 실시간 대기 순번 시스템
+> - Step 6: 대기열 진입 제한(Throttling) 및 유입량 제어
+> - Step 7: SSE 기반 실시간 순번 자동 푸시 시스템
+<!-- DOC_TOC_END -->
+
 대규모 트래픽 발생 시 데이터 정합성을 보장하고 시스템의 안정성을 유지하기 위한 **동시성 제어 및 비동기 처리 시스템** 프로젝트입니다.
 
 ---

@@ -1,5 +1,20 @@
 #  GitHub Pages 배포 및 운영 가이드
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 단계 목차 (Step Index)
+---
+> [!TIP]
+> - Step 1: 필수 파일 생성 (Root)
+> - Step 2: GitHub Pages 배포 설정
+> - Step 3: 확인
+<!-- DOC_TOC_END -->
+
 > **Goal**: GitHub Pages와 Docsify를 사용하여 5분 안에 프로젝트 문서 사이트를 구축하는 방법을 설명합니다.
 
 ---

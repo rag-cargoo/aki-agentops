@@ -1,5 +1,23 @@
 #  운영 및 자동화 표준 (Operations & Automation Standards)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1. Makefile 운영 원칙 (Makefile Standards)
+> - 2. 스크립트 관리 표준 (Scripting Standards)
+> - 3. 권한 및 실행 표준 (Execution)
+> - 4. 스킬 관리 및 동기화 표준 (Skill Management & Sync)
+> - 7.  파일 무결성 보호 프로토콜 (File Integrity Protection)
+> - 5. 문서 사이트 (GitHub Pages) 관리 표준
+<!-- DOC_TOC_END -->
+
 > **Core Philosophy**: "복잡한 수동 명령어를 지양하고, 모든 운영 작업은 명문화된 스크립트와 Makefile을 통해 수행한다."
 
 ---

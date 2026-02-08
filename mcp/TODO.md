@@ -1,5 +1,19 @@
 # MCP Ops TODO
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Backlog
+> - Done
+<!-- DOC_TOC_END -->
+
 > MCP 운영/자동화 개선 작업을 추적한다.
 
 ---

@@ -1,5 +1,23 @@
 #  코딩 표준 및 원칙 (Coding Standards)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1. 하드코딩 금지 (NO HARD-CODING) - [CRITICAL]
+> - 2. 모듈화 및 재사용성 (Modularity)
+> - 3. 주석 및 문서화 (Documentation)
+> - 4. 보안 및 시크릿 관리 (Security & Secrets)
+> - 5. 의존성 관리 (Dependency Management)
+> - 6. 테스트 전략 (Testing Strategy)
+<!-- DOC_TOC_END -->
+
 이 문서는 모든 결과물에 적용되는 **절대적인 품질 기준**입니다.
 
 ##  1. 하드코딩 금지 (NO HARD-CODING) - [CRITICAL]

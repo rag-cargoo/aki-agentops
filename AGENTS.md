@@ -1,5 +1,23 @@
 # AGENTS.md (Session Entry)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1) Single Entry Rule
+> - 2) Active Paths
+> - 3) Safety Rules
+> - 4) Skill Policy
+> - 5) Reload Trigger (Critical)
+> - 6) First Reply Contract
+<!-- DOC_TOC_END -->
+
 ## 1) Single Entry Rule
 이 저장소는 세션 시작 시 `AGENTS.md`만 읽고 진입한다.
 

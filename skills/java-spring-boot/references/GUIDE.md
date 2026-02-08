@@ -1,5 +1,24 @@
 # Java Spring Boot Guide
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Overview
+> - Category: General
+> - Quick Start
+> - Core Concepts
+> - Common Tasks
+> - Troubleshooting
+> - Related Resources
+<!-- DOC_TOC_END -->
+
 ## Overview
 
 This guide provides comprehensive documentation for the **java-spring-boot** skill in the custom-plugin-java plugin.

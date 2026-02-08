@@ -1,5 +1,21 @@
 #  문서 시각 표준 (Visual Standard)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1. 단계별 레이아웃 (H2 Standard)
+> - Step X: 제목
+> - 2. 시각적 요소 규칙
+> - 3. 코드 블록 스타일
+<!-- DOC_TOC_END -->
+
 > **Core Philosophy**: "일관된 위계와 박스 구조를 통해 엔지니어링 지식의 전달력을 극대화한다."
 
 ---

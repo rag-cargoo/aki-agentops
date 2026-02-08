@@ -1,5 +1,20 @@
 # 프로젝트 워크플로우 가이드 (Project Workflow)
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 1. 아키텍처 개요 (Architecture)
+> - 2. 작업 프로세스 (Standard Process)
+> - 3. 새로운 프로젝트 추가 방법
+<!-- DOC_TOC_END -->
+
 ## 1. 아키텍처 개요 (Architecture)
 
 이 워크스페이스는 **멀티 프로젝트(Multi-Project)** 구조를 지원하도록 설계되었습니다.

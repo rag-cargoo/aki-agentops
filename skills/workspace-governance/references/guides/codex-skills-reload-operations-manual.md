@@ -1,5 +1,26 @@
 # Codex Skills Reload 운영 매뉴얼
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - 0. 운영 플로우 요약 (세션 시작/세션 중)
+> - 1. 왜 이 구조를 만들었나
+> - 2. 스크립트 역할 (건드리기 전 반드시 확인)
+> - 3. 내부 동작 원리
+> - 4. 멀티 프로젝트 표준 절차
+> - 5. 런타임 스냅샷 파일 정책
+> - 6. 변경 시 체크리스트
+> - 7. 자동화 적용 상태
+> - 8. pre-commit 모드 정책 (Quick / Strict)
+<!-- DOC_TOC_END -->
+
 > 목적: 세션 시작/진행 중 스킬 리로드와 프로젝트 타겟 전환을 안전하게 운영하기 위한 사람용 표준 가이드.
 > 범위: `skills/bin/codex_skills_reload/` 및 관련 런타임 스냅샷(`.codex/runtime/`).
 

@@ -1,5 +1,20 @@
 # Java Spring Boot Patterns
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Design Patterns
+> - Anti-Patterns to Avoid
+> - Category-Specific Patterns: General
+<!-- DOC_TOC_END -->
+
 ## Design Patterns
 
 ### Pattern 1: Input Validation

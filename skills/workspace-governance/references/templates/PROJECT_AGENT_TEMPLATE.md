@@ -1,5 +1,21 @@
 # Project Agent Scope: <Service Name>
 
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-08 23:07:03`
+> - **Updated At**: `2026-02-08 23:11:27`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Scope
+> - Mandatory Load Order
+> - Project Rules
+> - Done Criteria
+<!-- DOC_TOC_END -->
+
 ## Scope
 이 문서는 `<project-root>` 경로의 프로젝트에만 적용된다.
 다른 프로젝트에는 이 규칙을 전파하지 않는다.
