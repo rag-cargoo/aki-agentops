@@ -4,7 +4,7 @@ set -euo pipefail
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
-staged_files="$(git diff --cached --name-only --diff-filter=ACMR || true)"
+staged_files="$(git diff --cached --name-only || true)"
 if [[ -z "$staged_files" ]]; then
   exit 0
 fi
@@ -27,10 +27,14 @@ while IFS= read -r file_path; do
 done <<< "$staged_files"
 
 if [[ "$requires_reload" != "true" ]]; then
-  exit 0
+  :
+else
+  echo "[pre-commit] codex skills reload validation"
+  bash -n skills/bin/codex_skills_reload/*.sh
+  ./skills/bin/codex_skills_reload/session_start.sh >/dev/null
+  echo "[pre-commit] ok"
 fi
 
-echo "[pre-commit] codex skills reload validation"
-bash -n skills/bin/codex_skills_reload/*.sh
-./skills/bin/codex_skills_reload/session_start.sh >/dev/null
-echo "[pre-commit] ok"
+echo "[pre-commit] ticket-core chain validation"
+bash skills/bin/validate-ticket-core-chain.sh
+echo "[pre-commit] ticket-core chain ok"

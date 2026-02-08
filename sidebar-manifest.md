@@ -26,6 +26,10 @@
           * [User API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/user-api.md)
           * [Concert API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/concert-api.md)
           * [Reservation API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/reservation-api.md)
+          * [Waiting Queue API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/waiting-queue-api.md)
+        * **API Test**
+          * [API Script Guide](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/README.md)
+          * [Latest API Script Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/latest.md)
         * **Engineering Knowledge**
           * [Step 1~6: 동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
