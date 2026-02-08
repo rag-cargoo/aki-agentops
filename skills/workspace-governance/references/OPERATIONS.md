@@ -94,6 +94,7 @@
     2. 사용자 승인 후에만 `strict`를 적용한다.
     3. 완료 후 기본값을 `quick`으로 복귀한다.
     4. `strict`는 `skills/precommit/policies/*.sh` 정책에 없는 staged 경로를 실패 처리한다.
+    5. `strict`는 문서 품질 규칙(지식 문서 Failure-First/Before&After/Execution Log, API 명세 6-Step)을 함께 검증한다.
 *   **명령어**:
     *   상태 확인: `./skills/bin/precommit_mode.sh status`
     *   기본 모드 설정: `./skills/bin/precommit_mode.sh quick|strict`

@@ -95,7 +95,7 @@ mode="$(resolve_mode "$@")"
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
-staged_files="$(git diff --cached --name-only || true)"
+staged_files="$(git -c core.quotePath=false diff --cached --name-only || true)"
 if [[ -z "$staged_files" ]]; then
   exit 0
 fi

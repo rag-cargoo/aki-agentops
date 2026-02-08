@@ -5,6 +5,82 @@ POLICY_ROOTS=(
   "workspace/apps/backend/ticket-core-service"
 )
 
+validate_knowledge_doc_quality() {
+  local file_path="$1"
+  [[ -f "$file_path" ]] || return 0
+
+  local missing=()
+  if ! grep -Eq "실패|한계|함정|Failure-First|Anti-Pattern|Antipattern|anti-pattern" "$file_path"; then
+    missing+=("Failure-First 단락(실패/한계/함정)")
+  fi
+  if ! grep -Eq "Before|나쁜 예시|Bad Practice" "$file_path"; then
+    missing+=("Before 단락(나쁜 예시)")
+  fi
+  if ! grep -Eq "After|모범 사례|Best Practice|개선" "$file_path"; then
+    missing+=("After 단락(개선 결과)")
+  fi
+  if ! grep -Eq "Execution Log|Raw Log|실행 로그|테스트 결과|Result: PASS|Result: FAIL" "$file_path"; then
+    missing+=("Execution Log 단락(실행/검증 로그)")
+  fi
+
+  local code_fence_count
+  code_fence_count="$(grep -c '```' "$file_path" || true)"
+  if [[ "$code_fence_count" -lt 2 ]]; then
+    missing+=("코드 블록(``` ... ```)")
+  fi
+
+  if grep -Eq "^## Step 7: SSE 기반 실시간 순번 자동 푸시" "$file_path"; then
+    if ! grep -Eq "v7-sse-rank-push\\.sh|RANK_UPDATE|ACTIVE|/api/v1/waiting-queue/subscribe" "$file_path"; then
+      missing+=("Step 7 구현/검증 근거(v7 script, event, subscribe endpoint)")
+    fi
+  fi
+
+  if [[ "${#missing[@]}" -gt 0 ]]; then
+    echo "[chain-check][${POLICY_ID}] strict validation failed: knowledge doc quality check"
+    echo "  - file: $file_path"
+    local item
+    for item in "${missing[@]}"; do
+      echo "  - missing: $item"
+    done
+    return 1
+  fi
+
+  return 0
+}
+
+validate_api_spec_quality() {
+  local file_path="$1"
+  [[ -f "$file_path" ]] || return 0
+
+  local required_tokens=(
+    "Endpoint"
+    "Description"
+    "Parameters"
+    "Request Example"
+    "Response Summary"
+    "Response Example"
+  )
+
+  local missing=()
+  local token
+  for token in "${required_tokens[@]}"; do
+    if ! grep -Fq "$token" "$file_path"; then
+      missing+=("$token")
+    fi
+  done
+
+  if [[ "${#missing[@]}" -gt 0 ]]; then
+    echo "[chain-check][${POLICY_ID}] strict validation failed: API spec 6-step check"
+    echo "  - file: $file_path"
+    for token in "${missing[@]}"; do
+      echo "  - missing: $token"
+    done
+    return 1
+  fi
+
+  return 0
+}
+
 policy_validate() {
   local mode="$1"
   local staged_files="$2"
@@ -34,6 +110,29 @@ policy_validate() {
     echo "[chain-check][${POLICY_ID}] quick mode warning: generated artifacts are staged"
   fi
 
+  local staged_knowledge_docs=()
+  local staged_api_specs=()
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    if [[ "$file_path" == "${project_root}/prj-docs/knowledge/"*.md ]]; then
+      staged_knowledge_docs+=("$file_path")
+      continue
+    fi
+    if [[ "$file_path" == "${project_root}/prj-docs/api-specs/"*.md ]]; then
+      staged_api_specs+=("$file_path")
+      continue
+    fi
+  done <<< "$staged_files"
+
+  if [[ "$mode" == "strict" ]]; then
+    for file_path in "${staged_knowledge_docs[@]}"; do
+      validate_knowledge_doc_quality "$file_path" || return 1
+    done
+    for file_path in "${staged_api_specs[@]}"; do
+      validate_api_spec_quality "$file_path" || return 1
+    done
+  fi
+
   local project_change_patterns=(
     "^${project_root}/src/main/java/.+\\.java$"
     "^${project_root}/src/main/resources/.+\\.ya?ml$"
@@ -57,7 +156,7 @@ policy_validate() {
   fi
 
   local added_docs
-  added_docs="$(git diff --cached --name-only --diff-filter=A | grep -E "^${project_root}/prj-docs/.+\\.md$" || true)"
+  added_docs="$(git -c core.quotePath=false diff --cached --name-only --diff-filter=A | grep -E "^${project_root}/prj-docs/.+\\.md$" || true)"
   local sidebar_missing="false"
   if [[ -n "$added_docs" ]] && ! grep -Fxq "$sidebar_file" <<< "$staged_files"; then
     sidebar_missing="true"

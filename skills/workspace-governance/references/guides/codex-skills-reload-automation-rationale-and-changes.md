@@ -50,6 +50,7 @@
 6. 프로젝트 체인 검증은 기본 `quick`, 중요 커밋은 `strict`로 운영
 7. `strict` 전환은 사용자 승인 후 수행하도록 운영 정책 고정
 8. `strict`에서 정책 미커버 staged 경로는 실패 처리
+9. `strict`에서 지식 문서 품질 토큰(Failure-First/Before&After/Execution Log)과 API 6-Step 토큰을 검증
 
 미적용 시:
 1. 로컬에서 막을 수 있는 오류가 원격까지 전파됨
