@@ -12,6 +12,7 @@ runtime_dir="$repo_root/.codex/runtime"
 skills_snapshot="$runtime_dir/codex_skills_reload.md"
 project_snapshot="$runtime_dir/codex_project_reload.md"
 session_snapshot="$runtime_dir/codex_session_start.md"
+handoff_file="$repo_root/mcp/runtime/SESSION_HANDOFF.md"
 
 "$script_dir/skills_reload.sh" >/dev/null
 "$script_dir/project_reload.sh" >/dev/null
@@ -26,6 +27,15 @@ if [[ -f "$project_snapshot" ]]; then
   active_project="$(grep -E '^- Project Root:' "$project_snapshot" | sed -E 's/^- Project Root: `([^`]+)`/\1/' || true)"
   active_task="$(grep -E '^- Task Doc:' "$project_snapshot" | sed -E 's/^- Task Doc: `([^`]+)`/\1/' || true)"
   active_agent="$(grep -E '^- Project Agent:' "$project_snapshot" | sed -E 's/^- Project Agent: `([^`]+)`/\1/' || true)"
+fi
+
+handoff_status="NONE"
+handoff_created=""
+handoff_reason=""
+if [[ -s "$handoff_file" ]]; then
+  handoff_status="PENDING"
+  handoff_created="$(grep -E '^- Created At:' "$handoff_file" | head -n 1 | sed -E 's/^- Created At: `([^`]+)`/\1/' || true)"
+  handoff_reason="$(grep -E '^- Reason:' "$handoff_file" | head -n 1 | sed -E 's/^- Reason: ?//' || true)"
 fi
 
 skills_status="OK"
@@ -102,6 +112,17 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
     echo "- Action: \`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>\`"
   fi
   echo
+  echo "## Session Handoff"
+  if [[ "$handoff_status" == "PENDING" ]]; then
+    echo "- Status: \`PENDING\`"
+    echo "- File: \`mcp/runtime/SESSION_HANDOFF.md\`"
+    [[ -n "$handoff_created" ]] && echo "- Created At: \`$handoff_created\`"
+    [[ -n "$handoff_reason" ]] && echo "- Reason: $handoff_reason"
+    echo "- Action: \`mcp/runtime/SESSION_HANDOFF.md\`를 먼저 읽고 이어서 진행"
+  else
+    echo "- Status: \`NONE\`"
+  fi
+  echo
   echo "## How It Works"
   echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\`에서 로드"
   echo "2. 프로젝트 규칙은 Active Project의 \`prj-docs/PROJECT_AGENT.md\`에서만 로드"
@@ -115,6 +136,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "## Quick Remind"
   echo "- 시작 문구: \`AGENTS.md만 읽고 시작해.\`"
   echo "- 세션 상태 문서: \`.codex/runtime/codex_session_start.md\`"
+  echo "- 재시작 핸드오프: \`mcp/runtime/SESSION_HANDOFF.md\` (있으면 우선 로드)"
   echo "- 문제 시 재동기화: \`./skills/bin/codex_skills_reload/session_start.sh\`"
   echo
   echo "## Usage"
