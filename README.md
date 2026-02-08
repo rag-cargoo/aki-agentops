@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 00:41:26`
+> - **Updated At**: `2026-02-09 00:46:36`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -51,15 +51,12 @@
   - Kubernetes
     - kind (`예정`)
     - aws-eks (`예정`)
-
-### 3. Manifests
-- Kubernetes Manifests
-  - base (`예정`)
-  - overlays
-    - kind (`예정`)
-    - aws-eks (`예정`)
-- App Release Manifests (`예정`)
-- `workspace/manifests` (`상위 루트`)
+    - Manifests
+      - base (`예정`)
+      - overlays/kind (`예정`)
+      - overlays/aws-eks (`예정`)
+- App Release
+  - Manifests (`예정`)
 
 ---
 
@@ -116,4 +113,5 @@ workspace/
 
 - 루트 `README.md`는 저장소 전체 분류/진입점만 다룹니다.
 - 프로젝트 상세 구현/실험 내역은 각 프로젝트의 `prj-docs/`에서 관리합니다.
-- 신규 프로젝트가 생기면 `Apps|Infra|Manifests` 분류 아래에 상태(`진행중/예정`)와 대표 문서 링크를 등록합니다.
+- 신규 프로젝트가 생기면 `Apps|Infra` 분류 아래에 상태(`진행중/예정`)와 대표 문서 링크를 등록합니다.
+- `workspace/manifests`는 Infra 배포 산출물 저장 루트로 관리합니다.
