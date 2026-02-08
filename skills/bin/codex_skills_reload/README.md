@@ -21,7 +21,7 @@
 2. `skills_reload.sh` - 스킬 목록 스냅샷 생성
 3. `project_reload.sh` - 활성 프로젝트 스냅샷 생성
 4. `set_active_project.sh` - 활성 프로젝트 지정/조회
-5. `init_project_docs.sh` - 신규 프로젝트 기준선 문서(`README.md`, `PROJECT_AGENT.md`, `task.md`)와 `prj-docs/rules/` 디렉토리 생성
+5. `init_project_docs.sh` - 신규 프로젝트 기준선 문서(`README.md`, `PROJECT_AGENT.md`, `task.md`, `meeting-notes/README.md`)와 `prj-docs/rules/` 디렉토리 생성
 
 ## Notes
 1. 기본 진입점은 `./skills/bin/codex_skills_reload/session_start.sh`다.

@@ -16,15 +16,15 @@ Usage:
   ./skills/bin/codex_skills_reload/set_active_project.sh --list
 
 Examples:
-  ./skills/bin/codex_skills_reload/set_active_project.sh workspace/apps/<domain>/<project>
+  ./skills/bin/codex_skills_reload/set_active_project.sh workspace/<category>/<project>
   ./skills/bin/codex_skills_reload/set_active_project.sh --list
 EOF
 }
 
 list_projects() {
-  mapfile -t task_files < <(find "$workspace_dir/apps" -type f -path "*/prj-docs/task.md" 2>/dev/null | sort || true)
+  mapfile -t task_files < <(find "$workspace_dir" -type f -path "*/prj-docs/task.md" 2>/dev/null | sort || true)
   if [[ "${#task_files[@]}" -eq 0 ]]; then
-    echo "no projects found under workspace/apps"
+    echo "no projects found under workspace"
     return 0
   fi
   echo "detected projects:"
@@ -58,6 +58,7 @@ required_files=(
   "$project_abs/README.md"
   "$project_abs/prj-docs/PROJECT_AGENT.md"
   "$project_abs/prj-docs/task.md"
+  "$project_abs/prj-docs/meeting-notes/README.md"
 )
 required_dirs=(
   "$project_abs/prj-docs/rules"

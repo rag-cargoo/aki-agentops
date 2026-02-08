@@ -94,7 +94,7 @@ CHAIN_VALIDATION_MODE=strict git commit -m "..."
 3. `api-specs/*.md` 6-Step 토큰 검증
    - Endpoint / Description / Parameters / Request Example / Response Summary / Response Example
 4. 프로젝트 기준선 존재 검증
-   - `README.md`, `prj-docs/PROJECT_AGENT.md`, `prj-docs/task.md`, `prj-docs/rules/`
+   - `README.md`, `prj-docs/PROJECT_AGENT.md`, `prj-docs/task.md`, `prj-docs/meeting-notes/README.md`, `prj-docs/rules/`
 5. 코드/설정/API 스크립트 변경 시 동반 문서 세트 staged 요구
    - `task.md`, `api-specs/*.md`, `knowledge/*.md`, `scripts/http/*.http`, `scripts/api/*.sh`
 6. 신규 문서 추가 시 `sidebar-manifest.md` 동시 staged 요구

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-09 04:43:58`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -89,11 +89,11 @@ cat .codex/runtime/codex_session_start.md
 
 1. 문서 골격 자동 생성
 ```bash
-./skills/bin/codex_skills_reload/init_project_docs.sh workspace/apps/<domain>/<service>
+./skills/bin/codex_skills_reload/init_project_docs.sh workspace/<category>/<service>
 ```
 2. 활성 프로젝트 지정 + 세션 리로드
 ```bash
-./skills/bin/codex_skills_reload/set_active_project.sh workspace/apps/<domain>/<service>
+./skills/bin/codex_skills_reload/set_active_project.sh workspace/<category>/<service>
 ./skills/bin/codex_skills_reload/session_start.sh
 ```
 

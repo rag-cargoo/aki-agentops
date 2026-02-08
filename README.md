@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 00:49:06`
+> - **Updated At**: `2026-02-09 04:43:58`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -41,7 +41,11 @@
   - Ticket Core Service (`진행중`)
     - 프로젝트 README: [Ticket Core Service README](/workspace/apps/backend/ticket-core-service/README.md)
 
-### 2. Infra
+### 2. Agent Skills
+- Codex Runtime Engine (`진행중`)
+  - 프로젝트 README: [Codex Runtime Engine README](/workspace/agent-skills/codex-runtime-engine/README.md)
+
+### 3. Infra
 - IaC
   - Terraform (`예정`)
   - Ansible (`예정`)
@@ -109,4 +113,4 @@ workspace/
 
 - 루트 `README.md`는 저장소 전체 분류/진입점만 다룹니다.
 - 프로젝트 상세 구현/실험 내역은 각 프로젝트의 `prj-docs/`에서 관리합니다.
-- 신규 프로젝트가 생기면 `Apps|Infra` 분류 아래에 상태(`진행중/예정`)와 대표 문서 링크를 등록합니다.
+- 신규 프로젝트가 생기면 `Apps|Agent Skills|Infra` 분류 아래에 상태(`진행중/예정`)와 대표 문서 링크를 등록합니다.

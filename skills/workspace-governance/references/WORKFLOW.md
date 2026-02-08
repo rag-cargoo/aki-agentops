@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 01:38:36`
+> - **Updated At**: `2026-02-09 04:43:58`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -88,6 +88,6 @@ skills/
 ---
 
 ## 3. 새로운 프로젝트 추가 방법
-1. `workspace/apps` 하위에 서비스 폴더를 생성합니다.
-2. `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`를 실행해 `prj-docs` 골격과 `PROJECT_AGENT.md` 템플릿을 자동 생성합니다.
+1. `workspace/<category>` 하위에 프로젝트 폴더를 생성합니다.
+2. `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`를 실행해 기준선 문서(`README.md`, `PROJECT_AGENT.md`, `task.md`, `meeting-notes/README.md`)와 `prj-docs` 골격을 자동 생성합니다.
 3. `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>` 및 `sidebar-manifest.md` 등록으로 활성 타겟과 문서 링크를 동기화합니다.

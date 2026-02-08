@@ -33,6 +33,16 @@
         * **Engineering Knowledge**
           * [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
+        * **Meeting Notes**
+          * [Index](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md)
+  * **Agent Skills**
+    * **Codex Runtime Engine**
+      * [Project README](/workspace/agent-skills/codex-runtime-engine/README.md)
+      * [Project Agent (Rules)](/workspace/agent-skills/codex-runtime-engine/prj-docs/PROJECT_AGENT.md)
+      * [Current Tasks](/workspace/agent-skills/codex-runtime-engine/prj-docs/task.md)
+      * **Meeting Notes**
+        * [Index](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/README.md)
+        * [2026-02-09 Kickoff](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-09-kickoff.md)
 
 ---
 

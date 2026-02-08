@@ -143,8 +143,16 @@ def extract_step_entries(lines: list[str]) -> list[str]:
 def extract_h2_entries(lines: list[str]) -> list[str]:
     entries: list[str] = []
     seen: set[str] = set()
+    in_code = False
     for line in lines:
-        match = re.match(r"^##\s+(.+)$", line.strip())
+        stripped = line.rstrip("\n")
+        if CODE_FENCE_RE.match(stripped):
+            in_code = not in_code
+            continue
+        if in_code:
+            continue
+
+        match = re.match(r"^##\s+(.+)$", stripped.strip())
         if not match:
             continue
         heading = match.group(1).strip()

@@ -21,12 +21,16 @@ mkdir -p "$runtime_dir"
 mapfile -t loaded_skills < <(find "$repo_root/skills" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
 
 active_project=""
+active_readme=""
 active_task=""
 active_agent=""
+active_meeting_notes=""
 if [[ -f "$project_snapshot" ]]; then
   active_project="$(grep -E '^- Project Root:' "$project_snapshot" | sed -E 's/^- Project Root: `([^`]+)`/\1/' || true)"
+  active_readme="$(grep -E '^- Project README:' "$project_snapshot" | sed -E 's/^- Project README: `([^`]+)`/\1/' || true)"
   active_task="$(grep -E '^- Task Doc:' "$project_snapshot" | sed -E 's/^- Task Doc: `([^`]+)`/\1/' || true)"
   active_agent="$(grep -E '^- Project Agent:' "$project_snapshot" | sed -E 's/^- Project Agent: `([^`]+)`/\1/' || true)"
+  active_meeting_notes="$(grep -E '^- Meeting Notes:' "$project_snapshot" | sed -E 's/^- Meeting Notes: `([^`]+)`/\1/' || true)"
 fi
 
 handoff_status="NONE"
@@ -105,8 +109,10 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "## Active Project"
   if [[ -n "$active_project" && "$active_project" != "(not selected)" ]]; then
     echo "- Project Root: \`$active_project\`"
+    [[ -n "$active_readme" ]] && echo "- Project README: \`$active_readme\`"
     [[ -n "$active_task" ]] && echo "- Task Doc: \`$active_task\`"
     [[ -n "$active_agent" ]] && echo "- Project Agent: \`$active_agent\`"
+    [[ -n "$active_meeting_notes" ]] && echo "- Meeting Notes: \`$active_meeting_notes\`"
   else
     echo "- Project Root: \`(not selected)\`"
     echo "- Action: \`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>\`"
@@ -125,7 +131,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo
   echo "## How It Works"
   echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\`에서 로드"
-  echo "2. 프로젝트 규칙은 Active Project의 \`prj-docs/PROJECT_AGENT.md\`에서만 로드"
+  echo "2. 프로젝트 컨텍스트는 Active Project의 \`README.md\` + \`prj-docs/PROJECT_AGENT.md\` + \`prj-docs/meeting-notes/README.md\`에서 로드"
   echo "3. 멀티 프로젝트에서는 Active Project를 명시적으로 전환해서 충돌 방지"
   echo
   echo "## Multi Project Guide"

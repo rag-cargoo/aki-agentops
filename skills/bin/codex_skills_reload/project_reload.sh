@@ -20,7 +20,7 @@ if [[ ! -d "$workspace_dir" ]]; then
 fi
 mkdir -p "$runtime_dir"
 
-mapfile -t task_files < <(find "$workspace_dir/apps" -type f -path "*/prj-docs/task.md" 2>/dev/null | sort || true)
+mapfile -t task_files < <(find "$workspace_dir" -type f -path "*/prj-docs/task.md" 2>/dev/null | sort || true)
 project_count="${#task_files[@]}"
 
 declare -a project_roots=()
@@ -43,6 +43,7 @@ fi
 active_task=""
 active_agent=""
 active_readme=""
+active_meeting_notes=""
 declare -a active_missing=()
 active_is_valid="false"
 if [[ -n "$active_project" ]]; then
@@ -50,6 +51,7 @@ if [[ -n "$active_project" ]]; then
   candidate_readme="$active_abs/README.md"
   candidate_task="$active_abs/prj-docs/task.md"
   candidate_agent="$active_abs/prj-docs/PROJECT_AGENT.md"
+  candidate_meeting_notes="$active_abs/prj-docs/meeting-notes/README.md"
   candidate_rules_dir="$active_abs/prj-docs/rules"
 
   if [[ ! -f "$candidate_readme" ]]; then
@@ -61,6 +63,9 @@ if [[ -n "$active_project" ]]; then
   if [[ ! -f "$candidate_agent" ]]; then
     active_missing+=("${candidate_agent#$repo_root/}")
   fi
+  if [[ ! -f "$candidate_meeting_notes" ]]; then
+    active_missing+=("${candidate_meeting_notes#$repo_root/}")
+  fi
   if [[ ! -d "$candidate_rules_dir" ]]; then
     active_missing+=("${candidate_rules_dir#$repo_root/}/")
   fi
@@ -70,6 +75,7 @@ if [[ -n "$active_project" ]]; then
     active_readme="${candidate_readme#$repo_root/}"
     active_task="${candidate_task#$repo_root/}"
     active_agent="${candidate_agent#$repo_root/}"
+    active_meeting_notes="${candidate_meeting_notes#$repo_root/}"
   fi
 fi
 
@@ -86,6 +92,7 @@ fi
     echo "- Project README: \`$active_readme\`"
     echo "- Task Doc: \`$active_task\`"
     echo "- Project Agent: \`$active_agent\`"
+    echo "- Meeting Notes: \`$active_meeting_notes\`"
   else
     echo "- Project Root: \`(not selected)\`"
     if [[ -n "$active_project" && "${#active_missing[@]}" -gt 0 ]]; then
@@ -100,7 +107,7 @@ fi
     elif [[ "$project_count" -gt 1 ]]; then
       echo "- Reason: multiple projects detected. run \`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>\`"
     elif [[ "$project_count" -eq 0 ]]; then
-      echo "- Reason: no project with \`prj-docs/task.md\` found under \`workspace/apps\`"
+      echo "- Reason: no project with \`prj-docs/task.md\` found under \`workspace\`"
     else
       echo "- Reason: invalid active project path. run \`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>\`"
     fi
@@ -127,7 +134,7 @@ fi
   echo "## Usage"
   echo "1. 기본 리로드는 \`./skills/bin/codex_skills_reload/session_start.sh\` 사용 (권장)"
   echo "2. 신규/다중 프로젝트면 \`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>\` 실행"
-  echo "3. 이 문서를 읽고 Active Project의 \`README.md\` + \`PROJECT_AGENT.md\` + \`task.md\`를 로드"
+  echo "3. 이 문서를 읽고 Active Project의 \`README.md\` + \`PROJECT_AGENT.md\` + \`task.md\` + \`meeting-notes/README.md\`를 로드"
 } > "$output_file"
 
 echo "updated: $output_file"

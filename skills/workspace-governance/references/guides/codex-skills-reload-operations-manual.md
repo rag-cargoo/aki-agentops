@@ -63,7 +63,7 @@
 | `skills/bin/codex_skills_reload/skills_reload.sh` | 로드된 `SKILL.md` 목록 스냅샷 생성 | 스킬 목록 검증 불가 |
 | `skills/bin/codex_skills_reload/project_reload.sh` | 프로젝트 탐색 + Active Project 스냅샷 생성 | 프로젝트 규칙 오적용 가능 |
 | `skills/bin/codex_skills_reload/set_active_project.sh` | Active Project 지정/조회 | 멀티 프로젝트 운영 실패 |
-| `skills/bin/codex_skills_reload/init_project_docs.sh` | 신규 프로젝트 `prj-docs` 기본 골격 + `PROJECT_AGENT.md` 템플릿 주입 | 초기 프로젝트 문서 누락/편차 발생 |
+| `skills/bin/codex_skills_reload/init_project_docs.sh` | 신규 프로젝트 기준선 문서(`README.md`, `PROJECT_AGENT.md`, `task.md`, `meeting-notes/README.md`) + `prj-docs` 기본 골격 생성 | 초기 프로젝트 문서 누락/편차 발생 |
 | `skills/bin/create-backup-point.sh` | 위험 작업 전 백업 브랜치/태그 생성 | 복구 지점 상실 |
 | `skills/bin/sync-skill.sh` | 런타임 스킬 링크 동기화 | 런타임이 최신 스킬을 못 읽을 수 있음 |
 

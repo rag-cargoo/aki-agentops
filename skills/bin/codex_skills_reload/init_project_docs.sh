@@ -21,8 +21,8 @@ Options:
   -h, --help              Show this help
 
 Examples:
-  ./skills/bin/codex_skills_reload/init_project_docs.sh workspace/apps/backend/payment-service
-  ./skills/bin/codex_skills_reload/init_project_docs.sh workspace/apps/backend/payment-service --service-name "Payment Service" --force
+  ./skills/bin/codex_skills_reload/init_project_docs.sh workspace/agent-skills/codex-runtime-engine
+  ./skills/bin/codex_skills_reload/init_project_docs.sh workspace/agent-skills/codex-runtime-engine --service-name "Codex Runtime Engine" --force
 EOF
 }
 
@@ -79,8 +79,8 @@ if [[ "$target_path" == "$repo_root"* ]]; then
   target_path="${target_path#$repo_root/}"
 fi
 
-if [[ ! "$target_path" =~ ^workspace/apps/[^[:space:]]+$ ]]; then
-  echo "error: project-root must be under workspace/apps: $target_path" >&2
+if [[ ! "$target_path" =~ ^workspace/[^[:space:]]+$ ]]; then
+  echo "error: project-root must be under workspace/: $target_path" >&2
   exit 1
 fi
 
@@ -132,6 +132,7 @@ write_file() {
 ensure_dir "$project_abs"
 ensure_dir "$project_abs/prj-docs"
 ensure_dir "$project_abs/prj-docs/rules"
+ensure_dir "$project_abs/prj-docs/meeting-notes"
 ensure_dir "$project_abs/prj-docs/knowledge"
 ensure_dir "$project_abs/prj-docs/troubleshooting"
 
@@ -149,6 +150,38 @@ task_content="# Task Board ($service_name)
 - Record implementation decisions in this document.
 "
 
+meeting_notes_index_content="# Meeting Notes ($service_name)
+
+## Purpose
+- Store official meeting notes for this project.
+- Keep kickoff/decision/action logs in dated markdown files.
+
+## Naming
+- Use: YYYY-MM-DD-topic.md
+
+## First Note
+- Create the first note file before major design/implementation changes.
+
+## Template
+\`\`\`md
+# Meeting Notes: <title>
+
+## 안건 1: <주제>
+- 결정사항:
+- 후속작업:
+  - 담당:
+  - 기한:
+  - 상태: TODO | DOING | DONE
+
+## 안건 2: <주제>
+- 결정사항:
+- 후속작업:
+  - 담당:
+  - 기한:
+  - 상태: TODO | DOING | DONE
+\`\`\`
+"
+
 readme_content="# $service_name README
 
 ## Overview
@@ -161,11 +194,14 @@ readme_content="# $service_name README
 ## Docs
 - Project Agent: $target_path/prj-docs/PROJECT_AGENT.md
 - Task Dashboard: $target_path/prj-docs/task.md
+- Meeting Notes: $target_path/prj-docs/meeting-notes/README.md
 "
 
 write_file "$project_abs/README.md" "$readme_content"
 write_file "$project_abs/prj-docs/PROJECT_AGENT.md" "$project_agent_content"
 write_file "$project_abs/prj-docs/task.md" "$task_content"
+write_file "$project_abs/prj-docs/meeting-notes/README.md" "$meeting_notes_index_content"
+write_file "$project_abs/prj-docs/rules/.gitkeep" ""
 
 echo "project-root: $target_path"
 echo "service-name: $service_name"
