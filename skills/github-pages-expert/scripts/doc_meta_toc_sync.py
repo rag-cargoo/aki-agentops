@@ -22,6 +22,9 @@ EXCLUDED_PREFIXES = (
     ".codex/runtime/",
     ".gemini/",
 )
+FORCE_QUICK_INDEX_FILES = {
+    "README.md",
+}
 
 
 def run(cmd: list[str]) -> str:
@@ -153,6 +156,11 @@ def extract_h2_entries(lines: list[str]) -> list[str]:
     return entries
 
 
+def should_force_quick_index(path: str) -> bool:
+    normalized = path.replace("\\", "/")
+    return normalized in FORCE_QUICK_INDEX_FILES
+
+
 def build_meta_block(created_at: str, updated_at: str) -> list[str]:
     return [
         META_START,
@@ -163,8 +171,11 @@ def build_meta_block(created_at: str, updated_at: str) -> list[str]:
     ]
 
 
-def build_toc_block(lines: list[str]) -> list[str]:
-    step_entries = extract_step_entries(lines)
+def build_toc_block(path: str, lines: list[str]) -> list[str]:
+    step_entries: list[str] = []
+    if not should_force_quick_index(path):
+        step_entries = extract_step_entries(lines)
+
     if step_entries:
         header = "## 단계 목차 (Step Index)"
         items = step_entries
@@ -202,7 +213,7 @@ def sync_file(path: str, now: str) -> bool:
 
     insert_idx = find_insert_index(lines)
     meta_block = build_meta_block(created_at, now)
-    toc_block = build_toc_block(lines)
+    toc_block = build_toc_block(path, lines)
 
     prefix = lines[:insert_idx]
     suffix = lines[insert_idx:]

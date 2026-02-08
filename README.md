@@ -1,65 +1,68 @@
-#  홍구 (고성능 선착순 티켓팅 시스템)
+#  홍구 Workspace Repository Guide
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 00:10:32`
+> - **Updated At**: `2026-02-09 00:18:34`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
-## 단계 목차 (Step Index)
+## 문서 목차 (Quick Index)
 ---
 > [!TIP]
-> - Step 1: 낙관적 락(Optimistic Lock) - JPA @Version 활용
-> - Step 2: 비관적 락(Pessimistic Lock) - DB FOR UPDATE 쿼리 활용
-> - Step 3: 분산 락(Distributed Lock) - Redis(Redisson) Facade 패턴 적용
-> - Step 1~3: 락 전략 구축 및 정합성 검증
-> - Step 4: Kafka 기반 비동기 대기열 및 SSE 알림 시스템
-> - Step 5: Redis Sorted Set 기반 실시간 대기 순번 시스템
-> - Step 6: 대기열 진입 제한(Throttling) 및 유입량 제어
-> - Step 7: SSE 기반 실시간 순번 자동 푸시 시스템
+> - 저장소 구성 (Repository Map)
+> - 현재 활성 프로젝트 (Current Active Project)
+> - 빠른 시작 (Ticket Core Service)
+> - 운영 원칙 (README Scope)
 <!-- DOC_TOC_END -->
 
-대규모 트래픽 발생 시 데이터 정합성을 보장하고 시스템의 안정성을 유지하기 위한 **동시성 제어 및 비동기 처리 시스템(홍구)** 프로젝트입니다.
+이 README는 루트 저장소 관점에서 **전체 워크스페이스 구조**를 안내합니다.
+현재 구현이 진행된 서비스는 `workspace/apps/backend/ticket-core-service`이며, `skills/`와 `mcp/`는 운영/자동화 문서 영역으로 분리되어 있습니다.
 
 ---
 
-##  시스템 아키텍처 (Architecture)
+## 저장소 구성 (Repository Map)
 
-- **Language**: Java 17
-- **Framework**: Spring Boot 3.4.1
-- **Database**: PostgreSQL (Main), H2 (Local Test)
-- **Messaging**: Apache Kafka (비동기 대기열)
-- **Caching/Lock**: Redis (분산 락, 상태 관리)
-- **Notification**: Server-Sent Events (실시간 알림)
+### 1. SKILLS (전역 규칙/자동화)
+- [Workflow](/skills/workspace-governance/references/WORKFLOW.md)
+- [Structure & Standards](/skills/workspace-governance/references/STRUCTURE.md)
+- [Operations & Automation](/skills/workspace-governance/references/OPERATIONS.md)
+- [GitHub Pages 배포 가이드](/skills/workspace-governance/references/guides/docsify-setup.md)
 
----
+### 2. WORKSPACE (프로젝트 구현 영역)
+- `workspace/apps/backend/ticket-core-service`
+- [Project Agent Scope](/workspace/apps/backend/ticket-core-service/prj-docs/PROJECT_AGENT.md)
+- [Current Tasks](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
+- [Roadmap](/workspace/apps/backend/ticket-core-service/prj-docs/ROADMAP.md)
+- [Architecture](/workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)
+- [Reservation API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/reservation-api.md)
 
-##  주요 구현 기능
-
-### 1. 동시성 제어 전략 (Concurrency Control)
-- **Step 1: 낙관적 락(Optimistic Lock)** - JPA `@Version` 활용
-- **Step 2: 비관적 락(Pessimistic Lock)** - DB `FOR UPDATE` 쿼리 활용
-- **Step 3: 분산 락(Distributed Lock)** - Redis(Redisson) Facade 패턴 적용
-
-### 2. 고성능 비동기 대기열 (Queue System)
-- **Kafka 기반 요청 수집**: 초당 수만 건의 요청을 안전하게 완충
-- **실시간 상태 추적**: Redis를 통한 PENDING -> SUCCESS 상태 전이 관리
-- **실시간 알림**: SSE(`INIT`/`RANK_UPDATE`/`ACTIVE`)를 통해 순번 및 상태 변화를 즉시 통보
-
----
-
-##  핵심 기술 문서 (Engineering Docs)
-
-모든 설계 결정과 실험 기록은 `prj-docs/` 하위에 상세히 기록되어 있습니다.
-- **[동시성 제어 전략 (Step 1~7)](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)**: 기술적 진화 과정 및 코드 대조 가이드.
-- **[API 연동 가이드](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/reservation-api.md)**: 프론트엔드 작업자를 위한 상세 시퀀스 및 JSON 명세.
+### 3. MCP (런타임 운영 문서)
+- [MCP Workspace Guide](/mcp/README.md)
+- [MCP Manifest](/mcp/manifest/mcp-manifest.md)
+- [MCP TODO](/mcp/TODO.md)
+- [MCP Experience Log](/mcp/references/experience-log.md)
 
 ---
 
-##  기동 및 테스트 방법 (Quick Start)
+## 현재 활성 프로젝트 (Current Active Project)
 
-### 1. 인프라 실행 (Docker)
+> [!NOTE]
+> - **프로젝트 경로**: `workspace/apps/backend/ticket-core-service`
+> - **상태**: 동시성 제어 + 대기열 + SSE 실시간 순번 자동 푸시까지 구현 완료
+> - **핵심 스택**: Java 17, Spring Boot 3.4.1, PostgreSQL, Redis, Kafka
+> - **상세 구현/실험 기록**: 프로젝트 문서(`prj-docs/`)에서 관리
+
+대표 문서:
+- [Project Task Dashboard](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
+- [Concurrency Strategy Knowledge](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
+- [API Test Guide](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/README.md)
+
+---
+
+## 빠른 시작 (Ticket Core Service)
+
+### 1. 인프라 실행
 ```bash
 docker-compose up -d
 ```
@@ -70,21 +73,16 @@ cd workspace/apps/backend/ticket-core-service
 ./gradlew bootRun --args='--spring.profiles.active=local'
 ```
 
-### 3. 테스트 자동화 (Admin Setup & Verify)
+### 3. API 스크립트 테스트
 ```bash
-# 1. 테스트 공연 및 좌석 자동 생성
-./scripts/api/setup-test-data.sh
-
-# 2. API 스크립트 회귀 테스트(v1~v7)
+cd workspace/apps/backend/ticket-core-service
 make test-suite
 ```
 
 ---
 
-##  개발 로드맵
-- [x] Step 1~3: 락 전략 구축 및 정합성 검증
-- [x] Step 4: Kafka 기반 비동기 대기열 및 SSE 알림 시스템
-- [x] Step 5: Redis Sorted Set 기반 실시간 대기 순번 시스템
-- [x] Step 6: 대기열 진입 제한(Throttling) 및 유입량 제어
-- [x] Step 7: SSE 기반 실시간 순번 자동 푸시 시스템
-- [ ] **Next: 캐싱 전략 적용 (공연 조회 성능 개선)**
+## 운영 원칙 (README Scope)
+
+- 루트 `README.md`는 저장소 전체 관점의 안내 문서입니다.
+- 프로젝트 상세 구현/검증/실험 내역은 각 프로젝트의 `prj-docs/`에서 관리합니다.
+- 신규 프로젝트가 추가되면 본 문서의 `WORKSPACE` 섹션에 동일 포맷으로 경로와 대표 문서를 등록합니다.
