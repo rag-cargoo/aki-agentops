@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 01:16:49`
+> - **Updated At**: `2026-02-09 01:38:36`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -47,10 +47,12 @@ skills/
 
 ```
 {service-name}/
+├── README.md             # [필수] 프로젝트 진입 문서
 ├── src/                  # 실제 소스 코드
 ├── prj-docs/             # [필수] 프로젝트 전용 관리 문서
-│   ├── task.md           # 현재 작업 현황판
-│   ├── TODO.md           # 단기 할 일 목록
+│   ├── PROJECT_AGENT.md  # [필수] 프로젝트 규칙 문서
+│   ├── task.md           # [필수] 작업 현황 + TODO 통합 문서
+│   ├── rules/            # [필수] 규칙 문서 디렉토리 (개별 문서는 필요 시 추가)
 │   ├── knowledge/        # [선택] 기술 지식 기록 (사용자 요청 시)
 │   ├── troubleshooting/  # [선택] 트러블슈팅 사례 (사용자 요청 시)
 │   └── ai-context/       # [선택] 서비스 전용 AI 컨텍스트

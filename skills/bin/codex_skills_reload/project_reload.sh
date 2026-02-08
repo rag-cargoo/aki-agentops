@@ -42,17 +42,34 @@ fi
 
 active_task=""
 active_agent=""
+active_readme=""
+declare -a active_missing=()
 active_is_valid="false"
 if [[ -n "$active_project" ]]; then
   active_abs="$repo_root/$active_project"
+  candidate_readme="$active_abs/README.md"
   candidate_task="$active_abs/prj-docs/task.md"
   candidate_agent="$active_abs/prj-docs/PROJECT_AGENT.md"
-  if [[ -f "$candidate_task" ]]; then
+  candidate_rules_dir="$active_abs/prj-docs/rules"
+
+  if [[ ! -f "$candidate_readme" ]]; then
+    active_missing+=("${candidate_readme#$repo_root/}")
+  fi
+  if [[ ! -f "$candidate_task" ]]; then
+    active_missing+=("${candidate_task#$repo_root/}")
+  fi
+  if [[ ! -f "$candidate_agent" ]]; then
+    active_missing+=("${candidate_agent#$repo_root/}")
+  fi
+  if [[ ! -d "$candidate_rules_dir" ]]; then
+    active_missing+=("${candidate_rules_dir#$repo_root/}/")
+  fi
+
+  if [[ "${#active_missing[@]}" -eq 0 ]]; then
     active_is_valid="true"
+    active_readme="${candidate_readme#$repo_root/}"
     active_task="${candidate_task#$repo_root/}"
-    if [[ -f "$candidate_agent" ]]; then
-      active_agent="${candidate_agent#$repo_root/}"
-    fi
+    active_agent="${candidate_agent#$repo_root/}"
   fi
 fi
 
@@ -66,15 +83,21 @@ fi
   echo "## Active Project"
   if [[ "$active_is_valid" == "true" ]]; then
     echo "- Project Root: \`$active_project\`"
+    echo "- Project README: \`$active_readme\`"
     echo "- Task Doc: \`$active_task\`"
-    if [[ -n "$active_agent" ]]; then
-      echo "- Project Agent: \`$active_agent\`"
-    else
-      echo "- Project Agent: \`(missing: prj-docs/PROJECT_AGENT.md)\`"
-    fi
+    echo "- Project Agent: \`$active_agent\`"
   else
     echo "- Project Root: \`(not selected)\`"
-    if [[ "$project_count" -gt 1 ]]; then
+    if [[ -n "$active_project" && "${#active_missing[@]}" -gt 0 ]]; then
+      echo "- Reason: active project is missing baseline files/directories"
+      local_missing_idx=1
+      for missing_item in "${active_missing[@]}"; do
+        echo "  $local_missing_idx) \`$missing_item\`"
+        local_missing_idx=$((local_missing_idx + 1))
+      done
+      echo "- Action: \`./skills/bin/codex_skills_reload/init_project_docs.sh $active_project\`"
+      echo "- Action: \`./skills/bin/codex_skills_reload/set_active_project.sh $active_project\`"
+    elif [[ "$project_count" -gt 1 ]]; then
       echo "- Reason: multiple projects detected. run \`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>\`"
     elif [[ "$project_count" -eq 0 ]]; then
       echo "- Reason: no project with \`prj-docs/task.md\` found under \`workspace/apps\`"
@@ -104,7 +127,7 @@ fi
   echo "## Usage"
   echo "1. 기본 리로드는 \`./skills/bin/codex_skills_reload/session_start.sh\` 사용 (권장)"
   echo "2. 신규/다중 프로젝트면 \`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>\` 실행"
-  echo "3. 이 문서를 읽고 Active Project의 \`PROJECT_AGENT.md\` + \`task.md\`를 로드"
+  echo "3. 이 문서를 읽고 Active Project의 \`README.md\` + \`PROJECT_AGENT.md\` + \`task.md\`를 로드"
 } > "$output_file"
 
 echo "updated: $output_file"

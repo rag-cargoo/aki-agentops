@@ -149,29 +149,23 @@ task_content="# Task Board ($service_name)
 - Record implementation decisions in this document.
 "
 
-todo_content="# TODO ($service_name)
+readme_content="# $service_name README
 
-- [ ] Clarify initial product requirements
-- [ ] Draft domain and architecture outline
-- [ ] Choose the first implementation slice
+## Overview
+- Status: TODO
+- Summary: describe project purpose, scope, and boundaries.
+
+## Run
+- Add local run instructions for this project.
+
+## Docs
+- Project Agent: $target_path/prj-docs/PROJECT_AGENT.md
+- Task Dashboard: $target_path/prj-docs/task.md
 "
 
-architecture_content="# Architecture Rules ($service_name)
-
-## Boundaries
-- 서비스 경계와 책임을 먼저 명확히 정의한다.
-
-## Dependencies
-- 외부 의존성은 최소화하고, 인터페이스를 통해 분리한다.
-
-## Data
-- Separate data ownership by service and define read model strategy.
-"
-
+write_file "$project_abs/README.md" "$readme_content"
 write_file "$project_abs/prj-docs/PROJECT_AGENT.md" "$project_agent_content"
 write_file "$project_abs/prj-docs/task.md" "$task_content"
-write_file "$project_abs/prj-docs/TODO.md" "$todo_content"
-write_file "$project_abs/prj-docs/rules/architecture.md" "$architecture_content"
 
 echo "project-root: $target_path"
 echo "service-name: $service_name"

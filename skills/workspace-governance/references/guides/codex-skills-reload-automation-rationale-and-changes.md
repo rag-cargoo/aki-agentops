@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 01:16:49`
+> - **Updated At**: `2026-02-09 01:38:36`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -113,7 +113,7 @@
 변경 내용:
 1. `prj-docs` 기본 폴더 자동 생성
 2. `PROJECT_AGENT.md` 템플릿 자동 주입
-3. `task.md`, `TODO.md`, `rules/architecture.md` 기본 문서 생성
+3. `README.md`, `task.md` 기본 문서 + `rules/` 기본 디렉토리 생성
 
 미적용 시:
 1. 프로젝트마다 문서 시작점이 달라지고 누락 파일이 반복 발생

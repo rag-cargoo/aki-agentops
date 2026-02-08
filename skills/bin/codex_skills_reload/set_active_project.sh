@@ -54,15 +54,38 @@ if [[ "$input_path" == "$repo_root"* ]]; then
 fi
 
 project_abs="$repo_root/$input_path"
-task_file="$project_abs/prj-docs/task.md"
+required_files=(
+  "$project_abs/README.md"
+  "$project_abs/prj-docs/PROJECT_AGENT.md"
+  "$project_abs/prj-docs/task.md"
+)
+required_dirs=(
+  "$project_abs/prj-docs/rules"
+)
 
 if [[ ! -d "$project_abs" ]]; then
   echo "error: project root not found: $input_path" >&2
   exit 1
 fi
 
-if [[ ! -f "$task_file" ]]; then
-  echo "error: required file missing: ${task_file#$repo_root/}" >&2
+missing=()
+for req_file in "${required_files[@]}"; do
+  if [[ ! -f "$req_file" ]]; then
+    missing+=("${req_file#$repo_root/}")
+  fi
+done
+for req_dir in "${required_dirs[@]}"; do
+  if [[ ! -d "$req_dir" ]]; then
+    missing+=("${req_dir#$repo_root/}/")
+  fi
+done
+
+if [[ "${#missing[@]}" -gt 0 ]]; then
+  echo "error: project baseline requirements are missing:" >&2
+  for item in "${missing[@]}"; do
+    echo "  - $item" >&2
+  done
+  echo "hint: run ./skills/bin/codex_skills_reload/init_project_docs.sh $input_path" >&2
   exit 1
 fi
 

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 00:54:04`
-> - **Updated At**: `2026-02-09 00:54:14`
+> - **Updated At**: `2026-02-09 01:38:36`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -93,10 +93,12 @@ CHAIN_VALIDATION_MODE=strict git commit -m "..."
    - Execution Log
 3. `api-specs/*.md` 6-Step 토큰 검증
    - Endpoint / Description / Parameters / Request Example / Response Summary / Response Example
-4. 코드/설정/API 스크립트 변경 시 동반 문서 세트 staged 요구
-   - `task.md`, `TODO.md`, `api-specs/*.md`, `knowledge/*.md`, `scripts/http/*.http`, `scripts/api/*.sh`
-5. 신규 문서 추가 시 `sidebar-manifest.md` 동시 staged 요구
-6. 런타임 API 스크립트 변경 시:
+4. 프로젝트 기준선 존재 검증
+   - `README.md`, `prj-docs/PROJECT_AGENT.md`, `prj-docs/task.md`, `prj-docs/rules/`
+5. 코드/설정/API 스크립트 변경 시 동반 문서 세트 staged 요구
+   - `task.md`, `api-specs/*.md`, `knowledge/*.md`, `scripts/http/*.http`, `scripts/api/*.sh`
+6. 신규 문서 추가 시 `sidebar-manifest.md` 동시 staged 요구
+7. 런타임 API 스크립트 변경 시:
    - `scripts/api/run-api-script-tests.sh` 실제 실행
    - `prj-docs/api-test/latest.md` 최신 리포트 staged 및 최신 상태 요구
 

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-09 01:38:36`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -21,7 +21,7 @@
 2. `skills_reload.sh` - 스킬 목록 스냅샷 생성
 3. `project_reload.sh` - 활성 프로젝트 스냅샷 생성
 4. `set_active_project.sh` - 활성 프로젝트 지정/조회
-5. `init_project_docs.sh` - 신규 프로젝트 문서 골격 + `PROJECT_AGENT.md` 템플릿 주입
+5. `init_project_docs.sh` - 신규 프로젝트 기준선 문서(`README.md`, `PROJECT_AGENT.md`, `task.md`)와 `prj-docs/rules/` 디렉토리 생성
 
 ## Notes
 1. 기본 진입점은 `./skills/bin/codex_skills_reload/session_start.sh`다.

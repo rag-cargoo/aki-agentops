@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-09 01:38:36`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -39,7 +39,7 @@ skills/
 
 ### 1단계: 타겟 설정 및 컨텍스트 로딩
 1. `AGENTS.md`를 읽고 `./skills/bin/codex_skills_reload/session_start.sh`를 실행해 Skills/Project 상태를 동기화합니다.
-2. `.codex/runtime/codex_session_start.md`와 `.codex/runtime/codex_project_reload.md`의 Active Project를 기준으로 `prj-docs/PROJECT_AGENT.md`, `task.md`, `TODO.md`를 읽어 현재 상태와 우선순위를 파악합니다.
+2. `.codex/runtime/codex_session_start.md`와 `.codex/runtime/codex_project_reload.md`의 Active Project를 기준으로 `README.md`, `prj-docs/PROJECT_AGENT.md`, `prj-docs/task.md`를 읽어 현재 상태와 우선순위를 파악합니다.
 
 ### 2단계: 구현 및 기록
 1. **[코딩 표준](/skills/workspace-governance/references/CODING_STANDARD.md)**을 엄수하여 기능을 구현합니다.
