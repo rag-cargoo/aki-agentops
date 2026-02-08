@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 00:25:26`
+> - **Updated At**: `2026-02-09 00:33:02`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -12,7 +12,7 @@
 > [!TIP]
 > - 상위 영역 맵 (Top-Level Domains)
 > - 프로젝트 분류 (Workspace Classification)
-> - Ticket Core Service 빠른 실행
+> - 프로젝트 진입 링크
 > - 운영 문서 바로가기
 > - 유지 원칙 (README Scope)
 <!-- DOC_TOC_END -->
@@ -38,9 +38,7 @@
 ### 1. Apps
 - Backend
   - Ticket Core Service (`진행중`)
-    - 프로젝트 소개/현황: [Project Task Dashboard](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
-    - 실행/검증 가이드: [API Script Guide](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/README.md)
-    - 대표 설계 문서: [Architecture](/workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)
+    - 프로젝트 README: [Ticket Core Service README](/workspace/apps/backend/ticket-core-service/README.md)
 
 ### 2. Infra
 - Docker Swarm (`예정`)
@@ -52,27 +50,12 @@
 
 ---
 
-## Ticket Core Service 빠른 실행
+## 프로젝트 진입 링크
 
 > [!TIP]
-> 프로젝트 경로: `workspace/apps/backend/ticket-core-service`
+> 각 프로젝트의 소개/실행 방법은 프로젝트 루트 README에서 관리합니다.
 
-### 1. 인프라 실행
-```bash
-docker-compose up -d
-```
-
-### 2. 서버 실행
-```bash
-cd workspace/apps/backend/ticket-core-service
-./gradlew bootRun --args='--spring.profiles.active=local'
-```
-
-### 3. API 스크립트 테스트
-```bash
-cd workspace/apps/backend/ticket-core-service
-make test-suite
-```
+- [Ticket Core Service README](/workspace/apps/backend/ticket-core-service/README.md)
 
 ---
 
