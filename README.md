@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 00:33:02`
+> - **Updated At**: `2026-02-09 00:41:26`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -12,6 +12,7 @@
 > [!TIP]
 > - 상위 영역 맵 (Top-Level Domains)
 > - 프로젝트 분류 (Workspace Classification)
+> - 권장 디렉터리 스케치 (Infra/Manifests)
 > - 프로젝트 진입 링크
 > - 운영 문서 바로가기
 > - 유지 원칙 (README Scope)
@@ -41,12 +42,48 @@
     - 프로젝트 README: [Ticket Core Service README](/workspace/apps/backend/ticket-core-service/README.md)
 
 ### 2. Infra
-- Docker Swarm (`예정`)
-- Cloud
-  - AWS (`예정`)
+- IaC
+  - Terraform (`예정`)
+  - Ansible (`예정`)
+- Container Runtime
+  - Docker (`예정`)
+- Container Orchestration
+  - Kubernetes
+    - kind (`예정`)
+    - aws-eks (`예정`)
 
 ### 3. Manifests
-- `workspace/manifests` (`예정/확장 슬롯`)
+- Kubernetes Manifests
+  - base (`예정`)
+  - overlays
+    - kind (`예정`)
+    - aws-eks (`예정`)
+- App Release Manifests (`예정`)
+- `workspace/manifests` (`상위 루트`)
+
+---
+
+## 권장 디렉터리 스케치 (Infra/Manifests)
+
+```text
+workspace/
+  infra/
+    iac/
+      terraform/
+      ansible/
+    container/
+      docker/
+    kubernetes/
+      kind/
+      aws-eks/
+  manifests/
+    kubernetes/
+      base/
+      overlays/
+        kind/
+        aws-eks/
+    apps/
+```
 
 ---
 
