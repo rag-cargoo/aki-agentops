@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 04:28:10`
+> - **Updated At**: `2026-02-10 05:15:39`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -18,6 +18,11 @@
 > - 안건 6: `aki-codex-workflows` 2차 플로우 확장
 > - 안건 7: SoT 드리프트 점검 규칙 문서화
 > - 안건 8: `develop -> main` 병합 전 Pages 최종 릴리즈 체크
+> - 안건 9: precommit 정책 스크립트 안전옵션 정합화
+> - 안건 10: docsify 검증 pre-commit 체인 자동 연동
+> - 안건 11: docsify_validator CLI 개선
+> - 안건 12: GitHub MCP init 재시도/백오프 규칙 명문화
+> - 안건 13: workflows Owner Skill lint 스크립트 추가
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 전역 관리 범위 고정(`aki-*` only)
@@ -135,3 +140,68 @@
   - 기한: 2026-02-10
   - 상태: TODO
   - 이슈: https://github.com/rag-cargoo/2602/issues/28
+
+## 안건 9: precommit 정책 스크립트 안전옵션 정합화
+- Created At: 2026-02-10 05:10:31
+- Updated At: 2026-02-10 05:15:39
+- Status: DONE
+- 결정사항:
+  - `core-workspace.sh`에 `set -euo pipefail`을 적용해 코어 운영 규칙과 정합화한다.
+  - quick/strict 실행 회귀를 함께 검증한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/29
+
+## 안건 10: docsify 검증 pre-commit 체인 자동 연동
+- Created At: 2026-02-10 05:10:31
+- Updated At: 2026-02-10 05:15:39
+- Status: DONE
+- 결정사항:
+  - 문서 변경 시 docsify 검증을 pre-commit 체인에서 자동 수행하도록 연결한다.
+  - 실패 시 커밋을 차단하고 실패 로그를 그대로 보고한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/30
+
+## 안건 11: docsify_validator CLI 개선
+- Created At: 2026-02-10 05:10:31
+- Updated At: 2026-02-10 05:15:39
+- Status: DONE
+- 결정사항:
+  - `argparse` 기반으로 다중 파일과 `--all-managed` 옵션을 지원한다.
+  - 기존 단일 파일 실행 방식과 호환성을 유지한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/31
+
+## 안건 12: GitHub MCP init 재시도/백오프 규칙 명문화
+- Created At: 2026-02-10 05:10:31
+- Updated At: 2026-02-10 05:15:39
+- Status: DONE
+- 결정사항:
+  - `429/5xx/연결 오류` 재시도 횟수와 backoff(대기시간) 기준을 고정한다.
+  - 중단 기준과 부분 성공 보고 기준을 함께 명시한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/32
+
+## 안건 13: workflows Owner Skill lint 스크립트 추가
+- Created At: 2026-02-10 05:10:31
+- Updated At: 2026-02-10 05:15:39
+- Status: DONE
+- 결정사항:
+  - workflows references의 Owner Skill 표기를 자동 검증하는 스크립트를 추가한다.
+  - 미존재 스킬 참조를 실패로 처리한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/33

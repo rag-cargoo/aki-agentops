@@ -37,6 +37,7 @@
     * [Pages Release Verification Flow](/skills/aki-codex-workflows/references/pages-release-verification-flow.md)
     * [PR Merge Readiness Flow](/skills/aki-codex-workflows/references/pr-merge-readiness-flow.md)
     * [SoT Drift Check Rule](/skills/aki-codex-workflows/references/sot-drift-check-rule.md)
+    * [Owner Skill Lint Script](/skills/aki-codex-workflows/scripts/check-owner-skill-links.sh)
   * **Aki Codex Session Reload**
     * [Skill Guide](/skills/aki-codex-session-reload/SKILL.md)
     * [Project Agent Template](/skills/aki-codex-session-reload/references/templates/PROJECT_AGENT_TEMPLATE.md)

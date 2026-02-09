@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 POLICY_ID="core-workspace"
 POLICY_ROOTS=(
@@ -30,6 +31,37 @@ policy_validate() {
   if [[ "$has_skill_changes" == "true" ]]; then
     echo "[chain-check][${POLICY_ID}] checking skill naming policy"
     bash skills/aki-codex-core/scripts/check-skill-naming.sh
+  fi
+
+  local has_managed_md_changes="false"
+  local managed_docs=()
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    [[ "$file_path" != *.md ]] && continue
+    [[ ! -f "$file_path" ]] && continue
+    if grep -qE "DOC_META_START|DOC_TOC_START" "$file_path"; then
+      has_managed_md_changes="true"
+      managed_docs+=("$file_path")
+    fi
+  done <<< "$staged_files"
+
+  if [[ "$has_managed_md_changes" == "true" ]]; then
+    echo "[chain-check][${POLICY_ID}] running docsify validation"
+    python3 skills/aki-github-pages-expert/scripts/docsify_validator.py "${managed_docs[@]}"
+  fi
+
+  local has_workflow_ref_changes="false"
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    if [[ "$file_path" == "skills/aki-codex-workflows/references/"*".md" ]]; then
+      has_workflow_ref_changes="true"
+      break
+    fi
+  done <<< "$staged_files"
+
+  if [[ "$has_workflow_ref_changes" == "true" ]]; then
+    echo "[chain-check][${POLICY_ID}] checking workflow Owner Skill links"
+    bash skills/aki-codex-workflows/scripts/check-owner-skill-links.sh
   fi
 
   if [[ "$mode" != "strict" ]]; then

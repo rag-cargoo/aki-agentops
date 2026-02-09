@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 01:48:58`
-> - **Updated At**: `2026-02-10 04:14:19`
+> - **Updated At**: `2026-02-10 05:15:39`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -25,6 +25,7 @@ description: |
 > - 1차 Workflow References
 > - 2차 Workflow References
 > - SoT Drift Rule
+> - 운영 스크립트
 > - 결과 보고
 <!-- DOC_TOC_END -->
 
@@ -82,6 +83,11 @@ description: |
 2. `task.md`는 실행 보드/캐시로 유지하고 원격 상태에 정렬한다.
 3. 드리프트 점검/조치 절차는 아래 문서를 따른다.
    - `references/sot-drift-check-rule.md`
+
+## 운영 스크립트
+1. Owner Skill 링크 점검:
+   - `scripts/check-owner-skill-links.sh`
+   - 목적: workflows references의 `Owner Skill` 표기 누락/오타를 사전 차단
 
 ## 결과 보고
 - 실행 후 아래를 반드시 보고한다.

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:27:20`
-> - **Updated At**: `2026-02-10 04:28:10`
+> - **Updated At**: `2026-02-10 05:15:39`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -95,6 +95,21 @@
     - `develop -> main` 병합 전 GitHub Pages 최종 릴리즈 체크 추적 이슈 등록
     - 상태: OPEN (릴리즈 직전 실행)
     - 링크: https://github.com/rag-cargoo/2602/issues/28
+  - 이슈 #29 완료:
+    - precommit `core-workspace.sh` 안전옵션(`set -euo pipefail`) 정합화
+    - 반영 경로: `skills/aki-codex-precommit/policies/core-workspace.sh`
+  - 이슈 #30 완료:
+    - managed markdown 변경 시 docsify 검증 pre-commit 자동 실행 연동
+    - 반영 경로: `skills/aki-codex-precommit/policies/core-workspace.sh`, `skills/aki-github-pages-expert/scripts/docsify_validator.py`
+  - 이슈 #31 완료:
+    - `docsify_validator.py` CLI 개선(`argparse`, 다중 파일, `--all-managed`)
+    - 반영 경로: `skills/aki-github-pages-expert/scripts/docsify_validator.py`
+  - 이슈 #32 완료:
+    - GitHub MCP init 재시도/backoff 표준 규칙 문서화
+    - 반영 경로: `skills/aki-mcp-github/references/init.md`
+  - 이슈 #33 완료:
+    - workflows Owner Skill lint 스크립트 추가 + pre-commit 연동
+    - 반영 경로: `skills/aki-codex-workflows/scripts/check-owner-skill-links.sh`, `skills/aki-codex-workflows/SKILL.md`, `skills/aki-codex-precommit/policies/core-workspace.sh`, `sidebar-manifest.md`
   - 역할/책임 분리 보강 완료:
     - `skills/aki-codex-core/references/core-responsibility-matrix.md`
     - `skills/aki-codex-core/references/WORKFLOW.md`
