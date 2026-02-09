@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 04:07:22`
+> - **Updated At**: `2026-02-10 04:09:33`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -66,7 +66,7 @@ description: |
 - `Skills Snapshot`: `OK`
 - `Project Snapshot`: `OK`
 - `Skills Runtime Integrity`: `OK`
-- `GitHub MCP Init` 섹션의 기본 toolset 확인
+- `GitHub MCP Init` 섹션의 `init_mode`/`execution_status`/기본 toolset 확인
 
 ## 실패 복구
 1. 문법 점검:

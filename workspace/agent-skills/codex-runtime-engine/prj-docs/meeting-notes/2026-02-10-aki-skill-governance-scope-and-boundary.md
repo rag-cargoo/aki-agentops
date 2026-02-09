@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 04:06:43`
+> - **Updated At**: `2026-02-10 04:10:14`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -62,15 +62,16 @@
 
 ## 안건 4: GitHub MCP init 계약-구현 정합성
 - Created At: 2026-02-10 03:40:47
-- Updated At: 2026-02-10 03:59:33
-- Status: TODO
+- Updated At: 2026-02-10 04:10:14
+- Status: DONE
 - 결정사항:
   - [AGENT-PROPOSAL] `AGENTS.md`의 "init 결과 보고" 요구와 `session_start.sh`의 "가이드 출력" 동작을 일치시켜야 한다.
-  - 최소 기준은 `enabled/failed` 결과를 세션 시작 보고에서 명확히 볼 수 있어야 한다.
+  - 계약 모드는 `guide_only`로 명시하고 `init_mode`/`execution_status` 필드를 세션 시작 보고에 고정 출력한다.
+  - 실제 enable 실행은 `aki-mcp-github` init flow에서 수행하며 결과(`enabled`/`failed`/`unsupported`)를 후속 보고에 포함한다.
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-11
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/23
 
 ## 안건 5: 스킬 문서 스키마/메타 통일
