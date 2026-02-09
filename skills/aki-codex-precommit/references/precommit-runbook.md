@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 17:53:22`
+> - **Updated At**: `2026-02-10 05:53:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -11,6 +11,8 @@
 ---
 > [!TIP]
 > - 모드 운용
+> - strict 트리거 기준
+> - 비용 최적화
 > - 수동 검증
 > - strict 차단 대응
 <!-- DOC_TOC_END -->
@@ -26,6 +28,19 @@
    - `./skills/aki-codex-precommit/scripts/precommit_mode.sh strict`
 3. 1회성 strict:
    - `CHAIN_VALIDATION_MODE=strict git commit -m "..."`
+
+## strict 트리거 기준
+1. 중요 커밋:
+   - 정책/런타임/워크플로우/훅 변경
+2. PR 머지 직전 최종 점검
+3. 릴리즈 직전
+4. 대규모 리팩터링 완료 시점
+
+## 비용 최적화
+1. 기본 커밋은 `quick` 유지
+2. `strict`는 트리거 조건 충족 시에만 실행
+3. 세션 시작 환경 점검은 `session-reload`의 `validate_env.sh` 1회로 분리
+4. 항상 strict를 강제하지 않는다(처리시간/토큰/운영비용 절감)
 
 ## 수동 검증
 1. `./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick`

@@ -44,8 +44,11 @@
   * **Aki Codex Session Reload**
     * [Skill Guide](/skills/aki-codex-session-reload/SKILL.md)
     * [Project Agent Template](/skills/aki-codex-session-reload/references/templates/PROJECT_AGENT_TEMPLATE.md)
+    * [Validate Env Script](/skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh)
+    * [Bootstrap Env Script](/skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh)
   * **Aki Codex Precommit**
     * [Skill Guide](/skills/aki-codex-precommit/SKILL.md)
+    * [Precommit Runbook](/skills/aki-codex-precommit/references/precommit-runbook.md)
 
 ---
 

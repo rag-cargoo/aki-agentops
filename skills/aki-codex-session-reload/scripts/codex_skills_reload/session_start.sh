@@ -8,6 +8,7 @@ if [[ -z "$repo_root" ]]; then
 fi
 reload_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh"
 set_active_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh"
+bootstrap_env_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh"
 
 runtime_dir="$repo_root/.codex/runtime"
 skills_snapshot="$runtime_dir/codex_skills_reload.md"
@@ -66,25 +67,32 @@ skills_status="OK"
 project_status="OK"
 runtime_status="OK"
 
-required_runtime_scripts=(
-  "$repo_root/skills/aki-codex-core/scripts/create-backup-point.sh"
-  "$repo_root/skills/aki-codex-precommit/scripts/validate-precommit-chain.sh"
-  "$repo_root/skills/aki-codex-precommit/scripts/run-project-api-script-tests.sh"
-  "$repo_root/skills/aki-codex-session-reload/scripts/sync-skill.sh"
-  "$repo_root/skills/aki-codex-session-reload/scripts/run-skill-hooks.sh"
-  "$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh"
-  "$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/skills_reload.sh"
-  "$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/project_reload.sh"
-  "$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh"
-  "$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh"
-)
+extract_kv() {
+  local key="$1"
+  local payload="$2"
+  while IFS= read -r line; do
+    if [[ "$line" == "$key="* ]]; then
+      echo "${line#*=}"
+      return 0
+    fi
+  done <<< "$payload"
+  return 1
+}
 
-missing_runtime_scripts=()
-for s in "${required_runtime_scripts[@]}"; do
-  if [[ ! -x "$s" ]]; then
-    missing_runtime_scripts+=("${s#$repo_root/}")
-  fi
-done
+env_report="$("$script_dir/validate_env.sh" --quiet || true)"
+env_status="$(extract_kv "ENV_STATUS" "$env_report" || true)"
+env_hooks_current="$(extract_kv "HOOKS_PATH_CURRENT" "$env_report" || true)"
+env_hooks_expected="$(extract_kv "HOOKS_PATH_EXPECTED" "$env_report" || true)"
+env_missing_files="$(extract_kv "MISSING_FILES" "$env_report" || true)"
+env_nonexec_files="$(extract_kv "NONEXEC_FILES" "$env_report" || true)"
+env_action="$(extract_kv "ACTION" "$env_report" || true)"
+
+if [[ -z "$env_status" ]]; then
+  env_status="WARN"
+fi
+if [[ -z "$env_action" ]]; then
+  env_action="$bootstrap_env_entry"
+fi
 
 if [[ ! -f "$skills_snapshot" || "${#loaded_skills[@]}" -eq 0 ]]; then
   skills_status="WARN"
@@ -94,7 +102,7 @@ if [[ -z "$active_project" || "$active_project" == "(not selected)" ]]; then
   project_status="WARN"
 fi
 
-if [[ "${#missing_runtime_scripts[@]}" -gt 0 ]]; then
+if [[ "$env_status" != "OK" ]]; then
   runtime_status="WARN"
 fi
 
@@ -113,8 +121,15 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "- Project Snapshot: \`$project_status\`"
   echo "- Skills Runtime Integrity: \`$runtime_status\`"
   if [[ "$runtime_status" == "WARN" ]]; then
-    echo "- Missing/Non-Executable: \`$(IFS=', '; echo "${missing_runtime_scripts[*]}")\`"
-    echo "- Action: \`chmod +x skills/aki-codex-core/scripts/*.sh skills/aki-codex-precommit/scripts/*.sh skills/aki-codex-session-reload/scripts/*.sh skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh\`"
+    [[ -z "$env_hooks_current" ]] && env_hooks_current="(unknown)"
+    [[ -z "$env_hooks_expected" ]] && env_hooks_expected=".githooks"
+    [[ -z "$env_missing_files" ]] && env_missing_files="(none)"
+    [[ -z "$env_nonexec_files" ]] && env_nonexec_files="(none)"
+    echo "- Env Validate: \`$env_status\`"
+    echo "- Hooks Path: \`$env_hooks_current\` (expected: \`$env_hooks_expected\`)"
+    echo "- Missing Files: \`$env_missing_files\`"
+    echo "- Non-Executable Files: \`$env_nonexec_files\`"
+    echo "- Action: \`$env_action\`"
   fi
   echo
   echo "## Loaded Skills"

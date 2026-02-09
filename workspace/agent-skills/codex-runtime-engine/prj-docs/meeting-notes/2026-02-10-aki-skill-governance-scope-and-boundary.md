@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 05:30:04`
+> - **Updated At**: `2026-02-10 05:53:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -24,6 +24,7 @@
 > - 안건 12: GitHub MCP init 재시도/백오프 규칙 명문화
 > - 안건 13: workflows Owner Skill lint 스크립트 추가
 > - 안건 14: Issue Reopen-First 강제(템플릿/PR 게이트/upsert)
+> - 안건 15: 세션 환경 부트스트랩/검증 자동화(.codex/.githooks)
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 전역 관리 범위 고정(`aki-*` only)
@@ -220,3 +221,17 @@
   - 기한: 2026-02-10
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/34
+
+## 안건 15: 세션 환경 부트스트랩/검증 자동화(.codex/.githooks)
+- Created At: 2026-02-10 05:53:55
+- Updated At: 2026-02-10 05:53:55
+- Status: DONE
+- 결정사항:
+  - 새 PC/세션에서 동일 동작 재현을 위해 `bootstrap_env.sh`/`validate_env.sh`를 추가한다.
+  - `session_start.sh`는 세션 시작 시 환경 검증 결과를 Startup Checks에 반영한다.
+  - pre-commit `strict`는 이벤트 기반 트리거(중요 커밋/머지 직전/릴리즈 직전/대규모 리팩터링 완료)로 운영한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/35

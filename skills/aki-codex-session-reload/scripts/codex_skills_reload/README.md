@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 17:53:22`
+> - **Updated At**: `2026-02-10 05:53:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -22,6 +22,8 @@
 3. `project_reload.sh` - 활성 프로젝트 스냅샷 생성
 4. `set_active_project.sh` - 활성 프로젝트 지정/조회
 5. `init_project_docs.sh` - 신규 프로젝트 기준선 문서(`README.md`, `PROJECT_AGENT.md`, `task.md`, `meeting-notes/README.md`)와 `prj-docs/rules/` 디렉토리 생성
+6. `validate_env.sh` - `.codex/runtime`/`.githooks`/실행권한 상태 점검
+7. `bootstrap_env.sh` - 환경 자동 복구(idempotent) + 세션 스냅샷 재생성
 
 ## Notes
 1. 기본 진입점은 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`다.
@@ -29,3 +31,4 @@
 3. 신규 프로젝트 문서 생성은 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh <project-root>`를 사용한다.
 4. 세션 스냅샷(`.codex/runtime/codex_session_start.md`)에는 GitHub MCP bootstrap 리마인더가 포함되며, 기본 toolset은 `context,repos,issues,projects,pull_requests,labels`다.
 5. 기본 toolset 목록은 `GITHUB_MCP_DEFAULT_TOOLSETS` 환경 변수로 오버라이드할 수 있다.
+6. 새 PC/세션 초기화는 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`를 권장한다.

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 04:09:33`
+> - **Updated At**: `2026-02-10 05:53:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -11,6 +11,7 @@
 ---
 > [!TIP]
 > - 표준 실행
+> - 환경 검증
 > - 멀티 프로젝트
 > - 실패 복구
 <!-- DOC_TOC_END -->
@@ -25,6 +26,16 @@
 4. `Startup Checks` 3개가 `OK`인지 확인
 5. `GitHub MCP Init`의 `init_mode`/`execution_status`를 확인하고 필요 시 `aki-mcp-github` init flow를 실행
 
+## 환경 검증
+1. 환경 점검:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh`
+2. WARN 복구:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
+3. 목적:
+   - `.codex/runtime` 재생성
+   - `core.hooksPath=.githooks` 정렬
+   - 훅/핵심 스크립트 실행권한 복구
+
 ## 멀티 프로젝트
 1. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh --list`
 2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
@@ -33,7 +44,9 @@
 ## 실패 복구
 1. `bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh`
 2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
-3. baseline 누락 시:
+3. 환경 훼손/누락 시:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
+4. baseline 누락 시:
    - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh <project-root>`
 
 ## 공존 원칙

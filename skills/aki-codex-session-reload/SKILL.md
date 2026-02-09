@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 04:09:33`
+> - **Updated At**: `2026-02-10 05:53:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -23,6 +23,7 @@ description: |
 > - 실행 대상
 > - 소유권 경계
 > - 표준 실행 순서
+> - 환경 부트스트랩
 > - 점검 포인트
 > - 실패 복구
 > - 참고 문서
@@ -44,6 +45,8 @@ description: |
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/project_reload.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
 - runtime orchestrator 소스:
   - `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`
   - `skills/aki-codex-session-reload/scripts/runtime_orchestrator/engine.yaml`
@@ -60,7 +63,18 @@ description: |
 2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`를 실행한다.
 3. `.codex/runtime/codex_session_start.md`에서 Startup Checks를 확인한다.
 4. `Loaded Skills`와 `Active Project`를 기준으로 필요한 문서를 로드한다.
-5. 경고가 있으면 `set_active_project.sh` 또는 `init_project_docs.sh`로 복구한다.
+5. 경고가 있으면 `validate_env.sh` 또는 `bootstrap_env.sh`로 환경을 복구한다.
+6. 프로젝트 경고가 있으면 `set_active_project.sh` 또는 `init_project_docs.sh`로 복구한다.
+
+## 환경 부트스트랩
+1. 환경 점검:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh`
+2. 자동 복구(재실행 안전):
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
+3. 역할 분리:
+   - `skills/`는 소스(정책/로직)
+   - `.codex/runtime`은 런타임 스냅샷(재생성 대상)
+   - `.githooks`는 훅 엔트리포인트(`core.hooksPath`)로 유지
 
 ## 점검 포인트
 - `Skills Snapshot`: `OK`
@@ -73,7 +87,9 @@ description: |
    - `bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh`
 2. 스냅샷 재생성:
    - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
-3. Active Project 재지정:
+3. 환경 복구:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
+4. Active Project 재지정:
    - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
 
 ## 공존 원칙

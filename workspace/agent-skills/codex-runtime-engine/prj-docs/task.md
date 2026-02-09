@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:27:20`
-> - **Updated At**: `2026-02-10 05:30:04`
+> - **Updated At**: `2026-02-10 05:53:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -124,6 +124,19 @@
       - `skills/aki-mcp-github/SKILL.md`
       - `skills/aki-codex-workflows/references/issue-lifecycle-governance-flow.md`
       - `AGENTS.md`, `sidebar-manifest.md`
+  - 이슈 #35 완료:
+    - 세션 환경 부트스트랩/검증 자동화(`.codex/.githooks` 재현) 반영
+    - 반영 경로:
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh`
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
+      - `skills/aki-codex-session-reload/SKILL.md`
+      - `skills/aki-codex-session-reload/references/session-reload-runbook.md`
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/README.md`
+      - `skills/aki-codex-precommit/SKILL.md`
+      - `skills/aki-codex-precommit/references/precommit-runbook.md`
+      - `skills/aki-codex-workflows/references/precommit-flow.md`
+      - `sidebar-manifest.md`
   - 역할/책임 분리 보강 완료:
     - `skills/aki-codex-core/references/core-responsibility-matrix.md`
     - `skills/aki-codex-core/references/WORKFLOW.md`
