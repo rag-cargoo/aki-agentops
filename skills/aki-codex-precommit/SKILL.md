@@ -12,7 +12,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 16:20:00`
+> - **Updated At**: `2026-02-09 17:38:06`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -52,11 +52,11 @@ description: |
 
 ## 실행 절차
 1. 현재 모드 확인:
-   - `./skills/bin/precommit_mode.sh status`
+   - `./skills/aki-codex-precommit/scripts/precommit_mode.sh status`
 2. 필요 모드 전환:
-   - `./skills/bin/precommit_mode.sh quick|strict`
+   - `./skills/aki-codex-precommit/scripts/precommit_mode.sh quick|strict`
 3. 수동 정책 실행:
-   - `./skills/bin/validate-precommit-chain.sh --mode quick|strict`
+   - `./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick|strict`
 4. 최종 커밋:
    - `git commit -m "..."`
 
@@ -64,7 +64,7 @@ description: |
 - 정책 미커버 staged 경로가 있으면 커밋 차단
 - 프로젝트 정책에서 요구하는 문서/API/리포트 동기화가 없으면 차단
 - 산출물/임시 파일 staged 금지 규칙 위반 시 차단
-- 스킬 변경 시 네이밍 정책(`./skills/bin/check-skill-naming.sh`) 위반이면 차단
+- 스킬 변경 시 네이밍 정책(`./skills/aki-codex-core/scripts/check-skill-naming.sh`) 위반이면 차단
 - 네이밍 검사의 소스 스크립트는 `skills/aki-codex-core/scripts/check-skill-naming.sh`를 사용
 
 ## 참고 문서

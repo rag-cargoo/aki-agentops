@@ -33,7 +33,7 @@
 
 수동 실행(터미널):
 ```bash
-./skills/bin/codex_skills_reload/session_start.sh
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
 ```
 
 ---
@@ -55,7 +55,7 @@
 
 1. 실행
 ```bash
-./skills/bin/codex_skills_reload/session_start.sh
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
 ```
 2. 상태 파일 확인
 ```bash
@@ -72,15 +72,15 @@ cat .codex/runtime/codex_session_start.md
 
 1. 프로젝트 목록 확인
 ```bash
-./skills/bin/codex_skills_reload/set_active_project.sh --list
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh --list
 ```
 2. 활성 프로젝트 지정
 ```bash
-./skills/bin/codex_skills_reload/set_active_project.sh <project-root>
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>
 ```
 3. 재실행
 ```bash
-./skills/bin/codex_skills_reload/session_start.sh
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
 ```
 
 ---
@@ -89,12 +89,12 @@ cat .codex/runtime/codex_session_start.md
 
 1. 문서 골격 자동 생성
 ```bash
-./skills/bin/codex_skills_reload/init_project_docs.sh workspace/<category>/<service>
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh workspace/<category>/<service>
 ```
 2. 활성 프로젝트 지정 + 세션 리로드
 ```bash
-./skills/bin/codex_skills_reload/set_active_project.sh workspace/<category>/<service>
-./skills/bin/codex_skills_reload/session_start.sh
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh workspace/<category>/<service>
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
 ```
 
 ---
@@ -103,11 +103,11 @@ cat .codex/runtime/codex_session_start.md
 
 1. 문법 점검
 ```bash
-bash -n skills/bin/codex_skills_reload/*.sh
+bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh
 ```
 2. 세션 상태 재생성
 ```bash
-./skills/bin/codex_skills_reload/session_start.sh
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
 ```
 3. 훅 경로 확인
 ```bash

@@ -28,8 +28,8 @@
 
 ## Run
 ```bash
-./skills/bin/codex_skills_reload/session_start.sh
-./skills/bin/codex_skills_reload/set_active_project.sh workspace/agent-skills/codex-runtime-engine
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh workspace/agent-skills/codex-runtime-engine
 ```
 
 ## Docs

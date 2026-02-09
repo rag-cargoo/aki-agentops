@@ -79,7 +79,7 @@ bash mcp/scripts/write_session_handoff.sh \
 bash mcp/scripts/clear_session_handoff.sh
 ```
 
-`skills/bin/codex_skills_reload/session_start.sh`는
+`skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`는
 `mcp/runtime/SESSION_HANDOFF.md` 존재 시 `.codex/runtime/codex_session_start.md`에
 `Session Handoff` 섹션을 자동 표기한다.
 

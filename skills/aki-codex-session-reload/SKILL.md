@@ -56,7 +56,7 @@ description: |
 
 ## 표준 실행 순서
 1. `git status --short`로 현재 워크트리 상태를 확인한다.
-2. `./skills/bin/codex_skills_reload/session_start.sh`를 실행한다.
+2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`를 실행한다.
 3. `.codex/runtime/codex_session_start.md`에서 Startup Checks를 확인한다.
 4. `Loaded Skills`와 `Active Project`를 기준으로 필요한 문서를 로드한다.
 5. 경고가 있으면 `set_active_project.sh` 또는 `init_project_docs.sh`로 복구한다.
@@ -69,15 +69,15 @@ description: |
 
 ## 실패 복구
 1. 문법 점검:
-   - `bash -n skills/bin/codex_skills_reload/*.sh`
+   - `bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh`
 2. 스냅샷 재생성:
-   - `./skills/bin/codex_skills_reload/session_start.sh`
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
 3. Active Project 재지정:
-   - `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
 
 ## 공존 원칙
-- 기본 세션 진입점은 계속 `./skills/bin/codex_skills_reload/session_start.sh`를 사용한다.
-- runtime orchestrator(`./skills/bin/run-skill-hooks.sh`, 소스: `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`)는 보조 자동화 레이어이며 즉시 대체가 아니다.
+- 기본 세션 진입점은 source-first로 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`를 사용한다.
+- runtime orchestrator(`./skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`, compat: `./skills/bin/run-skill-hooks.sh`)는 보조 자동화 레이어이며 즉시 대체가 아니다.
 - pre-commit 체인(`precommit_mode.sh`, `validate-precommit-chain.sh`)은 기존 정책대로 독립 운영한다.
 
 ## 참고 문서

@@ -43,15 +43,15 @@
 1. 브랜치/백업 게이트:
    - `git status --short`
    - `git rev-parse --abbrev-ref HEAD`로 브랜치 확인
-   - 위험 작업 전 `./skills/bin/create-backup-point.sh pre-change-core-skills-refactor`
+   - 위험 작업 전 `./skills/aki-codex-core/scripts/create-backup-point.sh pre-change-core-skills-refactor`
 2. 구조 게이트:
    - 중첩 스킬 디렉토리 금지 확인
    - 점검 예시: `find skills -type d -path 'skills/*/skills/*'`
 3. 품질 게이트:
-   - `./skills/bin/check-skill-naming.sh`
-   - `./skills/bin/codex_skills_reload/session_start.sh`
-   - `bash skills/bin/validate-precommit-chain.sh --mode quick`
-   - `bash skills/bin/validate-precommit-chain.sh --mode strict`
+   - `./skills/aki-codex-core/scripts/check-skill-naming.sh`
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
+   - `bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick`
+   - `bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode strict`
 4. 링크/문서 게이트:
    - `sidebar-manifest.md` 링크 동기화
    - 회의록 + `task.md` 역기록

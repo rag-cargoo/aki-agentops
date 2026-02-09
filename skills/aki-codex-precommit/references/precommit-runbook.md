@@ -20,21 +20,21 @@
 
 ## 모드 운용
 1. 현재 모드 확인:
-   - `./skills/bin/precommit_mode.sh status`
+   - `./skills/aki-codex-precommit/scripts/precommit_mode.sh status`
 2. 기본 모드 전환:
-   - `./skills/bin/precommit_mode.sh quick`
-   - `./skills/bin/precommit_mode.sh strict`
+   - `./skills/aki-codex-precommit/scripts/precommit_mode.sh quick`
+   - `./skills/aki-codex-precommit/scripts/precommit_mode.sh strict`
 3. 1회성 strict:
    - `CHAIN_VALIDATION_MODE=strict git commit -m "..."`
 
 ## 수동 검증
-1. `./skills/bin/validate-precommit-chain.sh --mode quick`
-2. `./skills/bin/validate-precommit-chain.sh --mode strict`
+1. `./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick`
+2. `./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode strict`
 3. 정책 파일 확인:
    - 전역: `skills/aki-codex-precommit/policies/*.sh`
    - 프로젝트: `<project-root>/prj-docs/precommit-policy.sh`
 4. 스킬 변경 시 네이밍 정책 점검:
-   - `./skills/bin/check-skill-naming.sh`
+   - `./skills/aki-codex-core/scripts/check-skill-naming.sh`
 
 ## 소스 경로
 1. pre-commit 모드 스크립트: `skills/aki-codex-precommit/scripts/precommit_mode.sh`
