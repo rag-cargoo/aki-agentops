@@ -22,13 +22,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Ensure executable permissions
-        run: chmod +x skills/bin/*.sh skills/bin/codex_skills_reload/*.sh
+        run: chmod +x skills/aki-codex-core/scripts/*.sh skills/aki-codex-precommit/scripts/*.sh skills/aki-codex-session-reload/scripts/*.sh skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh skills/workspace-governance/scripts/*.sh
 
       - name: Shell syntax check
-        run: bash -n skills/bin/codex_skills_reload/*.sh
+        run: bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh
 
       - name: Session start dry-run
-        run: ./skills/bin/codex_skills_reload/session_start.sh
+        run: ./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
 
       - name: Validate runtime snapshots
         run: |

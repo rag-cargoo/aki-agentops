@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 07:52:02`
-> - **Updated At**: `2026-02-09 16:45:56`
+> - **Updated At**: `2026-02-09 17:26:35`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -133,8 +133,8 @@
 
 ## 안건 8: skills/bin 호환 래퍼 단계적 폐기 기준
 - Created At: 2026-02-09 16:33:27
-- Updated At: 2026-02-09 16:33:27
-- Status: TODO
+- Updated At: 2026-02-09 17:26:35
+- Status: DOING
 - 결정사항:
   - `skills/bin`은 당분간 호환 래퍼로 유지하고, 즉시 삭제하지 않는다.
   - 최종 폐기 조건은 다음 3가지를 모두 충족해야 한다.
@@ -145,5 +145,6 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-12
-  - 상태: TODO
+  - 상태: DOING
   - 이슈: https://github.com/rag-cargoo/2602/issues/10
+  - 진행기록: `bin-wrapper-deprecation-inventory.md` + `bin-wrapper-deprecation-checklist.md` 작성, 내부 실행 경로(`.githooks`, `.github/workflows`, precommit strict policy)를 source path로 1차 전환 완료

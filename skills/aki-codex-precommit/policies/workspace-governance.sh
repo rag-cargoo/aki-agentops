@@ -81,8 +81,8 @@ policy_validate() {
 
   if [[ "$requires_reload" == "true" ]]; then
     echo "[chain-check][${POLICY_ID}] strict mode: running codex skills reload validation"
-    bash -n skills/bin/codex_skills_reload/*.sh
-    ./skills/bin/codex_skills_reload/session_start.sh >/dev/null
+    bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh
+    ./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh >/dev/null
   fi
 
   echo "[chain-check][${POLICY_ID}] validation ok (strict)"
