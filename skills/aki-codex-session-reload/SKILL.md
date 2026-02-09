@@ -55,7 +55,7 @@ description: |
 - `Skills Snapshot`: `OK`
 - `Project Snapshot`: `OK`
 - `Skills Runtime Integrity`: `OK`
-- `GitHub MCP Bootstrap` 섹션의 기본 toolset 확인
+- `GitHub MCP Init` 섹션의 기본 toolset 확인
 
 ## 실패 복구
 1. 문법 점검:

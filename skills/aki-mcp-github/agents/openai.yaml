@@ -1,0 +1,3 @@
+interface:
+  display_name: "Aki MCP GitHub"
+  short_description: "Unified GitHub MCP init/sync/issue-pr operations"

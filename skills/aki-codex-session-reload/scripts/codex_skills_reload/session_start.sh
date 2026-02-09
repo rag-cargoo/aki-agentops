@@ -141,11 +141,11 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
     echo "- Status: \`NONE\`"
   fi
   echo
-  echo "## GitHub MCP Bootstrap"
+  echo "## GitHub MCP Init"
   echo "- Server Config: \`$github_mcp_status\`"
   echo "- Default Toolsets: \`$github_toolsets_default\`"
   if [[ "$github_mcp_status" == "CONFIGURED" ]]; then
-    echo "- Action: \`skills/aki-github-mcp-bootstrap/SKILL.md\` 절차로 \`context,repos,issues,projects,pull_requests,labels\` enable + 재검증"
+    echo "- Action: \`skills/aki-mcp-github/SKILL.md\`의 init flow로 \`context,repos,issues,projects,pull_requests,labels\` enable + 재검증"
   else
     echo "- Action: \`~/.codex/config.toml\`에 \`[mcp_servers.github]\` 등록 후 세션 재시작"
   fi
