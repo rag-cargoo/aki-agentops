@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 09:49:46`
-> - **Updated At**: `2026-02-09 09:49:46`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -30,7 +30,7 @@
    - `feature/core-skills-refactor`
 2. 주요 인스코프 경로:
    - `skills/aki-codex-*/**`
-   - `skills/bin/**` (코어 운영 스크립트)
+   - `skills/workspace-governance/scripts/**`
    - `skills/workspace-governance/references/**`
    - `sidebar-manifest.md`
    - `workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/**`

@@ -11,7 +11,7 @@
   "hooks": [
     {
       "id": "session_start",
-      "run": "./skills/bin/codex_skills_reload/session_start.sh",
+      "run": "./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh",
       "on_fail": "fail_fast",
       "status": "passed",
       "exit_code": 0,

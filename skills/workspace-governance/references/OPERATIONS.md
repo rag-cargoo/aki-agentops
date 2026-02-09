@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 17:38:06`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -64,14 +64,13 @@
 
 ## 4. 스킬 관리 및 동기화 표준 (Skill Management & Sync)
 
-에이전트 지능을 확장하는 스킬(Skill)은 개발 소스와 런타임 연결을 분리하여 관리한다.
+에이전트 지능을 확장하는 스킬(Skill)은 스킬별 소스 스크립트 기준으로 운영한다.
 
 ### 스크립트 배치 원칙 (중요)
 
-*   **호환 래퍼 엔트리**: `skills/bin/`에는 사용자 호출 호환용 래퍼만 둔다.
 *   **리로드 런타임 구현**: `skills/aki-codex-session-reload/scripts/codex_skills_reload/`에 집중 배치한다.
 *   **스킬 내부 전용 스크립트**: 실제 구현은 각 스킬의 `skills/<skill-name>/scripts/`에 둔다.
-*   **삭제/수정 안전성**: 세션 시작 시 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`가 `skills/bin` 무결성을 자동 점검한다.
+*   **삭제/수정 안전성**: 세션 시작 시 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`가 런타임 스크립트 무결성을 자동 점검한다.
 
 ### 런타임 분리의 이유
 

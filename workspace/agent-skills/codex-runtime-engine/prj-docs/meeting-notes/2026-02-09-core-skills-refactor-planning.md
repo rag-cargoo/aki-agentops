@@ -133,18 +133,15 @@
 
 ## 안건 8: skills/bin 호환 래퍼 단계적 폐기 기준
 - Created At: 2026-02-09 16:33:27
-- Updated At: 2026-02-09 17:26:35
-- Status: DOING
+- Updated At: 2026-02-09 17:50:00
+- Status: DONE
 - 결정사항:
-  - `skills/bin`은 당분간 호환 래퍼로 유지하고, 즉시 삭제하지 않는다.
-  - 최종 폐기 조건은 다음 3가지를 모두 충족해야 한다.
-    - 호출 지점(문서, hooks, CI, 운영 명령) 새 경로 전환 완료
-    - 1~2 릴리즈 동안 래퍼 기반 운영 안정성 검증 완료
-    - 팀 합의로 `skills/bin` 경로 폐기 결정
-  - 실행 로직의 단일 소스는 계속 각 스킬의 `skills/<aki-skill>/scripts/`에 둔다.
+  - 호출 지점(문서, hooks, CI, 운영 명령)을 source 경로로 전환 완료.
+  - `skills/bin` 래퍼/링크를 저장소에서 제거한다.
+  - 실행 로직의 단일 소스는 각 스킬의 `skills/<aki-skill>/scripts/` 경로만 사용한다.
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-12
-  - 상태: DOING
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/10
-  - 진행기록: `bin-wrapper-deprecation-inventory.md` + `bin-wrapper-deprecation-checklist.md` 작성, 내부 실행 경로(`.githooks`, `.github/workflows`, precommit strict policy)를 source path로 1차 전환 완료
+  - 진행기록: `bin-wrapper-deprecation-inventory.md` + `bin-wrapper-deprecation-checklist.md` 작성, 내부 실행 경로(`.githooks`, `.github/workflows`, precommit strict policy) 전환 완료, `skills/bin` 실제 제거 완료

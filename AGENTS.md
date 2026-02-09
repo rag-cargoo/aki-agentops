@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 07:07:52`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -44,8 +44,7 @@
 ## 2) Active Paths
 - Workspace Root: `workspace`
 - Governance Root: `skills/workspace-governance`
-- Reload Runtime (Source): `skills/aki-codex-session-reload/scripts/codex_skills_reload`
-- Reload Runtime (Compat): `skills/bin/codex_skills_reload`
+- Reload Runtime: `skills/aki-codex-session-reload/scripts/codex_skills_reload`
 - Skills Snapshot: `.codex/runtime/codex_skills_reload.md`
 - Project Snapshot: `.codex/runtime/codex_project_reload.md`
 - Session Snapshot: `.codex/runtime/codex_session_start.md`
@@ -78,7 +77,7 @@
 ## 6) First Reply Contract
 세션 첫 응답에서 아래 항목을 반드시 사용자에게 보고한다.
 
-1. `Startup Checks` 결과 (`Skills Snapshot`, `Project Snapshot`, `Skills Bin Integrity`)
+1. `Startup Checks` 결과 (`Skills Snapshot`, `Project Snapshot`, `Skills Runtime Integrity`)
 2. `Loaded Skills` 전체 목록
 3. `Active Project` (`Project Root`, `Task Doc`, `Project Agent`)
 4. `How It Works` 3줄 요약 (전역 규칙 vs 프로젝트 규칙 vs Active Project 개념)

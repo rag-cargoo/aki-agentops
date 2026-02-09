@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 16:20:00`
-> - **Updated At**: `2026-02-09 16:45:00`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -16,23 +16,23 @@
 <!-- DOC_TOC_END -->
 
 ## 목적
-- `skills/bin` 스크립트의 소유 스킬을 명확히 한다.
-- 구현은 스킬별 `scripts/`에 두고, `skills/bin`은 호환 엔트리로 유지한다.
+- `skills/bin` 폐기 이후 소스 스크립트의 소유 스킬을 명확히 한다.
+- 실행 엔트리는 각 스킬의 `scripts/` 경로만 사용한다.
 
 ## 매핑
-| 호환 엔트리 (`skills/bin`) | 소스 스크립트 | 소유 스킬 |
-| --- | --- | --- |
-| `check-skill-naming.sh` | `skills/aki-codex-core/scripts/check-skill-naming.sh` | `aki-codex-core` |
-| `create-backup-point.sh` | `skills/aki-codex-core/scripts/create-backup-point.sh` | `aki-codex-core` |
-| `precommit_mode.sh` | `skills/aki-codex-precommit/scripts/precommit_mode.sh` | `aki-codex-precommit` |
-| `validate-precommit-chain.sh` | `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh` | `aki-codex-precommit` |
-| `codex_skills_reload/` | `skills/aki-codex-session-reload/scripts/codex_skills_reload/` | `aki-codex-session-reload` |
-| `run-skill-hooks.sh` | `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh` | `aki-codex-session-reload` |
-| `runtime_orchestrator/` | `skills/aki-codex-session-reload/scripts/runtime_orchestrator/` | `aki-codex-session-reload` |
-| `sync-skill.sh` | `skills/aki-codex-session-reload/scripts/sync-skill.sh` | `aki-codex-session-reload` |
-| `run-project-api-script-tests.sh` | `skills/workspace-governance/scripts/run-project-api-script-tests.sh` | `workspace-governance` |
+| 소스 스크립트 | 소유 스킬 |
+| --- | --- |
+| `skills/aki-codex-core/scripts/check-skill-naming.sh` | `aki-codex-core` |
+| `skills/aki-codex-core/scripts/create-backup-point.sh` | `aki-codex-core` |
+| `skills/aki-codex-precommit/scripts/precommit_mode.sh` | `aki-codex-precommit` |
+| `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh` | `aki-codex-precommit` |
+| `skills/aki-codex-session-reload/scripts/codex_skills_reload/` | `aki-codex-session-reload` |
+| `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh` | `aki-codex-session-reload` |
+| `skills/aki-codex-session-reload/scripts/runtime_orchestrator/` | `aki-codex-session-reload` |
+| `skills/aki-codex-session-reload/scripts/sync-skill.sh` | `aki-codex-session-reload` |
+| `skills/workspace-governance/scripts/run-project-api-script-tests.sh` | `workspace-governance` |
 
 ## 운영 원칙
 1. 기능 수정은 소스 스크립트에서만 수행한다.
-2. `skills/bin` 엔트리는 최소 위임 로직만 유지한다.
-3. 엔트리 변경 시 호출 호환성(`./skills/bin/<script>`)을 먼저 검증한다.
+2. `skills/bin` 경로는 폐기되었으며 새 엔트리를 추가하지 않는다.
+3. 엔트리 변경 시 source 경로 호출 검증(`./skills/aki-*/scripts/...`)을 먼저 수행한다.

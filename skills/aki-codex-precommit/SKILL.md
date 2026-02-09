@@ -12,7 +12,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 17:38:06`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -36,9 +36,6 @@ description: |
 - 소스 스크립트:
   - `skills/aki-codex-precommit/scripts/precommit_mode.sh`
   - `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh`
-- 호환 래퍼 엔트리:
-  - `skills/bin/precommit_mode.sh`
-  - `skills/bin/validate-precommit-chain.sh`
 - `skills/aki-codex-precommit/policies/*.sh`
 - `<project-root>/prj-docs/precommit-policy.sh`
 

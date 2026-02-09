@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 16:45:00`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -38,21 +38,11 @@ description: |
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/project_reload.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh`
-- session reload 호환 엔트리:
-  - `skills/bin/codex_skills_reload/session_start.sh`
-  - `skills/bin/codex_skills_reload/skills_reload.sh`
-  - `skills/bin/codex_skills_reload/project_reload.sh`
-  - `skills/bin/codex_skills_reload/set_active_project.sh`
-  - `skills/bin/codex_skills_reload/init_project_docs.sh`
 - runtime orchestrator 소스:
   - `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`
   - `skills/aki-codex-session-reload/scripts/runtime_orchestrator/engine.yaml`
-- runtime orchestrator 호환 엔트리:
-  - `skills/bin/run-skill-hooks.sh`
-  - `skills/bin/runtime_orchestrator/engine.yaml`
 - 기타 runtime 도구:
-  - 소스: `skills/aki-codex-session-reload/scripts/sync-skill.sh`
-  - 호환: `skills/bin/sync-skill.sh`
+  - `skills/aki-codex-session-reload/scripts/sync-skill.sh`
 
 ## 표준 실행 순서
 1. `git status --short`로 현재 워크트리 상태를 확인한다.
@@ -64,7 +54,7 @@ description: |
 ## 점검 포인트
 - `Skills Snapshot`: `OK`
 - `Project Snapshot`: `OK`
-- `Skills Bin Integrity`: `OK`
+- `Skills Runtime Integrity`: `OK`
 - `GitHub MCP Bootstrap` 섹션의 기본 toolset 확인
 
 ## 실패 복구
@@ -77,7 +67,7 @@ description: |
 
 ## 공존 원칙
 - 기본 세션 진입점은 source-first로 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`를 사용한다.
-- runtime orchestrator(`./skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`, compat: `./skills/bin/run-skill-hooks.sh`)는 보조 자동화 레이어이며 즉시 대체가 아니다.
+- runtime orchestrator(`./skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`)는 보조 자동화 레이어이며 즉시 대체가 아니다.
 - pre-commit 체인(`precommit_mode.sh`, `validate-precommit-chain.sh`)은 기존 정책대로 독립 운영한다.
 
 ## 참고 문서
