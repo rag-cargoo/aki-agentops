@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-POLICY_ID="workspace-governance"
+POLICY_ID="core-workspace"
 POLICY_ROOTS=(
   "AGENTS.md"
   "HOME.md"

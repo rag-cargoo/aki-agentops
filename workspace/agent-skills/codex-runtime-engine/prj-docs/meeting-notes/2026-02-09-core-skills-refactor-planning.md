@@ -145,3 +145,21 @@
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/10
   - 진행기록: `bin-wrapper-deprecation-inventory.md` + `bin-wrapper-deprecation-checklist.md` 작성, 내부 실행 경로(`.githooks`, `.github/workflows`, precommit strict policy) 전환 완료, `skills/bin` 실제 제거 완료
+
+## 안건 9: 레거시 거버넌스 스킬 제거 및 소유 스킬 분산
+- Created At: 2026-02-09 19:01:53
+- Updated At: 2026-02-09 19:01:53
+- Status: DONE
+- 결정사항:
+  - 레거시 거버넌스 스킬은 제거한다.
+  - 규칙/운영 문서는 소유 스킬로 이관한다.
+    - 코어 규칙/체크포인트: `skills/aki-codex-core/references/*`
+    - 세션 리로드 가이드/템플릿: `skills/aki-codex-session-reload/references/*`
+    - pre-commit 가이드/API 테스트 실행기: `skills/aki-codex-precommit/*`
+    - Pages 가이드: `skills/aki-github-pages-expert/references/docsify-setup.md`
+  - `AGENTS.md`, `sidebar-manifest.md`, CI/스크립트 경로는 새 구조로 동기화한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 진행기록: 파일 이관 + 참조 경로 교체 + 레거시 스킬 삭제 + 실행 검증(session_start/check-skill-naming/quick+strict/run-skill-hooks) 완료

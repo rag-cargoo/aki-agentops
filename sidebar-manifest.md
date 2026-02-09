@@ -4,13 +4,6 @@
 ---
 
 * **SKILLS**
-  * **Workspace Governance**
-    * [Workflow](/skills/workspace-governance/references/WORKFLOW.md)
-    * [Structure & Standards](/skills/workspace-governance/references/STRUCTURE.md)
-    * [Operations & Automation](/skills/workspace-governance/references/OPERATIONS.md)
-    * [Architecture Rules](/skills/workspace-governance/references/ARCHITECTURE_RULES.md)
-    * [Coding Standard](/skills/workspace-governance/references/CODING_STANDARD.md)
-    * [Project Agent Template](/skills/workspace-governance/references/templates/PROJECT_AGENT_TEMPLATE.md)
   * **GitHub MCP Bootstrap**
     * [Skill Guide](/skills/aki-github-mcp-bootstrap/SKILL.md)
   * **Meeting Notes GitHub Sync**
@@ -23,6 +16,11 @@
     * [Skill Guide](/skills/aki-meeting-notes-task-sync/SKILL.md)
   * **Aki Codex Core**
     * [Skill Guide](/skills/aki-codex-core/SKILL.md)
+    * [Workflow](/skills/aki-codex-core/references/WORKFLOW.md)
+    * [Structure & Standards](/skills/aki-codex-core/references/STRUCTURE.md)
+    * [Operations & Automation](/skills/aki-codex-core/references/OPERATIONS.md)
+    * [Architecture Rules](/skills/aki-codex-core/references/ARCHITECTURE_RULES.md)
+    * [Coding Standard](/skills/aki-codex-core/references/CODING_STANDARD.md)
     * [Responsibility Matrix](/skills/aki-codex-core/references/core-responsibility-matrix.md)
     * [Skill Naming Policy](/skills/aki-codex-core/references/skill-naming-policy.md)
     * [Bin Script Ownership Map](/skills/aki-codex-core/references/bin-script-ownership-map.md)
@@ -30,6 +28,7 @@
     * [Bin Wrapper Deprecation Checklist](/skills/aki-codex-core/references/bin-wrapper-deprecation-checklist.md)
   * **Aki Codex Session Reload**
     * [Skill Guide](/skills/aki-codex-session-reload/SKILL.md)
+    * [Project Agent Template](/skills/aki-codex-session-reload/references/templates/PROJECT_AGENT_TEMPLATE.md)
   * **Aki Codex Precommit**
     * [Skill Guide](/skills/aki-codex-precommit/SKILL.md)
 
@@ -71,18 +70,18 @@
 
 * **OPERATIONS & MANUALS**
   * **Pre-commit Guides**
-    * [Pre-commit Start Guide](/skills/workspace-governance/references/guides/precommit-start-guide.md)
+    * [Pre-commit Start Guide](/skills/aki-codex-precommit/references/precommit-start-guide.md)
   * **Codex Skills Reload Guides**
-    * [Start Guide](/skills/workspace-governance/references/guides/codex-skills-reload-start-guide.md)
-    * [Operations Manual](/skills/workspace-governance/references/guides/codex-skills-reload-operations-manual.md)
-    * [자동화 도입 배경 및 변경 내역](/skills/workspace-governance/references/guides/codex-skills-reload-automation-rationale-and-changes.md)
+    * [Start Guide](/skills/aki-codex-session-reload/references/guides/codex-skills-reload-start-guide.md)
+    * [Operations Manual](/skills/aki-codex-session-reload/references/guides/codex-skills-reload-operations-manual.md)
+    * [자동화 도입 배경 및 변경 내역](/skills/aki-codex-session-reload/references/guides/codex-skills-reload-automation-rationale-and-changes.md)
   * **Safety Checkpoints**
-    * [Core Skills Refactor Branch](/skills/workspace-governance/references/checkpoints/CORE_SKILLS_REFACTOR_BRANCH_CHECKPOINT.md)
-    * [MCP & Skills Pre-Checkpoint](/skills/workspace-governance/references/checkpoints/PRE_MCP_SKILLS_STATE.md)
+    * [Core Skills Refactor Branch](/skills/aki-codex-core/references/checkpoints/CORE_SKILLS_REFACTOR_BRANCH_CHECKPOINT.md)
+    * [MCP & Skills Pre-Checkpoint](/skills/aki-codex-core/references/checkpoints/PRE_MCP_SKILLS_STATE.md)
   * **MCP Runtime Ops**
     * [MCP Workspace Guide](/mcp/README.md)
     * [MCP Manifest](/mcp/manifest/mcp-manifest.md)
     * [MCP TODO](/mcp/TODO.md)
     * [MCP Experience Log](/mcp/references/experience-log.md)
-  * [에이전트 사고 시 Git 백업/복구 플레이북](/skills/workspace-governance/references/guides/agent-incident-git-backup-restore-playbook.md)
-  * [GitHub Pages 배포 가이드](/skills/workspace-governance/references/guides/docsify-setup.md)
+  * [에이전트 사고 시 Git 백업/복구 플레이북](/skills/aki-codex-core/references/guides/agent-incident-git-backup-restore-playbook.md)
+  * [GitHub Pages 배포 가이드](/skills/aki-github-pages-expert/references/docsify-setup.md)

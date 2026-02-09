@@ -29,10 +29,12 @@
 
 ```
 skills/
-├── workspace-governance/      # 전역 워크플로우/표준
-├── aki-github-pages-expert/       # 문서 렌더링/무결성
+├── aki-codex-core/            # 전역 원칙/구조/표준
+├── aki-codex-session-reload/  # 세션 시작/리로드
+├── aki-codex-precommit/       # pre-commit 체인/품질 게이트
+├── aki-github-pages-expert/   # 문서 렌더링/무결성
 ├── java-spring-boot/          # 기술 스택 전용 스킬
-└── bin/                        # reload, backup, target 전환 스크립트
+└── ...                         # 기타 스킬
 ```
 
 ### 1. 표준 계층 (Standard Layers)
