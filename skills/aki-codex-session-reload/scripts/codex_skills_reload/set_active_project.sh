@@ -4,7 +4,7 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(git -C "$script_dir" rev-parse --show-toplevel 2>/dev/null || true)"
 if [[ -z "$repo_root" ]]; then
-  repo_root="$(cd "$script_dir/../../.." && pwd)"
+  repo_root="$(cd "$script_dir/../../../.." && pwd)"
 fi
 workspace_dir="$repo_root/workspace"
 active_file="$workspace_dir/.active_project"
@@ -12,12 +12,12 @@ active_file="$workspace_dir/.active_project"
 usage() {
   cat <<'EOF'
 Usage:
-  ./skills/bin/codex_skills_reload/set_active_project.sh <project-root>
-  ./skills/bin/codex_skills_reload/set_active_project.sh --list
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh --list
 
 Examples:
-  ./skills/bin/codex_skills_reload/set_active_project.sh workspace/<category>/<project>
-  ./skills/bin/codex_skills_reload/set_active_project.sh --list
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh workspace/<category>/<project>
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh --list
 EOF
 }
 
@@ -86,7 +86,7 @@ if [[ "${#missing[@]}" -gt 0 ]]; then
   for item in "${missing[@]}"; do
     echo "  - $item" >&2
   done
-  echo "hint: run ./skills/bin/codex_skills_reload/init_project_docs.sh $input_path" >&2
+  echo "hint: run ./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh $input_path" >&2
   exit 1
 fi
 

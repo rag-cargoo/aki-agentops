@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 16:20:00`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -40,7 +40,7 @@
 1. pre-commit 모드 스크립트: `skills/aki-codex-precommit/scripts/precommit_mode.sh`
 2. 체인 검증 스크립트: `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh`
 3. 네이밍 검증 스크립트: `skills/aki-codex-core/scripts/check-skill-naming.sh`
-4. `skills/bin/*` 경로는 기존 명령 호환을 위한 래퍼 엔트리다.
+4. 모든 실행 경로는 각 스킬의 `scripts/` 소스 경로를 기준으로 사용한다.
 
 ## strict 차단 대응
 1. 정책 미커버 경로가 있으면 정책 루트에 staged 경로를 포함시킨다.

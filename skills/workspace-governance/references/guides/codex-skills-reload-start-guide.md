@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 04:43:58`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -64,7 +64,7 @@ cat .codex/runtime/codex_session_start.md
 3. 아래 3개가 `OK`인지 확인
 - `Skills Snapshot`
 - `Project Snapshot`
-- `Skills Bin Integrity`
+- `Skills Runtime Integrity`
 
 ---
 

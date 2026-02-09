@@ -4,7 +4,7 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(git -C "$script_dir" rev-parse --show-toplevel 2>/dev/null || true)"
 if [[ -z "$repo_root" ]]; then
-  repo_root="$(cd "$script_dir/../../.." && pwd)"
+  repo_root="$(cd "$script_dir/../../../.." && pwd)"
 fi
 
 template_file="$repo_root/skills/workspace-governance/references/templates/PROJECT_AGENT_TEMPLATE.md"
@@ -12,7 +12,7 @@ template_file="$repo_root/skills/workspace-governance/references/templates/PROJE
 usage() {
   cat <<'EOF'
 Usage:
-  ./skills/bin/codex_skills_reload/init_project_docs.sh <project-root> [options]
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh <project-root> [options]
 
 Options:
   --service-name <name>   Override default service name (basename of project-root)
@@ -21,8 +21,8 @@ Options:
   -h, --help              Show this help
 
 Examples:
-  ./skills/bin/codex_skills_reload/init_project_docs.sh workspace/agent-skills/codex-runtime-engine
-  ./skills/bin/codex_skills_reload/init_project_docs.sh workspace/agent-skills/codex-runtime-engine --service-name "Codex Runtime Engine" --force
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh workspace/agent-skills/codex-runtime-engine
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh workspace/agent-skills/codex-runtime-engine --service-name "Codex Runtime Engine" --force
 EOF
 }
 
@@ -233,5 +233,5 @@ else
 fi
 echo
 echo "next:"
-echo "- ./skills/bin/codex_skills_reload/set_active_project.sh $target_path"
-echo "- ./skills/bin/codex_skills_reload/session_start.sh"
+echo "- ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh $target_path"
+echo "- ./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh"

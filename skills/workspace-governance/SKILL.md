@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 17:38:06`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -50,7 +50,7 @@ description: |
 
 ##  세션 시작 가이드
 - "스킬스 리로드해줘" 요청 시, `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`를 실행하고 `.codex/runtime/codex_session_start.md` 기준으로 아래를 보고해야 합니다.
-- `Startup Checks` (Skills Snapshot / Project Snapshot / Skills Bin Integrity)
+- `Startup Checks` (Skills Snapshot / Project Snapshot / Skills Runtime Integrity)
 - `Loaded Skills` 전체 목록
 - `Active Project` 정보와 멀티 프로젝트 전환 안내
 
@@ -68,5 +68,5 @@ description: |
 - 코어 원칙/경계/분해 기준은 `skills/aki-codex-core/SKILL.md`를 우선 참조한다.
 - 스킬 네이밍(`aki-` prefix) 정책은 `skills/aki-codex-core/references/skill-naming-policy.md`를 우선 참조한다.
 - 프로젝트 API 스크립트 테스트 실행기는 다음 경로를 사용한다.
-  - 호환 명령: `./skills/bin/run-project-api-script-tests.sh`
+  - 실행 명령: `./skills/workspace-governance/scripts/run-project-api-script-tests.sh`
   - 소스 스크립트: `skills/workspace-governance/scripts/run-project-api-script-tests.sh`

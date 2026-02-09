@@ -13,9 +13,9 @@ Options:
   --help, -h    Show this help
 
 Examples:
-  ./skills/bin/create-backup-point.sh
-  ./skills/bin/create-backup-point.sh pre-pages-check
-  ./skills/bin/create-backup-point.sh --label pre-hotfix --push
+  ./skills/aki-codex-core/scripts/create-backup-point.sh
+  ./skills/aki-codex-core/scripts/create-backup-point.sh pre-pages-check
+  ./skills/aki-codex-core/scripts/create-backup-point.sh --label pre-hotfix --push
 EOF
 }
 

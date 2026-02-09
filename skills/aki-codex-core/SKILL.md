@@ -12,7 +12,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 17:38:06`
+> -02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -67,7 +67,7 @@ description: |
 3. 문서 렌더링/무손실 점검:
    - `aki-github-pages-expert` 사용
 4. 백업 포인트 생성 실행:
-   - 호환 명령: `./skills/bin/create-backup-point.sh`
+   - 실행 명령: `./skills/aki-codex-core/scripts/create-backup-point.sh`
    - 소스 스크립트: `skills/aki-codex-core/scripts/create-backup-point.sh`
 
 ## 네이밍 규칙
