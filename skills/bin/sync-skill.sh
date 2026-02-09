@@ -1,26 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Link local skills/* directories into the runtime skill folder.
-script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(cd "$script_dir/../.." && pwd)"
-source_root="$repo_root/skills"
-target_root="${TARGET_ROOT:-$repo_root/.gemini/skills}"
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
 
-echo ">>>> skill link start"
-echo "source: $source_root"
-echo "target: $target_root"
-
-mkdir -p "$target_root"
-
-while IFS= read -r skill_file; do
-  skill_dir="$(dirname "$skill_file")"
-  skill_name="$(basename "$skill_dir")"
-  target_path="$target_root/$skill_name"
-
-  rm -rf "$target_path"
-  ln -s "$skill_dir" "$target_path"
-  echo "  - linked: $skill_name"
-done < <(find "$source_root" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
-
-echo ">>>> success"
+exec bash skills/aki-codex-session-reload/scripts/sync-skill.sh "$@"

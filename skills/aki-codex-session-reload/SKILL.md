@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 16:20:00`
+> - **Updated At**: `2026-02-09 16:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -32,17 +32,27 @@ description: |
 - 세션 재시작 이후 이어받기 비용을 최소화한다.
 
 ## 실행 대상
-- `skills/bin/codex_skills_reload/session_start.sh`
-- `skills/bin/codex_skills_reload/skills_reload.sh`
-- `skills/bin/codex_skills_reload/project_reload.sh`
-- `skills/bin/codex_skills_reload/set_active_project.sh`
-- `skills/bin/codex_skills_reload/init_project_docs.sh`
+- session reload 소스:
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/skills_reload.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/project_reload.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh`
+- session reload 호환 엔트리:
+  - `skills/bin/codex_skills_reload/session_start.sh`
+  - `skills/bin/codex_skills_reload/skills_reload.sh`
+  - `skills/bin/codex_skills_reload/project_reload.sh`
+  - `skills/bin/codex_skills_reload/set_active_project.sh`
+  - `skills/bin/codex_skills_reload/init_project_docs.sh`
 - runtime orchestrator 소스:
   - `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`
   - `skills/aki-codex-session-reload/scripts/runtime_orchestrator/engine.yaml`
 - runtime orchestrator 호환 엔트리:
   - `skills/bin/run-skill-hooks.sh`
   - `skills/bin/runtime_orchestrator/engine.yaml`
+- 기타 runtime 도구:
+  - 소스: `skills/aki-codex-session-reload/scripts/sync-skill.sh`
+  - 호환: `skills/bin/sync-skill.sh`
 
 ## 표준 실행 순서
 1. `git status --short`로 현재 워크트리 상태를 확인한다.
