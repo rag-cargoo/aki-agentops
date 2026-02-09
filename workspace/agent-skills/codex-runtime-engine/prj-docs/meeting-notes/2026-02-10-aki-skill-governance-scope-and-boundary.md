@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 04:10:14`
+> - **Updated At**: `2026-02-10 04:14:19`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -76,14 +76,16 @@
 
 ## 안건 5: 스킬 문서 스키마/메타 통일
 - Created At: 2026-02-10 03:40:47
-- Updated At: 2026-02-10 03:59:33
-- Status: TODO
+- Updated At: 2026-02-10 04:14:19
+- Status: DONE
 - 결정사항:
   - [AGENT-PROPOSAL] `aki-*` 스킬 문서는 최소 공통 섹션(목표/경계/입출력/Done/참고)을 통일한다.
   - `aki-*` 스킬은 `agents/openai.yaml` 메타를 기본으로 갖추고 누락 시 보완한다.
   - 비-`aki` 스킬은 프로젝트/외부 스킬 정책에 따라 별도 관리한다.
+  - `skill-schema-policy.md`를 코어 기준 문서로 추가하고 AGENTS/사이드바에 연결한다.
+  - `aki-github-pages-expert`의 `agents/openai.yaml` 누락을 보완한다.
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-11
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/25

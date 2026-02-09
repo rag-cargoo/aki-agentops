@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-10 04:09:33`
+> - **Updated At**: `2026-02-10 04:10:14`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -65,6 +65,7 @@
 3. 구조/표준/전역 원칙은 `skills/aki-codex-core` 기준 적용
 4. 실행 순서/분기/완료판정은 `skills/aki-codex-workflows` 기준 적용
 5. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
+6. `aki-*` 스킬 문서/메타 스키마는 `skills/aki-codex-core/references/skill-schema-policy.md` 기준 적용
 
 ## 5) Skill Management Scope
 1. 전역 관리 대상 스킬은 `skills/aki-*` prefix로 고정한다.

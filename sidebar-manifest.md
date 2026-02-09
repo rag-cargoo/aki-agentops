@@ -24,6 +24,7 @@
     * [Coding Standard](/skills/aki-codex-core/references/CODING_STANDARD.md)
     * [Responsibility Matrix](/skills/aki-codex-core/references/core-responsibility-matrix.md)
     * [Skill Naming Policy](/skills/aki-codex-core/references/skill-naming-policy.md)
+    * [Skill Schema Policy](/skills/aki-codex-core/references/skill-schema-policy.md)
     * [Bin Script Ownership Map](/skills/aki-codex-core/references/bin-script-ownership-map.md)
     * [Bin Wrapper Deprecation Inventory](/skills/aki-codex-core/references/bin-wrapper-deprecation-inventory.md)
     * [Bin Wrapper Deprecation Checklist](/skills/aki-codex-core/references/bin-wrapper-deprecation-checklist.md)

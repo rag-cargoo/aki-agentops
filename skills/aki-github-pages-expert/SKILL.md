@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-10 04:10:14`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -24,6 +24,8 @@ description: |
 > - 4. 가이드라인
 > - 5. 작업 워크플로우
 > - 6. 전용 도구 세트
+> - 7. 오케스트레이션 경계
+> - 8. 로컬 실행 계약
 <!-- DOC_TOC_END -->
 
 GitHub Pages와 Docsify를 활용하여 기술 지식을 고품질 웹 문서로 변환하고 관리합니다.
@@ -62,3 +64,19 @@ GitHub Pages와 Docsify를 활용하여 기술 지식을 고품질 웹 문서로
 - `skills/aki-github-pages-expert/scripts/docsify_validator.py` (스타일 검사)
 - `skills/aki-github-pages-expert/scripts/check_data_loss.py` (무결성 검사)
 - `skills/aki-github-pages-expert/scripts/doc_meta_toc_sync.py` (문서 메타/상단 목차 동기화)
+
+## 7. 오케스트레이션 경계
+- 이 스킬은 문서 렌더링/무손실 검증 도메인 실행만 담당한다.
+- 크로스 스킬 호출 순서/분기/종료판정은 `aki-codex-workflows` 문서를 권위 소스로 따른다.
+
+## 8. 로컬 실행 계약
+- Input:
+  - 대상 문서 경로 또는 docsify 관리 범위
+  - 작업 목적(시각 정비/무결성 검증/메타 동기화)
+- Output:
+  - 검증 결과(pass/fail)와 수정된 문서 diff
+  - 필요 시 스타일/무결성 검사 리포트
+- Success:
+  - docsify 렌더링 오류가 없고 무결성 검증이 통과
+- Failure:
+  - 실패 로그 보존 후 수정 포인트 보고, 필요 시 롤백/재검증

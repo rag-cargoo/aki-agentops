@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:27:20`
-> - **Updated At**: `2026-02-10 04:10:14`
+> - **Updated At**: `2026-02-10 04:14:19`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -82,6 +82,9 @@
   - 이슈 #23 완료:
     - GitHub MCP init 계약-구현 정합성 개선(`guide_only` + `init_mode`/`execution_status` 보고)
     - 반영 경로: `AGENTS.md`, `session_start.sh`, `aki-codex-session-reload/SKILL.md`, `session-reload-runbook.md`
+  - 이슈 #25 완료:
+    - `aki-*` 스킬 문서/메타 스키마 통일 기준 추가
+    - 반영 경로: `skill-schema-policy.md`, `AGENTS.md`, `sidebar-manifest.md`, `aki-github-pages-expert/SKILL.md`, `aki-playwright-mcp/SKILL.md`, `aki-github-pages-expert/agents/openai.yaml`
   - 역할/책임 분리 보강 완료:
     - `skills/aki-codex-core/references/core-responsibility-matrix.md`
     - `skills/aki-codex-core/references/WORKFLOW.md`
@@ -94,9 +97,6 @@
     - 오케스트레이션 권위 소스: `aki-codex-workflows`
     - 도메인 실행 권위 소스: 각 Owner Skill
 - 다음 작업:
-  - `aki-*` 스킬 문서/메타 스키마 통일:
-    - 공통 SKILL 스키마 + `agents/openai.yaml` 누락 보강
-    - 이슈: #25 https://github.com/rag-cargoo/2602/issues/25
   - `aki-codex-workflows` 2차 플로우 확장 검토:
     - 후보: GitHub MCP init 단독 실행, Pages 배포 검증, PR 머지 전 최종 점검
   - `task.md`-GitHub Issue 상태 드리프트 점검 규칙(SoT 운영) 문서화

@@ -8,7 +8,7 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-10 04:10:14`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -16,12 +16,14 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 ---
 > [!TIP]
 > - 목표
+> - 오케스트레이션 경계
 > - 기본 원칙
 > - 실행 절차
 > - 핵심 구분
 > - 산출물 규칙
 > - 리소스 안내
 > - 운영 원칙
+> - 로컬 실행 계약
 <!-- DOC_TOC_END -->
 
 ## 목표
@@ -29,6 +31,11 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 - Linux/WSL에서 Playwright MCP를 재현 가능하게 세팅한다.
 - 코드 없이 MCP 도구만으로 브라우저 제어를 검증한다.
 - "MCP 제어 경로"와 "사용자 화면 GUI 경로"를 분리해 원인을 빠르게 좁힌다.
+
+## 오케스트레이션 경계
+
+- 이 스킬은 Playwright MCP 설치/진단/실행 검증 도메인만 담당한다.
+- 크로스 스킬 호출 순서/분기/종료판정은 `aki-codex-workflows` 문서를 권위 소스로 따른다.
 
 ## 기본 원칙
 
@@ -79,3 +86,14 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 - 설치 단계와 검증 단계를 섞지 않는다.
 - 실패 메시지는 원문 그대로 보존하고, 해석은 별도로 기록한다.
 - 배포/CI 환경에서는 MCP 경로 검증과 GUI 경로 검증을 분리한다.
+
+## 로컬 실행 계약
+
+- Input:
+  - 대상 환경(OS/WSL), 설치 정책(`MCP_INSTALL_POLICY`), 브라우저 경로(선택)
+- Output:
+  - 진단 결과, GUI/MCP 검증 결과, 재현 명령
+- Success:
+  - 환경 진단 통과 + GUI/MCP 검증 절차 수행 완료
+- Failure:
+  - 실패 로그/증상 분류를 보존하고 `references/troubleshooting.md` 기준 교정 후 재시도
