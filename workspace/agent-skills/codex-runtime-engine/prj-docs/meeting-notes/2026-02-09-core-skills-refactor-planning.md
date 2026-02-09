@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 07:52:02`
-> - **Updated At**: `2026-02-09 15:56:00`
+> - **Updated At**: `2026-02-09 16:08:15`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -16,6 +16,7 @@
 > - 안건 4: 실행 계획 및 안전장치
 > - 안건 5: precommit 정책 경로 이관
 > - 안건 6: [AGENT-PROPOSAL] Runtime Orchestrator 도입
+> - 안건 7: scripts 소유권 이관 + 호환 래퍼 정책
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 코어 스킬 구조 재정의
@@ -112,3 +113,17 @@
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/5
   - 진행기록: `engine.yaml` + `run-skill-hooks.sh` + JSON 리포트 샘플/README + `aki-codex-session-reload` 공존 원칙 문서화 + 실행 검증 완료
+
+## 안건 7: scripts 소유권 이관 + 호환 래퍼 정책
+- Created At: 2026-02-09 16:08:15
+- Updated At: 2026-02-09 16:08:15
+- Status: TODO
+- 결정사항:
+  - `skills/bin`은 공용 엔트리포인트 중심으로 축소하고, 스킬 전용 로직은 각 스킬의 `scripts/`로 이관한다.
+  - 기존 호출 경로 호환을 위해 `skills/bin`에 얇은 위임 래퍼를 남긴다.
+  - 점진 이관 원칙으로 문서/체크 체인/운영 가이드를 단계 동기화한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-11
+  - 상태: TODO
+  - 이슈: https://github.com/rag-cargoo/2602/issues/8
