@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 15:52:00`
-> - **Updated At**: `2026-02-09 15:55:00`
+> - **Updated At**: `2026-02-09 16:16:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -19,7 +19,7 @@
 
 ## Purpose
 - Manage session/runtime checks with a declarative hook list in `engine.yaml`.
-- Execute hooks with `./skills/bin/run-skill-hooks.sh`.
+- Execute hooks with `./skills/bin/run-skill-hooks.sh` (compat wrapper) or `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh` (source script).
 - Persist standardized execution results to `.codex/runtime/skill-hooks-report.json`.
 
 ## Coexistence Policy
@@ -29,7 +29,8 @@
 
 ## Run
 - Default engine: `./skills/bin/run-skill-hooks.sh`
-- Custom engine: `./skills/bin/run-skill-hooks.sh --engine skills/bin/runtime_orchestrator/engine.yaml`
+- Source script: `bash skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`
+- Custom engine: `./skills/bin/run-skill-hooks.sh --engine skills/aki-codex-session-reload/scripts/runtime_orchestrator/engine.yaml`
 
 ## Engine Shape
 ```yaml
@@ -46,7 +47,7 @@ hooks:
 - `version` currently supports only `1`.
 
 ## JSON Report Shape
-- Sample: `skills/bin/runtime_orchestrator/skill-hooks-report.sample.json`
+- Sample: `skills/aki-codex-session-reload/scripts/runtime_orchestrator/skill-hooks-report.sample.json`
 - Key fields:
   - `engine_path`: engine config path
   - `generated_at`: UTC timestamp

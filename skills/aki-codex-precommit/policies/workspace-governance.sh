@@ -29,7 +29,7 @@ policy_validate() {
 
   if [[ "$has_skill_changes" == "true" ]]; then
     echo "[chain-check][${POLICY_ID}] checking skill naming policy"
-    bash skills/bin/check-skill-naming.sh
+    bash skills/aki-codex-core/scripts/check-skill-naming.sh
   fi
 
   if [[ "$mode" != "strict" ]]; then

@@ -1,0 +1,201 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: validate-precommit-chain.sh [--mode quick|strict]
+
+Modes:
+  quick   Lightweight checks for routine commits (default)
+  strict  Full policy-driven validation. Fails on uncovered staged paths.
+
+Policies:
+  Global:  skills/aki-codex-precommit/policies/*.sh
+  Project: */prj-docs/precommit-policy.sh
+EOF
+}
+
+resolve_mode() {
+  local cli_mode=""
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --mode)
+        if [[ $# -lt 2 ]]; then
+          echo "[chain-check] --mode requires a value" >&2
+          usage
+          exit 1
+        fi
+        cli_mode="$2"
+        shift 2
+        ;;
+      -h|--help)
+        usage
+        exit 0
+        ;;
+      *)
+        echo "[chain-check] unknown argument: $1" >&2
+        usage
+        exit 1
+        ;;
+    esac
+  done
+
+  local mode="${cli_mode:-${CHAIN_VALIDATION_MODE:-quick}}"
+  case "$mode" in
+    quick|strict) ;;
+    *)
+      echo "[chain-check] invalid mode: $mode (allowed: quick, strict)" >&2
+      exit 1
+      ;;
+  esac
+
+  echo "$mode"
+}
+
+path_matches_root() {
+  local path="$1"
+  local root="$2"
+  [[ "$path" == "$root" || "$path" == "$root/"* ]]
+}
+
+has_matching_path_for_roots() {
+  local staged_files="$1"
+  shift
+  local roots=("$@")
+
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    local root
+    for root in "${roots[@]}"; do
+      if path_matches_root "$file_path" "$root"; then
+        return 0
+      fi
+    done
+  done <<< "$staged_files"
+
+  return 1
+}
+
+is_covered_by_any_root() {
+  local file_path="$1"
+  shift
+  local roots=("$@")
+
+  local root
+  for root in "${roots[@]}"; do
+    if path_matches_root "$file_path" "$root"; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+mode="$(resolve_mode "$@")"
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+staged_files="$(git -c core.quotePath=false diff --cached --name-only || true)"
+if [[ -z "$staged_files" ]]; then
+  exit 0
+fi
+
+global_policy_dir="skills/aki-codex-precommit/policies"
+mapfile -t global_policy_files < <(find "$global_policy_dir" -maxdepth 1 -type f -name '*.sh' 2>/dev/null | sort)
+mapfile -t project_policy_files < <(find . -type f -path './*/prj-docs/precommit-policy.sh' 2>/dev/null | sort | sed 's#^\./##')
+
+policy_files=()
+if [[ "${#global_policy_files[@]}" -gt 0 ]]; then
+  policy_files+=("${global_policy_files[@]}")
+fi
+if [[ "${#project_policy_files[@]}" -gt 0 ]]; then
+  policy_files+=("${project_policy_files[@]}")
+fi
+
+if [[ "${#policy_files[@]}" -eq 0 ]]; then
+  if [[ "$mode" == "strict" ]]; then
+    echo "[chain-check] strict mode failed: no policy files found"
+    echo "  - ${global_policy_dir}/*.sh"
+    echo "  - */prj-docs/precommit-policy.sh"
+    exit 1
+  fi
+  echo "[chain-check] quick mode: no policy files found, skip"
+  exit 0
+fi
+
+all_policy_roots=()
+applied_policy_ids=()
+
+for policy_file in "${policy_files[@]}"; do
+  unset POLICY_ID POLICY_ROOTS
+  unset -f policy_validate || true
+
+  # shellcheck source=/dev/null
+  source "$policy_file"
+
+  if [[ -z "${POLICY_ID:-}" ]]; then
+    echo "[chain-check] invalid policy: missing POLICY_ID in $policy_file"
+    exit 1
+  fi
+  if ! declare -p POLICY_ROOTS >/dev/null 2>&1; then
+    echo "[chain-check] invalid policy: missing POLICY_ROOTS in $policy_file"
+    exit 1
+  fi
+  if [[ "${#POLICY_ROOTS[@]}" -eq 0 ]]; then
+    echo "[chain-check] invalid policy: missing POLICY_ROOTS in $policy_file"
+    exit 1
+  fi
+  if ! declare -F policy_validate >/dev/null; then
+    echo "[chain-check] invalid policy: missing policy_validate() in $policy_file"
+    exit 1
+  fi
+
+  for root in "${POLICY_ROOTS[@]}"; do
+    all_policy_roots+=("$root")
+  done
+
+  if has_matching_path_for_roots "$staged_files" "${POLICY_ROOTS[@]}"; then
+    echo "[chain-check] applying policy: ${POLICY_ID}"
+    policy_validate "$mode" "$staged_files"
+    applied_policy_ids+=("$POLICY_ID")
+  fi
+done
+
+if [[ "$mode" == "strict" ]]; then
+  uncovered_files=()
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    if ! is_covered_by_any_root "$file_path" "${all_policy_roots[@]}"; then
+      uncovered_files+=("$file_path")
+    fi
+  done <<< "$staged_files"
+
+  if [[ "${#uncovered_files[@]}" -gt 0 ]]; then
+    echo "[chain-check] strict mode failed: uncovered staged paths detected"
+    echo "[chain-check] add/update policy:"
+    echo "  - global: ${global_policy_dir}/*.sh"
+    echo "  - project: */prj-docs/precommit-policy.sh"
+    for path in "${uncovered_files[@]}"; do
+      echo "  - $path"
+    done
+    exit 1
+  fi
+fi
+
+if [[ "${#applied_policy_ids[@]}" -eq 0 ]]; then
+  if [[ "$mode" == "strict" ]]; then
+    echo "[chain-check] strict mode failed: no policy matched staged files"
+    echo "[chain-check] staged files:"
+    echo "$staged_files" | sed 's/^/  - /'
+    exit 1
+  fi
+  echo "[chain-check] quick mode: no matching policy, skip"
+  exit 0
+fi
+
+echo "[chain-check] applied policies:"
+for policy_id in "${applied_policy_ids[@]}"; do
+  echo "  - $policy_id"
+done
+echo "[chain-check] pre-commit chain validation ok (${mode})"

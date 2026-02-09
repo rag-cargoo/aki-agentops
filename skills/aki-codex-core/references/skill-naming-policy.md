@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 09:43:13`
-> - **Updated At**: `2026-02-09 09:43:13`
+> - **Updated At**: `2026-02-09 16:20:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -41,6 +41,7 @@
 ## 자동 점검
 1. 명령:
    - `./skills/bin/check-skill-naming.sh`
+   - 소스: `skills/aki-codex-core/scripts/check-skill-naming.sh`
 2. 정책:
    - `aki-` prefix 미준수 스킬이 예외 목록에 없으면 실패(exit 1)
 3. pre-commit 연동:
