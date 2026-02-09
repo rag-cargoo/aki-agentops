@@ -2,8 +2,8 @@
 name: workspace-governance
 description: |
   워크스페이스 전역 거버넌스 및 개발 표준 수호 스킬.
-  프로젝트 구조 관리 및 문서 전문 작업을 github-pages-expert에 위임합니다.
-  (최신 업데이트: 2026-02-08 23:06:35 | 문서 메타(생성/수정 시각) 및 상단 목차 표준 추가)
+  프로젝트 구조 관리 및 문서 전문 작업을 aki-github-pages-expert에 위임합니다.
+  (최신 업데이트: 2026-02-09 09:43:13 | 코어 스킬 호환 + 네이밍 정책(aki-) 연결 규칙 반영)
 ---
 
 # 워크스페이스 전역 거버넌스 (Global Governance)
@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-09 09:43:13`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -23,6 +23,7 @@ description: |
 > - 작업 워크플로우
 > - 세션 시작 가이드
 > - pre-commit 운영 원칙
+> - 코어 스킬 분리 호환 가이드
 <!-- DOC_TOC_END -->
 
 이 스킬은 워크스페이스 내 모든 프로젝트의 일관된 품질과 거버넌스를 보장합니다.
@@ -31,7 +32,7 @@ description: |
 
 1. **실시간 버전 증명 (Real-time Versioning)**: 스킬 지침 수정 시, 반드시 `description`의 타임스탬프를 **현재의 실제 시간(YYYY-MM-DD HH:mm:ss)**으로 즉시 갱신하여 로드된 지식의 최신성을 보장한다.
 2. **데이터 무결성 절대 사수**: 기존 파일 수정 시 전체 덮어쓰기보다 `apply_patch` 기반 부분 수정을 우선하고, 필요 시 shell 치환 후 diff로 무결성을 확인한다.
-3. **문서 전문성 위임**: 시각적 스타일링 및 무손실 복구 작업은 `github-pages-expert`에 위임.
+3. **문서 전문성 위임**: 시각적 스타일링 및 무손실 복구 작업은 `aki-github-pages-expert`에 위임.
 4. **하드코딩 금지**: 모든 설정은 환경 변수나 설정 파일을 통해 주입.
 5. **계층 구조 엄수**: 패키지 경계(`api`, `domain`, `global`)를 엄격히 유지.
 6. **문서 추적성 필수**: 관리 대상 문서는 상단에 `Created At`/`Updated At`과 상단 목차를 유지하고, 변경 시 `Updated At`을 즉시 갱신한다.
@@ -44,7 +45,7 @@ description: |
 
 ##  작업 워크플로우
 - 1단계: 타임스탬프 갱신을 통한 최신 지식 장착 증명.
-- 2단계: `github-pages-expert`를 통한 문서 무결성 확보.
+- 2단계: `aki-github-pages-expert`를 통한 문서 무결성 확보.
 - 3단계: [코드+문서+테스트] 패키지 완결성 검증.
 
 ##  세션 시작 가이드
@@ -59,3 +60,10 @@ description: |
 - 모드 전환은 `skills/bin/precommit_mode.sh` 또는 `CHAIN_VALIDATION_MODE=strict git commit ...`로 수행한다.
 - 프로젝트별 strict 규칙은 `<project-root>/prj-docs/precommit-policy.sh`에 등록하며, `strict`에서 정책 미커버 경로가 있으면 커밋을 차단한다.
 - 작업 완료 보고에는 반드시 `현재 pre-commit 모드`와 `모드 변경 명령`을 함께 안내한다.
+
+##  코어 스킬 분리 호환 가이드
+- 이 스킬은 즉시 제거하지 않고 호환 허브로 유지한다.
+- 세션 리로드 상세는 `skills/aki-codex-session-reload/SKILL.md`를 우선 참조한다.
+- pre-commit 상세는 `skills/aki-codex-precommit/SKILL.md`를 우선 참조한다.
+- 코어 원칙/경계/분해 기준은 `skills/aki-codex-core/SKILL.md`를 우선 참조한다.
+- 스킬 네이밍(`aki-` prefix) 정책은 `skills/aki-codex-core/references/skill-naming-policy.md`를 우선 참조한다.

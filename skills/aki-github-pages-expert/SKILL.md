@@ -1,5 +1,5 @@
 ---
-name: github-pages-expert
+name: aki-github-pages-expert
 description: |
   GitHub Pages(Docsify) 기술 문서 구조화 및 시각 표준 전문 스킬.
   데이터 무결성 사수(apply_patch 우선) 및 STRUCTURE.md 5번 지식 문서 표준을 강제합니다.
@@ -50,15 +50,15 @@ GitHub Pages와 Docsify를 활용하여 기술 지식을 고품질 웹 문서로
 - 위계 구조: H2 구분선 -> 박스(>) 테두리 -> H3 구분선 -> 2칸 단위 들여쓰기.
 - 문서 메타 고정: 관리 대상 `.md` 문서는 상단에 `Created At`/`Updated At`을 반드시 유지한다.
 - 상단 목차 고정: 단계형 문서는 `단계 목차 (Step Index)`, 일반 문서는 `문서 목차 (Quick Index)`를 상단에 유지한다.
-- 기계적 검증: 커밋 전 반드시 `skills/github-pages-expert/scripts/docsify_validator.py`를 실행하여 통과 확인.
+- 기계적 검증: 커밋 전 반드시 `skills/aki-github-pages-expert/scripts/docsify_validator.py`를 실행하여 통과 확인.
 
 ## 5. 작업 워크플로우
 - 1단계: wc -l 명령어로 원본 파일의 라인 수를 먼저 기록.
 - 2단계: 박스(>) 태그 내부에 시각적 위계에 맞춰 텍스트 재배치.
-- 3단계: `skills/github-pages-expert/scripts/doc_meta_toc_sync.py --all-managed`로 메타/목차를 동기화.
-- 4단계: `skills/github-pages-expert/scripts/check_data_loss.py`를 실행하여 원본 대비 유실 없음을 증명.
+- 3단계: `skills/aki-github-pages-expert/scripts/doc_meta_toc_sync.py --all-managed`로 메타/목차를 동기화.
+- 4단계: `skills/aki-github-pages-expert/scripts/check_data_loss.py`를 실행하여 원본 대비 유실 없음을 증명.
 
 ## 6. 전용 도구 세트
-- `skills/github-pages-expert/scripts/docsify_validator.py` (스타일 검사)
-- `skills/github-pages-expert/scripts/check_data_loss.py` (무결성 검사)
-- `skills/github-pages-expert/scripts/doc_meta_toc_sync.py` (문서 메타/상단 목차 동기화)
+- `skills/aki-github-pages-expert/scripts/docsify_validator.py` (스타일 검사)
+- `skills/aki-github-pages-expert/scripts/check_data_loss.py` (무결성 검사)
+- `skills/aki-github-pages-expert/scripts/doc_meta_toc_sync.py` (문서 메타/상단 목차 동기화)

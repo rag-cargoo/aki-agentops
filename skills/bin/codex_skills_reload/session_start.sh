@@ -13,6 +13,9 @@ skills_snapshot="$runtime_dir/codex_skills_reload.md"
 project_snapshot="$runtime_dir/codex_project_reload.md"
 session_snapshot="$runtime_dir/codex_session_start.md"
 handoff_file="$repo_root/mcp/runtime/SESSION_HANDOFF.md"
+codex_home="${CODEX_HOME:-$HOME/.codex}"
+codex_config_file="$codex_home/config.toml"
+github_toolsets_default="${GITHUB_MCP_DEFAULT_TOOLSETS:-context,repos,issues,projects,pull_requests,labels}"
 
 "$script_dir/skills_reload.sh" >/dev/null
 "$script_dir/project_reload.sh" >/dev/null
@@ -40,6 +43,11 @@ if [[ -s "$handoff_file" ]]; then
   handoff_status="PENDING"
   handoff_created="$(grep -E '^- Created At:' "$handoff_file" | head -n 1 | sed -E 's/^- Created At: `([^`]+)`/\1/' || true)"
   handoff_reason="$(grep -E '^- Reason:' "$handoff_file" | head -n 1 | sed -E 's/^- Reason: ?//' || true)"
+fi
+
+github_mcp_status="NOT_CONFIGURED"
+if [[ -f "$codex_config_file" ]] && grep -Eq '^\[mcp_servers\.github\]' "$codex_config_file"; then
+  github_mcp_status="CONFIGURED"
 fi
 
 skills_status="OK"
@@ -127,6 +135,15 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
     echo "- Action: \`mcp/runtime/SESSION_HANDOFF.md\`를 먼저 읽고 이어서 진행"
   else
     echo "- Status: \`NONE\`"
+  fi
+  echo
+  echo "## GitHub MCP Bootstrap"
+  echo "- Server Config: \`$github_mcp_status\`"
+  echo "- Default Toolsets: \`$github_toolsets_default\`"
+  if [[ "$github_mcp_status" == "CONFIGURED" ]]; then
+    echo "- Action: \`skills/aki-github-mcp-bootstrap/SKILL.md\` 절차로 \`context,repos,issues,projects,pull_requests,labels\` enable + 재검증"
+  else
+    echo "- Action: \`~/.codex/config.toml\`에 \`[mcp_servers.github]\` 등록 후 세션 재시작"
   fi
   echo
   echo "## How It Works"

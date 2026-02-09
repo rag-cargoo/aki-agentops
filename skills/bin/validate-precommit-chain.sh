@@ -10,7 +10,7 @@ Modes:
   strict  Full policy-driven validation. Fails on uncovered staged paths.
 
 Policies:
-  Global:  skills/precommit/policies/*.sh
+  Global:  skills/aki-codex-precommit/policies/*.sh
   Project: */prj-docs/precommit-policy.sh
 EOF
 }
@@ -101,7 +101,7 @@ if [[ -z "$staged_files" ]]; then
   exit 0
 fi
 
-global_policy_dir="skills/precommit/policies"
+global_policy_dir="skills/aki-codex-precommit/policies"
 mapfile -t global_policy_files < <(find "$global_policy_dir" -maxdepth 1 -type f -name '*.sh' 2>/dev/null | sort)
 mapfile -t project_policy_files < <(find . -type f -path './*/prj-docs/precommit-policy.sh' 2>/dev/null | sort | sed 's#^\./##')
 

@@ -22,7 +22,7 @@
 ## 1. Baseline Check
 
 ```bash
-bash skills/playwright-mcp/scripts/diagnose_playwright_mcp.sh
+bash skills/aki-playwright-mcp/scripts/diagnose_playwright_mcp.sh
 ```
 
 확인 포인트:
@@ -66,7 +66,7 @@ wsl --shutdown
 ## 4. GUI Smoke Test
 
 ```bash
-bash skills/playwright-mcp/scripts/chrome_gui_smoke.sh https://www.google.com
+bash skills/aki-playwright-mcp/scripts/chrome_gui_smoke.sh https://www.google.com
 ```
 
 주의:

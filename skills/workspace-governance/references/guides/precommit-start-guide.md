@@ -60,7 +60,7 @@ CHAIN_VALIDATION_MODE=strict git commit -m "..."
    - 둘 다 없으면 `quick`
 4. 정책 엔진 실행:
    - `skills/bin/validate-precommit-chain.sh --mode <quick|strict>`
-   - 전역 정책: `skills/precommit/policies/*.sh`
+   - 전역 정책: `skills/aki-codex-precommit/policies/*.sh`
    - 프로젝트 정책: `<project-root>/prj-docs/precommit-policy.sh`
 
 ---

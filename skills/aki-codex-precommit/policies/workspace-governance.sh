@@ -17,12 +17,26 @@ policy_validate() {
   local mode="$1"
   local staged_files="$2"
 
+  local has_skill_changes="false"
+  local file_path
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    if [[ "$file_path" == skills/* ]]; then
+      has_skill_changes="true"
+      break
+    fi
+  done <<< "$staged_files"
+
+  if [[ "$has_skill_changes" == "true" ]]; then
+    echo "[chain-check][${POLICY_ID}] checking skill naming policy"
+    bash skills/bin/check-skill-naming.sh
+  fi
+
   if [[ "$mode" != "strict" ]]; then
     echo "[chain-check][${POLICY_ID}] quick mode: deep checks skipped"
     return 0
   fi
 
-  local file_path
   while IFS= read -r file_path; do
     [[ -z "$file_path" ]] && continue
 

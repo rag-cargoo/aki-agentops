@@ -1,5 +1,5 @@
 ---
-name: playwright-mcp
+name: aki-playwright-mcp
 description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우저 자동화 환경을 설치, 검증, 장애대응하는 표준 워크플로우. 새 PC에 세팅할 때, 브라우저 창이 바로 닫히는 문제를 디버깅할 때, GUI 실행은 되는데 MCP 제어가 실패할 때, 또는 팀 공용 runbook을 갱신할 때 사용한다.
 ---
 
