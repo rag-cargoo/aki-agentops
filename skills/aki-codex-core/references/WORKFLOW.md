@@ -21,7 +21,7 @@
 에이전트는 **글로벌 컨텍스트(Root)**와 **로컬 컨텍스트(Sub-Project)**를 명확히 구분해야 합니다.
 
 ###  디렉토리 구조 표준
-* 상세 구조는 **[STRUCTURE.md](/skills/workspace-governance/references/STRUCTURE.md)**를 참조하십시오.
+* 상세 구조는 **[STRUCTURE.md](/skills/aki-codex-core/references/STRUCTURE.md)**를 참조하십시오.
 
 ###  Governance 구조
 ```
@@ -29,11 +29,7 @@ skills/
 ├── aki-codex-core/            # 코어 원칙/책임 경계
 ├── aki-codex-session-reload/  # 세션 시작/리로드 운영
 ├── aki-codex-precommit/       # pre-commit 체인/정책
-├── workspace-governance/      # 호환 허브(요약/링크 유지)
-│   ├── references/      # 워크플로우 및 대원칙 (불변)
-│   │   ├── guides/      # 프로젝트 운영 가이드 (Manuals)
-│   │   └── ...
-└── bin/                 # 동기화 및 관리 스크립트
+└── aki-github-pages-expert/   # 문서 렌더링/무손실 점검
 ```
 
 ---
@@ -46,7 +42,7 @@ skills/
 3. 코어 스킬 분해 작업이면 `references/checkpoints/CORE_SKILLS_REFACTOR_BRANCH_CHECKPOINT.md`를 먼저 확인합니다.
 
 ### 2단계: 구현 및 기록
-1. **[코딩 표준](/skills/workspace-governance/references/CODING_STANDARD.md)**을 엄수하여 기능을 구현합니다.
+1. **[코딩 표준](/skills/aki-codex-core/references/CODING_STANDARD.md)**을 엄수하여 기능을 구현합니다.
 2. 작업 중 발생하는 중요한 결정 사항은 즉시 메모합니다.
 
 ### 3단계: 실행 및 기록 (Execution & Reporting)
@@ -73,7 +69,7 @@ skills/
 *   트리거: 사용자가 요청하거나 중요한 기술적 의사결정을 기록할 때.
 
 ####  AI 컨텍스트 문서 (AI Context Rules)
-*   **Global Context (`skills/workspace-governance/references/`)**:
+*   **Global Context (`skills/aki-codex-core/references/`)**:
     *   라이브러리/워크플로우/표준 등 **재사용 가능한 정보**.
 *   **Local Context (`prj-docs/ai-context/`)**:
     *   해당 프로젝트 고유의 설계, 레거시 설명 등 **재사용 불가능한 정보**.

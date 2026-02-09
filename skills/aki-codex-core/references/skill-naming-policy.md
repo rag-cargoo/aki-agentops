@@ -35,7 +35,6 @@
    - `skill-creator`
    - `skill-installer`
 2. 레거시 공용 스킬은 호환성 목적의 예외로 허용한다.
-   - `workspace-governance`
    - `java-spring-boot`
 
 ## 자동 점검
@@ -45,7 +44,7 @@
 2. 정책:
    - `aki-` prefix 미준수 스킬이 예외 목록에 없으면 실패(exit 1)
 3. pre-commit 연동:
-   - `skills/aki-codex-precommit/policies/workspace-governance.sh`가 스킬 변경 시 자동 호출
+   - `skills/aki-codex-precommit/policies/core-workspace.sh`가 스킬 변경 시 자동 호출
 
 ## 신규 스킬 생성 체크리스트
 1. `skill-creator`로 스킬 골격 생성

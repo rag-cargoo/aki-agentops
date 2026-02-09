@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 17:26:35`
-> -02-09 17:53:22`
+> - **Updated At**: `2026-02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -42,7 +42,7 @@
    - `skills/bin/validate-precommit-chain.sh` -> `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh`
 2. `.github/workflows/codex-skills-reload.yml`
    - syntax/session-start 경로를 session-reload 소스로 전환
-3. `skills/aki-codex-precommit/policies/workspace-governance.sh`
+3. `skills/aki-codex-precommit/policies/core-workspace.sh`
    - strict 모드 reload 검증 경로를 session-reload 소스로 전환
 
 ## 최종 상태

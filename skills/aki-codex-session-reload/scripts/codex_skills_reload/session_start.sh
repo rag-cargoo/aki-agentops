@@ -58,7 +58,7 @@ runtime_status="OK"
 required_runtime_scripts=(
   "$repo_root/skills/aki-codex-core/scripts/create-backup-point.sh"
   "$repo_root/skills/aki-codex-precommit/scripts/validate-precommit-chain.sh"
-  "$repo_root/skills/workspace-governance/scripts/run-project-api-script-tests.sh"
+  "$repo_root/skills/aki-codex-precommit/scripts/run-project-api-script-tests.sh"
   "$repo_root/skills/aki-codex-session-reload/scripts/sync-skill.sh"
   "$repo_root/skills/aki-codex-session-reload/scripts/run-skill-hooks.sh"
   "$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh"
@@ -103,7 +103,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "- Skills Runtime Integrity: \`$runtime_status\`"
   if [[ "$runtime_status" == "WARN" ]]; then
     echo "- Missing/Non-Executable: \`$(IFS=', '; echo "${missing_runtime_scripts[*]}")\`"
-    echo "- Action: \`chmod +x skills/aki-codex-core/scripts/*.sh skills/aki-codex-precommit/scripts/*.sh skills/aki-codex-session-reload/scripts/*.sh skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh skills/workspace-governance/scripts/*.sh\`"
+    echo "- Action: \`chmod +x skills/aki-codex-core/scripts/*.sh skills/aki-codex-precommit/scripts/*.sh skills/aki-codex-session-reload/scripts/*.sh skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh\`"
   fi
   echo
   echo "## Loaded Skills"

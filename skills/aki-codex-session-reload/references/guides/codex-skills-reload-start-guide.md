@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> -02-09 17:53:22`
+> - **Updated At**: `2026-02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -46,8 +46,8 @@
 3. 필수 확인 포인트
 
 상세 운영/원리는 아래 문서에서 본다.
-1. `skills/workspace-governance/references/guides/codex-skills-reload-operations-manual.md`
-2. `skills/workspace-governance/references/guides/codex-skills-reload-automation-rationale-and-changes.md`
+1. `skills/aki-codex-session-reload/references/guides/codex-skills-reload-operations-manual.md`
+2. `skills/aki-codex-session-reload/references/guides/codex-skills-reload-automation-rationale-and-changes.md`
 
 ---
 

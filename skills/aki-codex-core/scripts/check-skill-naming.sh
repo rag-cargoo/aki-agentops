@@ -5,7 +5,6 @@ repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
 declare -a allowed_names=(
-  "workspace-governance"
   "java-spring-boot"
   "find-skills"
   "skill-creator"

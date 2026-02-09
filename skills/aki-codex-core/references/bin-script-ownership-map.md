@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 16:20:00`
-> -02-09 17:53:22`
+> - **Updated At**: `2026-02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -30,7 +30,7 @@
 | `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh` | `aki-codex-session-reload` |
 | `skills/aki-codex-session-reload/scripts/runtime_orchestrator/` | `aki-codex-session-reload` |
 | `skills/aki-codex-session-reload/scripts/sync-skill.sh` | `aki-codex-session-reload` |
-| `skills/workspace-governance/scripts/run-project-api-script-tests.sh` | `workspace-governance` |
+| `skills/aki-codex-precommit/scripts/run-project-api-script-tests.sh` | `aki-codex-precommit` |
 
 ## 운영 원칙
 1. 기능 수정은 소스 스크립트에서만 수행한다.

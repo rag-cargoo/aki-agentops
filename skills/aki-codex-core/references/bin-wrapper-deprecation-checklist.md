@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 17:26:35`
-> -02-09 17:53:22`
+> - **Updated At**: `2026-02-09 17:53:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -26,7 +26,7 @@
 2. 즉시 전환 가능한 내부 경로 처리
    - [x] `.githooks/pre-commit` 전환
    - [x] `.github/workflows/codex-skills-reload.yml` 전환
-   - [x] `workspace-governance` strict 정책 전환
+   - [x] `core-workspace` strict 정책 전환
 3. 문서/명령 전환
    - [x] 사용자 문서 명령을 source 경로 기준으로 전환
    - [x] 스크립트 help/log/샘플 경로를 source 기준으로 전환

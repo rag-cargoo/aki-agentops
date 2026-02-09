@@ -44,7 +44,7 @@
 3. 신규 프로젝트마다 `prj-docs` 구조가 제각각이 되는 문제
 
 사고 사례 근거:
-1. `skills/workspace-governance/references/guides/agent-incident-git-backup-restore-playbook.md`
+1. `skills/aki-codex-core/references/guides/agent-incident-git-backup-restore-playbook.md`
 2. 2026-02-07 사고에서 `main` 최신 포인터가 훼손 구간을 가리켜 대량 복구가 필요했음
 
 핵심 목표는 "사고 후 복구"가 아니라 "사고 전 예방"이다.
@@ -148,5 +148,5 @@
 
 ## 5. 참고 문서
 
-1. 운영 절차 상세: `skills/workspace-governance/references/guides/codex-skills-reload-operations-manual.md`
+1. 운영 절차 상세: `skills/aki-codex-session-reload/references/guides/codex-skills-reload-operations-manual.md`
 2. 세션 진입 규칙: `AGENTS.md`

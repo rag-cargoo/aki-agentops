@@ -7,7 +7,7 @@ if [[ -z "$repo_root" ]]; then
   repo_root="$(cd "$script_dir/../../../.." && pwd)"
 fi
 
-template_file="$repo_root/skills/workspace-governance/references/templates/PROJECT_AGENT_TEMPLATE.md"
+template_file="$repo_root/skills/aki-codex-session-reload/references/templates/PROJECT_AGENT_TEMPLATE.md"
 
 usage() {
   cat <<'EOF'
