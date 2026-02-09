@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:27:20`
-> - **Updated At**: `2026-02-10 05:15:39`
+> - **Updated At**: `2026-02-10 05:30:04`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -110,6 +110,20 @@
   - 이슈 #33 완료:
     - workflows Owner Skill lint 스크립트 추가 + pre-commit 연동
     - 반영 경로: `skills/aki-codex-workflows/scripts/check-owner-skill-links.sh`, `skills/aki-codex-workflows/SKILL.md`, `skills/aki-codex-precommit/policies/core-workspace.sh`, `sidebar-manifest.md`
+  - 이슈 #34 완료:
+    - Issue Reopen-First 강제 장치(이슈 폼/PR 템플릿/PR 게이트/issue-upsert) 반영
+    - 반영 경로:
+      - `.github/ISSUE_TEMPLATE/config.yml`
+      - `.github/ISSUE_TEMPLATE/01-work-item.yml`
+      - `.github/pull_request_template.md`
+      - `.github/workflows/pr-issue-governance.yml`
+      - `skills/aki-mcp-github/references/issue-lifecycle-policy.md`
+      - `skills/aki-mcp-github/scripts/issue-upsert.sh`
+      - `skills/aki-mcp-github/references/issue-pr-flow.md`
+      - `skills/aki-mcp-github/references/meeting-notes-sync.md`
+      - `skills/aki-mcp-github/SKILL.md`
+      - `skills/aki-codex-workflows/references/issue-lifecycle-governance-flow.md`
+      - `AGENTS.md`, `sidebar-manifest.md`
   - 역할/책임 분리 보강 완료:
     - `skills/aki-codex-core/references/core-responsibility-matrix.md`
     - `skills/aki-codex-core/references/WORKFLOW.md`

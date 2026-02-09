@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 01:48:58`
-> - **Updated At**: `2026-02-10 05:15:39`
+> - **Updated At**: `2026-02-10 05:26:14`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -77,6 +77,8 @@ description: |
    - `references/pages-release-verification-flow.md`
 3. PR Merge Readiness Flow:
    - `references/pr-merge-readiness-flow.md`
+4. Issue Lifecycle Governance Flow:
+   - `references/issue-lifecycle-governance-flow.md`
 
 ## SoT Drift Rule
 1. 상태 충돌 시 SoT는 GitHub Issue를 우선한다.

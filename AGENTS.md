@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-10 04:10:14`
+> - **Updated At**: `2026-02-10 05:26:14`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -18,6 +18,7 @@
 > - 6) Reload Trigger (Critical)
 > - 7) First Reply Contract
 > - 8) GitHub MCP Init (Default)
+> - 9) Issue Lifecycle Governance
 <!-- DOC_TOC_END -->
 
 ## 1) Single Entry Rule
@@ -112,3 +113,11 @@ GitHub MCP가 등록되어 있으면 세션 시작 보고에서 기본 6개 tool
 3. 이미 enable된 toolset은 재실행해도 무방하다(idempotent).
 4. 일부 toolset이 실패해도 전체 세션은 중단하지 않고 실패 항목만 보고 후 계속 진행한다.
 5. GitHub 작업(이슈/보드/리포 변경)은 init 결과 보고 후 진행한다.
+
+## 9) Issue Lifecycle Governance
+1. 같은 범위/목적의 후속작업은 기존 이슈 갱신 또는 재오픈을 기본으로 한다.
+2. 새 이슈 생성은 범위가 달라진 경우에만 허용한다.
+3. 기존 이슈 본문은 보존하고, 변경사항/진행상황은 코멘트로 누적한다.
+4. 새 이슈를 만들면 "왜 재오픈이 아닌지" 근거를 이슈/PR에 명시한다.
+5. 로컬 자동화는 `skills/aki-mcp-github/scripts/issue-upsert.sh`를 우선 사용한다.
+6. PR은 템플릿을 사용하고 `pr-issue-governance` 체크 통과를 필수로 한다.

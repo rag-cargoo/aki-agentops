@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 20:39:37`
-> - **Updated At**: `2026-02-09 20:39:37`
+> - **Updated At**: `2026-02-10 05:26:14`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -22,6 +22,8 @@ description: |
 > - 오케스트레이션 경계
 > - 로컬 실행 계약
 > - Subflow References
+> - Issue Lifecycle Policy
+> - 운영 스크립트
 > - 결과 보고
 <!-- DOC_TOC_END -->
 
@@ -57,6 +59,19 @@ description: |
    - `references/meeting-notes-sync.md`
 3. Issue-PR Flow:
    - `references/issue-pr-flow.md`
+4. Issue Lifecycle Policy:
+   - `references/issue-lifecycle-policy.md`
+
+## Issue Lifecycle Policy
+1. 같은 범위의 후속작업은 기존 이슈 갱신/재오픈을 기본값으로 처리한다.
+2. 새 이슈 생성은 범위가 달라진 경우에만 허용한다.
+3. 새 이슈 생성 시 "왜 재오픈이 아닌지" 근거를 남긴다.
+4. 정책 상세는 `references/issue-lifecycle-policy.md`를 따른다.
+
+## 운영 스크립트
+1. 이슈 업서트(재오픈 우선):
+   - `scripts/issue-upsert.sh`
+   - 기능: 검색 -> 기존 open 갱신 / closed reopen / 없으면 신규 생성
 
 ## 결과 보고
 - 실행 후 반드시 아래를 보고한다.

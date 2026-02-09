@@ -9,6 +9,8 @@
     * [Init Flow](/skills/aki-mcp-github/references/init.md)
     * [Meeting Notes Sync Flow](/skills/aki-mcp-github/references/meeting-notes-sync.md)
     * [Issue-PR Flow](/skills/aki-mcp-github/references/issue-pr-flow.md)
+    * [Issue Lifecycle Policy](/skills/aki-mcp-github/references/issue-lifecycle-policy.md)
+    * [Issue Upsert Script](/skills/aki-mcp-github/scripts/issue-upsert.sh)
   * **Aki GitHub Pages Expert**
     * [Skill Guide](/skills/aki-github-pages-expert/SKILL.md)
   * **Aki Playwright MCP**
@@ -34,6 +36,7 @@
     * [Pre-commit Flow](/skills/aki-codex-workflows/references/precommit-flow.md)
     * [Session Reload Flow](/skills/aki-codex-workflows/references/session-reload-flow.md)
     * [GitHub MCP Init Flow](/skills/aki-codex-workflows/references/github-mcp-init-flow.md)
+    * [Issue Lifecycle Governance Flow](/skills/aki-codex-workflows/references/issue-lifecycle-governance-flow.md)
     * [Pages Release Verification Flow](/skills/aki-codex-workflows/references/pages-release-verification-flow.md)
     * [PR Merge Readiness Flow](/skills/aki-codex-workflows/references/pr-merge-readiness-flow.md)
     * [SoT Drift Check Rule](/skills/aki-codex-workflows/references/sot-drift-check-rule.md)

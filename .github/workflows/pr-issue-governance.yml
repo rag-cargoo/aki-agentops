@@ -1,0 +1,77 @@
+name: pr-issue-governance
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize, ready_for_review]
+
+jobs:
+  verify:
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+    steps:
+      - name: Validate PR issue governance fields
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+            const errors = [];
+
+            const primaryIssue = body.match(/^- Primary:\s*#(\d+)/m);
+            if (!primaryIssue) {
+              errors.push("Missing required field: '- Primary: #<issue-number>'");
+            }
+
+            const reopenChecked = /- \[[xX]\] Reopen\/Update existing issue \(same scope\)/.test(body);
+            const newChecked = /- \[[xX]\] New issue \(different scope only\)/.test(body);
+            if (!reopenChecked && !newChecked) {
+              errors.push("Issue Lifecycle Decision must select exactly one checkbox.");
+            }
+            if (reopenChecked && newChecked) {
+              errors.push("Issue Lifecycle Decision has both checkboxes selected. Choose one.");
+            }
+
+            if (reopenChecked) {
+              const reopenIssue = body.match(/- Issue:\s*#(\d+)/m);
+              if (!reopenIssue) {
+                errors.push("Reopen path requires '- Issue: #<issue-number>'");
+              }
+            }
+
+            if (newChecked) {
+              const newIssue = body.match(/- New issue:\s*#(\d+)/m);
+              if (!newIssue) {
+                errors.push("New issue path requires '- New issue: #<issue-number>'");
+              }
+
+              const reasonMatch = body.match(/- Why not reopen:\s*(.+)$/m);
+              const reason = reasonMatch ? reasonMatch[1].trim() : "";
+              if (!reason || reason.includes("<reason>")) {
+                errors.push("New issue path requires concrete 'Why not reopen' reason.");
+              }
+            }
+
+            const referenced = [...body.matchAll(/#(\d+)/g)].map((m) => Number(m[1]));
+            const uniqueRefs = [...new Set(referenced)];
+            if (uniqueRefs.length === 0) {
+              errors.push("No issue reference found in PR body.");
+            }
+
+            for (const issue_number of uniqueRefs) {
+              try {
+                await github.rest.issues.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number,
+                });
+              } catch (err) {
+                errors.push(`Referenced issue #${issue_number} not found or inaccessible.`);
+              }
+            }
+
+            if (errors.length > 0) {
+              core.setFailed(errors.join("\n"));
+            }

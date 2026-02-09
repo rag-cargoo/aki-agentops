@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 05:15:39`
+> - **Updated At**: `2026-02-10 05:30:04`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -23,6 +23,7 @@
 > - 안건 11: docsify_validator CLI 개선
 > - 안건 12: GitHub MCP init 재시도/백오프 규칙 명문화
 > - 안건 13: workflows Owner Skill lint 스크립트 추가
+> - 안건 14: Issue Reopen-First 강제(템플릿/PR 게이트/upsert)
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 전역 관리 범위 고정(`aki-*` only)
@@ -205,3 +206,17 @@
   - 기한: 2026-02-10
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/33
+
+## 안건 14: Issue Reopen-First 강제(템플릿/PR 게이트/upsert)
+- Created At: 2026-02-10 05:30:04
+- Updated At: 2026-02-10 05:30:04
+- Status: DONE
+- 결정사항:
+  - 같은 범위 작업은 기존 이슈 갱신/재오픈을 기본값으로 강제한다.
+  - GitHub 이슈 폼/PR 템플릿/PR 검증 워크플로우를 추가해 누락을 차단한다.
+  - `aki-mcp-github`에 `issue-upsert.sh`를 추가해 검색->기존 이슈 우선 처리 흐름을 실행 표준으로 고정한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/34
