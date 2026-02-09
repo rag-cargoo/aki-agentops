@@ -34,3 +34,8 @@
 2. `./skills/bin/codex_skills_reload/session_start.sh`
 3. baseline 누락 시:
    - `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`
+
+## 공존 원칙
+1. 기본 세션 체인은 `session_start.sh`를 유지한다.
+2. `run-skill-hooks.sh`는 점진 도입용 보조 실행기다.
+3. pre-commit 체인은 기존 `precommit_mode.sh`/`validate-precommit-chain.sh` 경로를 그대로 쓴다.

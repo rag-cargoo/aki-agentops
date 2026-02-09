@@ -1,0 +1,17 @@
+version: 1
+
+report:
+  output: .codex/runtime/skill-hooks-report.json
+
+hooks:
+  - id: session_start
+    run: ./skills/bin/codex_skills_reload/session_start.sh
+    on_fail: fail_fast
+
+  - id: skill_naming
+    run: bash skills/bin/check-skill-naming.sh
+    on_fail: fail_fast
+
+  - id: chain_quick
+    run: bash skills/bin/validate-precommit-chain.sh --mode quick
+    on_fail: fail_fast

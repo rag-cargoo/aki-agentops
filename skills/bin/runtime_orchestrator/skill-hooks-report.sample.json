@@ -1,0 +1,43 @@
+{
+  "engine_path": "skills/bin/runtime_orchestrator/engine.yaml",
+  "generated_at": "2026-02-09T15:45:00Z",
+  "summary": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 1882
+  },
+  "hooks": [
+    {
+      "id": "session_start",
+      "run": "./skills/bin/codex_skills_reload/session_start.sh",
+      "on_fail": "fail_fast",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-02-09T15:44:58Z",
+      "finished_at": "2026-02-09T15:44:59Z",
+      "duration_ms": 811
+    },
+    {
+      "id": "skill_naming",
+      "run": "bash skills/bin/check-skill-naming.sh",
+      "on_fail": "fail_fast",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-02-09T15:44:59Z",
+      "finished_at": "2026-02-09T15:44:59Z",
+      "duration_ms": 412
+    },
+    {
+      "id": "chain_quick",
+      "run": "bash skills/bin/validate-precommit-chain.sh --mode quick",
+      "on_fail": "fail_fast",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-02-09T15:44:59Z",
+      "finished_at": "2026-02-09T15:45:00Z",
+      "duration_ms": 659
+    }
+  ]
+}
