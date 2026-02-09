@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 20:43:35`
+> - **Updated At**: `2026-02-10 02:01:49`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -61,8 +61,9 @@
 ## 4) Skill Policy
 1. 요청이 스킬 범위와 일치하면 해당 `SKILL.md`를 먼저 로드
 2. 문서 렌더링/Pages/무손실 점검은 `skills/aki-github-pages-expert` 우선 사용
-3. 워크플로우/구조/표준/운영 규칙은 `skills/aki-codex-core` 기준 적용
-4. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
+3. 구조/표준/전역 원칙은 `skills/aki-codex-core` 기준 적용
+4. 실행 순서/분기/완료판정은 `skills/aki-codex-workflows` 기준 적용
+5. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
 
 ## 5) Reload Trigger (Critical)
 아래 파일이 바뀌면 다음 작업 전에 반드시 다시 실행:
