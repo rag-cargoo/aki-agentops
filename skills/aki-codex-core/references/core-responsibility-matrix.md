@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 09:43:13`
+> - **Updated At**: `2026-02-10 02:01:49`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -22,7 +22,7 @@
 ## 책임 분해 원칙
 1. 허브(`aki-codex-core`)는 원칙/경계/완료 기준만 담당한다.
 2. 실행 로직은 도메인별 스킬로 위임한다.
-3. 규칙/운영 문서는 소유 스킬(`aki-codex-core`, `aki-codex-session-reload`, `aki-codex-precommit`, `aki-github-pages-expert`)에 직접 배치한다.
+3. 규칙/운영 문서는 소유 스킬(`aki-codex-core`, `aki-codex-session-reload`, `aki-codex-precommit`, `aki-codex-workflows`, `aki-github-pages-expert`)에 직접 배치한다.
 
 ## 책임 매트릭스
 - `aki-codex-core`
@@ -37,6 +37,10 @@
   - quick/strict 모드 운영
   - 정책 체인 검증
   - strict 차단 규칙 적용
+- `aki-codex-workflows`
+  - 크로스 스킬 실행 순서(Trigger/Why/Order/Condition/Done)
+  - 단계별 Owner Skill 명시
+  - Done 판정(Completion/Verification/Evidence)
 
 ## 호환성 규칙
 1. 단일 소스 경로를 기준으로 중복 규칙 문서를 제거한다.

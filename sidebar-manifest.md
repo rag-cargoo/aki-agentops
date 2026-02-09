@@ -27,6 +27,11 @@
     * [Bin Script Ownership Map](/skills/aki-codex-core/references/bin-script-ownership-map.md)
     * [Bin Wrapper Deprecation Inventory](/skills/aki-codex-core/references/bin-wrapper-deprecation-inventory.md)
     * [Bin Wrapper Deprecation Checklist](/skills/aki-codex-core/references/bin-wrapper-deprecation-checklist.md)
+  * **Aki Codex Workflows**
+    * [Skill Guide](/skills/aki-codex-workflows/SKILL.md)
+    * [Meeting Notes Flow](/skills/aki-codex-workflows/references/meeting-notes-flow.md)
+    * [Pre-commit Flow](/skills/aki-codex-workflows/references/precommit-flow.md)
+    * [Session Reload Flow](/skills/aki-codex-workflows/references/session-reload-flow.md)
   * **Aki Codex Session Reload**
     * [Skill Guide](/skills/aki-codex-session-reload/SKILL.md)
     * [Project Agent Template](/skills/aki-codex-session-reload/references/templates/PROJECT_AGENT_TEMPLATE.md)
