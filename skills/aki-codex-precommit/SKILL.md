@@ -12,7 +12,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 09:43:13`
+> - **Updated At**: `2026-02-09 16:20:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -33,8 +33,12 @@ description: |
 - 프로젝트별 precommit-policy와 전역 정책을 체인으로 통합한다.
 
 ## 운영 대상
-- `skills/bin/precommit_mode.sh`
-- `skills/bin/validate-precommit-chain.sh`
+- 소스 스크립트:
+  - `skills/aki-codex-precommit/scripts/precommit_mode.sh`
+  - `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh`
+- 호환 래퍼 엔트리:
+  - `skills/bin/precommit_mode.sh`
+  - `skills/bin/validate-precommit-chain.sh`
 - `skills/aki-codex-precommit/policies/*.sh`
 - `<project-root>/prj-docs/precommit-policy.sh`
 
@@ -61,6 +65,7 @@ description: |
 - 프로젝트 정책에서 요구하는 문서/API/리포트 동기화가 없으면 차단
 - 산출물/임시 파일 staged 금지 규칙 위반 시 차단
 - 스킬 변경 시 네이밍 정책(`./skills/bin/check-skill-naming.sh`) 위반이면 차단
+- 네이밍 검사의 소스 스크립트는 `skills/aki-codex-core/scripts/check-skill-naming.sh`를 사용
 
 ## 참고 문서
 - pre-commit 시작 가이드: `references/precommit-runbook.md`

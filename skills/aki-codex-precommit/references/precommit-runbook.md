@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 09:43:13`
+> - **Updated At**: `2026-02-09 16:20:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -35,6 +35,12 @@
    - 프로젝트: `<project-root>/prj-docs/precommit-policy.sh`
 4. 스킬 변경 시 네이밍 정책 점검:
    - `./skills/bin/check-skill-naming.sh`
+
+## 소스 경로
+1. pre-commit 모드 스크립트: `skills/aki-codex-precommit/scripts/precommit_mode.sh`
+2. 체인 검증 스크립트: `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh`
+3. 네이밍 검증 스크립트: `skills/aki-codex-core/scripts/check-skill-naming.sh`
+4. `skills/bin/*` 경로는 기존 명령 호환을 위한 래퍼 엔트리다.
 
 ## strict 차단 대응
 1. 정책 미커버 경로가 있으면 정책 루트에 staged 경로를 포함시킨다.

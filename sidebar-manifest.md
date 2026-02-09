@@ -25,6 +25,7 @@
     * [Skill Guide](/skills/aki-codex-core/SKILL.md)
     * [Responsibility Matrix](/skills/aki-codex-core/references/core-responsibility-matrix.md)
     * [Skill Naming Policy](/skills/aki-codex-core/references/skill-naming-policy.md)
+    * [Bin Script Ownership Map](/skills/aki-codex-core/references/bin-script-ownership-map.md)
   * **Aki Codex Session Reload**
     * [Skill Guide](/skills/aki-codex-session-reload/SKILL.md)
   * **Aki Codex Precommit**

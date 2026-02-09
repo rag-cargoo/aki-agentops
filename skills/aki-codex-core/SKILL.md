@@ -12,7 +12,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 09:43:13`
+> - **Updated At**: `2026-02-09 16:20:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -57,7 +57,7 @@ description: |
 - 코어 스킬 변경은 아래가 모두 충족되어야 완료로 본다.
   1. 역할 경계 문서가 업데이트됨
   2. 관련 사이드바/세션 스냅샷 링크가 동기화됨
-  3. `./skills/bin/check-skill-naming.sh` 및 문서 스타일 검증이 통과됨
+  3. `./skills/bin/check-skill-naming.sh`(소스: `skills/aki-codex-core/scripts/check-skill-naming.sh`) 및 문서 스타일 검증이 통과됨
 
 ## 위임 규칙
 1. 세션 시작/리로드 체인 작업:
@@ -71,7 +71,9 @@ description: |
 1. 사용자 제작 스킬은 `aki-` prefix를 기본값으로 사용한다.
 2. 외부/시스템 스킬(`find-skills`, `skill-creator`, `skill-installer`)은 예외로 유지한다.
 3. 스킬 추가/리네임 후 `./skills/bin/check-skill-naming.sh`로 자동 점검한다.
+4. 구현 스크립트는 `skills/aki-codex-core/scripts/check-skill-naming.sh`에 유지한다.
 
 ## 참고 문서
 - 책임 매트릭스: `references/core-responsibility-matrix.md`
 - 스킬 네이밍 정책: `references/skill-naming-policy.md`
+- bin 소유 매핑: `references/bin-script-ownership-map.md`
