@@ -12,7 +12,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 16:45:00`
+> - **Updated At**: `2026-02-09 17:26:35`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -80,3 +80,5 @@ description: |
 - 책임 매트릭스: `references/core-responsibility-matrix.md`
 - 스킬 네이밍 정책: `references/skill-naming-policy.md`
 - bin 소유 매핑: `references/bin-script-ownership-map.md`
+- bin 폐기 인벤토리: `references/bin-wrapper-deprecation-inventory.md`
+- bin 폐기 체크리스트: `references/bin-wrapper-deprecation-checklist.md`
