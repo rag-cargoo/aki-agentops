@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 01:48:58`
-> - **Updated At**: `2026-02-10 04:07:22`
+> - **Updated At**: `2026-02-10 04:14:19`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -23,6 +23,8 @@ description: |
 > - 공통 실행 규격
 > - 소유권 분리 규칙
 > - 1차 Workflow References
+> - 2차 Workflow References
+> - SoT Drift Rule
 > - 결과 보고
 <!-- DOC_TOC_END -->
 
@@ -66,6 +68,20 @@ description: |
    - `references/precommit-flow.md`
 3. Session Reload Flow:
    - `references/session-reload-flow.md`
+
+## 2차 Workflow References
+1. GitHub MCP Init Flow:
+   - `references/github-mcp-init-flow.md`
+2. Pages Release Verification Flow:
+   - `references/pages-release-verification-flow.md`
+3. PR Merge Readiness Flow:
+   - `references/pr-merge-readiness-flow.md`
+
+## SoT Drift Rule
+1. 상태 충돌 시 SoT는 GitHub Issue를 우선한다.
+2. `task.md`는 실행 보드/캐시로 유지하고 원격 상태에 정렬한다.
+3. 드리프트 점검/조치 절차는 아래 문서를 따른다.
+   - `references/sot-drift-check-rule.md`
 
 ## 결과 보고
 - 실행 후 아래를 반드시 보고한다.

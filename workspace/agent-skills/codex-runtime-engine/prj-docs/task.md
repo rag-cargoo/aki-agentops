@@ -85,6 +85,12 @@
   - 이슈 #25 완료:
     - `aki-*` 스킬 문서/메타 스키마 통일 기준 추가
     - 반영 경로: `skill-schema-policy.md`, `AGENTS.md`, `sidebar-manifest.md`, `aki-github-pages-expert/SKILL.md`, `aki-playwright-mcp/SKILL.md`, `aki-github-pages-expert/agents/openai.yaml`
+  - 이슈 #26 완료:
+    - `aki-codex-workflows` 2차 플로우 3종 추가
+    - 반영 경로: `github-mcp-init-flow.md`, `pages-release-verification-flow.md`, `pr-merge-readiness-flow.md`, `aki-codex-workflows/SKILL.md`, `sidebar-manifest.md`
+  - 이슈 #27 완료:
+    - SoT 드리프트 점검 규칙 문서화
+    - 반영 경로: `sot-drift-check-rule.md`, `aki-codex-workflows/SKILL.md`, `task.md`
   - 역할/책임 분리 보강 완료:
     - `skills/aki-codex-core/references/core-responsibility-matrix.md`
     - `skills/aki-codex-core/references/WORKFLOW.md`
@@ -97,7 +103,4 @@
     - 오케스트레이션 권위 소스: `aki-codex-workflows`
     - 도메인 실행 권위 소스: 각 Owner Skill
 - 다음 작업:
-  - `aki-codex-workflows` 2차 플로우 확장 검토:
-    - 후보: GitHub MCP init 단독 실행, Pages 배포 검증, PR 머지 전 최종 점검
-  - `task.md`-GitHub Issue 상태 드리프트 점검 규칙(SoT 운영) 문서화
   - GitHub Pages 최종 릴리즈 체크: `develop -> main` 병합 직전에 Pages source를 `main`으로 복귀하고 배포 상태를 재확인

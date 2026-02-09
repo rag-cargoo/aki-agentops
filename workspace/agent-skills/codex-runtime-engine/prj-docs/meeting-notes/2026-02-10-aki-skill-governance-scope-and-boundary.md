@@ -15,6 +15,8 @@
 > - 안건 3: 역할 경계 충돌 정리(`session-reload` vs `workflows`)
 > - 안건 4: GitHub MCP init 계약-구현 정합성
 > - 안건 5: 스킬 문서 스키마/메타 통일
+> - 안건 6: `aki-codex-workflows` 2차 플로우 확장
+> - 안건 7: SoT 드리프트 점검 규칙 문서화
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 전역 관리 범위 고정(`aki-*` only)
@@ -89,3 +91,33 @@
   - 기한: 2026-02-11
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/25
+
+## 안건 6: `aki-codex-workflows` 2차 플로우 확장
+- Created At: 2026-02-10 04:14:19
+- Updated At: 2026-02-10 04:14:19
+- Status: DONE
+- 결정사항:
+  - `aki-codex-workflows` 2차 플로우 3종을 references로 추가한다.
+    - GitHub MCP init 단독 실행
+    - Pages 배포 검증
+    - PR 머지 전 최종 점검
+  - `SKILL.md`와 사이드바에 신규 레퍼런스 링크를 동기화한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/26
+
+## 안건 7: SoT 드리프트 점검 규칙 문서화
+- Created At: 2026-02-10 04:14:19
+- Updated At: 2026-02-10 04:14:19
+- Status: DONE
+- 결정사항:
+  - `task.md`와 GitHub Issue 상태 충돌 시 GitHub Issue를 SoT로 우선한다.
+  - 드리프트 분류/조치/보고 규칙을 `sot-drift-check-rule.md`로 고정한다.
+  - PR 머지 전 점검 플로우에 SoT 드리프트 점검 단계를 포함한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/27
