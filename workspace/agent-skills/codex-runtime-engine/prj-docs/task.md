@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:27:20`
-> - **Updated At**: `2026-02-10 02:59:50`
+> - **Updated At**: `2026-02-10 03:42:52`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -84,6 +84,18 @@
     - 오케스트레이션 권위 소스: `aki-codex-workflows`
     - 도메인 실행 권위 소스: 각 Owner Skill
 - 다음 작업:
+  - 스킬 체계 정비 2차(합의안) 착수:
+    - 전역 관리 범위 고정: `aki-*` 전역 / 비-`aki` 프로젝트 위임
+    - 이슈: #22 https://github.com/rag-cargoo/2602/issues/22
+  - 오케스트레이션 소유권 정합화:
+    - `session-reload` vs `workflows` 경계 충돌 해소
+    - 이슈: #24 https://github.com/rag-cargoo/2602/issues/24
+  - GitHub MCP init 계약-구현 정합성 개선:
+    - 세션 시작 보고에서 `enabled/failed` 판단 가능 상태로 정리
+    - 이슈: #23 https://github.com/rag-cargoo/2602/issues/23
+  - `aki-*` 스킬 문서/메타 스키마 통일:
+    - 공통 SKILL 스키마 + `agents/openai.yaml` 누락 보강
+    - 이슈: #25 https://github.com/rag-cargoo/2602/issues/25
   - `aki-codex-workflows` 2차 플로우 확장 검토:
     - 후보: GitHub MCP init 단독 실행, Pages 배포 검증, PR 머지 전 최종 점검
   - `task.md`-GitHub Issue 상태 드리프트 점검 규칙(SoT 운영) 문서화

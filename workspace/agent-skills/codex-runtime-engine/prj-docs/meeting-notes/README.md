@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:59:53`
-> - **Updated At**: `2026-02-10 01:48:58`
+> - **Updated At**: `2026-02-10 03:42:52`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -27,6 +27,7 @@
 - [2026-02-09 MCP-Only GitHub Sync Workflow](./2026-02-09-mcp-only-github-sync.md)
 - [2026-02-09 Core Skills Refactor Planning](./2026-02-09-core-skills-refactor-planning.md)
 - [2026-02-09 Codex Workflows Skill Planning](./2026-02-09-codex-workflows-planning.md)
+- [2026-02-10 Aki Skill Governance Scope & Boundary](./2026-02-10-aki-skill-governance-scope-and-boundary.md)
 
 ## Template
 ```md
