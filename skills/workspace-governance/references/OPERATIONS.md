@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 01:38:36`
+> - **Updated At**: `2026-02-09 09:49:46`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -89,16 +89,18 @@
 
 
 
-2.  **기록 (Log)**: 스킬 내용 수정 시, `SKILL.md` 상단의 `description` 필드에 **상세 타임스탬프(YYYY-MM-DD HH:mm:ss)**와 변경 요약을 반드시 기록한다. 이는 `/skills list`를 통한 버전 검증의 기준이 된다.
+2.  **네이밍 점검 (Naming Check)**: 스킬 생성/리네임 후 `./skills/bin/check-skill-naming.sh`를 실행해 `aki-` prefix 정책 위반 여부를 확인한다.
 
 
 
-3. **수정 (Edit)**: `skills/` 하위의 문서를 자유롭게 수정한다.
+3.  **기록 (Log)**: 스킬 내용 수정 시, `SKILL.md` 상단의 `description` 필드에 **상세 타임스탬프(YYYY-MM-DD HH:mm:ss)**와 변경 요약을 반드시 기록한다. 이는 `/skills list`를 통한 버전 검증의 기준이 된다.
 
 
 
-4. **반영 (Reload)**: `./skills/bin/codex_skills_reload/session_start.sh`를 실행한다. (권장 단일 진입점)
-5. **확인 (Report)**: `.codex/runtime/codex_session_start.md`에서 Skills/Project 상태와 안내문을 확인한다.
+4. **브랜치 체크포인트 (Checkpoint)**: 코어 스킬 리팩터링 작업은 `references/checkpoints/CORE_SKILLS_REFACTOR_BRANCH_CHECKPOINT.md` 기준으로 수행한다.
+5. **수정 (Edit)**: `skills/` 하위의 문서를 자유롭게 수정한다.
+6. **반영 (Reload)**: `./skills/bin/codex_skills_reload/session_start.sh`를 실행한다. (권장 단일 진입점)
+7. **확인 (Report)**: `.codex/runtime/codex_session_start.md`에서 Skills/Project 상태와 안내문을 확인한다.
 
 ### pre-commit 모드 운영 (Quick / Strict)
 
@@ -111,7 +113,7 @@
     1. 중요 커밋 전에는 사용자에게 `strict` 전환 여부를 확인한다.
     2. 사용자 승인 후에만 `strict`를 적용한다.
     3. 완료 후 기본값을 `quick`으로 복귀한다.
-    4. `strict`는 정책 파일(`skills/precommit/policies/*.sh`, `<project-root>/prj-docs/precommit-policy.sh`)에 없는 staged 경로를 실패 처리한다.
+    4. `strict`는 정책 파일(`skills/aki-codex-precommit/policies/*.sh`, `<project-root>/prj-docs/precommit-policy.sh`)에 없는 staged 경로를 실패 처리한다.
     5. `strict`는 문서 품질 규칙(지식 문서 Failure-First/Before&After/Execution Log, API 명세 6-Step)을 함께 검증한다.
 *   **명령어**:
     *   상태 확인: `./skills/bin/precommit_mode.sh status`
@@ -119,7 +121,7 @@
     *   1회성 강제 실행: `CHAIN_VALIDATION_MODE=strict git commit -m "..."`
 *   **정책 엔진/레지스트리**:
     *   엔진: `skills/bin/validate-precommit-chain.sh`
-    *   전역 레지스트리: `skills/precommit/policies/*.sh`
+    *   전역 레지스트리: `skills/aki-codex-precommit/policies/*.sh`
     *   프로젝트 레지스트리: `<project-root>/prj-docs/precommit-policy.sh`
 
 

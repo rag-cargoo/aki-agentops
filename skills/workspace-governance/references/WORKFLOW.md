@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 04:43:58`
+> - **Updated At**: `2026-02-09 09:49:46`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -26,7 +26,10 @@
 ###  Governance 구조
 ```
 skills/
-├── workspace-governance/
+├── aki-codex-core/            # 코어 원칙/책임 경계
+├── aki-codex-session-reload/  # 세션 시작/리로드 운영
+├── aki-codex-precommit/       # pre-commit 체인/정책
+├── workspace-governance/      # 호환 허브(요약/링크 유지)
 │   ├── references/      # 워크플로우 및 대원칙 (불변)
 │   │   ├── guides/      # 프로젝트 운영 가이드 (Manuals)
 │   │   └── ...
@@ -40,6 +43,7 @@ skills/
 ### 1단계: 타겟 설정 및 컨텍스트 로딩
 1. `AGENTS.md`를 읽고 `./skills/bin/codex_skills_reload/session_start.sh`를 실행해 Skills/Project 상태를 동기화합니다.
 2. `.codex/runtime/codex_session_start.md`와 `.codex/runtime/codex_project_reload.md`의 Active Project를 기준으로 `README.md`, `prj-docs/PROJECT_AGENT.md`, `prj-docs/task.md`를 읽어 현재 상태와 우선순위를 파악합니다.
+3. 코어 스킬 분해 작업이면 `references/checkpoints/CORE_SKILLS_REFACTOR_BRANCH_CHECKPOINT.md`를 먼저 확인합니다.
 
 ### 2단계: 구현 및 기록
 1. **[코딩 표준](/skills/workspace-governance/references/CODING_STANDARD.md)**을 엄수하여 기능을 구현합니다.
@@ -60,6 +64,7 @@ skills/
 1. **문서 동기화**: 구현된 코드가 `README`, `knowledge` 등 기존 문서의 설명과 일치하는가?
 2. **규칙 현행화**: 기존 규칙(`RULES`)이 현실과 맞지 않다면, **규칙 문서를 먼저 수정**하십시오.
 3. **사이드바 갱신**: 새 문서(`.md`)가 생성되었다면 반드시 `sidebar-manifest.md`에 링크를 추가하십시오.
+4. **스킬 네이밍 점검**: 스킬 추가/리네임이 있으면 `./skills/bin/check-skill-naming.sh`를 실행하십시오.
 
 ### 4단계: 문서화 표준 (Documentation Policy)
 

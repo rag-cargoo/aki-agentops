@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 01:38:36`
+> - **Updated At**: `2026-02-09 07:07:52`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -27,3 +27,5 @@
 1. 기본 진입점은 `./skills/bin/codex_skills_reload/session_start.sh`다.
 2. 멀티 프로젝트 전환은 `./skills/bin/codex_skills_reload/set_active_project.sh`를 사용한다.
 3. 신규 프로젝트 문서 생성은 `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`를 사용한다.
+4. 세션 스냅샷(`.codex/runtime/codex_session_start.md`)에는 GitHub MCP bootstrap 리마인더가 포함되며, 기본 toolset은 `context,repos,issues,projects,pull_requests,labels`다.
+5. 기본 toolset 목록은 `GITHUB_MCP_DEFAULT_TOOLSETS` 환경 변수로 오버라이드할 수 있다.

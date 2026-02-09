@@ -167,6 +167,9 @@ meeting_notes_index_content="# Meeting Notes ($service_name)
 # Meeting Notes: <title>
 
 ## 안건 1: <주제>
+- Created At: YYYY-MM-DD HH:MM:SS
+- Updated At: YYYY-MM-DD HH:MM:SS
+- Status: TODO | DOING | DONE
 - 결정사항:
 - 후속작업:
   - 담당:
@@ -174,6 +177,9 @@ meeting_notes_index_content="# Meeting Notes ($service_name)
   - 상태: TODO | DOING | DONE
 
 ## 안건 2: <주제>
+- Created At: YYYY-MM-DD HH:MM:SS
+- Updated At: YYYY-MM-DD HH:MM:SS
+- Status: TODO | DOING | DONE
 - 결정사항:
 - 후속작업:
   - 담당:

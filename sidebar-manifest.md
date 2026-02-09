@@ -11,6 +11,24 @@
     * [Architecture Rules](/skills/workspace-governance/references/ARCHITECTURE_RULES.md)
     * [Coding Standard](/skills/workspace-governance/references/CODING_STANDARD.md)
     * [Project Agent Template](/skills/workspace-governance/references/templates/PROJECT_AGENT_TEMPLATE.md)
+  * **GitHub MCP Bootstrap**
+    * [Skill Guide](/skills/aki-github-mcp-bootstrap/SKILL.md)
+  * **Meeting Notes GitHub Sync**
+    * [Skill Guide](/skills/aki-meeting-notes-github-sync/SKILL.md)
+  * **Aki GitHub Pages Expert**
+    * [Skill Guide](/skills/aki-github-pages-expert/SKILL.md)
+  * **Aki Playwright MCP**
+    * [Skill Guide](/skills/aki-playwright-mcp/SKILL.md)
+  * **Aki Meeting Notes Task Sync**
+    * [Skill Guide](/skills/aki-meeting-notes-task-sync/SKILL.md)
+  * **Aki Codex Core**
+    * [Skill Guide](/skills/aki-codex-core/SKILL.md)
+    * [Responsibility Matrix](/skills/aki-codex-core/references/core-responsibility-matrix.md)
+    * [Skill Naming Policy](/skills/aki-codex-core/references/skill-naming-policy.md)
+  * **Aki Codex Session Reload**
+    * [Skill Guide](/skills/aki-codex-session-reload/SKILL.md)
+  * **Aki Codex Precommit**
+    * [Skill Guide](/skills/aki-codex-precommit/SKILL.md)
 
 ---
 
@@ -43,6 +61,8 @@
       * **Meeting Notes**
         * [Index](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/README.md)
         * [2026-02-09 Kickoff](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-09-kickoff.md)
+        * [2026-02-09 MCP-Only GitHub Sync Workflow](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-09-mcp-only-github-sync.md)
+        * [2026-02-09 Core Skills Refactor Planning](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-09-core-skills-refactor-planning.md)
 
 ---
 
@@ -53,6 +73,9 @@
     * [Start Guide](/skills/workspace-governance/references/guides/codex-skills-reload-start-guide.md)
     * [Operations Manual](/skills/workspace-governance/references/guides/codex-skills-reload-operations-manual.md)
     * [자동화 도입 배경 및 변경 내역](/skills/workspace-governance/references/guides/codex-skills-reload-automation-rationale-and-changes.md)
+  * **Safety Checkpoints**
+    * [Core Skills Refactor Branch](/skills/workspace-governance/references/checkpoints/CORE_SKILLS_REFACTOR_BRANCH_CHECKPOINT.md)
+    * [MCP & Skills Pre-Checkpoint](/skills/workspace-governance/references/checkpoints/PRE_MCP_SKILLS_STATE.md)
   * **MCP Runtime Ops**
     * [MCP Workspace Guide](/mcp/README.md)
     * [MCP Manifest](/mcp/manifest/mcp-manifest.md)

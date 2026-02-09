@@ -1,0 +1,3 @@
+interface:
+  display_name: "Aki Meeting Notes Task Sync"
+  short_description: "Sync meeting-note action items into project task.md TODOs"

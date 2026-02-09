@@ -30,7 +30,7 @@
 ```
 skills/
 ├── workspace-governance/      # 전역 워크플로우/표준
-├── github-pages-expert/       # 문서 렌더링/무결성
+├── aki-github-pages-expert/       # 문서 렌더링/무결성
 ├── java-spring-boot/          # 기술 스택 전용 스킬
 └── bin/                        # reload, backup, target 전환 스크립트
 ```
