@@ -10,10 +10,22 @@
 ## 문서 목차 (Quick Index)
 ---
 > [!TIP]
+> - 0. 권한 경계 (Authority Boundary)
 > - 1. 아키텍처 개요 (Architecture)
 > - 2. 작업 프로세스 (Standard Process)
 > - 3. 새로운 프로젝트 추가 방법
 <!-- DOC_TOC_END -->
+
+## 0. 권한 경계 (Authority Boundary)
+- 이 문서는 코어 공통 가이드(참조용)이며, 크로스 스킬 실행 오케스트레이션의 권위 소스는 아니다.
+- 크로스 스킬 순서/분기/종료판정(`When/Why/Order/Condition/Done`) 권위 소스:
+  - `skills/aki-codex-workflows/SKILL.md`
+  - `skills/aki-codex-workflows/references/*.md`
+- 도메인 실행 상세 권위 소스:
+  - 세션 리로드: `skills/aki-codex-session-reload/SKILL.md`
+  - pre-commit: `skills/aki-codex-precommit/SKILL.md`
+  - GitHub MCP: `skills/aki-mcp-github/SKILL.md`
+  - 회의록->task 동기화: `skills/aki-meeting-notes-task-sync/SKILL.md`
 
 ## 1. 아키텍처 개요 (Architecture)
 
@@ -26,10 +38,14 @@
 ###  Governance 구조
 ```
 skills/
-├── aki-codex-core/            # 코어 원칙/책임 경계
-├── aki-codex-session-reload/  # 세션 시작/리로드 운영
-├── aki-codex-precommit/       # pre-commit 체인/정책
-└── aki-github-pages-expert/   # 문서 렌더링/무손실 점검
+├── aki-codex-core/              # 코어 원칙/책임 경계
+├── aki-codex-workflows/         # 크로스 스킬 오케스트레이션
+├── aki-codex-session-reload/    # 세션 시작/리로드 운영
+├── aki-codex-precommit/         # pre-commit 체인/정책
+├── aki-mcp-github/              # GitHub MCP 운영
+├── aki-meeting-notes-task-sync/ # 회의록->task 동기화
+├── aki-github-pages-expert/     # 문서 렌더링/무손실 점검
+└── aki-playwright-mcp/           # Playwright MCP 운영
 ```
 
 ---

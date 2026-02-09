@@ -1,7 +1,7 @@
 ---
 name: aki-meeting-notes-task-sync
 description: |
-  회의록 문서를 Active Project의 `prj-docs/task.md` 실행 TODO로 동기화하는 워크플로우 스킬.
+  회의록 문서를 Active Project의 `prj-docs/task.md` 실행 TODO로 동기화하는 도메인 실행 스킬.
   회의 직후 안건/결정/후속작업을 task 보드의 실행 항목으로 내려야 할 때 사용한다.
   특히 `meeting-notes/*.md`를 근거로 `task.md`의 Next Tasks, 체크리스트, 담당/기한 상태를 갱신해야 하는 상황에서 사용한다.
 ---
@@ -19,6 +19,7 @@ description: |
 ---
 > [!TIP]
 > - 목표
+> - 오케스트레이션 경계
 > - 입력/출력
 > - 실행 절차
 > - 매핑 규칙
@@ -31,6 +32,10 @@ description: |
 - 회의록의 합의사항을 실행 가능한 TODO로 표준 변환한다.
 - `task.md`에 남는 작업 누락과 중복을 줄인다.
 - 회의 문맥과 실행 보드 사이 추적성을 확보한다.
+
+## 오케스트레이션 경계
+- 이 스킬은 회의록->`task.md` 동기화 실행만 담당한다.
+- 크로스 스킬 순서/분기/종료판정은 `aki-codex-workflows`를 권위 소스로 따른다.
 
 ## 입력/출력
 - 입력:

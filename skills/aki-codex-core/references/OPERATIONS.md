@@ -10,6 +10,7 @@
 ## 문서 목차 (Quick Index)
 ---
 > [!TIP]
+> - 0. 권한 경계 (Authority Boundary)
 > - 1. Makefile 운영 원칙 (Makefile Standards)
 > - 2. 스크립트 관리 표준 (Scripting Standards)
 > - 3. 권한 및 실행 표준 (Execution)
@@ -19,6 +20,21 @@
 <!-- DOC_TOC_END -->
 
 > **Core Philosophy**: "복잡한 수동 명령어를 지양하고, 모든 운영 작업은 명문화된 스크립트와 Makefile을 통해 수행한다."
+
+---
+
+## 0. 권한 경계 (Authority Boundary)
+
+- 이 문서는 운영 표준 참조 문서이며, 크로스 스킬 실행 순서의 권위 소스가 아니다.
+- 크로스 스킬 오케스트레이션 권위 소스:
+  - `skills/aki-codex-workflows/SKILL.md`
+  - `skills/aki-codex-workflows/references/*.md`
+- 도메인별 실행 소스는 각 스킬이 소유한다:
+  - 세션 리로드: `skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh`
+  - pre-commit: `skills/aki-codex-precommit/scripts/*.sh`
+  - GitHub MCP: `skills/aki-mcp-github/references/*.md`
+  - 회의록->task 동기화: `skills/aki-meeting-notes-task-sync/SKILL.md`
+  - Pages 품질 검증: `skills/aki-github-pages-expert/scripts/*.py`
 
 ---
 

@@ -22,7 +22,7 @@
 ## 책임 분해 원칙
 1. 허브(`aki-codex-core`)는 원칙/경계/완료 기준만 담당한다.
 2. 실행 로직은 도메인별 스킬로 위임한다.
-3. 규칙/운영 문서는 소유 스킬(`aki-codex-core`, `aki-codex-session-reload`, `aki-codex-precommit`, `aki-codex-workflows`, `aki-github-pages-expert`)에 직접 배치한다.
+3. 규칙/운영 문서는 소유 스킬(`aki-codex-core`, `aki-codex-session-reload`, `aki-codex-precommit`, `aki-codex-workflows`, `aki-mcp-github`, `aki-meeting-notes-task-sync`, `aki-github-pages-expert`, `aki-playwright-mcp`)에 직접 배치한다.
 
 ## 책임 매트릭스
 - `aki-codex-core`
@@ -41,6 +41,24 @@
   - 크로스 스킬 실행 순서(Trigger/Why/Order/Condition/Done)
   - 단계별 Owner Skill 명시
   - Done 판정(Completion/Verification/Evidence)
+- `aki-mcp-github`
+  - GitHub MCP 초기화(init)와 운영 subflow 실행
+  - 이슈/PR/프로젝트/라벨 반영 및 링크 결과 보고
+- `aki-meeting-notes-task-sync`
+  - 회의록 후속작업의 `task.md` 동기화
+  - TODO/DOING/DONE 상태 매핑 및 중복 방지
+- `aki-github-pages-expert`
+  - 문서 렌더링/무손실 검증
+  - 사이드바/링크/Docsify 표시 품질 점검
+- `aki-playwright-mcp`
+  - Playwright MCP 설치/진단/GUI smoke 실행
+  - 브라우저 자동화 런타임 안정성 점검
+
+## 오케스트레이션 경계 규칙
+1. `aki-codex-workflows`는 `When/Why/Order/Condition/Done`만 소유한다.
+2. 각 도메인 스킬은 실행 계약(입력/출력/성공/실패)과 내부 로직만 소유한다.
+3. 도메인 스킬 문서에 엔드투엔드 순서가 필요할 때는 "참조용 실행 예시"로 표시하고, 권위 소스는 `aki-codex-workflows`로 고정한다.
+4. Owner Skill 없는 단계가 확인되면 `aki-codex-workflows`에서 Gap/Risk/Proposed Skill/Boundary/Trigger를 보고하고 스킬 신설을 권고한다.
 
 ## 호환성 규칙
 1. 단일 소스 경로를 기준으로 중복 규칙 문서를 제거한다.

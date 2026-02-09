@@ -19,6 +19,7 @@ description: |
 ---
 > [!TIP]
 > - 목표
+> - 오케스트레이션 경계
 > - 로컬 실행 계약
 > - Subflow References
 > - 결과 보고
@@ -28,6 +29,10 @@ description: |
 - GitHub MCP 작업의 초기 준비(init)와 운영 실행을 단일 스킬로 정렬한다.
 - 동일 세션에서 이슈/프로젝트/PR 작업의 누락과 중복을 줄인다.
 - `aki-codex-workflows`가 호출 가능한 도메인 실행 스킬 역할을 제공한다.
+
+## 오케스트레이션 경계
+- 이 스킬은 GitHub MCP 도메인 실행(init/meeting-notes-sync/issue-pr-flow)만 담당한다.
+- 크로스 스킬 호출 순서와 조건 분기는 `aki-codex-workflows` 문서를 권위 소스로 사용한다.
 
 ## 로컬 실행 계약
 - Entry Points:
