@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 16:20:00`
+> - **Updated At**: `2026-02-09 16:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -37,8 +37,13 @@
 
 ## 공존 원칙
 1. 기본 세션 체인은 `session_start.sh`를 유지한다.
+   - 호환 엔트리: `./skills/bin/codex_skills_reload/session_start.sh`
+   - 소스 스크립트: `skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
 2. `run-skill-hooks.sh`는 점진 도입용 보조 실행기다.
    - 호환 엔트리: `./skills/bin/run-skill-hooks.sh`
    - 소스 스크립트: `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`
    - 엔진 정의: `skills/aki-codex-session-reload/scripts/runtime_orchestrator/engine.yaml`
 3. pre-commit 체인은 기존 `precommit_mode.sh`/`validate-precommit-chain.sh` 경로를 그대로 쓴다.
+4. skill runtime 동기화 스크립트:
+   - 호환 엔트리: `./skills/bin/sync-skill.sh`
+   - 소스 스크립트: `skills/aki-codex-session-reload/scripts/sync-skill.sh`

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 07:52:02`
-> - **Updated At**: `2026-02-09 16:33:27`
+> - **Updated At**: `2026-02-09 16:45:56`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -117,7 +117,7 @@
 
 ## 안건 7: scripts 소유권 이관 + 호환 래퍼 정책
 - Created At: 2026-02-09 16:08:15
-- Updated At: 2026-02-09 16:18:32
+- Updated At: 2026-02-09 16:45:56
 - Status: DONE
 - 결정사항:
   - `skills/bin`은 공용 엔트리포인트 중심으로 축소하고, 스킬 전용 로직은 각 스킬의 `scripts/`로 이관한다.
@@ -129,6 +129,7 @@
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/8
   - 진행기록: 소스 스크립트(`aki-codex-core`, `aki-codex-precommit`, `aki-codex-session-reload`) 이관 + `skills/bin` 래퍼 전환 + `runtime_orchestrator` 호환 링크 + 소유권 매핑 문서(`bin-script-ownership-map.md`) + 실행/문서 검증 완료
+  - 추가완료: 잔여 `skills/bin` 스크립트(`codex_skills_reload/`, `create-backup-point.sh`, `sync-skill.sh`, `run-project-api-script-tests.sh`)도 각 소유 스킬 `scripts/`로 이관하고 `bin`은 래퍼/링크로 정리 완료
 
 ## 안건 8: skills/bin 호환 래퍼 단계적 폐기 기준
 - Created At: 2026-02-09 16:33:27

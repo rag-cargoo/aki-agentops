@@ -12,7 +12,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 16:20:00`
+> - **Updated At**: `2026-02-09 16:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -66,6 +66,9 @@ description: |
    - `aki-codex-precommit` 사용
 3. 문서 렌더링/무손실 점검:
    - `aki-github-pages-expert` 사용
+4. 백업 포인트 생성 실행:
+   - 호환 명령: `./skills/bin/create-backup-point.sh`
+   - 소스 스크립트: `skills/aki-codex-core/scripts/create-backup-point.sh`
 
 ## 네이밍 규칙
 1. 사용자 제작 스킬은 `aki-` prefix를 기본값으로 사용한다.

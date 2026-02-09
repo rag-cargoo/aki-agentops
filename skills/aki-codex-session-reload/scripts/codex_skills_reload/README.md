@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 07:07:52`
+> - **Updated At**: `2026-02-09 16:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -14,7 +14,8 @@
 > - Notes
 <!-- DOC_TOC_END -->
 
-`skills/bin/codex_skills_reload/`는 리로드 로직의 실제 구현 디렉토리다.
+`skills/aki-codex-session-reload/scripts/codex_skills_reload/`는 리로드 로직의 실제 구현 디렉토리다.
+`skills/bin/codex_skills_reload/`는 기존 호출 호환을 위한 링크 경로다.
 
 ## Scripts
 1. `session_start.sh` - 단일 진입 리로드 및 상태 보고 문서 생성

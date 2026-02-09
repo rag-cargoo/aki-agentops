@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 16:20:00`
-> - **Updated At**: `2026-02-09 16:20:00`
+> - **Updated At**: `2026-02-09 16:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -23,10 +23,14 @@
 | 호환 엔트리 (`skills/bin`) | 소스 스크립트 | 소유 스킬 |
 | --- | --- | --- |
 | `check-skill-naming.sh` | `skills/aki-codex-core/scripts/check-skill-naming.sh` | `aki-codex-core` |
+| `create-backup-point.sh` | `skills/aki-codex-core/scripts/create-backup-point.sh` | `aki-codex-core` |
 | `precommit_mode.sh` | `skills/aki-codex-precommit/scripts/precommit_mode.sh` | `aki-codex-precommit` |
 | `validate-precommit-chain.sh` | `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh` | `aki-codex-precommit` |
+| `codex_skills_reload/` | `skills/aki-codex-session-reload/scripts/codex_skills_reload/` | `aki-codex-session-reload` |
 | `run-skill-hooks.sh` | `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh` | `aki-codex-session-reload` |
 | `runtime_orchestrator/` | `skills/aki-codex-session-reload/scripts/runtime_orchestrator/` | `aki-codex-session-reload` |
+| `sync-skill.sh` | `skills/aki-codex-session-reload/scripts/sync-skill.sh` | `aki-codex-session-reload` |
+| `run-project-api-script-tests.sh` | `skills/workspace-governance/scripts/run-project-api-script-tests.sh` | `workspace-governance` |
 
 ## 운영 원칙
 1. 기능 수정은 소스 스크립트에서만 수행한다.

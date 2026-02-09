@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 09:43:13`
+> - **Updated At**: `2026-02-09 16:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -67,3 +67,6 @@ description: |
 - pre-commit 상세는 `skills/aki-codex-precommit/SKILL.md`를 우선 참조한다.
 - 코어 원칙/경계/분해 기준은 `skills/aki-codex-core/SKILL.md`를 우선 참조한다.
 - 스킬 네이밍(`aki-` prefix) 정책은 `skills/aki-codex-core/references/skill-naming-policy.md`를 우선 참조한다.
+- 프로젝트 API 스크립트 테스트 실행기는 다음 경로를 사용한다.
+  - 호환 명령: `./skills/bin/run-project-api-script-tests.sh`
+  - 소스 스크립트: `skills/workspace-governance/scripts/run-project-api-script-tests.sh`
