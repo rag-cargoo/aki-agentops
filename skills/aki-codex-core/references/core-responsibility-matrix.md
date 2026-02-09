@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 03:59:33`
+> - **Updated At**: `2026-02-10 04:07:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -34,6 +34,7 @@
   - 세션 시작/리로드
   - Active Project 점검/복구
   - 런타임 스냅샷 확인
+  - 세션 부트스트랩 훅 실행기(`run-skill-hooks.sh`, `runtime_orchestrator/engine.yaml`) 소유
 - `aki-codex-precommit`
   - quick/strict 모드 운영
   - 정책 체인 검증
@@ -42,6 +43,7 @@
   - 크로스 스킬 실행 순서(Trigger/Why/Order/Condition/Done)
   - 단계별 Owner Skill 명시
   - Done 판정(Completion/Verification/Evidence)
+  - 사용자 작업 오케스트레이션 문서 권위 소스
 - `aki-mcp-github`
   - GitHub MCP 초기화(init)와 운영 subflow 실행
   - 이슈/PR/프로젝트/라벨 반영 및 링크 결과 보고

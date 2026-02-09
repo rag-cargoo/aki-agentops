@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 15:52:00`
-> - **Updated At**: `2026-02-09 17:53:22`
+> - **Updated At**: `2026-02-10 04:07:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -25,6 +25,8 @@
 ## Coexistence Policy
 - This orchestrator does not replace `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`.
 - This orchestrator does not replace existing pre-commit chain scripts.
+- Ownership of this runtime hook runner remains in `aki-codex-session-reload`.
+- User-facing workflow orchestration authority remains in `skills/aki-codex-workflows/*`.
 - Use it as an opt-in runtime check layer while keeping current workflows intact.
 
 ## Run

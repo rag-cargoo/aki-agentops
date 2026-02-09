@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 03:59:33`
+> - **Updated At**: `2026-02-10 04:06:43`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -47,15 +47,17 @@
 
 ## 안건 3: 역할 경계 충돌 정리(`session-reload` vs `workflows`)
 - Created At: 2026-02-10 03:40:47
-- Updated At: 2026-02-10 03:59:33
-- Status: TODO
+- Updated At: 2026-02-10 04:06:43
+- Status: DONE
 - 결정사항:
   - [AGENT-PROPOSAL] 현재 문서 원칙상 오케스트레이션은 `aki-codex-workflows` 소유인데, `runtime_orchestrator` 자산이 `aki-codex-session-reload`에 위치해 경계가 일부 겹친다.
-  - 소유권 정렬 방법(이관 또는 경계 재정의) 중 하나를 선택해 단일 기준으로 고정한다.
+  - 소유권 정렬 방식은 "명시 재정의"로 확정한다.
+    - 세션 부트스트랩 훅 실행기(`run-skill-hooks.sh`, `engine.yaml`)는 `aki-codex-session-reload` 소유
+    - 사용자 작업 오케스트레이션 권위 소스(When/Why/Order/Condition/Done)는 `aki-codex-workflows` 소유
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-11
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/24
 
 ## 안건 4: GitHub MCP init 계약-구현 정합성

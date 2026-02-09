@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 17:53:22`
+> - **Updated At**: `2026-02-10 04:07:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -21,6 +21,7 @@ description: |
 > - 목표
 > - 오케스트레이션 경계
 > - 실행 대상
+> - 소유권 경계
 > - 표준 실행 순서
 > - 점검 포인트
 > - 실패 복구
@@ -48,6 +49,11 @@ description: |
   - `skills/aki-codex-session-reload/scripts/runtime_orchestrator/engine.yaml`
 - 기타 runtime 도구:
   - `skills/aki-codex-session-reload/scripts/sync-skill.sh`
+
+## 소유권 경계
+- `run-skill-hooks.sh` + `runtime_orchestrator/engine.yaml`의 소유 스킬은 `aki-codex-session-reload`로 고정한다.
+- 위 자산은 "세션 부트스트랩/런타임 무결성 점검"을 위한 보조 실행기이며, 사용자 작업 오케스트레이션의 권위 소스가 아니다.
+- 사용자 작업 오케스트레이션(When/Why/Order/Condition/Done)의 권위 소스는 `aki-codex-workflows` 문서를 사용한다.
 
 ## 표준 실행 순서
 1. `git status --short`로 현재 워크트리 상태를 확인한다.

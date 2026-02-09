@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 01:48:58`
-> - **Updated At**: `2026-02-10 01:48:58`
+> - **Updated At**: `2026-02-10 04:07:22`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -21,6 +21,7 @@ description: |
 > - 목표
 > - 오케스트레이션 원칙
 > - 공통 실행 규격
+> - 소유권 분리 규칙
 > - 1차 Workflow References
 > - 결과 보고
 <!-- DOC_TOC_END -->
@@ -52,6 +53,11 @@ description: |
   - `Completion`: 절차 수행 완료 여부
   - `Verification`: 검증 통과 여부
   - `Evidence`: 근거(출력/링크/리포트 경로)
+
+## 소유권 분리 규칙
+1. 이 스킬은 사용자 작업 오케스트레이션 문서 규격(When/Why/Order/Condition/Done)만 소유한다.
+2. `run-skill-hooks.sh`/`engine.yaml` 같은 세션 부트스트랩 훅 실행기는 `aki-codex-session-reload` 소유로 취급한다.
+3. 스크립트 기반 훅 실행기와 사용자 작업 오케스트레이션을 동일 개념으로 혼용하지 않는다.
 
 ## 1차 Workflow References
 1. Meeting Notes Flow:
