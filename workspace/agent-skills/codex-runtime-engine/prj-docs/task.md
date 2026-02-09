@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:27:20`
-> - **Updated At**: `2026-02-10 04:14:19`
+> - **Updated At**: `2026-02-10 04:28:10`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -91,6 +91,10 @@
   - 이슈 #27 완료:
     - SoT 드리프트 점검 규칙 문서화
     - 반영 경로: `sot-drift-check-rule.md`, `aki-codex-workflows/SKILL.md`, `task.md`
+  - 이슈 #28 생성:
+    - `develop -> main` 병합 전 GitHub Pages 최종 릴리즈 체크 추적 이슈 등록
+    - 상태: OPEN (릴리즈 직전 실행)
+    - 링크: https://github.com/rag-cargoo/2602/issues/28
   - 역할/책임 분리 보강 완료:
     - `skills/aki-codex-core/references/core-responsibility-matrix.md`
     - `skills/aki-codex-core/references/WORKFLOW.md`
@@ -104,3 +108,4 @@
     - 도메인 실행 권위 소스: 각 Owner Skill
 - 다음 작업:
   - GitHub Pages 최종 릴리즈 체크: `develop -> main` 병합 직전에 Pages source를 `main`으로 복귀하고 배포 상태를 재확인
+    - 이슈: https://github.com/rag-cargoo/2602/issues/28

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 04:14:19`
+> - **Updated At**: `2026-02-10 04:28:10`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -17,6 +17,7 @@
 > - 안건 5: 스킬 문서 스키마/메타 통일
 > - 안건 6: `aki-codex-workflows` 2차 플로우 확장
 > - 안건 7: SoT 드리프트 점검 규칙 문서화
+> - 안건 8: `develop -> main` 병합 전 Pages 최종 릴리즈 체크
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 전역 관리 범위 고정(`aki-*` only)
@@ -121,3 +122,16 @@
   - 기한: 2026-02-10
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/27
+
+## 안건 8: `develop -> main` 병합 전 Pages 최종 릴리즈 체크
+- Created At: 2026-02-10 04:28:10
+- Updated At: 2026-02-10 04:28:10
+- Status: TODO
+- 결정사항:
+  - 메인 병합 직전 Pages source branch를 `main`으로 복귀하고 배포 상태를 재확인한다.
+  - 결과를 `task.md`와 이슈에 동기화한 뒤 최종 머지 Go/No-Go를 판정한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: TODO
+  - 이슈: https://github.com/rag-cargoo/2602/issues/28
