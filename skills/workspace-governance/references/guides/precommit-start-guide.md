@@ -33,9 +33,9 @@
 
 - 수동 명령:
 ```bash
-./skills/bin/precommit_mode.sh status
-./skills/bin/precommit_mode.sh quick
-./skills/bin/precommit_mode.sh strict
+./skills/aki-codex-precommit/scripts/precommit_mode.sh status
+./skills/aki-codex-precommit/scripts/precommit_mode.sh quick
+./skills/aki-codex-precommit/scripts/precommit_mode.sh strict
 ```
 
 - 1회성 strict 강제:
@@ -52,14 +52,14 @@ CHAIN_VALIDATION_MODE=strict git commit -m "..."
 
 1. staged 파일 확인 (`git diff --cached --name-only`)
 2. `AGENTS.md`, `skills/*`, `*/prj-docs/PROJECT_AGENT.md` 변경 시:
-   - `skills/bin/codex_skills_reload/*.sh` 문법 검사
-   - `./skills/bin/codex_skills_reload/session_start.sh` 실행
+   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh` 문법 검사
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh` 실행
 3. 모드 결정:
    - `CHAIN_VALIDATION_MODE` 환경변수 우선
    - 없으면 `.codex/runtime/precommit_mode` 값 사용
    - 둘 다 없으면 `quick`
 4. 정책 엔진 실행:
-   - `skills/bin/validate-precommit-chain.sh --mode <quick|strict>`
+   - `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode <quick|strict>`
    - 전역 정책: `skills/aki-codex-precommit/policies/*.sh`
    - 프로젝트 정책: `<project-root>/prj-docs/precommit-policy.sh`
 
@@ -122,7 +122,7 @@ CHAIN_VALIDATION_MODE=strict git commit -m "..."
 3. strict 커밋 완료 후: 기본 모드 `quick` 복귀
 
 ```bash
-./skills/bin/precommit_mode.sh strict
+./skills/aki-codex-precommit/scripts/precommit_mode.sh strict
 git commit -m "..."
-./skills/bin/precommit_mode.sh quick
+./skills/aki-codex-precommit/scripts/precommit_mode.sh quick
 ```

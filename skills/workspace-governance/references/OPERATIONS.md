@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 09:49:46`
+> - **Updated At**: `2026-02-09 17:38:06`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -68,10 +68,10 @@
 
 ### 스크립트 배치 원칙 (중요)
 
-*   **공용 운영 스크립트**: `skills/bin/`에만 둔다. (예: `session_start.sh`, `set_active_project.sh`)
-*   **리로드 런타임 구현**: `skills/bin/codex_skills_reload/`에 집중 배치한다.
-*   **스킬 내부 전용 스크립트**: 각 스킬의 `skills/<skill-name>/scripts/`에 둔다.
-*   **삭제/수정 안전성**: 세션 시작 시 `./skills/bin/codex_skills_reload/session_start.sh`가 `skills/bin` 무결성을 자동 점검한다.
+*   **호환 래퍼 엔트리**: `skills/bin/`에는 사용자 호출 호환용 래퍼만 둔다.
+*   **리로드 런타임 구현**: `skills/aki-codex-session-reload/scripts/codex_skills_reload/`에 집중 배치한다.
+*   **스킬 내부 전용 스크립트**: 실제 구현은 각 스킬의 `skills/<skill-name>/scripts/`에 둔다.
+*   **삭제/수정 안전성**: 세션 시작 시 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`가 `skills/bin` 무결성을 자동 점검한다.
 
 ### 런타임 분리의 이유
 
@@ -85,11 +85,11 @@
 
 
 
-1.  **연결 (Link)**: `./skills/bin/sync-skill.sh`를 실행한다. (최초 1회 또는 신규 스킬 추가 시)
+1.  **연결 (Link)**: `./skills/aki-codex-session-reload/scripts/sync-skill.sh`를 실행한다. (최초 1회 또는 신규 스킬 추가 시)
 
 
 
-2.  **네이밍 점검 (Naming Check)**: 스킬 생성/리네임 후 `./skills/bin/check-skill-naming.sh`를 실행해 `aki-` prefix 정책 위반 여부를 확인한다.
+2.  **네이밍 점검 (Naming Check)**: 스킬 생성/리네임 후 `./skills/aki-codex-core/scripts/check-skill-naming.sh`를 실행해 `aki-` prefix 정책 위반 여부를 확인한다.
 
 
 
@@ -99,7 +99,7 @@
 
 4. **브랜치 체크포인트 (Checkpoint)**: 코어 스킬 리팩터링 작업은 `references/checkpoints/CORE_SKILLS_REFACTOR_BRANCH_CHECKPOINT.md` 기준으로 수행한다.
 5. **수정 (Edit)**: `skills/` 하위의 문서를 자유롭게 수정한다.
-6. **반영 (Reload)**: `./skills/bin/codex_skills_reload/session_start.sh`를 실행한다. (권장 단일 진입점)
+6. **반영 (Reload)**: `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`를 실행한다. (권장 단일 진입점)
 7. **확인 (Report)**: `.codex/runtime/codex_session_start.md`에서 Skills/Project 상태와 안내문을 확인한다.
 
 ### pre-commit 모드 운영 (Quick / Strict)
@@ -116,11 +116,11 @@
     4. `strict`는 정책 파일(`skills/aki-codex-precommit/policies/*.sh`, `<project-root>/prj-docs/precommit-policy.sh`)에 없는 staged 경로를 실패 처리한다.
     5. `strict`는 문서 품질 규칙(지식 문서 Failure-First/Before&After/Execution Log, API 명세 6-Step)을 함께 검증한다.
 *   **명령어**:
-    *   상태 확인: `./skills/bin/precommit_mode.sh status`
-    *   기본 모드 설정: `./skills/bin/precommit_mode.sh quick|strict`
+    *   상태 확인: `./skills/aki-codex-precommit/scripts/precommit_mode.sh status`
+    *   기본 모드 설정: `./skills/aki-codex-precommit/scripts/precommit_mode.sh quick|strict`
     *   1회성 강제 실행: `CHAIN_VALIDATION_MODE=strict git commit -m "..."`
 *   **정책 엔진/레지스트리**:
-    *   엔진: `skills/bin/validate-precommit-chain.sh`
+    *   엔진: `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh`
     *   전역 레지스트리: `skills/aki-codex-precommit/policies/*.sh`
     *   프로젝트 레지스트리: `<project-root>/prj-docs/precommit-policy.sh`
 

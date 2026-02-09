@@ -40,7 +40,7 @@
 
 ## 자동 점검
 1. 명령:
-   - `./skills/bin/check-skill-naming.sh`
+   - `./skills/aki-codex-core/scripts/check-skill-naming.sh`
    - 소스: `skills/aki-codex-core/scripts/check-skill-naming.sh`
 2. 정책:
    - `aki-` prefix 미준수 스킬이 예외 목록에 없으면 실패(exit 1)
@@ -50,5 +50,5 @@
 ## 신규 스킬 생성 체크리스트
 1. `skill-creator`로 스킬 골격 생성
 2. 디렉토리/`name:`를 `aki-<skill-name>` 규칙으로 정렬
-3. `./skills/bin/check-skill-naming.sh` 실행
-4. `./skills/bin/codex_skills_reload/session_start.sh` 실행 후 로드 결과 확인
+3. `./skills/aki-codex-core/scripts/check-skill-naming.sh` 실행
+4. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh` 실행 후 로드 결과 확인

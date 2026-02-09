@@ -106,7 +106,7 @@ wc -l workspace/apps/backend/ticket-core-service/prj-docs/task.md
 ### 4.2 표준 명령
 
 ```bash
-./skills/bin/create-backup-point.sh --label pre-work --push
+./skills/aki-codex-core/scripts/create-backup-point.sh --label pre-work --push
 ```
 
 생성 예시:

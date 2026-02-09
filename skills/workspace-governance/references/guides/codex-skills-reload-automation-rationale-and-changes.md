@@ -64,9 +64,9 @@
 
 변경 내용:
 1. `AGENTS.md`, `skills/**`, `workspace/**/prj-docs/PROJECT_AGENT.md` 변경이 스테이징되면 자동 검증 실행
-2. `bash -n skills/bin/codex_skills_reload/*.sh`
-3. `./skills/bin/codex_skills_reload/session_start.sh`
-4. 정책 엔진 `skills/bin/validate-precommit-chain.sh`로 프로젝트별 규칙을 실행
+2. `bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh`
+3. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
+4. 정책 엔진 `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh`로 프로젝트별 규칙을 실행
 5. 전역 규칙은 `skills/aki-codex-precommit/policies/*.sh`, 프로젝트 규칙은 `<project-root>/prj-docs/precommit-policy.sh`로 분리
 6. 프로젝트 체인 검증은 기본 `quick`, 중요 커밋은 `strict`로 운영
 7. `strict` 전환은 사용자 승인 후 수행하도록 운영 정책 고정
@@ -104,7 +104,7 @@
 ## 2.3 신규 프로젝트 문서 자동 초기화 추가
 
 파일:
-- `skills/bin/codex_skills_reload/init_project_docs.sh`
+- `skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh`
 
 사고 예시:
 1. 신규 프로젝트에서 `PROJECT_AGENT.md` 또는 `task.md`가 누락된 채 시작

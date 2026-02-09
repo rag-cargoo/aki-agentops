@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-09 16:45:00`
+> - **Updated At**: `2026-02-09 17:38:06`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -20,20 +20,20 @@
 
 ## 표준 실행
 1. `git status --short`
-2. `./skills/bin/codex_skills_reload/session_start.sh`
+2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
 3. `cat .codex/runtime/codex_session_start.md`
 4. `Startup Checks` 3개가 `OK`인지 확인
 
 ## 멀티 프로젝트
-1. `./skills/bin/codex_skills_reload/set_active_project.sh --list`
-2. `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
-3. `./skills/bin/codex_skills_reload/session_start.sh`
+1. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh --list`
+2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
+3. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
 
 ## 실패 복구
-1. `bash -n skills/bin/codex_skills_reload/*.sh`
-2. `./skills/bin/codex_skills_reload/session_start.sh`
+1. `bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh`
+2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
 3. baseline 누락 시:
-   - `./skills/bin/codex_skills_reload/init_project_docs.sh <project-root>`
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh <project-root>`
 
 ## 공존 원칙
 1. 기본 세션 체인은 `session_start.sh`를 유지한다.
