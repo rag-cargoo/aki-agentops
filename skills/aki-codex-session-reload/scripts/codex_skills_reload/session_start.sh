@@ -145,9 +145,10 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "- Server Config: \`$github_mcp_status\`"
   echo "- Default Toolsets: \`$github_toolsets_default\`"
   if [[ "$github_mcp_status" == "CONFIGURED" ]]; then
-    echo "- Action: \`skills/aki-mcp-github/SKILL.md\`의 init flow로 \`context,repos,issues,projects,pull_requests,labels\` enable + 재검증"
+    echo "- Action Guide: \`skills/aki-mcp-github/SKILL.md\`의 init flow로 \`$github_toolsets_default\` enable + 재검증"
+    echo "- Note: 이 스크립트는 MCP toolset enable을 직접 실행하지 않고 가이드만 출력"
   else
-    echo "- Action: \`~/.codex/config.toml\`에 \`[mcp_servers.github]\` 등록 후 세션 재시작"
+    echo "- Action Guide: \`~/.codex/config.toml\`에 \`[mcp_servers.github]\` 등록 후 세션 재시작"
   fi
   echo
   echo "## How It Works"

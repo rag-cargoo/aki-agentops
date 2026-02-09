@@ -15,8 +15,8 @@
 > - 2. 스크립트 관리 표준 (Scripting Standards)
 > - 3. 권한 및 실행 표준 (Execution)
 > - 4. 스킬 관리 및 동기화 표준 (Skill Management & Sync)
-> - 7.  파일 무결성 보호 프로토콜 (File Integrity Protection)
-> - 5. 문서 사이트 (GitHub Pages) 관리 표준
+> - 5. 파일 무결성 보호 프로토콜 (File Integrity Protection)
+> - 6. 문서 사이트 (GitHub Pages) 관리 표준
 <!-- DOC_TOC_END -->
 
 > **Core Philosophy**: "복잡한 수동 명령어를 지양하고, 모든 운영 작업은 명문화된 스크립트와 Makefile을 통해 수행한다."
@@ -153,7 +153,7 @@
 
 
 
-## 7.  파일 무결성 보호 프로토콜 (File Integrity Protection)
+## 5. 파일 무결성 보호 프로토콜 (File Integrity Protection)
 
 
 
@@ -185,7 +185,7 @@
 
 
 
-### 7.1. `write_file` 금지 원칙 (Ban Overwrite)
+### 5.1. `write_file` 금지 원칙 (Ban Overwrite)
 
 
 
@@ -225,7 +225,7 @@
 
 
 
-### 7.2. 대규모 수정 시 안전 절차 (Safety Procedure)
+### 5.2. 대규모 수정 시 안전 절차 (Safety Procedure)
 
 
 
@@ -273,7 +273,7 @@
 
 
 
-### 7.3. 내용 보존의 원칙
+### 5.3. 내용 보존의 원칙
 
 
 
@@ -311,7 +311,7 @@
 
 ---
 
-## 5. 문서 사이트 (GitHub Pages) 관리 표준
+## 6. 문서 사이트 (GitHub Pages) 관리 표준
 
 문서는 "작성하는 것"보다 "쉽게 찾아볼 수 있게 관리하는 것"이 더 중요하다. 모든 문서는 Docsify 기반의 GitHub Pages를 통해 실시간으로 공유된다.
 
