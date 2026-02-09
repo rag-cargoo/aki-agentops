@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 07:52:02`
-> - **Updated At**: `2026-02-09 16:18:32`
+> - **Updated At**: `2026-02-09 16:33:27`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -17,6 +17,7 @@
 > - 안건 5: precommit 정책 경로 이관
 > - 안건 6: [AGENT-PROPOSAL] Runtime Orchestrator 도입
 > - 안건 7: scripts 소유권 이관 + 호환 래퍼 정책
+> - 안건 8: skills/bin 호환 래퍼 단계적 폐기 기준
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 코어 스킬 구조 재정의
@@ -128,3 +129,20 @@
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/8
   - 진행기록: 소스 스크립트(`aki-codex-core`, `aki-codex-precommit`, `aki-codex-session-reload`) 이관 + `skills/bin` 래퍼 전환 + `runtime_orchestrator` 호환 링크 + 소유권 매핑 문서(`bin-script-ownership-map.md`) + 실행/문서 검증 완료
+
+## 안건 8: skills/bin 호환 래퍼 단계적 폐기 기준
+- Created At: 2026-02-09 16:33:27
+- Updated At: 2026-02-09 16:33:27
+- Status: TODO
+- 결정사항:
+  - `skills/bin`은 당분간 호환 래퍼로 유지하고, 즉시 삭제하지 않는다.
+  - 최종 폐기 조건은 다음 3가지를 모두 충족해야 한다.
+    - 호출 지점(문서, hooks, CI, 운영 명령) 새 경로 전환 완료
+    - 1~2 릴리즈 동안 래퍼 기반 운영 안정성 검증 완료
+    - 팀 합의로 `skills/bin` 경로 폐기 결정
+  - 실행 로직의 단일 소스는 계속 각 스킬의 `skills/<aki-skill>/scripts/`에 둔다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-12
+  - 상태: TODO
+  - 이슈: https://github.com/rag-cargoo/2602/issues/10
