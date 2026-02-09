@@ -59,5 +59,10 @@ description: |
 3. Active Project 재지정:
    - `./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
 
+## 공존 원칙
+- 기본 세션 진입점은 계속 `./skills/bin/codex_skills_reload/session_start.sh`를 사용한다.
+- runtime orchestrator(`./skills/bin/run-skill-hooks.sh`)는 보조 자동화 레이어이며 즉시 대체가 아니다.
+- pre-commit 체인(`precommit_mode.sh`, `validate-precommit-chain.sh`)은 기존 정책대로 독립 운영한다.
+
 ## 참고 문서
 - 세션 리로드 요약: `references/session-reload-runbook.md`
