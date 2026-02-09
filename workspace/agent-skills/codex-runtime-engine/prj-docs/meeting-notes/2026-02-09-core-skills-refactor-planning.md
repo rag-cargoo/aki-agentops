@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 07:52:02`
-> - **Updated At**: `2026-02-09 10:00:31`
+> - **Updated At**: `2026-02-09 15:29:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -96,7 +96,7 @@
 
 ## 안건 6: [AGENT-PROPOSAL] Runtime Orchestrator 도입
 - Created At: 2026-02-09 10:00:31
-- Updated At: 2026-02-09 10:00:31
+- Updated At: 2026-02-09 15:29:42
 - Status: TODO
 - 제안 출처: Agent
 > [!IMPORTANT]
@@ -105,6 +105,7 @@
   - `engine.yaml`로 세션/검증 훅 실행 순서를 선언형으로 관리하는 방안을 검토한다.
   - `run-skill-hooks.sh`와 `.codex/runtime` JSON 리포트 포맷을 함께 정의해 실행 결과를 일관되게 남긴다.
   - 기존 `session_start.sh`/pre-commit 체인을 대체하지 않고 점진 도입한다.
+  - GitHub Pages 운영은 임시로 `develop` 브랜치 소스로 검증하고, `develop -> main` 최종 병합 직전에 소스를 `main`으로 복귀한다.
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-11
