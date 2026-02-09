@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 07:13:21`
-> - **Updated At**: `2026-02-09 07:13:21`
+> - **Updated At**: `2026-02-10 01:48:58`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -32,7 +32,7 @@
 - Updated At: 2026-02-09 07:13:21
 - Status: DONE
 - 결정사항:
-  - `aki-meeting-notes-github-sync` 스킬을 MCP-only 방식으로 운영한다.
+  - (현행 기준) `aki-mcp-github` 스킬의 `meeting-notes-sync` flow를 MCP-only 방식으로 운영한다.
   - local fallback 없이 GitHub MCP로 이슈/프로젝트/PR/라벨까지 동기화한다.
   - 회의록 원문에는 생성된 Issue/PR 링크를 역기록한다.
 - 후속작업:
@@ -45,7 +45,7 @@
 - Updated At: 2026-02-09 07:13:21
 - Status: DOING
 - 결정사항:
-  - 다음 실제 회의록 1건에 대해 `aki-meeting-notes-github-sync`를 실행해 이슈/PR 동기화를 실증한다.
+  - 다음 실제 회의록 1건에 대해 `aki-mcp-github`의 `meeting-notes-sync` flow를 실행해 이슈/PR 동기화를 실증한다.
   - 실행 결과(생성/갱신 이슈, PR, 프로젝트 반영, 실패 항목)를 회의록에 기록한다.
 - 후속작업:
   - 담당: Aki + Agent

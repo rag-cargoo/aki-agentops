@@ -4,10 +4,11 @@
 ---
 
 * **SKILLS**
-  * **GitHub MCP Bootstrap**
-    * [Skill Guide](/skills/aki-github-mcp-bootstrap/SKILL.md)
-  * **Meeting Notes GitHub Sync**
-    * [Skill Guide](/skills/aki-meeting-notes-github-sync/SKILL.md)
+  * **Aki MCP GitHub**
+    * [Skill Guide](/skills/aki-mcp-github/SKILL.md)
+    * [Init Flow](/skills/aki-mcp-github/references/init.md)
+    * [Meeting Notes Sync Flow](/skills/aki-mcp-github/references/meeting-notes-sync.md)
+    * [Issue-PR Flow](/skills/aki-mcp-github/references/issue-pr-flow.md)
   * **Aki GitHub Pages Expert**
     * [Skill Guide](/skills/aki-github-pages-expert/SKILL.md)
   * **Aki Playwright MCP**
@@ -65,6 +66,7 @@
         * [2026-02-09 Kickoff](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-09-kickoff.md)
         * [2026-02-09 MCP-Only GitHub Sync Workflow](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-09-mcp-only-github-sync.md)
         * [2026-02-09 Core Skills Refactor Planning](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-09-core-skills-refactor-planning.md)
+        * [2026-02-09 Codex Workflows Skill Planning](/workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-09-codex-workflows-planning.md)
 
 ---
 

@@ -1,3 +1,0 @@
-interface:
-  display_name: "Meeting Notes GitHub Sync"
-  short_description: "Sync meeting notes to GitHub issues, projects, and PR tracking via MCP"
