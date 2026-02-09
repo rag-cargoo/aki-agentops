@@ -23,6 +23,17 @@ github_toolsets_default="${GITHUB_MCP_DEFAULT_TOOLSETS:-context,repos,issues,pro
 mkdir -p "$runtime_dir"
 
 mapfile -t loaded_skills < <(find "$repo_root/skills" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
+declare -a managed_skills=()
+declare -a delegated_skills=()
+for abs_path in "${loaded_skills[@]}"; do
+  rel_path="${abs_path#$repo_root/}"
+  skill_name="$(basename "$(dirname "$abs_path")")"
+  if [[ "$skill_name" == aki-* ]]; then
+    managed_skills+=("$rel_path")
+  else
+    delegated_skills+=("$rel_path")
+  fi
+done
 
 active_project=""
 active_readme=""
@@ -113,8 +124,25 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
     idx=1
     for abs_path in "${loaded_skills[@]}"; do
       rel_path="${abs_path#$repo_root/}"
-      echo "$idx. \`$rel_path\`"
+      skill_name="$(basename "$(dirname "$abs_path")")"
+      scope_tag="delegated"
+      if [[ "$skill_name" == aki-* ]]; then
+        scope_tag="managed"
+      fi
+      echo "$idx. [${scope_tag}] \`$rel_path\`"
       idx=$((idx + 1))
+    done
+  fi
+  echo
+  echo "## Skill Management Scope"
+  echo "- Managed Policy: \`skills/aki-*\`를 전역 관리 대상으로 사용"
+  echo "- Delegated Policy: 비-\`aki\` 스킬은 Active Project 요구 시에만 사용"
+  echo "- Managed Count: \`${#managed_skills[@]}\`"
+  echo "- Delegated Count: \`${#delegated_skills[@]}\`"
+  if [[ "${#delegated_skills[@]}" -gt 0 ]]; then
+    echo "- Delegated Skills:"
+    for skill_path in "${delegated_skills[@]}"; do
+      echo "  - \`$skill_path\`"
     done
   fi
   echo

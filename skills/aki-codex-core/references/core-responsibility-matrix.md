@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 02:01:49`
+> - **Updated At**: `2026-02-10 03:59:33`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -12,6 +12,7 @@
 > [!TIP]
 > - 책임 분해 원칙
 > - 책임 매트릭스
+> - 관리 범위 규칙
 > - 호환성 규칙
 > - 공존/이관 계획
 <!-- DOC_TOC_END -->
@@ -53,6 +54,12 @@
 - `aki-playwright-mcp`
   - Playwright MCP 설치/진단/GUI smoke 실행
   - 브라우저 자동화 런타임 안정성 점검
+
+## 관리 범위 규칙
+1. 코어 전역 관리 대상 스킬은 `aki-*` prefix를 기준으로 한다.
+2. 비-`aki` 스킬은 기본적으로 프로젝트 위임 대상이며 전역 운영 규칙의 강제 대상이 아니다.
+3. 비-`aki` 스킬의 사용 판단은 Active Project 문서(`PROJECT_AGENT.md`, `task.md`)에서 결정한다.
+4. 세션 시작 보고는 `Managed(aki-*)`와 `Delegated(non-aki)`를 분리해 노출한다.
 
 ## 오케스트레이션 경계 규칙
 1. `aki-codex-workflows`는 `When/Why/Order/Condition/Done`만 소유한다.

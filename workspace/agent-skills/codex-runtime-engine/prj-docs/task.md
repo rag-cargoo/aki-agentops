@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:27:20`
-> - **Updated At**: `2026-02-10 03:42:52`
+> - **Updated At**: `2026-02-10 03:59:33`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -72,6 +72,10 @@
     - `AGENTS.md`, `sidebar-manifest.md`, CI/스크립트 경로를 새 구조로 전환
 - 상태 갱신(2026-02-10):
   - 이슈 #17, #19 완료/종료 확인(오픈 이슈 0건)
+  - 이슈 #22 완료:
+    - 전역 관리 범위 고정: `aki-*` 전역 / 비-`aki` 프로젝트 위임 규칙 반영
+    - 반영 경로: `AGENTS.md`, `core-responsibility-matrix.md`, `session_start.sh`
+    - 세션 보고에 `Managed(aki-*)` / `Delegated(non-aki)` 구분 추가
   - 역할/책임 분리 보강 완료:
     - `skills/aki-codex-core/references/core-responsibility-matrix.md`
     - `skills/aki-codex-core/references/WORKFLOW.md`
@@ -84,9 +88,6 @@
     - 오케스트레이션 권위 소스: `aki-codex-workflows`
     - 도메인 실행 권위 소스: 각 Owner Skill
 - 다음 작업:
-  - 스킬 체계 정비 2차(합의안) 착수:
-    - 전역 관리 범위 고정: `aki-*` 전역 / 비-`aki` 프로젝트 위임
-    - 이슈: #22 https://github.com/rag-cargoo/2602/issues/22
   - 오케스트레이션 소유권 정합화:
     - `session-reload` vs `workflows` 경계 충돌 해소
     - 이슈: #24 https://github.com/rag-cargoo/2602/issues/24

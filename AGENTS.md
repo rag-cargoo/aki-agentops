@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-10 02:01:49`
+> - **Updated At**: `2026-02-10 03:59:33`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -14,9 +14,10 @@
 > - 2) Active Paths
 > - 3) Safety Rules
 > - 4) Skill Policy
-> - 5) Reload Trigger (Critical)
-> - 6) First Reply Contract
-> - 7) GitHub MCP Init (Default)
+> - 5) Skill Management Scope
+> - 6) Reload Trigger (Critical)
+> - 7) First Reply Contract
+> - 8) GitHub MCP Init (Default)
 <!-- DOC_TOC_END -->
 
 ## 1) Single Entry Rule
@@ -65,7 +66,13 @@
 4. 실행 순서/분기/완료판정은 `skills/aki-codex-workflows` 기준 적용
 5. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
 
-## 5) Reload Trigger (Critical)
+## 5) Skill Management Scope
+1. 전역 관리 대상 스킬은 `skills/aki-*` prefix로 고정한다.
+2. 비-`aki` 스킬(예: `java-spring-boot`)은 프로젝트 선택형으로 취급한다.
+3. 비-`aki` 스킬의 사용/검증/운영 규칙은 Active Project의 `PROJECT_AGENT.md` + `task.md`에서 위임 관리한다.
+4. 세션 시작 보고에서는 `Managed(aki-*)`와 `Delegated(non-aki)`를 구분해 표시한다.
+
+## 6) Reload Trigger (Critical)
 아래 파일이 바뀌면 다음 작업 전에 반드시 다시 실행:
 1. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
 2. `.codex/runtime/codex_skills_reload.md` + `.codex/runtime/codex_project_reload.md` + `.codex/runtime/codex_session_start.md` 재확인
@@ -75,18 +82,19 @@
 - `skills/*/SKILL.md`
 - `workspace/**/prj-docs/PROJECT_AGENT.md`
 
-## 6) First Reply Contract
+## 7) First Reply Contract
 세션 첫 응답에서 아래 항목을 반드시 사용자에게 보고한다.
 
 1. `Startup Checks` 결과 (`Skills Snapshot`, `Project Snapshot`, `Skills Runtime Integrity`)
 2. `Loaded Skills` 전체 목록
-3. `Active Project` (`Project Root`, `Task Doc`, `Project Agent`)
-4. `How It Works` 3줄 요약 (전역 규칙 vs 프로젝트 규칙 vs Active Project 개념)
-5. 멀티 프로젝트 사용법 2줄 (`--list`, `set_active_project`)
-6. 누락/경고 항목이 있으면 즉시 후속 액션 1줄 제시
-7. GitHub MCP init 결과 (`enabled toolsets`, `미활성/실패 항목`)
+3. `Skill Management Scope` (`Managed(aki-*)` / `Delegated(non-aki)`)
+4. `Active Project` (`Project Root`, `Task Doc`, `Project Agent`)
+5. `How It Works` 3줄 요약 (전역 규칙 vs 프로젝트 규칙 vs Active Project 개념)
+6. 멀티 프로젝트 사용법 2줄 (`--list`, `set_active_project`)
+7. 누락/경고 항목이 있으면 즉시 후속 액션 1줄 제시
+8. GitHub MCP init 결과 (`enabled toolsets`, `미활성/실패 항목`)
 
-## 7) GitHub MCP Init (Default)
+## 8) GitHub MCP Init (Default)
 GitHub MCP가 등록되어 있으면 세션 시작 때 기본 6개 toolset init을 수행한다.
 
 기본 대상:

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 03:42:52`
+> - **Updated At**: `2026-02-10 03:59:33`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -19,7 +19,7 @@
 
 ## 안건 1: 전역 관리 범위 고정(`aki-*` only)
 - Created At: 2026-02-10 03:40:47
-- Updated At: 2026-02-10 03:42:52
+- Updated At: 2026-02-10 03:59:33
 - Status: DONE
 - 결정사항:
   - 코어 운영 관점의 기본 관리 대상은 `aki-*` 스킬로 고정한다.
@@ -28,12 +28,12 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-11
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/22
 
 ## 안건 2: 비-`aki` 스킬 프로젝트 위임 원칙
 - Created At: 2026-02-10 03:40:47
-- Updated At: 2026-02-10 03:42:52
+- Updated At: 2026-02-10 03:59:33
 - Status: DONE
 - 결정사항:
   - 비-`aki` 스킬은 Active Project 요구가 있을 때만 로드/사용한다.
@@ -42,12 +42,12 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-11
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/22
 
 ## 안건 3: 역할 경계 충돌 정리(`session-reload` vs `workflows`)
 - Created At: 2026-02-10 03:40:47
-- Updated At: 2026-02-10 03:42:52
+- Updated At: 2026-02-10 03:59:33
 - Status: TODO
 - 결정사항:
   - [AGENT-PROPOSAL] 현재 문서 원칙상 오케스트레이션은 `aki-codex-workflows` 소유인데, `runtime_orchestrator` 자산이 `aki-codex-session-reload`에 위치해 경계가 일부 겹친다.
@@ -60,7 +60,7 @@
 
 ## 안건 4: GitHub MCP init 계약-구현 정합성
 - Created At: 2026-02-10 03:40:47
-- Updated At: 2026-02-10 03:42:52
+- Updated At: 2026-02-10 03:59:33
 - Status: TODO
 - 결정사항:
   - [AGENT-PROPOSAL] `AGENTS.md`의 "init 결과 보고" 요구와 `session_start.sh`의 "가이드 출력" 동작을 일치시켜야 한다.
@@ -73,7 +73,7 @@
 
 ## 안건 5: 스킬 문서 스키마/메타 통일
 - Created At: 2026-02-10 03:40:47
-- Updated At: 2026-02-10 03:42:52
+- Updated At: 2026-02-10 03:59:33
 - Status: TODO
 - 결정사항:
   - [AGENT-PROPOSAL] `aki-*` 스킬 문서는 최소 공통 섹션(목표/경계/입출력/Done/참고)을 통일한다.
