@@ -23,6 +23,7 @@
 > - 11. Google Search Button Click Is Intercepted
 > - 12. `Transport closed` After Long Session
 > - 13. Korean Text Looks Broken (Tofu/Boxes)
+> - 14. Local HTML Cannot Be Opened Directly by MCP
 <!-- DOC_TOC_END -->
 
 ## 1. Browser Opens Then Closes Immediately
@@ -210,3 +211,23 @@ sudo apt-get install -y fonts-noto-cjk fonts-nanum fonts-noto-color-emoji
 fc-cache -f
 ```
 3. Chrome 재기동 후 페이지 재확인
+
+## 14. Local HTML Cannot Be Opened Directly by MCP
+
+증상:
+- `file:///.../k6-web-dashboard.html`로 `navigate` 시 실패
+- MCP 에러에 허용 프로토콜이 `http:, https:, about:, data:`로 표시됨
+
+원인:
+- Playwright MCP가 `file://` 직접 접근을 허용하지 않는 실행 경로
+
+조치:
+1. 로컬 HTML 경로를 직접 열지 않는다.
+2. 디렉토리를 로컬 HTTP로 먼저 서빙한다.
+```bash
+cd workspace/apps/backend/ticket-core-service
+nohup python3 -m http.server 18080 --bind 127.0.0.1 --directory prj-docs/api-test >/tmp/k6-http.log 2>&1 &
+curl -sS -I http://127.0.0.1:18080/k6-web-dashboard.html | head -n 1
+```
+3. MCP는 `navigate`로 `http://127.0.0.1:18080/k6-web-dashboard.html`에 접속한다.
+4. 세션 중단/재시작이 잦으면 `nohup` 또는 세션 분리 실행으로 서버 생존성을 보장한다.
