@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 05:53:55`
+> - **Updated At**: `2026-02-10 06:54:11`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -12,6 +12,7 @@
 > [!TIP]
 > - 표준 실행
 > - 환경 검증
+> - 런타임 상태표
 > - 멀티 프로젝트
 > - 실패 복구
 <!-- DOC_TOC_END -->
@@ -33,8 +34,47 @@
    - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
 3. 목적:
    - `.codex/runtime` 재생성
+   - `.codex/state` 재생성
    - `core.hooksPath=.githooks` 정렬
    - 훅/핵심 스크립트 실행권한 복구
+
+## 런타임 상태표
+1. 동기화(파일 갱신):
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh sync`
+2. 조회(고정폭 표):
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh status`
+3. 경고 전용 조회:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh alerts`
+4. 산출물:
+   - `.codex/state/runtime_flags.yaml`
+   - `.codex/runtime/current_status.txt`
+5. 출력 타이밍(권장):
+   - 세션 시작 1회
+   - 옵션 변경 직후(예: precommit mode 전환)
+   - 사용자 명시 요청 시(`상태 보여줘`)
+6. 표 구성:
+   - `[User Controls]`: 이용자 제어 항목(예: precommit mode, active project)
+   - `[Agent Checks]`: 에이전트 자동 점검 항목(예: hooks/env/handoff 존재 여부)
+7. Pages/품질 가드 해석:
+   - `pages_skill`, `pages_docsify_validator`, `pages_release_flow`가 모두 정상인지 확인
+   - `docsify_precommit_guard`, `owner_skill_lint_guard`, `skill_naming_guard`가 `ENABLED`인지 확인
+8. Skill Inventory 해석:
+   - `skills_total`과 각 count가 기대치와 맞는지 확인
+   - `skill:<name>` 목록에서 누락 스킬이 없는지 확인
+9. MCP Inventory 해석:
+   - `mcp_servers_total`과 `mcp_servers_running`으로 MCP 가동 범위를 확인
+   - `mcp:<server>` 행에서 runtime/status를 확인
+   - Docker 항목 detail에 `probe=RESTRICTED`가 보이면 Docker daemon 조회 제한 상태이며, 프로세스 기반으로 `RUNNING` 판정한 결과다.
+10. Workflow Health 해석:
+   - `workflow_total`, `workflow_ready_count`로 워크플로우 준비 범위를 확인한다.
+   - `workflow_marks_count`, `workflow_marks_file`로 최신 실행 마크 저장소 적용 여부를 확인한다.
+   - `workflow:<name>`은 `READY/NOT_READY`와 마지막 상태(`PASS/FAIL/UNVERIFIED/NOT_RUN`)를 함께 본다.
+   - `workflow:<name>:detail`에서 누락 의존성/최근 실행 근거를 확인한다.
+11. Alerts 해석:
+   - 상태표 상단 `Alerts`에서 문제 항목만 먼저 확인한다.
+   - `runtime all_clear`면 즉시 조치가 필요한 항목이 없다는 의미다.
+12. Session Snapshot 요약:
+   - `.codex/runtime/codex_session_start.md`의 `Runtime Status` 아래 `Workflow Summary` 1줄로 핵심 상태를 빠르게 확인한다.
 
 ## 멀티 프로젝트
 1. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh --list`

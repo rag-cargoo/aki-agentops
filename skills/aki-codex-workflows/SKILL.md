@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 01:48:58`
-> - **Updated At**: `2026-02-10 05:26:14`
+> - **Updated At**: `2026-02-10 06:54:11`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -79,6 +79,8 @@ description: |
    - `references/pr-merge-readiness-flow.md`
 4. Issue Lifecycle Governance Flow:
    - `references/issue-lifecycle-governance-flow.md`
+5. Runtime Status Visibility Flow:
+   - `references/runtime-status-flow.md`
 
 ## SoT Drift Rule
 1. 상태 충돌 시 SoT는 GitHub Issue를 우선한다.
@@ -90,6 +92,9 @@ description: |
 1. Owner Skill 링크 점검:
    - `scripts/check-owner-skill-links.sh`
    - 목적: workflows references의 `Owner Skill` 표기 누락/오타를 사전 차단
+2. Workflow 실행 결과 마킹:
+   - `scripts/workflow_mark.sh`
+   - 목적: workflow별 최신 실행 결과(`PASS/FAIL/NOT_RUN/UNVERIFIED`)를 `.codex/state/workflow_marks.tsv`에 기록/조회
 
 ## 결과 보고
 - 실행 후 아래를 반드시 보고한다.

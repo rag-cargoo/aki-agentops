@@ -9,8 +9,14 @@ fi
 reload_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh"
 set_active_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh"
 bootstrap_env_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh"
+runtime_flags_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
+workflow_mark_entry="./skills/aki-codex-workflows/scripts/workflow_mark.sh"
+workflow_mark_script="$repo_root/skills/aki-codex-workflows/scripts/workflow_mark.sh"
 
 runtime_dir="$repo_root/.codex/runtime"
+runtime_status_file="$runtime_dir/current_status.txt"
+runtime_flags_file="$repo_root/.codex/state/runtime_flags.yaml"
+workflow_marks_file="$repo_root/.codex/state/workflow_marks.tsv"
 skills_snapshot="$runtime_dir/codex_skills_reload.md"
 project_snapshot="$runtime_dir/codex_project_reload.md"
 session_snapshot="$runtime_dir/codex_session_start.md"
@@ -67,6 +73,36 @@ skills_status="OK"
 project_status="OK"
 runtime_status="OK"
 
+workflow_mark_recorded="false"
+record_session_reload_mark() {
+  local workflow_status="$1"
+  local detail=""
+  if [[ "$workflow_mark_recorded" == "true" ]]; then
+    return 0
+  fi
+  workflow_mark_recorded="true"
+  if [[ ! -x "$workflow_mark_script" ]]; then
+    return 0
+  fi
+  detail="project=${active_project:-none};runtime=${runtime_status:-unknown};flags=${flags_status:-unknown}"
+  "$workflow_mark_script" set \
+    --workflow "session_reload" \
+    --status "$workflow_status" \
+    --source "session_start.sh" \
+    --detail "$detail" >/dev/null 2>&1 || true
+}
+
+on_session_start_exit() {
+  local exit_code="$1"
+  if [[ "$exit_code" -eq 0 ]]; then
+    record_session_reload_mark "PASS"
+  else
+    record_session_reload_mark "FAIL"
+  fi
+}
+
+trap 'on_session_start_exit $?' EXIT
+
 extract_kv() {
   local key="$1"
   local payload="$2"
@@ -77,6 +113,60 @@ extract_kv() {
     fi
   done <<< "$payload"
   return 1
+}
+
+extract_flag_value() {
+  local key="$1"
+  if [[ ! -f "$runtime_flags_file" ]]; then
+    return 1
+  fi
+  awk -F': ' -v key="$key" '$1==key {print substr($0, index($0, ": ")+2); exit}' "$runtime_flags_file"
+}
+
+count_status_in_workflow_summary() {
+  local summary="$1"
+  local target="$2"
+  local count=0
+  local entry=""
+  local status=""
+  if [[ -z "$summary" || "$summary" == "none" ]]; then
+    echo "0"
+    return 0
+  fi
+  IFS=',' read -r -a entries <<< "$summary"
+  for entry in "${entries[@]}"; do
+    status="${entry##*:}"
+    if [[ "$status" == "$target" ]]; then
+      count=$((count + 1))
+    fi
+  done
+  echo "$count"
+}
+
+get_workflow_mark_status() {
+  local workflow_name="$1"
+  if [[ ! -f "$workflow_marks_file" ]]; then
+    return 1
+  fi
+  awk -F'\t' -v name="$workflow_name" '$1==name {print $2; exit}' "$workflow_marks_file"
+}
+
+seed_github_init_mark_if_missing() {
+  local detail="execution=guide_only;server_config=${github_mcp_status}"
+  if [[ "$github_mcp_status" != "CONFIGURED" ]]; then
+    return 0
+  fi
+  if [[ ! -x "$workflow_mark_script" ]]; then
+    return 0
+  fi
+  if "$workflow_mark_script" get --workflow "github_mcp_init" >/dev/null 2>&1; then
+    return 0
+  fi
+  "$workflow_mark_script" set \
+    --workflow "github_mcp_init" \
+    --status "NOT_RUN" \
+    --source "session_start.sh" \
+    --detail "$detail" >/dev/null 2>&1 || true
 }
 
 env_report="$("$script_dir/validate_env.sh" --quiet || true)"
@@ -94,6 +184,17 @@ if [[ -z "$env_action" ]]; then
   env_action="$bootstrap_env_entry"
 fi
 
+seed_github_init_mark_if_missing
+
+flags_status="OK"
+if [[ -x "$script_dir/runtime_flags.sh" ]]; then
+  if ! "$script_dir/runtime_flags.sh" sync --quiet >/dev/null 2>&1; then
+    flags_status="WARN"
+  fi
+else
+  flags_status="WARN"
+fi
+
 if [[ ! -f "$skills_snapshot" || "${#loaded_skills[@]}" -eq 0 ]]; then
   skills_status="WARN"
 fi
@@ -104,6 +205,45 @@ fi
 
 if [[ "$env_status" != "OK" ]]; then
   runtime_status="WARN"
+fi
+if [[ "$flags_status" != "OK" ]]; then
+  runtime_status="WARN"
+fi
+
+workflow_total_value="$(extract_flag_value "workflow_total" || true)"
+workflow_ready_value="$(extract_flag_value "workflow_ready_count" || true)"
+workflow_last_summary_value="$(extract_flag_value "workflows_last_summary" || true)"
+workflow_marks_count_value="$(extract_flag_value "workflow_marks_count" || true)"
+runtime_alert_count_value="$(extract_flag_value "mcp_alerts_count" || true)"
+[[ -z "$workflow_total_value" ]] && workflow_total_value="0"
+[[ -z "$workflow_ready_value" ]] && workflow_ready_value="0"
+[[ -z "$workflow_last_summary_value" ]] && workflow_last_summary_value="none"
+[[ -z "$workflow_marks_count_value" ]] && workflow_marks_count_value="0"
+[[ -z "$runtime_alert_count_value" ]] && runtime_alert_count_value="0"
+workflow_pass_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "PASS")"
+workflow_fail_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "FAIL")"
+workflow_not_run_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "NOT_RUN")"
+workflow_unverified_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "UNVERIFIED")"
+workflow_blocked_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "BLOCKED")"
+workflow_warn_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "WARN")"
+workflow_summary_extra=""
+if [[ "$workflow_blocked_count" != "0" ]]; then
+  workflow_summary_extra="${workflow_summary_extra} BLOCKED ${workflow_blocked_count}"
+fi
+if [[ "$workflow_warn_count" != "0" ]]; then
+  workflow_summary_extra="${workflow_summary_extra} WARN ${workflow_warn_count}"
+fi
+workflow_summary_line="ready ${workflow_ready_value}/${workflow_total_value} | PASS ${workflow_pass_count} FAIL ${workflow_fail_count} NOT_RUN ${workflow_not_run_count} UNVERIFIED ${workflow_unverified_count}${workflow_summary_extra} | marks ${workflow_marks_count_value} alerts ${runtime_alert_count_value}"
+github_init_mark_status="$(get_workflow_mark_status "github_mcp_init" || true)"
+github_init_execution_status="NOT_EXECUTED"
+if [[ -n "$github_init_mark_status" ]]; then
+  case "$github_init_mark_status" in
+    PASS) github_init_execution_status="COMPLETED" ;;
+    FAIL) github_init_execution_status="FAILED" ;;
+    BLOCKED) github_init_execution_status="BLOCKED" ;;
+    NOT_RUN|UNVERIFIED) github_init_execution_status="NOT_EXECUTED" ;;
+    *) github_init_execution_status="$github_init_mark_status" ;;
+  esac
 fi
 
 now_human="$(date '+%Y-%m-%d %H:%M:%S')"
@@ -120,6 +260,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "- Skills Snapshot: \`$skills_status\`"
   echo "- Project Snapshot: \`$project_status\`"
   echo "- Skills Runtime Integrity: \`$runtime_status\`"
+  echo "- Runtime Flags: \`$flags_status\`"
   if [[ "$runtime_status" == "WARN" ]]; then
     [[ -z "$env_hooks_current" ]] && env_hooks_current="(unknown)"
     [[ -z "$env_hooks_expected" ]] && env_hooks_expected=".githooks"
@@ -130,6 +271,23 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
     echo "- Missing Files: \`$env_missing_files\`"
     echo "- Non-Executable Files: \`$env_nonexec_files\`"
     echo "- Action: \`$env_action\`"
+    if [[ "$flags_status" != "OK" ]]; then
+      echo "- Runtime Flags Action: \`$runtime_flags_entry sync\`"
+    fi
+  fi
+  echo
+  echo "## Runtime Status"
+  if [[ -f "$runtime_status_file" ]]; then
+    echo "\`\`\`text"
+    cat "$runtime_status_file"
+    echo "\`\`\`"
+    echo "- Flags File: \`${runtime_flags_file#$repo_root/}\`"
+    echo "- Show Command: \`$runtime_flags_entry status\`"
+    echo "- Alerts Command: \`$runtime_flags_entry alerts\`"
+    echo "- Workflow Summary: \`$workflow_summary_line\`"
+  else
+    echo "- Status: \`UNAVAILABLE\`"
+    echo "- Action: \`$runtime_flags_entry sync\`"
   fi
   echo
   echo "## Loaded Skills"
@@ -189,7 +347,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "- Server Config: \`$github_mcp_status\`"
   echo "- Default Toolsets: \`$github_toolsets_default\`"
   if [[ "$github_mcp_status" == "CONFIGURED" ]]; then
-    echo "- Execution Status: \`NOT_EXECUTED\`"
+    echo "- Execution Status: \`$github_init_execution_status\`"
     echo "- Action Guide: \`skills/aki-mcp-github/SKILL.md\`의 init flow로 \`$github_toolsets_default\` enable + 재검증"
     echo "- Report Contract: 실행 후 \`enabled\`/\`failed\`/\`unsupported\` 목록을 세션 보고에 포함"
     echo "- Note: 이 스크립트는 MCP toolset enable을 직접 실행하지 않고 가이드만 출력"

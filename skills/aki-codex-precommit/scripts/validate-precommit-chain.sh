@@ -96,6 +96,36 @@ mode="$(resolve_mode "$@")"
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
+workflow_mark_script="$repo_root/skills/aki-codex-workflows/scripts/workflow_mark.sh"
+workflow_mark_recorded="false"
+record_precommit_mark() {
+  local workflow_status="$1"
+  local detail="mode=${mode:-unknown}"
+  if [[ "$workflow_mark_recorded" == "true" ]]; then
+    return 0
+  fi
+  workflow_mark_recorded="true"
+  if [[ ! -x "$workflow_mark_script" ]]; then
+    return 0
+  fi
+  "$workflow_mark_script" set \
+    --workflow "precommit" \
+    --status "$workflow_status" \
+    --source "validate-precommit-chain.sh" \
+    --detail "$detail" >/dev/null 2>&1 || true
+}
+
+on_precommit_exit() {
+  local exit_code="$1"
+  if [[ "$exit_code" -eq 0 ]]; then
+    record_precommit_mark "PASS"
+  else
+    record_precommit_mark "FAIL"
+  fi
+}
+
+trap 'on_precommit_exit $?' EXIT
+
 staged_files="$(git -c core.quotePath=false diff --cached --name-only || true)"
 if [[ -z "$staged_files" ]]; then
   exit 0

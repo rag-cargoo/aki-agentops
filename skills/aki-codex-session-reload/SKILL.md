@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 05:53:55`
+> - **Updated At**: `2026-02-10 06:54:11`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -24,6 +24,7 @@ description: |
 > - 소유권 경계
 > - 표준 실행 순서
 > - 환경 부트스트랩
+> - 런타임 상태표
 > - 점검 포인트
 > - 실패 복구
 > - 참고 문서
@@ -47,6 +48,7 @@ description: |
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh`
 - runtime orchestrator 소스:
   - `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`
   - `skills/aki-codex-session-reload/scripts/runtime_orchestrator/engine.yaml`
@@ -64,7 +66,8 @@ description: |
 3. `.codex/runtime/codex_session_start.md`에서 Startup Checks를 확인한다.
 4. `Loaded Skills`와 `Active Project`를 기준으로 필요한 문서를 로드한다.
 5. 경고가 있으면 `validate_env.sh` 또는 `bootstrap_env.sh`로 환경을 복구한다.
-6. 프로젝트 경고가 있으면 `set_active_project.sh` 또는 `init_project_docs.sh`로 복구한다.
+6. `Runtime Status` 표(`.codex/runtime/current_status.txt`)를 확인한다.
+7. 프로젝트 경고가 있으면 `set_active_project.sh` 또는 `init_project_docs.sh`로 복구한다.
 
 ## 환경 부트스트랩
 1. 환경 점검:
@@ -74,12 +77,48 @@ description: |
 3. 역할 분리:
    - `skills/`는 소스(정책/로직)
    - `.codex/runtime`은 런타임 스냅샷(재생성 대상)
+   - `.codex/state`는 런타임 플래그 상태 저장소
    - `.githooks`는 훅 엔트리포인트(`core.hooksPath`)로 유지
+
+## 런타임 상태표
+1. 상태 동기화:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh sync`
+2. 상태 조회:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh status`
+3. 경고 전용 조회:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh alerts`
+4. 상태 산출물:
+   - `.codex/state/runtime_flags.yaml`
+   - `.codex/runtime/current_status.txt`
+5. 소유 원칙:
+   - 상태 파일 생성/갱신/표 출력은 `aki-codex-session-reload`가 소유한다.
+   - 출력 타이밍(언제 보여줄지)은 `aki-codex-workflows` 규칙을 따른다.
+6. 표시 구분:
+   - `User Controls`와 `Agent Checks`를 분리해 사용자 제어값과 자동 점검값을 구분한다.
+7. Agent Checks 기본 항목:
+   - GitHub MCP 구성 상태
+   - 환경/훅 무결성 상태
+   - MCP 인벤토리(`mcp_servers_total`, `mcp:<server>` runtime/status)
+   - Pages 운영 가드(`pages_skill`, `pages_docsify_validator`, `pages_release_flow`)
+   - pre-commit 품질 가드(`docsify_precommit_guard`, `owner_skill_lint_guard`, `skill_naming_guard`)
+8. Skill Inventory:
+   - `skills_total`, `skills_managed_count`, `skills_delegated_count`를 출력한다.
+   - `skill:<name>` 행으로 모든 로컬 스킬 존재 상태를 표시한다.
+9. Workflow Health:
+   - 주요 워크플로우별 준비 상태(`READY/NOT_READY`)와 마지막 상태(`PASS/FAIL/UNVERIFIED/NOT_RUN`)를 출력한다.
+   - `workflow_marks_count`/`workflow_marks_file`로 실행 결과 마크 저장소 연동 상태를 확인한다.
+   - `workflow:*:detail` 행에서 누락 의존성/실행 근거를 확인한다.
+10. Alerts 요약:
+   - 상태표 상단 `Alerts` 섹션에 문제 항목(`WARN`/`MISSING`/`MISMATCH`/`IDLE`)만 요약 표시한다.
+   - `all_clear`면 경고 없음으로 간주한다.
+11. Session Snapshot 요약:
+   - `session_start.sh`는 `Runtime Status` 아래 `Workflow Summary` 1줄을 자동 삽입해 핵심 판정을 빠르게 제공한다.
 
 ## 점검 포인트
 - `Skills Snapshot`: `OK`
 - `Project Snapshot`: `OK`
 - `Skills Runtime Integrity`: `OK`
+- `Runtime Flags`: `OK`
 - `GitHub MCP Init` 섹션의 `init_mode`/`execution_status`/기본 toolset 확인
 
 ## 실패 복구
