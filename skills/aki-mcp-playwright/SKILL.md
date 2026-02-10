@@ -8,7 +8,7 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-10 04:10:14`
+> - **Updated At**: `2026-02-11 06:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -54,8 +54,9 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 2. `MCP_INSTALL_POLICY` 기준으로 설치 허용 여부를 먼저 판정한다.
 3. 필요 시에만 `references/setup-linux-wsl.md`의 설치 레시피를 사용한다.
 4. GUI 창 유지 검증은 `scripts/chrome_gui_smoke.sh <url>`로 수행한다.
-5. MCP 도구로 `navigate -> snapshot -> click/type -> screenshot` 순서로 검증한다.
-6. 실패 시 `references/troubleshooting.md`에서 증상별 원인을 찾아 교정한다.
+5. CDP endpoint 모드면 `scripts/ensure_cdp_chrome.sh`로 `9222` 상태를 먼저 보정한다.
+6. MCP 도구로 `navigate -> snapshot -> click/type -> screenshot` 순서로 검증한다.
+7. 실패 시 `references/troubleshooting.md`에서 증상별 원인을 찾아 교정한다.
 
 ## 핵심 구분
 
@@ -80,6 +81,7 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 - 장애 대응: `references/troubleshooting.md`
 - 환경 점검: `scripts/diagnose_playwright_mcp.sh`
 - GUI 실행 점검: `scripts/chrome_gui_smoke.sh`
+- CDP endpoint 보정: `scripts/ensure_cdp_chrome.sh`
 
 ## 운영 원칙
 

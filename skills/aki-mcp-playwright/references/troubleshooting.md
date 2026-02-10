@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-10 23:25:04`
+> - **Updated At**: `2026-02-11 06:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -142,16 +142,21 @@ npx playwright install --with-deps chromium
 - Chrome GUI가 `--remote-debugging-port=9222`로 떠 있지 않거나 즉시 종료됨
 
 조치:
-1. Chrome를 세션 분리로 실행
+1. `ensure_cdp_chrome.sh`로 자동 보정
+```bash
+bash skills/aki-mcp-playwright/scripts/ensure_cdp_chrome.sh about:blank
+```
+2. 자동 보정 실패 시 Chrome를 세션 분리로 수동 실행
 ```bash
 setsid google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-mcp-profile --no-first-run --no-default-browser-check about:blank >/tmp/playwright_chrome.log 2>&1 < /dev/null &
 ```
-2. 포트 확인
+3. 포트 확인
 ```bash
 ss -ltnp | rg 9222
 curl -sS http://127.0.0.1:9222/json/version
 ```
-3. MCP `navigate` 재시도
+4. 런타임 상태표에서 `mcp:playwright` detail의 `cdp:...:up` 여부를 확인
+5. MCP `navigate` 재시도
 
 ## 10. Address Bar Input Test (`Ctrl+L`) Becomes In-Page Search
 

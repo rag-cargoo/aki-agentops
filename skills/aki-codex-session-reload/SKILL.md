@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 06:54:11`
+> - **Updated At**: `2026-02-11 06:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -97,8 +97,10 @@ description: |
    - `User Controls`와 `Agent Checks`를 분리해 사용자 제어값과 자동 점검값을 구분한다.
 7. Agent Checks 기본 항목:
    - GitHub MCP 구성 상태
+   - GitHub 토큰 소스 상태(`github_token_source`)
    - 환경/훅 무결성 상태
    - MCP 인벤토리(`mcp_servers_total`, `mcp:<server>` runtime/status)
+   - CDP endpoint health(`mcp:playwright` detail의 `cdp:...:up|down`)
    - Pages 운영 가드(`pages_skill`, `pages_docsify_validator`, `pages_release_flow`)
    - pre-commit 품질 가드(`docsify_precommit_guard`, `owner_skill_lint_guard`, `skill_naming_guard`)
 8. Skill Inventory:

@@ -3,6 +3,7 @@
 ## 목표
 - GitHub MCP 연결 직후 기본 작업 toolset을 즉시 사용 가능한 상태로 만든다.
 - 최소 권한 원칙을 유지하면서 세션 초반 재시도 비용을 줄인다.
+- init 결과를 workflow mark(`github_mcp_init`)로 남겨 세션 상태표와 실행 이력을 일치시킨다.
 
 ## 기본 프로필
 - 기본 대상 toolset: `context`, `repos`, `issues`, `projects`, `pull_requests`, `labels`
@@ -16,11 +17,26 @@
 4. `can_enable=true`이고 `currently_enabled=false`인 경우에만 `mcp__github__enable_toolset`를 호출한다.
 5. `mcp__github__list_available_toolsets`를 다시 호출해 최종 상태를 재검증한다.
 6. 대상별 결과(활성/이미활성/실패/미지원)를 사용자에게 보고한다.
+7. init 결과를 workflow mark로 동기화한다.
+   - `bash skills/aki-mcp-github/scripts/github-init-mark.sh --status PASS --enabled <csv> --failed <csv> --unsupported <csv>`
 
 ## 검증 기준
 - 성공: 대상 toolset 전부 `currently_enabled=true`
 - 부분 성공: 일부 실패가 있어도 실패 항목과 영향 범위를 분리 보고
 - 차단: `list_available_toolsets` 실패 시 GitHub 변경 작업 보류
+
+## Workflow Mark 동기화 규칙
+1. 상태 매핑:
+   - 전체 성공: `PASS`
+   - 부분 실패/재시도 필요: `FAIL` 또는 `WARN`
+   - init 미실행(guide_only): `NOT_RUN`
+2. 권장 기록:
+   - `enabled`, `failed`, `unsupported`를 CSV로 함께 기록한다.
+3. 예시:
+   - 성공:
+     - `bash skills/aki-mcp-github/scripts/github-init-mark.sh --status PASS --enabled context,repos,issues,projects,pull_requests,labels --failed none --unsupported none`
+   - 부분 실패:
+     - `bash skills/aki-mcp-github/scripts/github-init-mark.sh --status FAIL --enabled context,repos --failed projects --unsupported none`
 
 ## 재시도 정책 (표준)
 1. 재시도 대상:

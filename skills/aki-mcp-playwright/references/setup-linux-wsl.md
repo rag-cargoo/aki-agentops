@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-10 23:25:04`
+> - **Updated At**: `2026-02-11 06:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -79,18 +79,23 @@ bash skills/aki-mcp-playwright/scripts/chrome_gui_smoke.sh https://www.google.co
 
 Playwright MCP를 `--cdp-endpoint http://127.0.0.1:9222`로 사용할 때 권장 절차:
 
-1. Chrome GUI를 CDP 포트로 실행
+1. `ensure_cdp_chrome.sh`로 CDP endpoint를 먼저 보정
+```bash
+bash skills/aki-mcp-playwright/scripts/ensure_cdp_chrome.sh about:blank
+```
+
+2. 필요 시 수동 실행 fallback(스크립트 실패 시)
 ```bash
 setsid google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-mcp-profile --no-first-run --no-default-browser-check about:blank >/tmp/playwright_chrome.log 2>&1 < /dev/null &
 ```
 
-2. 엔드포인트 확인
+3. 엔드포인트 확인
 ```bash
 ss -ltnp | rg 9222
 curl -sS http://127.0.0.1:9222/json/version
 ```
 
-3. MCP 최소 점검 (`navigate -> snapshot`) 수행
+4. MCP 최소 점검 (`navigate -> snapshot`) 수행
 
 ## 5. MCP Functional Check
 

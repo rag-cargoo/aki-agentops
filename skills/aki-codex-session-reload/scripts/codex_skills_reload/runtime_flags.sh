@@ -64,13 +64,13 @@ extract_kv() {
   return 1
 }
 
-get_mcp_section_value() {
-  local server_name="$1"
+get_toml_section_value() {
+  local section_name="$1"
   local key_name="$2"
   if [[ ! -f "$codex_config_file" ]]; then
     return 0
   fi
-  awk -v section="[mcp_servers.${server_name}]" -v key="${key_name}" '
+  awk -v section="[${section_name}]" -v key="${key_name}" '
     $0 == section { in_section=1; next }
     in_section && /^\[/ { exit }
     in_section && $1 == key {
@@ -81,6 +81,12 @@ get_mcp_section_value() {
       exit
     }
   ' "$codex_config_file"
+}
+
+get_mcp_section_value() {
+  local server_name="$1"
+  local key_name="$2"
+  get_toml_section_value "mcp_servers.${server_name}" "$key_name"
 }
 
 extract_first_docker_image() {
@@ -205,6 +211,9 @@ build_alerts() {
   if [[ "$github_mcp_state" != "CONFIGURED" ]]; then
     add_alert "github_mcp" "$github_mcp" "WARN" "github_mcp_not_configured"
   fi
+  if [[ "$github_token_source_state" == "INLINE_PLAINTEXT" ]]; then
+    add_alert "github_token_source" "$github_token_source" "WARN" "github_token_plaintext_in_config"
+  fi
   if [[ "$env_bootstrap_state" != "OK" ]]; then
     add_alert "env_bootstrap" "$env_bootstrap" "WARN" "env_bootstrap_not_ready"
   fi
@@ -236,7 +245,7 @@ build_alerts() {
   for server_name in "${mcp_server_names[@]}"; do
     server_status="${mcp_server_status[$server_name]}"
     case "$server_status" in
-      RUNNING) ;;
+      RUNNING|CONFIGURED) ;;
       IDLE)
         add_alert "mcp:${server_name}" "${mcp_server_runtime[$server_name]}" "WARN" "mcp_server_idle"
         ;;
@@ -309,6 +318,7 @@ print_status_table() {
   printf '%-32s %-36s %s\n' "item" "value" "status"
   printf '%-32s %-36s %s\n' "--------------------------------" "------------------------------------" "--------"
   printf '%-32s %-36s %s\n' "github_mcp" "$github_mcp" "$github_mcp_state"
+  printf '%-32s %-36s %s\n' "github_token_source" "$github_token_source" "$github_token_source_state"
   printf '%-32s %-36s %s\n' "env_bootstrap" "$env_bootstrap" "$env_bootstrap_state"
   printf '%-32s %-36s %s\n' "hooks_path" "$hooks_path" "$hooks_path_state"
   printf '%-32s %-36s %s\n' "session_reload_guard" "$session_reload_guard" "$session_reload_guard_state"
@@ -389,6 +399,8 @@ precommit_strict: $precommit_strict
 precommit_strict_state: $precommit_strict_state
 github_mcp: $github_mcp
 github_mcp_state: $github_mcp_state
+github_token_source: $github_token_source
+github_token_source_state: $github_token_source_state
 env_bootstrap: $env_bootstrap
 env_bootstrap_state: $env_bootstrap_state
 hooks_path: $hooks_path
@@ -483,6 +495,29 @@ collect_runtime_state() {
   else
     github_mcp="not_configured"
     github_mcp_state="MISSING"
+  fi
+
+  github_token_source="not_applicable"
+  github_token_source_state="N_A"
+  if [[ "$github_mcp_state" == "CONFIGURED" ]]; then
+    github_token_value="$(get_toml_section_value "mcp_servers.github.env" "GITHUB_PERSONAL_ACCESS_TOKEN" || true)"
+    github_token_value="$(strip_wrapped_quotes "$github_token_value")"
+    if [[ -z "$github_token_value" ]]; then
+      github_token_source="external_or_unset"
+      github_token_source_state="UNSET_OR_EXTERNAL"
+    elif [[ "$github_token_value" =~ ^\$\{?[A-Za-z_][A-Za-z0-9_]*\}?$ ]]; then
+      github_token_source="env_ref"
+      github_token_source_state="EXTERNAL_REF"
+    elif [[ "$github_token_value" =~ ^(<[^>]+>|REDACTED|redacted|CHANGEME|changeme|\*+)$ ]]; then
+      github_token_source="placeholder"
+      github_token_source_state="PLACEHOLDER"
+    elif [[ "$github_token_value" =~ ^(ghp_|gho_|ghu_|ghs_|ghr_|github_pat_) ]]; then
+      github_token_source="inline_plaintext"
+      github_token_source_state="INLINE_PLAINTEXT"
+    else
+      github_token_source="custom_inline_value"
+      github_token_source_state="CUSTOM"
+    fi
   fi
 
   env_report=""
@@ -641,7 +676,15 @@ collect_runtime_state() {
     command_value="$(get_mcp_section_value "$server_name" "command" || true)"
     command_value="$(strip_wrapped_quotes "$command_value")"
     args_value="$(get_mcp_section_value "$server_name" "args" || true)"
-    runtime_kind="${command_value:-unknown}"
+    url_value="$(get_mcp_section_value "$server_name" "url" || true)"
+    url_value="$(strip_wrapped_quotes "$url_value")"
+
+    runtime_kind="unknown"
+    if [[ -n "$command_value" ]]; then
+      runtime_kind="$command_value"
+    elif [[ -n "$url_value" ]]; then
+      runtime_kind="url"
+    fi
     status_value="UNKNOWN"
     detail_value=""
 
@@ -701,6 +744,32 @@ collect_runtime_state() {
           status_value="IDLE"
         fi
         detail_value="runtime:${runtime_kind}"
+
+        # Playwright MCP can be up while CDP endpoint browser is down.
+        # Mark it idle unless the configured endpoint responds.
+        if [[ "$server_name" == "playwright" && "$status_value" == "RUNNING" ]]; then
+          cdp_endpoint="$(printf '%s\n' "$args_value" | sed -n 's/.*"--cdp-endpoint"[[:space:]]*,[[:space:]]*"\([^"]*\)".*/\1/p')"
+          if [[ -n "$cdp_endpoint" ]]; then
+            if curl -sS --max-time 2 "${cdp_endpoint}/json/version" >/dev/null 2>&1; then
+              detail_value="${detail_value};cdp:${cdp_endpoint}:up"
+            else
+              status_value="IDLE"
+              detail_value="${detail_value};cdp:${cdp_endpoint}:down"
+              # Remove from running list when endpoint probe fails.
+              filtered_running=()
+              for running_name in "${running_mcp_servers[@]}"; do
+                if [[ "$running_name" != "$server_name" ]]; then
+                  filtered_running+=("$running_name")
+                fi
+              done
+              running_mcp_servers=("${filtered_running[@]}")
+            fi
+          fi
+        fi
+        ;;
+      url)
+        status_value="CONFIGURED"
+        detail_value="url:${url_value}"
         ;;
       "")
         status_value="MISSING"

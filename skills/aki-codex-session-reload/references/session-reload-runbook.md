@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 06:54:11`
+> - **Updated At**: `2026-02-11 06:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -58,22 +58,27 @@
 7. Pages/품질 가드 해석:
    - `pages_skill`, `pages_docsify_validator`, `pages_release_flow`가 모두 정상인지 확인
    - `docsify_precommit_guard`, `owner_skill_lint_guard`, `skill_naming_guard`가 `ENABLED`인지 확인
-8. Skill Inventory 해석:
+8. GitHub 토큰 소스 해석:
+   - `github_token_source`가 `inline_plaintext`면 config 파일 평문 토큰 경고 상태다.
+   - 권장값은 `${ENV_VAR}` 형태의 외부 참조(`env_ref`)다.
+9. Skill Inventory 해석:
    - `skills_total`과 각 count가 기대치와 맞는지 확인
    - `skill:<name>` 목록에서 누락 스킬이 없는지 확인
-9. MCP Inventory 해석:
-   - `mcp_servers_total`과 `mcp_servers_running`으로 MCP 가동 범위를 확인
-   - `mcp:<server>` 행에서 runtime/status를 확인
+10. MCP Inventory 해석:
+   - `mcp_servers_total`은 구성된 MCP 수, `mcp_servers_running`은 로컬 프로세스/컨테이너 기반 가동 수다.
+   - `mcp:<server>` 행에서 runtime/status를 확인한다.
+   - `runtime=url` + `status=CONFIGURED`는 원격 MCP(endpoint 기반) 구성 완료 상태다. "미사용" 의미가 아니다.
+   - `mcp:playwright` detail의 `cdp:...:down`이면 MCP 프로세스가 살아 있어도 브라우저 CDP endpoint가 죽은 상태다.
    - Docker 항목 detail에 `probe=RESTRICTED`가 보이면 Docker daemon 조회 제한 상태이며, 프로세스 기반으로 `RUNNING` 판정한 결과다.
-10. Workflow Health 해석:
+11. Workflow Health 해석:
    - `workflow_total`, `workflow_ready_count`로 워크플로우 준비 범위를 확인한다.
    - `workflow_marks_count`, `workflow_marks_file`로 최신 실행 마크 저장소 적용 여부를 확인한다.
    - `workflow:<name>`은 `READY/NOT_READY`와 마지막 상태(`PASS/FAIL/UNVERIFIED/NOT_RUN`)를 함께 본다.
    - `workflow:<name>:detail`에서 누락 의존성/최근 실행 근거를 확인한다.
-11. Alerts 해석:
+12. Alerts 해석:
    - 상태표 상단 `Alerts`에서 문제 항목만 먼저 확인한다.
    - `runtime all_clear`면 즉시 조치가 필요한 항목이 없다는 의미다.
-12. Session Snapshot 요약:
+13. Session Snapshot 요약:
    - `.codex/runtime/codex_session_start.md`의 `Runtime Status` 아래 `Workflow Summary` 1줄로 핵심 상태를 빠르게 확인한다.
 
 ## 멀티 프로젝트
