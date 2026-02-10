@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 04:43:58`
+> - **Updated At**: `2026-02-10 10:04:12`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -99,6 +99,7 @@ workspace/
 - [Workflow](/skills/aki-codex-core/references/WORKFLOW.md)
 - [Structure & Standards](/skills/aki-codex-core/references/STRUCTURE.md)
 - [Operations & Automation](/skills/aki-codex-core/references/OPERATIONS.md)
+- [Aki Skills User Prompt Guide](/skills/aki-codex-workflows/references/aki-skills-user-prompt-guide.md)
 - [GitHub Pages 배포 가이드](/skills/aki-github-pages-expert/references/docsify-setup.md)
 
 ### MCP
