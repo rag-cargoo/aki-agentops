@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:59:53`
-> - **Updated At**: `2026-02-09 05:06:04`
+> - **Updated At**: `2026-02-10 03:42:52`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -24,12 +24,19 @@
 
 ## Current Notes
 - [2026-02-09 Kickoff](./2026-02-09-kickoff.md)
+- [2026-02-09 MCP-Only GitHub Sync Workflow](./2026-02-09-mcp-only-github-sync.md)
+- [2026-02-09 Core Skills Refactor Planning](./2026-02-09-core-skills-refactor-planning.md)
+- [2026-02-09 Codex Workflows Skill Planning](./2026-02-09-codex-workflows-planning.md)
+- [2026-02-10 Aki Skill Governance Scope & Boundary](./2026-02-10-aki-skill-governance-scope-and-boundary.md)
 
 ## Template
 ```md
 # Meeting Notes: <title>
 
 ## 안건 1: <주제>
+- Created At: YYYY-MM-DD HH:MM:SS
+- Updated At: YYYY-MM-DD HH:MM:SS
+- Status: TODO | DOING | DONE
 - 결정사항:
 - 후속작업:
   - 담당:
@@ -37,6 +44,9 @@
   - 상태: TODO | DOING | DONE
 
 ## 안건 2: <주제>
+- Created At: YYYY-MM-DD HH:MM:SS
+- Updated At: YYYY-MM-DD HH:MM:SS
+- Status: TODO | DOING | DONE
 - 결정사항:
 - 후속작업:
   - 담당:

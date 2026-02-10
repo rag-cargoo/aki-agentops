@@ -96,10 +96,10 @@ workspace/
 ## 운영 문서 바로가기
 
 ### SKILLS
-- [Workflow](/skills/workspace-governance/references/WORKFLOW.md)
-- [Structure & Standards](/skills/workspace-governance/references/STRUCTURE.md)
-- [Operations & Automation](/skills/workspace-governance/references/OPERATIONS.md)
-- [GitHub Pages 배포 가이드](/skills/workspace-governance/references/guides/docsify-setup.md)
+- [Workflow](/skills/aki-codex-core/references/WORKFLOW.md)
+- [Structure & Standards](/skills/aki-codex-core/references/STRUCTURE.md)
+- [Operations & Automation](/skills/aki-codex-core/references/OPERATIONS.md)
+- [GitHub Pages 배포 가이드](/skills/aki-github-pages-expert/references/docsify-setup.md)
 
 ### MCP
 - [MCP Workspace Guide](/mcp/README.md)

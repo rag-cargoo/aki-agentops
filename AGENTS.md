@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-10 05:26:14`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -14,8 +14,11 @@
 > - 2) Active Paths
 > - 3) Safety Rules
 > - 4) Skill Policy
-> - 5) Reload Trigger (Critical)
-> - 6) First Reply Contract
+> - 5) Skill Management Scope
+> - 6) Reload Trigger (Critical)
+> - 7) First Reply Contract
+> - 8) GitHub MCP Init (Default)
+> - 9) Issue Lifecycle Governance
 <!-- DOC_TOC_END -->
 
 ## 1) Single Entry Rule
@@ -28,18 +31,22 @@
 
 필수 시작 순서:
 1. `git status --short`
-2. `./skills/bin/codex_skills_reload/session_start.sh`
+2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
 3. `.codex/runtime/codex_session_start.md` 확인 후, 나열된 `SKILL.md` + Active Project의 `PROJECT_AGENT.md` + `task.md` 로드
-4. 필요 시 `.codex/runtime/codex_skills_reload.md`, `.codex/runtime/codex_project_reload.md` 상세 확인
-5. `sidebar-manifest.md` 확인
+4. GitHub MCP가 등록되어 있으면 기본 toolset 부팅 수행:
+   - `mcp__github__list_available_toolsets`
+   - `mcp__github__enable_toolset`: `context`, `repos`, `issues`, `projects`, `pull_requests`, `labels`
+   - `mcp__github__list_available_toolsets` 재호출로 `currently_enabled=true` 재검증
+5. 필요 시 `.codex/runtime/codex_skills_reload.md`, `.codex/runtime/codex_project_reload.md` 상세 확인
+6. `sidebar-manifest.md` 확인
 
 멀티 프로젝트에서 Active Project가 비어 있으면 먼저 실행:
-`./skills/bin/codex_skills_reload/set_active_project.sh <project-root>`
+`./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
 
 ## 2) Active Paths
 - Workspace Root: `workspace`
-- Governance Root: `skills/workspace-governance`
-- Reload Runtime: `skills/bin/codex_skills_reload`
+- Governance Root: `skills/aki-codex-core`
+- Reload Runtime: `skills/aki-codex-session-reload/scripts/codex_skills_reload`
 - Skills Snapshot: `.codex/runtime/codex_skills_reload.md`
 - Project Snapshot: `.codex/runtime/codex_project_reload.md`
 - Session Snapshot: `.codex/runtime/codex_session_start.md`
@@ -51,17 +58,25 @@
 3. 단일 파일은 부분 수정 우선, 전체 덮어쓰기 지양
 4. 문서 스타일 변경 시 본문 내용 diff가 생기지 않게 유지
 5. 대규모 작업 전 백업 포인트 생성:
-`./skills/bin/create-backup-point.sh pre-change`
+`./skills/aki-codex-core/scripts/create-backup-point.sh pre-change`
 
 ## 4) Skill Policy
 1. 요청이 스킬 범위와 일치하면 해당 `SKILL.md`를 먼저 로드
-2. 문서 렌더링/Pages/무손실 점검은 `skills/github-pages-expert` 우선 사용
-3. 워크플로우/구조/표준/운영 규칙은 `skills/workspace-governance` 기준 적용
-4. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
+2. 문서 렌더링/Pages/무손실 점검은 `skills/aki-github-pages-expert` 우선 사용
+3. 구조/표준/전역 원칙은 `skills/aki-codex-core` 기준 적용
+4. 실행 순서/분기/완료판정은 `skills/aki-codex-workflows` 기준 적용
+5. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
+6. `aki-*` 스킬 문서/메타 스키마는 `skills/aki-codex-core/references/skill-schema-policy.md` 기준 적용
 
-## 5) Reload Trigger (Critical)
+## 5) Skill Management Scope
+1. 전역 관리 대상 스킬은 `skills/aki-*` prefix로 고정한다.
+2. 비-`aki` 스킬(예: `java-spring-boot`)은 프로젝트 선택형으로 취급한다.
+3. 비-`aki` 스킬의 사용/검증/운영 규칙은 Active Project의 `PROJECT_AGENT.md` + `task.md`에서 위임 관리한다.
+4. 세션 시작 보고에서는 `Managed(aki-*)`와 `Delegated(non-aki)`를 구분해 표시한다.
+
+## 6) Reload Trigger (Critical)
 아래 파일이 바뀌면 다음 작업 전에 반드시 다시 실행:
-1. `./skills/bin/codex_skills_reload/session_start.sh`
+1. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
 2. `.codex/runtime/codex_skills_reload.md` + `.codex/runtime/codex_project_reload.md` + `.codex/runtime/codex_session_start.md` 재확인
 
 대상 파일:
@@ -69,12 +84,40 @@
 - `skills/*/SKILL.md`
 - `workspace/**/prj-docs/PROJECT_AGENT.md`
 
-## 6) First Reply Contract
+## 7) First Reply Contract
 세션 첫 응답에서 아래 항목을 반드시 사용자에게 보고한다.
 
-1. `Startup Checks` 결과 (`Skills Snapshot`, `Project Snapshot`, `Skills Bin Integrity`)
+1. `Startup Checks` 결과 (`Skills Snapshot`, `Project Snapshot`, `Skills Runtime Integrity`)
 2. `Loaded Skills` 전체 목록
-3. `Active Project` (`Project Root`, `Task Doc`, `Project Agent`)
-4. `How It Works` 3줄 요약 (전역 규칙 vs 프로젝트 규칙 vs Active Project 개념)
-5. 멀티 프로젝트 사용법 2줄 (`--list`, `set_active_project`)
-6. 누락/경고 항목이 있으면 즉시 후속 액션 1줄 제시
+3. `Skill Management Scope` (`Managed(aki-*)` / `Delegated(non-aki)`)
+4. `Active Project` (`Project Root`, `Task Doc`, `Project Agent`)
+5. `How It Works` 3줄 요약 (전역 규칙 vs 프로젝트 규칙 vs Active Project 개념)
+6. 멀티 프로젝트 사용법 2줄 (`--list`, `set_active_project`)
+7. 누락/경고 항목이 있으면 즉시 후속 액션 1줄 제시
+8. GitHub MCP init 상태 (`init_mode`, `execution_status`, `enabled/failed/unsupported` 결과 또는 미실행 사유)
+
+## 8) GitHub MCP Init (Default)
+GitHub MCP가 등록되어 있으면 세션 시작 보고에서 기본 6개 toolset init 가이드를 제공한다.
+
+기본 대상:
+1. `context`
+2. `repos`
+3. `issues`
+4. `projects`
+5. `pull_requests`
+6. `labels`
+
+운영 규칙:
+1. `session_start.sh`는 `guide_only` 모드로 동작하며 toolset enable을 직접 실행하지 않는다.
+2. 실제 enable은 `skills/aki-mcp-github/SKILL.md` init flow 단계에서 수행하고 결과(`enabled/failed/unsupported`)를 보고한다.
+3. 이미 enable된 toolset은 재실행해도 무방하다(idempotent).
+4. 일부 toolset이 실패해도 전체 세션은 중단하지 않고 실패 항목만 보고 후 계속 진행한다.
+5. GitHub 작업(이슈/보드/리포 변경)은 init 결과 보고 후 진행한다.
+
+## 9) Issue Lifecycle Governance
+1. 같은 범위/목적의 후속작업은 기존 이슈 갱신 또는 재오픈을 기본으로 한다.
+2. 새 이슈 생성은 범위가 달라진 경우에만 허용한다.
+3. 기존 이슈 본문은 보존하고, 변경사항/진행상황은 코멘트로 누적한다.
+4. 새 이슈를 만들면 "왜 재오픈이 아닌지" 근거를 이슈/PR에 명시한다.
+5. 로컬 자동화는 `skills/aki-mcp-github/scripts/issue-upsert.sh`를 우선 사용한다.
+6. PR은 템플릿을 사용하고 `pr-issue-governance` 체크 통과를 필수로 한다.

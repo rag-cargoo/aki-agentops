@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Core Workflow Guide
+    url: https://rag-cargoo.github.io/2602/#/skills/aki-codex-workflows/SKILL
+    about: 이슈 생성 전 워크플로우와 재오픈 우선 원칙을 먼저 확인하세요.

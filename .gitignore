@@ -5,6 +5,7 @@ workspace/**/.env
 # 개인 작업 진행 상황 (다른 사람과 공유하지 않음)
 management/task.md
 **/prj-docs/task.md
+!workspace/agent-skills/codex-runtime-engine/prj-docs/task.md
 **/prj-docs/TODO.md
 
 # Gemini CLI runtime
@@ -12,6 +13,7 @@ management/task.md
 
 # Codex runtime snapshots
 .codex/runtime/
+.codex/state/
 
 # Build artifacts
 **/build/

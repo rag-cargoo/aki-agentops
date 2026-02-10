@@ -18,7 +18,7 @@
 
 ##  탐색 가이드 (Navigation)
 
-###  [SKILLS / Workspace Governance](/skills/workspace-governance/references/WORKFLOW.md)
+###  [SKILLS / Aki Codex Core](/skills/aki-codex-core/references/WORKFLOW.md)
 에이전트와 개발자가 준수해야 할 전역 규칙, 코딩 표준, 작업 프로세스를 확인하십시오.
 
 ###  [WORKSPACE / Apps / Backend](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)

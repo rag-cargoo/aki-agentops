@@ -30,8 +30,8 @@ if [[ "$requires_reload" != "true" ]]; then
   :
 else
   echo "[pre-commit] codex skills reload validation"
-  bash -n skills/bin/codex_skills_reload/*.sh
-  ./skills/bin/codex_skills_reload/session_start.sh >/dev/null
+  bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh >/dev/null
   echo "[pre-commit] ok"
 fi
 
@@ -43,5 +43,5 @@ fi
 chain_mode="${chain_mode:-quick}"
 
 echo "[pre-commit] policy chain validation (mode: ${chain_mode})"
-bash skills/bin/validate-precommit-chain.sh --mode "$chain_mode"
+bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode "$chain_mode"
 echo "[pre-commit] policy chain ok (${chain_mode})"
