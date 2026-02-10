@@ -6,6 +6,7 @@ POLICY_ROOTS=(
   "AGENTS.md"
   "HOME.md"
   "README.md"
+  ".gitignore"
   "index.html"
   ".githooks"
   "skills"

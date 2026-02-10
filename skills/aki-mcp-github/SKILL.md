@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 20:39:37`
-> - **Updated At**: `2026-02-10 05:26:14`
+> - **Updated At**: `2026-02-11 06:19:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -72,6 +72,9 @@ description: |
 1. 이슈 업서트(재오픈 우선):
    - `scripts/issue-upsert.sh`
    - 기능: 검색 -> 기존 open 갱신 / closed reopen / 없으면 신규 생성
+2. GitHub MCP init 마크 동기화:
+   - `scripts/github-init-mark.sh`
+   - 기능: init 결과를 `github_mcp_init` workflow mark(`PASS`/`FAIL`/`NOT_RUN`)로 기록
 
 ## 결과 보고
 - 실행 후 반드시 아래를 보고한다.
@@ -79,3 +82,4 @@ description: |
   2. 성공/실패 항목 요약
   3. 생성/갱신/종료된 GitHub 링크
   4. 재시도 필요 작업
+  5. `init` 실행 시 workflow mark 동기화 결과(`github_mcp_init`) 포함

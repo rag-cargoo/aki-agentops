@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-08 23:32:34`
+> - **Updated At**: `2026-02-11 06:45:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -14,7 +14,9 @@
 > - 2. Installation Policy Gate
 > - 3. WSL GUI Enablement
 > - 4. GUI Smoke Test
+> - 4-1. CDP Endpoint Mode (GUI + MCP)
 > - 5. MCP Functional Check
+> - 5-1. Korean Font Rendering Check
 > - 6. Optional: Install Recipe (Only If Allowed)
 > - 7. Optional: Code-Based Playwright Runtime
 <!-- DOC_TOC_END -->
@@ -73,6 +75,28 @@ bash skills/aki-mcp-playwright/scripts/chrome_gui_smoke.sh https://www.google.co
 - 터미널 세션과 분리하려면 `nohup` 기반 실행을 사용한다.
 - 일부 환경에서는 실행 세션이 끝나면서 브라우저도 같이 종료될 수 있다.
 
+## 4-1. CDP Endpoint Mode (GUI + MCP)
+
+Playwright MCP를 `--cdp-endpoint http://127.0.0.1:9222`로 사용할 때 권장 절차:
+
+1. `ensure_cdp_chrome.sh`로 CDP endpoint를 먼저 보정
+```bash
+bash skills/aki-mcp-playwright/scripts/ensure_cdp_chrome.sh about:blank
+```
+
+2. 필요 시 수동 실행 fallback(스크립트 실패 시)
+```bash
+setsid google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-mcp-profile --no-first-run --no-default-browser-check about:blank >/tmp/playwright_chrome.log 2>&1 < /dev/null &
+```
+
+3. 엔드포인트 확인
+```bash
+ss -ltnp | rg 9222
+curl -sS http://127.0.0.1:9222/json/version
+```
+
+4. MCP 최소 점검 (`navigate -> snapshot`) 수행
+
 ## 5. MCP Functional Check
 
 MCP 도구에서 최소 순서:
@@ -82,6 +106,31 @@ MCP 도구에서 최소 순서:
 4. `take_screenshot` 또는 `console_messages`
 
 이 순서를 통과하면 "MCP 제어 경로"가 정상이다.
+
+참고:
+- 브라우저 주소창(옴니박스) 직접 제어는 보장하지 않는다. URL 이동은 `navigate`를 기준으로 한다.
+- Google 검색은 자동완성 레이어가 버튼 클릭을 가로챌 수 있어 `Escape` 후 재클릭이 필요할 수 있다.
+
+## 5-1. Korean Font Rendering Check
+
+한글이 네모/깨짐으로 보이면 폰트 상태를 먼저 확인한다.
+
+진단:
+```bash
+fc-match 'sans:lang=ko'
+fc-list :lang=ko family | head -n 20
+```
+
+`lang=ko` 결과가 없거나 `DejaVu Sans`로만 매칭되면 한글 폰트가 부족한 상태다.
+
+설치(Ubuntu/WSL):
+```bash
+sudo apt-get update
+sudo apt-get install -y fonts-noto-cjk fonts-nanum fonts-noto-color-emoji
+fc-cache -f
+```
+
+설치 후 브라우저를 재기동하고 페이지를 다시 열어 확인한다.
 
 ## 6. Optional: Install Recipe (Only If Allowed)
 
