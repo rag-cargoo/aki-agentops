@@ -25,6 +25,7 @@
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
         * **Meeting Notes**
           * [Index](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md)
+          * [2026-02-11 Develop-Main Release Readiness](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-11-develop-main-release-readiness.md)
   * **Agent Skills**
     * **Codex Runtime Engine**
       * [Project README](/workspace/agent-skills/codex-runtime-engine/README.md)
