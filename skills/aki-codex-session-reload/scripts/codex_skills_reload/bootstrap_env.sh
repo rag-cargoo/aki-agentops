@@ -45,6 +45,9 @@ echo "[bootstrap-env] applying environment fixes"
 echo "[bootstrap-env] validating environment"
 "$script_dir/validate_env.sh"
 
+echo "[bootstrap-env] syncing runtime flags"
+"$script_dir/runtime_flags.sh" sync --quiet >/dev/null
+
 if [[ "$skip_session_start" != "true" ]]; then
   echo "[bootstrap-env] regenerating session snapshot"
   "$script_dir/session_start.sh"

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 05:53:55`
+> - **Updated At**: `2026-02-10 06:54:11`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -26,6 +26,7 @@
 2. 기본 모드 전환:
    - `./skills/aki-codex-precommit/scripts/precommit_mode.sh quick`
    - `./skills/aki-codex-precommit/scripts/precommit_mode.sh strict`
+   - 모드 전환 시 `runtime_flags.yaml`/`current_status.txt`가 자동 동기화된다.
 3. 1회성 strict:
    - `CHAIN_VALIDATION_MODE=strict git commit -m "..."`
 

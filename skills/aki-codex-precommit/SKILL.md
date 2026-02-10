@@ -12,7 +12,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-10 05:53:55`
+> - **Updated At**: `2026-02-10 06:54:11`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -57,6 +57,7 @@ description: |
    - `./skills/aki-codex-precommit/scripts/precommit_mode.sh status`
 2. 필요 모드 전환:
    - `./skills/aki-codex-precommit/scripts/precommit_mode.sh quick|strict`
+   - 전환 시 `aki-codex-session-reload`의 runtime flags 상태가 자동 동기화됨
 3. 수동 정책 실행:
    - `./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick|strict`
 4. 최종 커밋:

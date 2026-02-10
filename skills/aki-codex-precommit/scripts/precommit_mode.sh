@@ -19,6 +19,7 @@ repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
 mode_file=".codex/runtime/precommit_mode"
+runtime_flags_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
 mkdir -p "$(dirname "$mode_file")"
 
 command="${1:-status}"
@@ -41,6 +42,9 @@ case "$command" in
     ;;
   quick|strict)
     echo "$command" > "$mode_file"
+    if [[ -x "$runtime_flags_entry" ]]; then
+      "$runtime_flags_entry" sync --quiet >/dev/null || true
+    fi
     echo "[precommit-mode] default set to: $command"
     ;;
   -h|--help|help)

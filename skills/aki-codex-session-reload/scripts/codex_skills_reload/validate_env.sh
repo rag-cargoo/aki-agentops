@@ -43,6 +43,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 runtime_dir="$repo_root/.codex/runtime"
+state_dir="$repo_root/.codex/state"
 hooks_path_expected=".githooks"
 hooks_file_rel=".githooks/pre-commit"
 
@@ -60,10 +61,13 @@ required_exec_rel=(
   "skills/aki-codex-session-reload/scripts/codex_skills_reload/project_reload.sh"
   "skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh"
   "skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh"
+  "skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh"
+  "skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh"
+  "skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
 )
 
 if [[ "$fix_mode" == "true" ]]; then
-  mkdir -p "$runtime_dir"
+  mkdir -p "$runtime_dir" "$state_dir"
   git -C "$repo_root" config core.hooksPath "$hooks_path_expected"
   for rel_path in "${required_exec_rel[@]}"; do
     abs_path="$repo_root/$rel_path"
@@ -80,6 +84,10 @@ fi
 runtime_exists="false"
 if [[ -d "$runtime_dir" ]]; then
   runtime_exists="true"
+fi
+state_exists="false"
+if [[ -d "$state_dir" ]]; then
+  state_exists="true"
 fi
 
 declare -a missing_files=()
@@ -102,6 +110,9 @@ fi
 if [[ "$runtime_exists" != "true" ]]; then
   status="WARN"
 fi
+if [[ "$state_exists" != "true" ]]; then
+  status="WARN"
+fi
 if [[ "${#missing_files[@]}" -gt 0 || "${#nonexec_files[@]}" -gt 0 ]]; then
   status="WARN"
 fi
@@ -113,6 +124,9 @@ if [[ "$quiet_mode" != "true" ]]; then
   echo "[env-validate] hooksPath: $hooks_path_current (expected: $hooks_path_expected)"
   if [[ "$runtime_exists" != "true" ]]; then
     echo "[env-validate] missing runtime dir: .codex/runtime"
+  fi
+  if [[ "$state_exists" != "true" ]]; then
+    echo "[env-validate] missing state dir: .codex/state"
   fi
   if [[ "${#missing_files[@]}" -gt 0 ]]; then
     echo "[env-validate] missing files: $(IFS=', '; echo "${missing_files[*]}")"
@@ -129,6 +143,7 @@ echo "ENV_STATUS=$status"
 echo "HOOKS_PATH_CURRENT=$hooks_path_current"
 echo "HOOKS_PATH_EXPECTED=$hooks_path_expected"
 echo "RUNTIME_DIR_EXISTS=$runtime_exists"
+echo "STATE_DIR_EXISTS=$state_exists"
 echo "FIX_APPLIED=$fix_mode"
 echo "MISSING_COUNT=${#missing_files[@]}"
 echo "NONEXEC_COUNT=${#nonexec_files[@]}"

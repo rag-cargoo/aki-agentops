@@ -13,6 +13,7 @@ management/task.md
 
 # Codex runtime snapshots
 .codex/runtime/
+.codex/state/
 
 # Build artifacts
 **/build/
