@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 04:27:20`
-> - **Updated At**: `2026-02-10 05:53:55`
+> - **Updated At**: `2026-02-10 07:33:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -84,7 +84,7 @@
     - 반영 경로: `AGENTS.md`, `session_start.sh`, `aki-codex-session-reload/SKILL.md`, `session-reload-runbook.md`
   - 이슈 #25 완료:
     - `aki-*` 스킬 문서/메타 스키마 통일 기준 추가
-    - 반영 경로: `skill-schema-policy.md`, `AGENTS.md`, `sidebar-manifest.md`, `aki-github-pages-expert/SKILL.md`, `aki-playwright-mcp/SKILL.md`, `aki-github-pages-expert/agents/openai.yaml`
+    - 반영 경로: `skill-schema-policy.md`, `AGENTS.md`, `sidebar-manifest.md`, `aki-github-pages-expert/SKILL.md`, `aki-mcp-playwright/SKILL.md`, `aki-github-pages-expert/agents/openai.yaml`
   - 이슈 #26 완료:
     - `aki-codex-workflows` 2차 플로우 3종 추가
     - 반영 경로: `github-mcp-init-flow.md`, `pages-release-verification-flow.md`, `pr-merge-readiness-flow.md`, `aki-codex-workflows/SKILL.md`, `sidebar-manifest.md`
@@ -137,6 +137,56 @@
       - `skills/aki-codex-precommit/references/precommit-runbook.md`
       - `skills/aki-codex-workflows/references/precommit-flow.md`
       - `sidebar-manifest.md`
+  - 이슈 #36 완료:
+    - runtime flags 상태표/옵션 즉시 동기화 반영
+    - 반영 경로:
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh`
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh`
+      - `skills/aki-codex-precommit/scripts/precommit_mode.sh`
+      - `skills/aki-codex-session-reload/SKILL.md`
+      - `skills/aki-codex-session-reload/references/session-reload-runbook.md`
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/README.md`
+      - `skills/aki-codex-workflows/SKILL.md`
+      - `skills/aki-codex-workflows/references/runtime-status-flow.md`
+      - `skills/aki-codex-precommit/SKILL.md`
+      - `skills/aki-codex-precommit/references/precommit-runbook.md`
+      - `.gitignore`
+      - `sidebar-manifest.md`
+  - 이슈 #37 완료:
+    - Runtime Status 출력을 `User Controls` / `Agent Checks`로 분리
+    - `session_handoff` 표시를 존재 여부(`PRESENT/ABSENT`)로 정규화
+    - 반영 경로:
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh`
+      - `skills/aki-codex-session-reload/SKILL.md`
+      - `skills/aki-codex-session-reload/references/session-reload-runbook.md`
+      - `workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-10-aki-skill-governance-scope-and-boundary.md`
+      - `workspace/agent-skills/codex-runtime-engine/prj-docs/task.md`
+  - 이슈 #38 완료:
+    - Runtime Status Agent Checks에 Pages/품질 가드 항목 추가
+    - 반영 경로:
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh`
+      - `skills/aki-codex-session-reload/SKILL.md`
+      - `skills/aki-codex-session-reload/references/session-reload-runbook.md`
+      - `workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-10-aki-skill-governance-scope-and-boundary.md`
+      - `workspace/agent-skills/codex-runtime-engine/prj-docs/task.md`
+  - 이슈 #39 완료:
+    - Runtime Status에 전체 Skill Inventory(모든 스킬 행 표시) 추가
+    - 반영 경로:
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh`
+      - `skills/aki-codex-session-reload/SKILL.md`
+      - `skills/aki-codex-session-reload/references/session-reload-runbook.md`
+      - `workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-10-aki-skill-governance-scope-and-boundary.md`
+      - `workspace/agent-skills/codex-runtime-engine/prj-docs/task.md`
+  - 이슈 #40 완료:
+    - Runtime Status에 MCP Inventory 섹션(서버별 runtime/status/detail) 추가
+    - 반영 경로:
+      - `skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh`
+      - `skills/aki-codex-session-reload/SKILL.md`
+      - `skills/aki-codex-session-reload/references/session-reload-runbook.md`
+      - `workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/2026-02-10-aki-skill-governance-scope-and-boundary.md`
+      - `workspace/agent-skills/codex-runtime-engine/prj-docs/task.md`
   - 역할/책임 분리 보강 완료:
     - `skills/aki-codex-core/references/core-responsibility-matrix.md`
     - `skills/aki-codex-core/references/WORKFLOW.md`

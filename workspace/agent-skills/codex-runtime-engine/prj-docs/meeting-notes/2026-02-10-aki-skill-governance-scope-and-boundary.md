@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 05:53:55`
+> - **Updated At**: `2026-02-10 07:33:55`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -25,6 +25,11 @@
 > - 안건 13: workflows Owner Skill lint 스크립트 추가
 > - 안건 14: Issue Reopen-First 강제(템플릿/PR 게이트/upsert)
 > - 안건 15: 세션 환경 부트스트랩/검증 자동화(.codex/.githooks)
+> - 안건 16: Runtime Flags 상태표/옵션 즉시 동기화
+> - 안건 17: Runtime Status 표 분리(User Controls/Agent Checks)
+> - 안건 18: Runtime Status Pages/품질 가드 항목 확장
+> - 안건 19: Runtime Status 전체 Skill Inventory 표시
+> - 안건 20: Runtime Status MCP Inventory 표시
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 전역 관리 범위 고정(`aki-*` only)
@@ -235,3 +240,74 @@
   - 기한: 2026-02-10
   - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/35
+
+## 안건 16: Runtime Flags 상태표/옵션 즉시 동기화
+- Created At: 2026-02-10 06:54:11
+- Updated At: 2026-02-10 06:54:11
+- Status: DONE
+- 결정사항:
+  - `aki-codex-session-reload`가 runtime flags 저장/상태표 출력의 단일 소유 스킬로 관리한다.
+  - 세션 시작 시 `runtime_flags.sh sync`를 자동 실행해 `.codex/state/runtime_flags.yaml`와 `.codex/runtime/current_status.txt`를 갱신한다.
+  - `precommit_mode.sh` 모드 전환 시 runtime flags를 즉시 재동기화해 세션 중 변경 반영성을 확보한다.
+  - 출력 타이밍은 `aki-codex-workflows`의 Runtime Status Visibility Flow로 규정한다(세션 시작 1회/옵션 변경 직후/사용자 요청 시).
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/36
+
+## 안건 17: Runtime Status 표 분리(User Controls/Agent Checks)
+- Created At: 2026-02-10 07:14:16
+- Updated At: 2026-02-10 07:14:16
+- Status: DONE
+- 결정사항:
+  - Runtime Status는 `User Controls`와 `Agent Checks` 2개 섹션으로 분리한다.
+  - `session_handoff`처럼 사용자 제어 대상이 아닌 항목은 ON/OFF 대신 존재 여부(`PRESENT/ABSENT`)로 표시한다.
+  - 사용자 요청이 없으면 상태표는 기본 숨김으로 두고, 세션 시작/옵션 변경/요청 시점에만 노출한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/37
+
+## 안건 18: Runtime Status Pages/품질 가드 항목 확장
+- Created At: 2026-02-10 07:22:38
+- Updated At: 2026-02-10 07:22:38
+- Status: DONE
+- 결정사항:
+  - Agent Checks에 Pages 상태 항목(`pages_skill`, `pages_docsify_validator`, `pages_release_flow`)을 추가한다.
+  - Agent Checks에 품질 가드 항목(`docsify_precommit_guard`, `owner_skill_lint_guard`, `skill_naming_guard`)을 추가한다.
+  - 상태 항목은 로컬 소스/정책 스크립트 기준으로 계산해 네트워크 의존 없이 빠르게 확인 가능하도록 유지한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/38
+
+## 안건 19: Runtime Status 전체 Skill Inventory 표시
+- Created At: 2026-02-10 07:27:53
+- Updated At: 2026-02-10 07:27:53
+- Status: DONE
+- 결정사항:
+  - Runtime Status에 `Skill Inventory` 섹션을 추가해 전체 스킬을 행 단위로 표시한다.
+  - managed/delegated 카운트와 목록을 함께 기록해 누락 여부를 즉시 점검 가능하게 한다.
+  - 상태 스냅샷(`runtime_flags.yaml`)에도 동일 집계 값을 저장한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/39
+
+## 안건 20: Runtime Status MCP Inventory 표시
+- Created At: 2026-02-10 07:33:55
+- Updated At: 2026-02-10 07:33:55
+- Status: DONE
+- 결정사항:
+  - Runtime Status에 `MCP Inventory` 섹션을 추가해 서버별 runtime/status/detail을 표시한다.
+  - GitHub MCP Docker 서버는 컨테이너/프로세스 기반으로 기동 상태를 판정하고, daemon 조회 제한 시 `probe=RESTRICTED` detail을 기록한다.
+  - 상태 스냅샷(`runtime_flags.yaml`)에도 MCP 집계 및 서버별 상세 키를 저장한다.
+- 후속작업:
+  - 담당: Aki + Agent
+  - 기한: 2026-02-10
+  - 상태: DONE
+  - 이슈: https://github.com/rag-cargoo/2602/issues/40
