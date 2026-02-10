@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 00:18:34`
+> - **Updated At**: `2026-02-10 10:04:12`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -20,6 +20,9 @@
 
 ###  [SKILLS / Aki Codex Core](/skills/aki-codex-core/references/WORKFLOW.md)
 에이전트와 개발자가 준수해야 할 전역 규칙, 코딩 표준, 작업 프로세스를 확인하십시오.
+
+###  [SKILLS / User Prompt Guide](/skills/aki-codex-workflows/references/aki-skills-user-prompt-guide.md)
+상태정보 조회, 회의록/투두/이슈 동기화, 프리커밋/세션리로드 등 사용자 프롬프트 호출 예시를 확인하십시오.
 
 ###  [WORKSPACE / Apps / Backend](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
 실제 백엔드 서비스의 구현 현황, API 명세, 기술적 의사결정 기록(ADR)을 확인하십시오.
