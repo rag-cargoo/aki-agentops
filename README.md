@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-10 10:04:12`
+> - **Updated At**: `2026-02-10 15:10:59`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -17,6 +17,8 @@
 > - 운영 문서 바로가기
 > - 유지 원칙 (README Scope)
 <!-- DOC_TOC_END -->
+
+[GitHub Pages Home](https://rag-cargoo.github.io/2602/)
 
 이 README는 루트 저장소 관점에서 **전체 워크스페이스 구조**를 안내합니다.
 현재 구현이 진행된 서비스는 `workspace/apps/backend/ticket-core-service`이며, `skills/`와 `mcp/`는 운영/자동화 문서 영역으로 분리되어 있습니다.
