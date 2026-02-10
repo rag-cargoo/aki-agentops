@@ -1,6 +1,6 @@
 * [Home](/HOME.md)
 * [README](/README.md)
-* [아키 스킬스 가이드](/skills/aki-codex-workflows/references/aki-skills-user-prompt-guide.md)
+* [Aki Skills User Prompt Guide](/skills/aki-codex-workflows/references/aki-skills-user-prompt-guide.md)
 
 ---
 
