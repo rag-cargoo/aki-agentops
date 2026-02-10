@@ -1,4 +1,4 @@
 interface:
-  display_name: "Playwright MCP"
+  display_name: "MCP Playwright"
   short_description: "No-code MCP setup on Linux/WSL with no-install default policy"
   default_prompt: "Set up and validate Playwright MCP in MCP-only mode with install policy gating"

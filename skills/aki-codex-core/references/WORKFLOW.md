@@ -45,7 +45,7 @@ skills/
 ├── aki-mcp-github/              # GitHub MCP 운영
 ├── aki-meeting-notes-task-sync/ # 회의록->task 동기화
 ├── aki-github-pages-expert/     # 문서 렌더링/무손실 점검
-└── aki-playwright-mcp/           # Playwright MCP 운영
+└── aki-mcp-playwright/           # Playwright MCP 운영
 ```
 
 ---

@@ -13,8 +13,8 @@
     * [Issue Upsert Script](/skills/aki-mcp-github/scripts/issue-upsert.sh)
   * **Aki GitHub Pages Expert**
     * [Skill Guide](/skills/aki-github-pages-expert/SKILL.md)
-  * **Aki Playwright MCP**
-    * [Skill Guide](/skills/aki-playwright-mcp/SKILL.md)
+  * **Aki MCP Playwright**
+    * [Skill Guide](/skills/aki-mcp-playwright/SKILL.md)
   * **Aki Meeting Notes Task Sync**
     * [Skill Guide](/skills/aki-meeting-notes-task-sync/SKILL.md)
   * **Aki Codex Core**
@@ -39,6 +39,7 @@
     * [Issue Lifecycle Governance Flow](/skills/aki-codex-workflows/references/issue-lifecycle-governance-flow.md)
     * [Pages Release Verification Flow](/skills/aki-codex-workflows/references/pages-release-verification-flow.md)
     * [PR Merge Readiness Flow](/skills/aki-codex-workflows/references/pr-merge-readiness-flow.md)
+    * [Runtime Status Visibility Flow](/skills/aki-codex-workflows/references/runtime-status-flow.md)
     * [SoT Drift Check Rule](/skills/aki-codex-workflows/references/sot-drift-check-rule.md)
     * [Owner Skill Lint Script](/skills/aki-codex-workflows/scripts/check-owner-skill-links.sh)
   * **Aki Codex Session Reload**
@@ -46,6 +47,7 @@
     * [Project Agent Template](/skills/aki-codex-session-reload/references/templates/PROJECT_AGENT_TEMPLATE.md)
     * [Validate Env Script](/skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh)
     * [Bootstrap Env Script](/skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh)
+    * [Runtime Flags Script](/skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh)
   * **Aki Codex Precommit**
     * [Skill Guide](/skills/aki-codex-precommit/SKILL.md)
     * [Precommit Runbook](/skills/aki-codex-precommit/references/precommit-runbook.md)

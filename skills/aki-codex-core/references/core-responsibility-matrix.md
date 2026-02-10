@@ -23,7 +23,7 @@
 ## 책임 분해 원칙
 1. 허브(`aki-codex-core`)는 원칙/경계/완료 기준만 담당한다.
 2. 실행 로직은 도메인별 스킬로 위임한다.
-3. 규칙/운영 문서는 소유 스킬(`aki-codex-core`, `aki-codex-session-reload`, `aki-codex-precommit`, `aki-codex-workflows`, `aki-mcp-github`, `aki-meeting-notes-task-sync`, `aki-github-pages-expert`, `aki-playwright-mcp`)에 직접 배치한다.
+3. 규칙/운영 문서는 소유 스킬(`aki-codex-core`, `aki-codex-session-reload`, `aki-codex-precommit`, `aki-codex-workflows`, `aki-mcp-github`, `aki-meeting-notes-task-sync`, `aki-github-pages-expert`, `aki-mcp-playwright`)에 직접 배치한다.
 
 ## 책임 매트릭스
 - `aki-codex-core`
@@ -53,7 +53,7 @@
 - `aki-github-pages-expert`
   - 문서 렌더링/무손실 검증
   - 사이드바/링크/Docsify 표시 품질 점검
-- `aki-playwright-mcp`
+- `aki-mcp-playwright`
   - Playwright MCP 설치/진단/GUI smoke 실행
   - 브라우저 자동화 런타임 안정성 점검
 

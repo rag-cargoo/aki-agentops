@@ -2,7 +2,7 @@
 set -euo pipefail
 
 URL="${1:-https://www.google.com}"
-LOG_FILE="${LOG_FILE:-/tmp/aki-playwright-mcp-chrome-gui.log}"
+LOG_FILE="${LOG_FILE:-/tmp/aki-mcp-playwright-chrome-gui.log}"
 PREFERRED_BROWSER="${MCP_BROWSER_BIN:-}"
 
 if [ -n "${PREFERRED_BROWSER}" ] && command -v "${PREFERRED_BROWSER}" >/dev/null 2>&1; then
