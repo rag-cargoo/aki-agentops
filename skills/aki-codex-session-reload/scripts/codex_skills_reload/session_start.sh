@@ -370,6 +370,8 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "- 시작 문구: \`AGENTS.md만 읽고 시작해.\`"
   echo "- 세션 상태 문서: \`.codex/runtime/codex_session_start.md\`"
   echo "- 재시작 핸드오프: \`mcp/runtime/SESSION_HANDOFF.md\` (있으면 우선 로드)"
+  echo "- 임시 산출물 정책: \`.codex/tmp/<tool>/<run-id>/\` 경로 사용 (로그/대시보드/스크린샷)"
+  echo "- 영구 증빙 정책: \`prj-docs/**\`에는 \`.md/.json\` 증빙만 유지"
   echo "- 문제 시 재동기화: \`$reload_entry\`"
   echo
   echo "## Usage"
