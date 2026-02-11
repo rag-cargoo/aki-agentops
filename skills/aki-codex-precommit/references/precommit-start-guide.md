@@ -33,6 +33,7 @@
 
 - 수동 명령:
 ```bash
+git config core.hooksPath .githooks
 ./skills/aki-codex-precommit/scripts/precommit_mode.sh status
 ./skills/aki-codex-precommit/scripts/precommit_mode.sh quick
 ./skills/aki-codex-precommit/scripts/precommit_mode.sh strict
