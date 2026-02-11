@@ -23,7 +23,7 @@
           * [Latest API Script Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/latest.md)
           * [Step11 Sales Policy Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step11-sales-policy-latest.md)
           * [Step12 Abuse Audit Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step12-abuse-audit-latest.md)
-          * [Social Auth Contract Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step13-social-auth-latest.md)
+          * [Social Auth Contract Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/auth-track-a1-social-auth-latest.md)
         * **Engineering Knowledge**
           * [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
           * [소셜 로그인 OAuth 연동 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/social-login-oauth-연동-전략.md)
