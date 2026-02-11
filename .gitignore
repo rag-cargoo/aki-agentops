@@ -29,3 +29,6 @@ management/task.md
 /*.tmp
 /*.pid
 /*.err
+
+# Ticket Core Service local run logs (move to .codex/tmp/)
+/workspace/apps/backend/ticket-core-service/*.log
