@@ -14,11 +14,9 @@ management/task.md
 # Codex runtime snapshots
 .codex/runtime/
 .codex/state/
+.codex/tmp/
 
 # Build artifacts
 **/build/
 **/out/
 .gradle/
-
-# Ticket-core local regression runtime log
-workspace/apps/backend/ticket-core-service/step7-regression.log
