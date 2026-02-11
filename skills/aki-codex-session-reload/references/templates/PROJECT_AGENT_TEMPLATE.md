@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-09 01:38:36`
+> - **Updated At**: `2026-02-11 11:10:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -32,6 +32,8 @@
 3. API/도메인 변경 시 관련 `api-specs/*.md`와 `task.md`를 함께 현행화한다.
 4. 문서 신규 생성/이동 시 `sidebar-manifest.md` 링크를 즉시 동기화한다.
 5. 프로젝트 고유 결정은 `prj-docs/knowledge/`에 근거와 함께 기록한다.
+6. 임시 산출물(`*.log`, `*.tmp`, 대시보드 HTML/스크린샷)은 `.codex/tmp/<tool>/<run-id>/`에 저장하고, 영구 증빙 파일(`*.md`, `*.json`)만 프로젝트 문서 경로에 유지한다.
+7. pre-commit 체인은 `.codex/tmp/` 밖에 임시 산출물이 stage되면 warning을 출력한다(차단 아님).
 
 ## Done Criteria
 1. 코드, 테스트, 문서(`task.md`, 필요 시 API 명세)가 서로 모순 없이 정합성을 가진다.
