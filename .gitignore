@@ -1,6 +1,8 @@
 .env
+.env.local
 .DS_Store
 workspace/**/.env
+workspace/**/.env.local
 
 # 개인 작업 진행 상황 (다른 사람과 공유하지 않음)
 management/task.md

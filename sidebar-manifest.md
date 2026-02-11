@@ -13,6 +13,7 @@
         * [Current Tasks](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
         * [Architecture](/workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)
         * **API Specification**
+          * [Social Auth API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/social-auth-api.md)
           * [User API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/user-api.md)
           * [Concert API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/concert-api.md)
           * [Reservation API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/reservation-api.md)
@@ -22,8 +23,10 @@
           * [Latest API Script Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/latest.md)
           * [Step11 Sales Policy Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step11-sales-policy-latest.md)
           * [Step12 Abuse Audit Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step12-abuse-audit-latest.md)
+          * [Social Auth Contract Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step13-social-auth-latest.md)
         * **Engineering Knowledge**
           * [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
+          * [소셜 로그인 OAuth 연동 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/social-login-oauth-연동-전략.md)
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
         * **Meeting Notes**
           * [Index](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md)
