@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 00:54:04`
-> - **Updated At**: `2026-02-09 01:38:36`
+> - **Updated At**: `2026-02-11 11:06:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -101,6 +101,7 @@ CHAIN_VALIDATION_MODE=strict git commit -m "..."
 7. 런타임 API 스크립트 변경 시:
    - `scripts/api/run-api-script-tests.sh` 실제 실행
    - `prj-docs/api-test/latest.md` 최신 리포트 staged 및 최신 상태 요구
+8. temp-like 산출물(`*.log`, `*.tmp`, 대시보드 HTML/PNG)이 `.codex/tmp/` 밖에서 stage되면 warning 출력
 
 ---
 

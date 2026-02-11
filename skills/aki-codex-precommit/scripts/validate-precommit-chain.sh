@@ -59,6 +59,46 @@ path_matches_root() {
   [[ "$path" == "$root" || "$path" == "$root/"* ]]
 }
 
+is_temp_like_artifact() {
+  local path="$1"
+  case "$path" in
+    *.log|*.tmp|*.temp|*.pid|*.stackdump)
+      return 0
+      ;;
+    *k6-web-dashboard.html|*k6-dashboard*.png|*playwright*.png)
+      return 0
+      ;;
+  esac
+  return 1
+}
+
+warn_temp_artifacts_outside_codex_tmp() {
+  local staged_files="$1"
+  local warnings=()
+  local file_path
+
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    [[ "$file_path" == ".codex/tmp/"* ]] && continue
+    if is_temp_like_artifact "$file_path"; then
+      warnings+=("$file_path")
+    fi
+  done <<< "$staged_files"
+
+  if [[ "${#warnings[@]}" -eq 0 ]]; then
+    return 0
+  fi
+
+  echo "[chain-check] warning: temp-like artifacts are staged outside .codex/tmp/"
+  local warned
+  for warned in "${warnings[@]}"; do
+    echo "  - $warned"
+  done
+  echo "[chain-check] recommendation:"
+  echo "  - move temp artifacts to .codex/tmp/<tool>/<run-id>/"
+  echo "  - keep only evidence docs/json under project docs when needed"
+}
+
 has_matching_path_for_roots() {
   local staged_files="$1"
   shift
@@ -130,6 +170,8 @@ staged_files="$(git -c core.quotePath=false diff --cached --name-only || true)"
 if [[ -z "$staged_files" ]]; then
   exit 0
 fi
+
+warn_temp_artifacts_outside_codex_tmp "$staged_files"
 
 global_policy_dir="skills/aki-codex-precommit/policies"
 mapfile -t global_policy_files < <(find "$global_policy_dir" -maxdepth 1 -type f -name '*.sh' 2>/dev/null | sort)
