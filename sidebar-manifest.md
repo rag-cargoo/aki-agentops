@@ -21,6 +21,7 @@
           * [API Script Guide](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/README.md)
           * [Latest API Script Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/latest.md)
           * [Step11 Sales Policy Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step11-sales-policy-latest.md)
+          * [Step12 Abuse Audit Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step12-abuse-audit-latest.md)
         * **Engineering Knowledge**
           * [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
