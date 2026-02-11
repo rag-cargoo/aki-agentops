@@ -12,6 +12,7 @@
 1. 변경 범위/리스크 파악
    - Owner Skill: `aki-codex-workflows`
    - 일반 변경은 quick, 고위험 변경은 strict 후보로 분류한다.
+   - 작업 시작 시 임시 산출물 경로를 먼저 확정한다: `.codex/tmp/<tool>/<run-id>/`
 2. 모드 확인/전환
    - Owner Skill: `aki-codex-precommit`
    - `precommit_mode.sh status|quick|strict` 실행
