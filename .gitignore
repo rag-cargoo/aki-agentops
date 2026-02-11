@@ -22,3 +22,10 @@ management/task.md
 **/build/
 **/out/
 .gradle/
+
+# Root-level temp outputs (keep runtime artifacts under .codex/tmp/)
+/*.log
+/*.out
+/*.tmp
+/*.pid
+/*.err
