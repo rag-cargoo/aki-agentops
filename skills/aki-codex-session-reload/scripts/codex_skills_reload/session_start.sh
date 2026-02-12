@@ -55,6 +55,22 @@ if [[ -f "$project_snapshot" ]]; then
   active_meeting_notes="$(grep -E '^- Meeting Notes:' "$project_snapshot" | sed -E 's/^- Meeting Notes: `([^`]+)`/\1/' || true)"
 fi
 
+default_work_branch="${CODEX_DEFAULT_WORK_BRANCH:-main}"
+git_current_branch="$(git -C "$repo_root" branch --show-current 2>/dev/null || true)"
+git_head_short="$(git -C "$repo_root" rev-parse --short HEAD 2>/dev/null || true)"
+git_tracking_branch="$(git -C "$repo_root" rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || true)"
+
+[[ -z "$git_current_branch" ]] && git_current_branch="(detached HEAD)"
+[[ -z "$git_head_short" ]] && git_head_short="(unknown)"
+[[ -z "$git_tracking_branch" ]] && git_tracking_branch="(none)"
+
+branch_guard="ON_MAIN"
+branch_guard_action="none"
+if [[ "$git_current_branch" != "$default_work_branch" ]]; then
+  branch_guard="OFF_DEFAULT"
+  branch_guard_action="사용자 명시 요청이 없다면 \`git checkout ${default_work_branch}\` 후 진행"
+fi
+
 handoff_status="NONE"
 handoff_created=""
 handoff_reason=""
@@ -329,6 +345,16 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   else
     echo "- Project Root: \`(not selected)\`"
     echo "- Action: \`$set_active_entry <project-root>\`"
+  fi
+  echo
+  echo "## Git Branch Context"
+  echo "- Current Branch: \`$git_current_branch\`"
+  echo "- HEAD: \`$git_head_short\`"
+  echo "- Tracking Branch: \`$git_tracking_branch\`"
+  echo "- Default Branch: \`$default_work_branch\`"
+  echo "- Branch Guard: \`$branch_guard\`"
+  if [[ "$branch_guard_action" != "none" ]]; then
+    echo "- Action: $branch_guard_action"
   fi
   echo
   echo "## Session Handoff"

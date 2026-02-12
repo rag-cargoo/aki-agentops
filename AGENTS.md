@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-10 05:26:14`
+> - **Updated At**: `2026-02-12 17:33:56`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -19,6 +19,8 @@
 > - 7) First Reply Contract
 > - 8) GitHub MCP Init (Default)
 > - 9) Issue Lifecycle Governance
+> - 10) Branch Governance
+> - 11) Playwright Evidence Policy
 <!-- DOC_TOC_END -->
 
 ## 1) Single Entry Rule
@@ -31,14 +33,15 @@
 
 필수 시작 순서:
 1. `git status --short`
-2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
-3. `.codex/runtime/codex_session_start.md` 확인 후, 나열된 `SKILL.md` + Active Project의 `PROJECT_AGENT.md` + `task.md` 로드
-4. GitHub MCP가 등록되어 있으면 기본 toolset 부팅 수행:
+2. `git branch --show-current`
+3. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
+4. `.codex/runtime/codex_session_start.md` 확인 후, 나열된 `SKILL.md` + Active Project의 `PROJECT_AGENT.md` + `task.md` 로드
+5. GitHub MCP가 등록되어 있으면 기본 toolset 부팅 수행:
    - `mcp__github__list_available_toolsets`
    - `mcp__github__enable_toolset`: `context`, `repos`, `issues`, `projects`, `pull_requests`, `labels`
    - `mcp__github__list_available_toolsets` 재호출로 `currently_enabled=true` 재검증
-5. 필요 시 `.codex/runtime/codex_skills_reload.md`, `.codex/runtime/codex_project_reload.md` 상세 확인
-6. `sidebar-manifest.md` 확인
+6. 필요 시 `.codex/runtime/codex_skills_reload.md`, `.codex/runtime/codex_project_reload.md` 상세 확인
+7. `sidebar-manifest.md` 확인
 
 멀티 프로젝트에서 Active Project가 비어 있으면 먼저 실행:
 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
@@ -95,6 +98,7 @@
 6. 멀티 프로젝트 사용법 2줄 (`--list`, `set_active_project`)
 7. 누락/경고 항목이 있으면 즉시 후속 액션 1줄 제시
 8. GitHub MCP init 상태 (`init_mode`, `execution_status`, `enabled/failed/unsupported` 결과 또는 미실행 사유)
+9. `Git Branch Context` (`Current Branch`, `HEAD`, `Default Branch`, `Branch Guard`)
 
 ## 8) GitHub MCP Init (Default)
 GitHub MCP가 등록되어 있으면 세션 시작 보고에서 기본 6개 toolset init 가이드를 제공한다.
@@ -121,3 +125,16 @@ GitHub MCP가 등록되어 있으면 세션 시작 보고에서 기본 6개 tool
 4. 새 이슈를 만들면 "왜 재오픈이 아닌지" 근거를 이슈/PR에 명시한다.
 5. 로컬 자동화는 `skills/aki-mcp-github/scripts/issue-upsert.sh`를 우선 사용한다.
 6. PR은 템플릿을 사용하고 `pr-issue-governance` 체크 통과를 필수로 한다.
+
+## 10) Branch Governance
+1. 기본 작업 브랜치는 `main`이다. 사용자 명시 요청이 없으면 `main`에서 작업한다.
+2. 세션 시작 보고에 `Current Branch`/`HEAD`/`Default Branch`를 반드시 포함한다.
+3. 사용자 요청으로 다른 브랜치를 사용할 때는 전환 직후 현재 브랜치를 먼저 보고한 뒤 작업한다.
+4. 브랜치 전환 기본 순서: `git checkout <branch>` -> `git pull --ff-only origin <branch>`.
+5. 브랜치 지시가 모호하면 작업 시작 전 사용자 확인을 우선한다.
+
+## 11) Playwright Evidence Policy
+1. Playwright 기본 검증은 텍스트 증빙(`snapshot`, `console/network logs`)을 우선한다.
+2. 스크린샷(`take_screenshot`, `*.png`) 생성은 사용자가 명시적으로 요청한 경우에만 수행한다.
+3. 스크린샷이 필요한 경우에도 저장 경로는 `.codex/tmp/<tool>/<run-id>/`를 우선 사용한다.
+4. 사용자 요청이 없으면 루트/프로젝트 경로에 PNG를 생성하지 않는다.

@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-11 11:16:00`
+> - **Updated At**: `2026-02-12 17:33:56`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -35,6 +35,7 @@ description: |
 - Active Project/스냅샷 불일치 상태를 빠르게 복구한다.
 - 세션 재시작 이후 이어받기 비용을 최소화한다.
 - 세션 시작 보고에서 임시 산출물 정책(`.codex/tmp`)을 선안내해 작업 전 규칙 전파를 보장한다.
+- 세션 시작 보고에 Git Branch Context를 포함해 작업 브랜치 혼선을 줄인다.
 
 ## 오케스트레이션 경계
 - 이 스킬은 세션 리로드 도메인 실행 로직만 담당한다.
@@ -63,12 +64,13 @@ description: |
 
 ## 표준 실행 순서
 1. `git status --short`로 현재 워크트리 상태를 확인한다.
-2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`를 실행한다.
-3. `.codex/runtime/codex_session_start.md`에서 Startup Checks를 확인한다.
-4. `Loaded Skills`와 `Active Project`를 기준으로 필요한 문서를 로드한다.
-5. 경고가 있으면 `validate_env.sh` 또는 `bootstrap_env.sh`로 환경을 복구한다.
-6. `Runtime Status` 표(`.codex/runtime/current_status.txt`)를 확인한다.
-7. 프로젝트 경고가 있으면 `set_active_project.sh` 또는 `init_project_docs.sh`로 복구한다.
+2. `git branch --show-current`로 현재 브랜치를 확인하고, 사용자 명시 요청이 없으면 `main`으로 정렬한다.
+3. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`를 실행한다.
+4. `.codex/runtime/codex_session_start.md`에서 Startup Checks를 확인한다.
+5. `Loaded Skills`와 `Active Project`를 기준으로 필요한 문서를 로드한다.
+6. 경고가 있으면 `validate_env.sh` 또는 `bootstrap_env.sh`로 환경을 복구한다.
+7. `Runtime Status` 표(`.codex/runtime/current_status.txt`)를 확인한다.
+8. 프로젝트 경고가 있으면 `set_active_project.sh` 또는 `init_project_docs.sh`로 복구한다.
 
 ## 환경 부트스트랩
 1. 환경 점검:
@@ -116,6 +118,8 @@ description: |
    - `all_clear`면 경고 없음으로 간주한다.
 11. Session Snapshot 요약:
    - `session_start.sh`는 `Runtime Status` 아래 `Workflow Summary` 1줄을 자동 삽입해 핵심 판정을 빠르게 제공한다.
+12. Branch Context:
+   - `session_start.sh`는 `Git Branch Context` 섹션에 `Current Branch`/`HEAD`/`Default Branch`/`Branch Guard`를 출력한다.
 
 ## 점검 포인트
 - `Skills Snapshot`: `OK`
@@ -123,6 +127,7 @@ description: |
 - `Skills Runtime Integrity`: `OK`
 - `Runtime Flags`: `OK`
 - `GitHub MCP Init` 섹션의 `init_mode`/`execution_status`/기본 toolset 확인
+- `Git Branch Context` 섹션의 `Current Branch`/`Branch Guard` 확인
 
 ## 실패 복구
 1. 문법 점검:

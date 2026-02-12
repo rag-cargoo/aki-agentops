@@ -8,7 +8,7 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-11 06:45:00`
+> - **Updated At**: `2026-02-12 17:33:56`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -47,6 +47,8 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
   - `forbid`(기본): 설치 금지. 기존 브라우저만 사용
   - `allow`: 사용자가 설치를 요청한 경우에만 설치 수행
 - 브라우저 경로가 커스텀이면 `MCP_BROWSER_BIN=<binary>`를 사용한다.
+- 스크린샷(`take_screenshot`, `*.png`)은 사용자가 명시적으로 요청한 경우에만 생성한다.
+- 사용자 요청이 없으면 텍스트 증빙(`snapshot`, `console/network logs`)으로 결과를 보고한다.
 
 ## 실행 절차
 
@@ -55,8 +57,9 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 3. 필요 시에만 `references/setup-linux-wsl.md`의 설치 레시피를 사용한다.
 4. GUI 창 유지 검증은 `scripts/chrome_gui_smoke.sh <url>`로 수행한다.
 5. CDP endpoint 모드면 `scripts/ensure_cdp_chrome.sh`로 `9222` 상태를 먼저 보정한다.
-6. MCP 도구로 `navigate -> snapshot -> click/type -> screenshot` 순서로 검증한다.
-7. 실패 시 `references/troubleshooting.md`에서 증상별 원인을 찾아 교정한다.
+6. MCP 도구로 `navigate -> snapshot -> click/type` 순서로 기본 검증한다.
+7. 사용자가 요청한 경우에만 `take_screenshot`으로 이미지 증빙을 추가한다.
+8. 실패 시 `references/troubleshooting.md`에서 증상별 원인을 찾아 교정한다.
 
 ## 핵심 구분
 
@@ -74,6 +77,7 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
   - 브라우저 버전
   - MCP 기능 점검 결과
   - 남은 리스크와 재현 명령
+- 스크린샷은 요청 기반 산출물이다. 요청이 없으면 PNG를 생성하지 않는다.
 
 ## 리소스 안내
 
