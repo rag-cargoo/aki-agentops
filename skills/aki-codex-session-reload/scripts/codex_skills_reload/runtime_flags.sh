@@ -303,6 +303,62 @@ print_alerts_section() {
   done
 }
 
+trim_text() {
+  local text="$1"
+  text="${text#"${text%%[![:space:]]*}"}"
+  text="${text%"${text##*[![:space:]]}"}"
+  printf '%s' "$text"
+}
+
+print_row_with_overflow() {
+  local item="$1"
+  local value="$2"
+  local status="$3"
+  local mode="${4:-plain}"
+  local trimmed=""
+  local line=""
+  local -a parts=()
+
+  case "$mode" in
+    list)
+      printf '%-32s %-36s %s\n' "$item" "(list below)" "$status"
+      if [[ "$value" == "none" ]]; then
+        printf '  - %s\n' "$value"
+        return
+      fi
+      IFS=',' read -r -a parts <<< "$value"
+      for line in "${parts[@]}"; do
+        trimmed="$(trim_text "$line")"
+        [[ -z "$trimmed" ]] && continue
+        printf '  - %s\n' "$trimmed"
+      done
+      ;;
+    detail)
+      printf '%-32s %-36s %s\n' "$item" "(detail below)" "$status"
+      if [[ "$value" == "none" ]]; then
+        printf '  - %s\n' "$value"
+        return
+      fi
+      IFS=';' read -r -a parts <<< "$value"
+      for line in "${parts[@]}"; do
+        trimmed="$(trim_text "$line")"
+        [[ -z "$trimmed" ]] && continue
+        printf '  - %s\n' "$trimmed"
+      done
+      ;;
+    *)
+      if [[ "${#value}" -le 36 ]]; then
+        printf '%-32s %-36s %s\n' "$item" "$value" "$status"
+        return
+      fi
+      printf '%-32s %-36s %s\n' "$item" "(value below)" "$status"
+      while IFS= read -r line || [[ -n "$line" ]]; do
+        printf '  %s\n' "$line"
+      done < <(printf '%s\n' "$value" | fold -s -w 92)
+      ;;
+  esac
+}
+
 print_status_table() {
   echo "[Runtime Status]"
   print_alerts_section
@@ -337,16 +393,16 @@ print_status_table() {
   printf '%-32s %-36s %s\n' "workflow_ready_count" "$workflow_ready_count" "COUNT"
   printf '%-32s %-36s %s\n' "workflow_not_ready_count" "$workflow_not_ready_count" "COUNT"
   printf '%-32s %-36s %s\n' "workflow_marks_count" "$workflow_marks_count" "COUNT"
-  printf '%-32s %-36s %s\n' "workflow_marks_file" "$workflow_mark_file_label" "PATH"
-  printf '%-32s %-36s %s\n' "workflows_ready" "$workflows_ready_list" "LIST"
-  printf '%-32s %-36s %s\n' "workflows_not_ready" "$workflows_not_ready_list" "LIST"
-  printf '%-32s %-36s %s\n' "workflows_last_summary" "$workflows_last_summary" "LIST"
+  print_row_with_overflow "workflow_marks_file" "$workflow_mark_file_label" "PATH" "plain"
+  print_row_with_overflow "workflows_ready" "$workflows_ready_list" "LIST" "list"
+  print_row_with_overflow "workflows_not_ready" "$workflows_not_ready_list" "LIST" "list"
+  print_row_with_overflow "workflows_last_summary" "$workflows_last_summary" "LIST" "list"
   if [[ "${#workflow_names[@]}" -eq 0 ]]; then
     printf '%-32s %-36s %s\n' "workflow" "none" "NONE"
   else
     for workflow_name in "${workflow_names[@]}"; do
       printf '%-32s %-36s %s\n' "workflow:${workflow_name}" "${workflow_ready[$workflow_name]}" "${workflow_last[$workflow_name]}"
-      printf '%-32s %-36s %s\n' "workflow:${workflow_name}:detail" "${workflow_detail[$workflow_name]}" "DETAIL"
+      print_row_with_overflow "workflow:${workflow_name}:detail" "${workflow_detail[$workflow_name]}" "DETAIL" "detail"
     done
   fi
   echo
