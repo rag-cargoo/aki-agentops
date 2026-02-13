@@ -27,6 +27,7 @@
         * **Engineering Knowledge**
           * [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
           * [소셜 로그인 OAuth 연동 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/social-login-oauth-연동-전략.md)
+          * [UX Track U1 Frontend MVP Playbook](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/ux-track-u1-frontend-mvp-playbook.md)
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
         * **Meeting Notes**
           * [Index](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md)
