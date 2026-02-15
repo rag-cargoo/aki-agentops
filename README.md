@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-15 18:27:00`
+> - **Updated At**: `2026-02-16 00:58:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -25,7 +25,6 @@
 
 - URL: [https://rag-cargoo.github.io/2602/](https://rag-cargoo.github.io/2602/)
 - Main Test URL (U1, Local): [http://localhost:8080/ux/u1/index.html](http://localhost:8080/ux/u1/index.html)
-- Legacy Redirect URL (U1, Compatibility): [http://localhost:8080/u1/index.html](http://localhost:8080/u1/index.html)
 
 URL은 현재 워크스페이스 문서 허브(Docsify) 메인 페이지입니다.
 README, SKILLS, WORKSPACE 문서를 한 곳에서 탐색할 때 사용합니다.
