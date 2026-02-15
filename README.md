@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-15 18:23:00`
+> - **Updated At**: `2026-02-15 18:27:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -23,12 +23,11 @@
 
 ## GitHub Pages Home
 
-- URL: `https://rag-cargoo.github.io/2602/`
-- Open: [https://rag-cargoo.github.io/2602/](https://rag-cargoo.github.io/2602/)
-- Main Test URL (U1): `http://localhost:8080/ux/u1/index.html`
-- Legacy Redirect URL (U1): `http://localhost:8080/u1/index.html`
+- URL: [https://rag-cargoo.github.io/2602/](https://rag-cargoo.github.io/2602/)
+- Main Test URL (U1, Local): [http://localhost:8080/ux/u1/index.html](http://localhost:8080/ux/u1/index.html)
+- Legacy Redirect URL (U1, Compatibility): [http://localhost:8080/u1/index.html](http://localhost:8080/u1/index.html)
 
-이 링크는 현재 워크스페이스 문서 허브(Docsify) 메인 페이지입니다.
+URL은 현재 워크스페이스 문서 허브(Docsify) 메인 페이지입니다.
 README, SKILLS, WORKSPACE 문서를 한 곳에서 탐색할 때 사용합니다.
 U1 테스트 URL은 로컬 백엔드 실행 상태에서 확인할 수 있습니다.
 
