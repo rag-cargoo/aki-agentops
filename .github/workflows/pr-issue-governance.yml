@@ -93,10 +93,26 @@ jobs:
             const pr = context.payload.pull_request;
             const headSha = pr.head.sha;
 
+            const pathTargets = [
+              {
+                task: "workspace/apps/backend/ticket-core-service/prj-docs/task.md",
+                meetingNotesReadme: "workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md",
+                meetingNotesRegex: /^workspace\/apps\/backend\/ticket-core-service\/prj-docs\/meeting-notes\/.+\.md$/,
+              },
+              {
+                task: "prj-docs/projects/ticket-core-service/task.md",
+                meetingNotesReadme: "prj-docs/projects/ticket-core-service/meeting-notes/README.md",
+                meetingNotesRegex: /^prj-docs\/projects\/ticket-core-service\/meeting-notes\/.+\.md$/,
+              },
+            ];
+
             const isTargetDoc = (path) => {
-              if (path === "workspace/apps/backend/ticket-core-service/prj-docs/task.md") return true;
-              if (path === "workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md") return false;
-              return /^workspace\/apps\/backend\/ticket-core-service\/prj-docs\/meeting-notes\/.+\.md$/.test(path);
+              for (const target of pathTargets) {
+                if (path === target.task) return true;
+                if (path === target.meetingNotesReadme) return false;
+                if (target.meetingNotesRegex.test(path)) return true;
+              }
+              return false;
             };
 
             const changedFiles = [];
@@ -110,6 +126,9 @@ jobs:
               }
             )) {
               for (const file of page.data) {
+                if (file.status === "removed") {
+                  continue;
+                }
                 if (isTargetDoc(file.filename)) {
                   changedFiles.push(file.filename);
                 }
