@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 20:18:06`
-> - **Updated At**: `2026-02-10 01:48:58`
+> - **Updated At**: `2026-02-17 06:18:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -30,7 +30,7 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-10
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/19
 
 ## 안건 2: `aki-codex-workflows` 구조 초안
@@ -44,7 +44,7 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-10
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/19
 
 ## 안건 3: 우선 적용 워크플로우 범위
@@ -80,13 +80,13 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-10
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/19
 
 ## 안건 5: 추가 후보 워크플로우 검토
 - Created At: 2026-02-09 20:21:49
 - Updated At: 2026-02-09 20:21:49
-- Status: DOING
+- Status: DONE
 - 결정사항:
   - 2차 후보 워크플로우를 아래처럼 분리 검토한다.
     - 스킬 수명주기 플로우: 생성 -> 리네이밍/분해 -> 검증 -> 폐기
@@ -98,7 +98,7 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-11
-  - 상태: DOING
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/19
   - 비고: 후보별 우선순위/도입 조건은 다음 회의에서 확정한다.
 
@@ -120,7 +120,7 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-10
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/19
 
 ## 안건 7: 운영 가드레일(SoT/Owner Skill Gap/실패정책)
@@ -137,5 +137,5 @@
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-10
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/19

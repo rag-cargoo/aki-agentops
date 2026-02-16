@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:03:20`
-> - **Updated At**: `2026-02-17 06:03:20`
+> - **Updated At**: `2026-02-17 06:22:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -32,4 +32,4 @@
 1. Phase A (완료): `ticket-core-service` 외부 레포 분리 + sidecar `docs_root` 도입.
 2. Phase B (완료): `strict-remote` 공통 검증 스크립트 도입 및 pre-push 훅 경로 결함 제거.
 3. Phase C (진행): 문서 템플릿 `External Sync` 강제와 운영 runbook 확정.
-4. Phase D (예정): safe-git 래퍼/명시 리포 강제(선택 적용) + CI 분리 규칙 고정.
+4. Phase D (완료): `safe-git`/`safe-gh` 래퍼 도입 + CI 책임 분리 규칙 runbook 고정.

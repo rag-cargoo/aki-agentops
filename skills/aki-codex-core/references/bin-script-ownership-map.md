@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 16:20:00`
-> - **Updated At**: `2026-02-09 17:53:22`
+> - **Updated At**: `2026-02-17 06:22:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -24,8 +24,11 @@
 | --- | --- |
 | `skills/aki-codex-core/scripts/check-skill-naming.sh` | `aki-codex-core` |
 | `skills/aki-codex-core/scripts/create-backup-point.sh` | `aki-codex-core` |
+| `skills/aki-codex-core/scripts/safe-git.sh` | `aki-codex-core` |
+| `skills/aki-codex-core/scripts/safe-gh.sh` | `aki-codex-core` |
 | `skills/aki-codex-precommit/scripts/precommit_mode.sh` | `aki-codex-precommit` |
 | `skills/aki-codex-precommit/scripts/validate-precommit-chain.sh` | `aki-codex-precommit` |
+| `skills/aki-codex-precommit/scripts/check-doc-remote-sync.sh` | `aki-codex-precommit` |
 | `skills/aki-codex-session-reload/scripts/codex_skills_reload/` | `aki-codex-session-reload` |
 | `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh` | `aki-codex-session-reload` |
 | `skills/aki-codex-session-reload/scripts/runtime_orchestrator/` | `aki-codex-session-reload` |
