@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 06:22:42`
+> - **Updated At**: `2026-02-17 06:51:30`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -13,6 +13,7 @@
 > - Scope
 > - P0: 분리 준비 단계 (Blockers)
 > - P1: 구조 고도화 단계
+> - P2: 리네이밍/README 재정의 단계
 > - Governance Rules
 <!-- DOC_TOC_END -->
 
@@ -164,6 +165,32 @@
   - `skills/aki-codex-core/scripts/safe-gh.sh` 추가
   - `prj-docs/references/sidecar-operations-runbook.md`에 Repo Target Guard 섹션 반영
   - `skills/aki-codex-core/references/bin-script-ownership-map.md` 업데이트
+
+## P2: 리네이밍/README 재정의 단계
+
+### TSK-2602-011 레포/프로젝트 명칭 리네임 전략 확정
+- Status: TODO
+- Owner: User + Codex
+- Due: 2026-02-20
+- Description:
+  - `2602` 명칭 유지/변경 여부와 목표 이름(표시명, slug, Pages 경로)을 확정한다.
+- Done Criteria:
+  - 후보명 2~3개 비교표와 최종안 확정
+  - `display-name only` vs `repo slug rename` 단계 계획 문서화
+- Evidence:
+  - `prj-docs/meeting-notes/2026-02-17-repo-rename-readme-governance-planning.md`
+
+### TSK-2602-012 루트 README 자체 프로젝트 소개/사용방법 재구성
+- Status: TODO
+- Owner: Codex
+- Due: 2026-02-20
+- Description:
+  - 루트 README 상단에 프로젝트 목적/사용 시나리오/Quick Start를 명시한다.
+- Done Criteria:
+  - Overview + Quick Start + Boundary 섹션이 상단에 배치됨
+  - 기존 링크형 문서는 보존하면서 탐색 경로가 유지됨
+- Evidence:
+  - README 개편 PR 링크(추후)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.
