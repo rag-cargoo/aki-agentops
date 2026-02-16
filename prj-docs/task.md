@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 06:51:30`
+> - **Updated At**: `2026-02-17 07:03:18`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -169,16 +169,17 @@
 ## P2: 리네이밍/README 재정의 단계
 
 ### TSK-2602-011 레포/프로젝트 명칭 리네임 전략 확정
-- Status: TODO
+- Status: DONE
 - Owner: User + Codex
 - Due: 2026-02-20
 - Description:
-  - `2602` 명칭 유지/변경 여부와 목표 이름(표시명, slug, Pages 경로)을 확정한다.
+  - 프로젝트 표시명과 레포 slug 처리 방식을 확정한다.
 - Done Criteria:
-  - 후보명 2~3개 비교표와 최종안 확정
-  - `display-name only` vs `repo slug rename` 단계 계획 문서화
+  - 표시명 `AKI AgentOps` 확정
+  - `display-name only` 1차 적용 + `repo slug rename` 2차 검토 전략 문서화
 - Evidence:
   - `prj-docs/meeting-notes/2026-02-17-repo-rename-readme-governance-planning.md`
+  - `https://github.com/rag-cargoo/2602/issues/70`
 
 ### TSK-2602-012 루트 README 자체 프로젝트 소개/사용방법 재구성
 - Status: TODO
@@ -191,6 +192,32 @@
   - 기존 링크형 문서는 보존하면서 탐색 경로가 유지됨
 - Evidence:
   - README 개편 PR 링크(추후)
+
+### TSK-2602-013 `AKI AgentOps` 표시명 1차 반영 (문서/내비게이션)
+- Status: TODO
+- Owner: Codex
+- Due: 2026-02-21
+- Description:
+  - 루트 문서에서 프로젝트 표시명을 `AKI AgentOps`로 정렬한다.
+  - 링크 경로/slug(`/2602/`)는 유지하고 표기명만 교체한다.
+- Done Criteria:
+  - `README.md`, `sidebar-manifest.md`, `prj-docs/meeting-notes/README.md`에 `AKI AgentOps` 표기가 반영됨
+  - 기존 `2602` 표기는 호환 맥락(구 명칭)으로만 남음
+- Evidence:
+  - 문서 반영 PR 링크(추후)
+
+### TSK-2602-014 레포 slug rename 사전 체크리스트(실행 보류)
+- Status: BLOCKED
+- Owner: User + Codex
+- Due: 2026-03-05
+- Description:
+  - 레포 slug rename(`2602` -> 신규 slug) 수행 전 체크리스트와 영향 범위를 문서화한다.
+  - 실제 rename 실행은 사용자 GO 신호 이후에만 진행한다.
+- Done Criteria:
+  - Pages URL/링크/스크립트/remote URL 영향 항목 체크리스트 완성
+  - GO/NO-GO 결정 기준 문서화
+- Evidence:
+  - 체크리스트 문서 링크(추후)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:51:30`
-> - **Updated At**: `2026-02-17 06:51:30`
+> - **Updated At**: `2026-02-17 07:03:18`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -34,23 +34,24 @@
     - GitHub MCP 기본 6개 toolset enabled 확인
 
 ## External Sync
-- Source of Truth: `rag-cargoo/2602` 내부 거버넌스 문서
-- Sync Action: readme-update
-- Last Synced At: 2026-02-17 06:51:30
+- Source of Truth: `rag-cargoo/2602` issue `#70`
+- Sync Action: issue-comment + task-update
+- Last Synced At: 2026-02-17 07:03:18
 
 ## 안건 1: 프로젝트/레포 이름 변경 필요성 판단
 - Created At: 2026-02-17 06:51:30
-- Updated At: 2026-02-17 06:51:30
-- Status: DOING
+- Updated At: 2026-02-17 07:03:18
+- Status: DONE
 - 결정사항:
   - `2602` 숫자 기반 명칭은 의미 전달력이 낮아 운영/온보딩에 불리하다.
   - 표시명(Display Name)과 실제 레포 슬러그(rename)는 분리해서 단계적으로 진행한다.
-  - 1차는 문서/내비게이션 표시명 정리, 2차는 GitHub repo rename 여부를 확정한다.
+  - 프로젝트 표시명은 `AKI AgentOps`로 확정한다. (한글 표기는 `아키에이전트옵스` 사용 가능)
+  - 레포 slug는 당분간 `2602`를 유지하고, 필요 시 2차로 rename을 별도 안건으로 처리한다.
 - 후속작업:
   - 담당: User + Codex
-  - 기한: 2026-02-18
-  - 상태: DOING
-  - 메모: rename 후보명(예: `codex-runtime-hub`, `workspace-governance-hub`) 2~3개를 비교 후 결정.
+  - 기한: 2026-02-20
+  - 상태: DONE
+  - 메모: 실행 태스크는 `TSK-2602-013`, `TSK-2602-014`로 분리 관리한다.
 
 ## 안건 2: README 정보구조 재정의(자체 프로젝트 소개/사용방법)
 - Created At: 2026-02-17 06:51:30
