@@ -24,6 +24,7 @@
           * [Step11 Sales Policy Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step11-sales-policy-latest.md)
           * [Step12 Abuse Audit Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step12-abuse-audit-latest.md)
           * [Social Auth Contract Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/auth-track-a1-social-auth-latest.md)
+          * [UX Track U1 Integration Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/ux-track-u1-integration-latest.md)
         * **Engineering Knowledge**
           * [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
           * [소셜 로그인 OAuth 연동 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/social-login-oauth-연동-전략.md)
@@ -31,6 +32,7 @@
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
         * **Meeting Notes**
           * [Index](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md)
+          * [2026-02-17 U1 Integration Scenario Validation](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-17-u1-integration-scenario-validation.md)
           * [2026-02-17 Artist Agency Domain Expansion Kickoff](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-17-artist-agency-domain-expansion-kickoff.md)
           * [2026-02-17 Concert Search Cache Batch2](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-17-concert-search-cache-batch2.md)
           * [2026-02-16 Service Boundary Port Phase2 Kickoff](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-16-service-boundary-port-phase2-kickoff.md)
