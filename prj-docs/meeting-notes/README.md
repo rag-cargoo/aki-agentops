@@ -1,9 +1,9 @@
-# Meeting Notes Index (2602 Repository)
+# Meeting Notes Index (AKI AgentOps, legacy: 2602)
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 04:24:00`
-> - **Updated At**: `2026-02-17 06:51:30`
+> - **Updated At**: `2026-02-17 08:13:59`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -20,7 +20,7 @@
 <!-- DOC_TOC_END -->
 
 ## Purpose
-- 2602 저장소 루트 관점의 구조/거버넌스 이슈를 날짜별로 기록한다.
+- `AKI AgentOps` 저장소 루트 관점의 구조/거버넌스 이슈를 날짜별로 기록한다.
 - 하위 프로젝트 구현 상세는 각 프로젝트 `prj-docs/` 문서에서 계속 관리한다.
 
 ## Naming Convention

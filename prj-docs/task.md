@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 07:03:18`
+> - **Updated At**: `2026-02-17 08:13:59`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -182,21 +182,22 @@
   - `https://github.com/rag-cargoo/2602/issues/70`
 
 ### TSK-2602-012 루트 README 자체 프로젝트 소개/사용방법 재구성
-- Status: TODO
+- Status: DONE
 - Owner: Codex
-- Due: 2026-02-20
+- Due: 2026-02-17
 - Description:
   - 루트 README 상단에 프로젝트 목적/사용 시나리오/Quick Start를 명시한다.
 - Done Criteria:
   - Overview + Quick Start + Boundary 섹션이 상단에 배치됨
   - 기존 링크형 문서는 보존하면서 탐색 경로가 유지됨
 - Evidence:
-  - README 개편 PR 링크(추후)
+  - `README.md` 상단 정보구조 재편 반영
+  - `prj-docs/meeting-notes/2026-02-17-repo-rename-readme-governance-planning.md` 안건 2 `DONE`
 
 ### TSK-2602-013 `AKI AgentOps` 표시명 1차 반영 (문서/내비게이션)
-- Status: TODO
+- Status: DONE
 - Owner: Codex
-- Due: 2026-02-21
+- Due: 2026-02-17
 - Description:
   - 루트 문서에서 프로젝트 표시명을 `AKI AgentOps`로 정렬한다.
   - 링크 경로/slug(`/2602/`)는 유지하고 표기명만 교체한다.
@@ -204,7 +205,9 @@
   - `README.md`, `sidebar-manifest.md`, `prj-docs/meeting-notes/README.md`에 `AKI AgentOps` 표기가 반영됨
   - 기존 `2602` 표기는 호환 맥락(구 명칭)으로만 남음
 - Evidence:
-  - 문서 반영 PR 링크(추후)
+  - `README.md` 표기명/호환 주석 반영
+  - `sidebar-manifest.md` repository 표시명 반영
+  - `prj-docs/meeting-notes/README.md` 제목/목적 문구 반영
 
 ### TSK-2602-014 레포 slug rename 사전 체크리스트(실행 보류)
 - Status: BLOCKED
