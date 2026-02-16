@@ -3,11 +3,18 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: validate-precommit-chain.sh [--mode quick|strict]
+Usage: validate-precommit-chain.sh [--mode quick|strict] [--all] [--strict-remote]
 
 Modes:
   quick   Lightweight checks for routine commits (default)
-  strict  Full policy-driven validation. Fails on uncovered staged paths.
+  strict  Full policy-driven validation. Fails on uncovered target paths.
+
+Scope:
+  default  Validate only staged files (git diff --cached --name-only)
+  --all    Validate all tracked files (git ls-files)
+
+Remote:
+  --strict-remote  Enable remote consistency checks (Issue/PR status vs docs) in strict mode.
 
 Policies:
   Global:  skills/aki-codex-precommit/policies/*.sh
@@ -15,8 +22,10 @@ Policies:
 EOF
 }
 
-resolve_mode() {
+resolve_args() {
   local cli_mode=""
+  local parsed_file_scope="staged"
+  local parsed_strict_remote="false"
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -28,6 +37,14 @@ resolve_mode() {
         fi
         cli_mode="$2"
         shift 2
+        ;;
+      --all)
+        parsed_file_scope="all"
+        shift
+        ;;
+      --strict-remote)
+        parsed_strict_remote="true"
+        shift
         ;;
       -h|--help)
         usage
@@ -41,16 +58,18 @@ resolve_mode() {
     esac
   done
 
-  local mode="${cli_mode:-${CHAIN_VALIDATION_MODE:-quick}}"
-  case "$mode" in
+  local parsed_mode="${cli_mode:-${CHAIN_VALIDATION_MODE:-quick}}"
+  case "$parsed_mode" in
     quick|strict) ;;
     *)
-      echo "[chain-check] invalid mode: $mode (allowed: quick, strict)" >&2
+      echo "[chain-check] invalid mode: $parsed_mode (allowed: quick, strict)" >&2
       exit 1
       ;;
   esac
 
-  echo "$mode"
+  mode="$parsed_mode"
+  file_scope="$parsed_file_scope"
+  strict_remote="$parsed_strict_remote"
 }
 
 path_matches_root() {
@@ -131,7 +150,10 @@ is_covered_by_any_root() {
   return 1
 }
 
-mode="$(resolve_mode "$@")"
+mode=""
+file_scope="staged"
+strict_remote="false"
+resolve_args "$@"
 
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
@@ -166,16 +188,24 @@ on_precommit_exit() {
 
 trap 'on_precommit_exit $?' EXIT
 
-staged_files="$(git -c core.quotePath=false diff --cached --name-only || true)"
-if [[ -z "$staged_files" ]]; then
+if [[ "$file_scope" == "all" ]]; then
+  target_files="$(git -c core.quotePath=false ls-files || true)"
+else
+  target_files="$(git -c core.quotePath=false diff --cached --name-only || true)"
+fi
+
+if [[ -z "$target_files" ]]; then
   exit 0
 fi
 
-warn_temp_artifacts_outside_codex_tmp "$staged_files"
+warn_temp_artifacts_outside_codex_tmp "$target_files"
 
 global_policy_dir="skills/aki-codex-precommit/policies"
 mapfile -t global_policy_files < <(find "$global_policy_dir" -maxdepth 1 -type f -name '*.sh' 2>/dev/null | sort)
 mapfile -t project_policy_files < <(find . -type f -path './*/prj-docs/precommit-policy.sh' 2>/dev/null | sort | sed 's#^\./##')
+
+export CHAIN_VALIDATION_SCOPE="$file_scope"
+export CHAIN_STRICT_REMOTE="$strict_remote"
 
 policy_files=()
 if [[ "${#global_policy_files[@]}" -gt 0 ]]; then
@@ -227,24 +257,28 @@ for policy_file in "${policy_files[@]}"; do
     all_policy_roots+=("$root")
   done
 
-  if has_matching_path_for_roots "$staged_files" "${POLICY_ROOTS[@]}"; then
+  if has_matching_path_for_roots "$target_files" "${POLICY_ROOTS[@]}"; then
     echo "[chain-check] applying policy: ${POLICY_ID}"
-    policy_validate "$mode" "$staged_files"
+    policy_validate "$mode" "$target_files"
     applied_policy_ids+=("$POLICY_ID")
   fi
 done
 
-if [[ "$mode" == "strict" ]]; then
+if [[ "$mode" == "strict" && "$file_scope" != "all" ]]; then
   uncovered_files=()
   while IFS= read -r file_path; do
     [[ -z "$file_path" ]] && continue
     if ! is_covered_by_any_root "$file_path" "${all_policy_roots[@]}"; then
       uncovered_files+=("$file_path")
     fi
-  done <<< "$staged_files"
+  done <<< "$target_files"
 
   if [[ "${#uncovered_files[@]}" -gt 0 ]]; then
-    echo "[chain-check] strict mode failed: uncovered staged paths detected"
+    if [[ "$file_scope" == "all" ]]; then
+      echo "[chain-check] strict mode failed: uncovered tracked paths detected"
+    else
+      echo "[chain-check] strict mode failed: uncovered staged paths detected"
+    fi
     echo "[chain-check] add/update policy:"
     echo "  - global: ${global_policy_dir}/*.sh"
     echo "  - project: */prj-docs/precommit-policy.sh"
@@ -255,11 +289,19 @@ if [[ "$mode" == "strict" ]]; then
   fi
 fi
 
+if [[ "$mode" == "strict" && "$file_scope" == "all" ]]; then
+  echo "[chain-check] strict all-scope: uncovered-path guard skipped"
+fi
+
 if [[ "${#applied_policy_ids[@]}" -eq 0 ]]; then
   if [[ "$mode" == "strict" ]]; then
-    echo "[chain-check] strict mode failed: no policy matched staged files"
-    echo "[chain-check] staged files:"
-    echo "$staged_files" | sed 's/^/  - /'
+    echo "[chain-check] strict mode failed: no policy matched target files"
+    if [[ "$file_scope" == "all" ]]; then
+      echo "[chain-check] tracked files:"
+    else
+      echo "[chain-check] staged files:"
+    fi
+    echo "$target_files" | sed 's/^/  - /'
     exit 1
   fi
   echo "[chain-check] quick mode: no matching policy, skip"

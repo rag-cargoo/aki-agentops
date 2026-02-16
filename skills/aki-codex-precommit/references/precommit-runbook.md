@@ -46,10 +46,12 @@
 ## 수동 검증
 1. `./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick`
 2. `./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode strict`
-3. 정책 파일 확인:
+3. 원격 상태 동기화 포함 strict:
+   - `./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode strict --all --strict-remote`
+4. 정책 파일 확인:
    - 전역: `skills/aki-codex-precommit/policies/*.sh`
    - 프로젝트: `<project-root>/prj-docs/precommit-policy.sh`
-4. 스킬 변경 시 네이밍 정책 점검:
+5. 스킬 변경 시 네이밍 정책 점검:
    - `./skills/aki-codex-core/scripts/check-skill-naming.sh`
 
 ## 소스 경로
@@ -62,3 +64,5 @@
 1. 정책 미커버 경로가 있으면 정책 루트에 staged 경로를 포함시킨다.
 2. 프로젝트 strict 요구 문서/API 리포트가 누락되면 함께 staged한다.
 3. 산출물(`build/`, `.gradle/` 등) staged를 제거한다.
+4. strict-remote 실패 시:
+   - `task.md`/`meeting-notes`에서 CLOSED/MERGED 이슈/PR과 같은 섹션의 TODO/DOING/[ ] 상태를 정리한다.

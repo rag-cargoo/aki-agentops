@@ -75,3 +75,182 @@ jobs:
             if (errors.length > 0) {
               core.setFailed(errors.join("\n"));
             }
+
+  doc-state-sync:
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+    steps:
+      - name: Validate Issue/PR state sync in task/meeting docs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const pr = context.payload.pull_request;
+            const headSha = pr.head.sha;
+
+            const isTargetDoc = (path) => {
+              if (path === "workspace/apps/backend/ticket-core-service/prj-docs/task.md") return true;
+              if (path === "workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md") return false;
+              return /^workspace\/apps\/backend\/ticket-core-service\/prj-docs\/meeting-notes\/.+\.md$/.test(path);
+            };
+
+            const changedFiles = [];
+            for await (const page of github.paginate.iterator(
+              github.rest.pulls.listFiles,
+              {
+                owner,
+                repo,
+                pull_number: pr.number,
+                per_page: 100,
+              }
+            )) {
+              for (const file of page.data) {
+                if (isTargetDoc(file.filename)) {
+                  changedFiles.push(file.filename);
+                }
+              }
+            }
+
+            if (changedFiles.length === 0) {
+              core.info("No task/meeting-note docs changed; skip doc-state-sync.");
+              return;
+            }
+
+            const issueUrlRegex = /https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/issues\/(\d+)/g;
+            const prUrlRegex = /https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/pull\/(\d+)/g;
+            const staleRegex = /Status:\s*(TODO|DOING)|상태:\s*(TODO|DOING)|\[[ ]\]/;
+            const sectionHeadingRegex = /^\s*##\s+/;
+            const taskAnchorRegex = /^\s*>\s*-\s*\[[ xX]\]\s+\*\*/;
+
+            const issueStateCache = new Map();
+            const prStateCache = new Map();
+
+            const getIssueState = async (issueNumber) => {
+              if (issueStateCache.has(issueNumber)) return issueStateCache.get(issueNumber);
+              const { data } = await github.rest.issues.get({
+                owner,
+                repo,
+                issue_number: issueNumber,
+              });
+              issueStateCache.set(issueNumber, data.state);
+              return data.state;
+            };
+
+            const getPrState = async (prNumber) => {
+              if (prStateCache.has(prNumber)) return prStateCache.get(prNumber);
+              const { data } = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: prNumber,
+              });
+              const state = data.state === "closed" && data.merged_at ? "merged" : data.state;
+              prStateCache.set(prNumber, state);
+              return state;
+            };
+
+            const isBlank = (line) => /^\s*$/.test(line);
+            const isSectionAnchor = (line) => sectionHeadingRegex.test(line) || taskAnchorRegex.test(line);
+
+            const findStaleInSameSection = (lines, refIndex) => {
+              let start = 0;
+              for (let i = refIndex; i >= 0; i--) {
+                if (isSectionAnchor(lines[i])) {
+                  start = i;
+                  break;
+                }
+                if (isBlank(lines[i])) {
+                  start = i + 1;
+                  break;
+                }
+              }
+
+              let end = lines.length - 1;
+              for (let i = refIndex + 1; i < lines.length; i++) {
+                if (isSectionAnchor(lines[i]) || isBlank(lines[i])) {
+                  end = i - 1;
+                  break;
+                }
+              }
+
+              for (let i = start; i <= end; i++) {
+                if (staleRegex.test(lines[i])) {
+                  return { lineNumber: i + 1, text: lines[i].trim() };
+                }
+              }
+              return null;
+            };
+
+            const mismatches = [];
+            const warnings = [];
+
+            for (const path of changedFiles) {
+              const contentResp = await github.rest.repos.getContent({
+                owner,
+                repo,
+                path,
+                ref: headSha,
+              });
+
+              if (Array.isArray(contentResp.data) || !("content" in contentResp.data)) {
+                continue;
+              }
+
+              const text = Buffer.from(contentResp.data.content, contentResp.data.encoding).toString("utf8");
+              const lines = text.split("\n");
+              const refs = [];
+
+              lines.forEach((line, idx) => {
+                for (const match of line.matchAll(issueUrlRegex)) {
+                  refs.push({ kind: "issue", number: Number(match[1]), lineIndex: idx });
+                }
+                for (const match of line.matchAll(prUrlRegex)) {
+                  refs.push({ kind: "pr", number: Number(match[1]), lineIndex: idx });
+                }
+              });
+
+              const hasStale = lines.some((line) => staleRegex.test(line));
+              if (refs.length === 0) {
+                if (hasStale) {
+                  warnings.push(`link missing, remote sync skipped: ${path}`);
+                }
+                continue;
+              }
+
+              for (const ref of refs) {
+                if (ref.kind === "issue") {
+                  const state = await getIssueState(ref.number);
+                  if (state === "closed") {
+                    const stale = findStaleInSameSection(lines, ref.lineIndex);
+                    if (stale) {
+                      mismatches.push(
+                        `[${path}] issue #${ref.number} is CLOSED but stale marker remains at line ${stale.lineNumber}: ${stale.text}`
+                      );
+                    }
+                  }
+                  continue;
+                }
+
+                const prState = await getPrState(ref.number);
+                if (prState === "closed" || prState === "merged") {
+                  const stale = findStaleInSameSection(lines, ref.lineIndex);
+                  if (stale) {
+                    mismatches.push(
+                      `[${path}] PR #${ref.number} is ${prState.toUpperCase()} but stale marker remains at line ${stale.lineNumber}: ${stale.text}`
+                    );
+                  }
+                }
+              }
+            }
+
+            for (const warning of warnings) {
+              core.warning(warning);
+            }
+
+            if (mismatches.length > 0) {
+              core.setFailed(["Doc state sync mismatches detected:", ...mismatches].join("\n"));
+            }

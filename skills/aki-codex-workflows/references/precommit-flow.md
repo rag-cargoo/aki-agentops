@@ -19,6 +19,7 @@
 3. 체인 검증 실행
    - Owner Skill: `aki-codex-precommit`
    - `validate-precommit-chain.sh --mode quick|strict` 실행
+   - 원격 상태 동기화까지 확인할 때: `validate-precommit-chain.sh --mode strict --all --strict-remote`
 4. 결과 판정
    - Owner Skill: `aki-codex-workflows`
    - 실패면 커밋 중단, 성공이면 커밋 진행

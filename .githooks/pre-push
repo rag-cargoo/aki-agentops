@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "${CHAIN_REMOTE_PUSH_CHECK:-true}" != "true" ]]; then
+  exit 0
+fi
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+project_root="workspace/apps/backend/ticket-core-service"
+remote_sync_script="${project_root}/scripts/check-doc-remote-sync.sh"
+
+if [[ ! -x "$remote_sync_script" ]]; then
+  echo "[pre-push] strict-remote skipped: missing script $remote_sync_script"
+  exit 0
+fi
+
+declare -A doc_seen=()
+docs_to_check=()
+
+collect_range_docs() {
+  local range="$1"
+  local file_path
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    case "$file_path" in
+      "${project_root}/prj-docs/task.md"|\
+      "${project_root}/prj-docs/meeting-notes/"*.md)
+        if [[ "$file_path" == "${project_root}/prj-docs/meeting-notes/README.md" ]]; then
+          continue
+        fi
+        if [[ -n "${doc_seen[$file_path]+x}" ]]; then
+          continue
+        fi
+        doc_seen["$file_path"]="1"
+        docs_to_check+=("$file_path")
+        ;;
+    esac
+  done < <(git -c core.quotePath=false diff --name-only "$range" || true)
+}
+
+while IFS=' ' read -r local_ref local_sha remote_ref remote_sha; do
+  [[ -z "${local_ref:-}" ]] && continue
+
+  if [[ "$local_sha" =~ ^0+$ ]]; then
+    continue
+  fi
+
+  if [[ "$remote_sha" =~ ^0+$ ]]; then
+    base_sha="$(git merge-base "$local_sha" origin/main 2>/dev/null || true)"
+    if [[ -n "$base_sha" ]]; then
+      collect_range_docs "${base_sha}..${local_sha}"
+    else
+      collect_range_docs "${local_sha}^..${local_sha}"
+    fi
+  else
+    collect_range_docs "${remote_sha}..${local_sha}"
+  fi
+done
+
+if [[ "${#docs_to_check[@]}" -eq 0 ]]; then
+  exit 0
+fi
+
+tmp_file="$(mktemp)"
+cleanup() {
+  rm -f "$tmp_file"
+}
+trap cleanup EXIT
+
+printf '%s\n' "${docs_to_check[@]}" | sort -u > "$tmp_file"
+
+echo "[pre-push] strict-remote doc sync check (${#docs_to_check[@]} docs)"
+bash "$remote_sync_script" --scope all --files-file "$tmp_file"
+echo "[pre-push] strict-remote doc sync ok"

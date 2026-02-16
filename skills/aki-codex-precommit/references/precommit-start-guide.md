@@ -44,6 +44,11 @@ git config core.hooksPath .githooks
 CHAIN_VALIDATION_MODE=strict git commit -m "..."
 ```
 
+- 원격 상태 동기화 포함 strict 점검(수동):
+```bash
+./skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode strict --all --strict-remote
+```
+
 ---
 
 ## 2. 내부 검사 흐름
@@ -103,6 +108,7 @@ CHAIN_VALIDATION_MODE=strict git commit -m "..."
    - `scripts/api/run-api-script-tests.sh` 실제 실행
    - `prj-docs/api-test/latest.md` 최신 리포트 staged 및 최신 상태 요구
 8. temp-like 산출물(`*.log`, `*.tmp`, 대시보드 HTML/PNG)이 `.codex/tmp/` 밖에서 stage되면 warning 출력
+9. `--strict-remote` 사용 시 Issue/PR 링크가 있는 `task.md`/`meeting-notes/*.md`는 원격 상태(CLOSED/MERGED)와 TODO/DOING/[ ] 상태 충돌 여부를 추가 검증
 
 ---
 
