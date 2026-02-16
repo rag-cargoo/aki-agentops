@@ -31,6 +31,7 @@
           * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
         * **Meeting Notes**
           * [Index](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md)
+          * [2026-02-17 Artist Agency Domain Expansion Kickoff](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-17-artist-agency-domain-expansion-kickoff.md)
           * [2026-02-17 Concert Search Cache Batch2](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-17-concert-search-cache-batch2.md)
           * [2026-02-16 Service Boundary Port Phase2 Kickoff](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-16-service-boundary-port-phase2-kickoff.md)
           * [2026-02-16 Service Interface Split Rollout](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-16-service-interface-split-rollout.md)
