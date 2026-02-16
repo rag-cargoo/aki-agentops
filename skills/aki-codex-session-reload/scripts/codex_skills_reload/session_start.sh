@@ -387,7 +387,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo
   echo "## How It Works"
   echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\`에서 로드"
-  echo "2. 프로젝트 컨텍스트는 Active Project의 \`README.md\` + Project Snapshot의 \`Task/Project Agent/Meeting Notes\` 경로(Docs Root 기준)에서 로드"
+  echo "2. 프로젝트 컨텍스트는 Active Project의 \`README.md(optional)\` + Project Snapshot의 \`Task/Project Agent/Meeting Notes\` 경로(Docs Root 기준)에서 로드"
   echo "3. 멀티 프로젝트에서는 Active Project를 명시적으로 전환해서 충돌 방지"
   echo
   echo "## Multi Project Guide"

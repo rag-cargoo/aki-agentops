@@ -126,5 +126,15 @@ policy_validate() {
     ./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh >/dev/null
   fi
 
+  if [[ "${CHAIN_STRICT_REMOTE:-false}" == "true" ]]; then
+    local remote_sync_script="skills/aki-codex-precommit/scripts/check-doc-remote-sync.sh"
+    if [[ ! -x "$remote_sync_script" ]]; then
+      echo "[chain-check][${POLICY_ID}] strict-remote failed: missing executable ${remote_sync_script}" >&2
+      return 1
+    fi
+    echo "[chain-check][${POLICY_ID}] strict-remote: checking Issue/PR state sync in docs"
+    bash "$remote_sync_script" --scope "${CHAIN_VALIDATION_SCOPE:-staged}"
+  fi
+
   echo "[chain-check][${POLICY_ID}] validation ok (strict)"
 }

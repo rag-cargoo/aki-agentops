@@ -171,9 +171,6 @@ if [[ -n "$active_project" ]]; then
   candidate_meeting_notes="$docs_abs/meeting-notes/README.md"
   candidate_rules_dir="$docs_abs/rules"
 
-  if [[ ! -f "$candidate_readme" ]]; then
-    active_missing+=("${candidate_readme#$repo_root/}")
-  fi
   if [[ ! -f "$candidate_task" ]]; then
     active_missing+=("${candidate_task#$repo_root/}")
   fi
@@ -190,7 +187,11 @@ if [[ -n "$active_project" ]]; then
   if [[ "${#active_missing[@]}" -eq 0 ]]; then
     active_is_valid="true"
     active_docs_root="$docs_root_rel"
-    active_readme="${candidate_readme#$repo_root/}"
+    if [[ -f "$candidate_readme" ]]; then
+      active_readme="${candidate_readme#$repo_root/}"
+    else
+      active_readme="(optional missing: ${candidate_readme#$repo_root/})"
+    fi
     active_task="${candidate_task#$repo_root/}"
     active_agent="${candidate_agent#$repo_root/}"
     active_meeting_notes="${candidate_meeting_notes#$repo_root/}"
@@ -255,7 +256,7 @@ fi
   echo "## Usage"
   echo "1. 기본 리로드는 \`./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh\` 사용 (권장)"
   echo "2. 신규/다중 프로젝트면 \`./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>\` 실행"
-  echo "3. 이 문서를 읽고 Active Project의 \`README.md\` + \`PROJECT_AGENT.md\` + \`task.md\` + \`meeting-notes/README.md\`를 로드 (Docs Root 기준)"
+  echo "3. 이 문서를 읽고 Active Project의 \`README.md(optional)\` + \`PROJECT_AGENT.md\` + \`task.md\` + \`meeting-notes/README.md\`를 로드 (Docs Root 기준)"
 } > "$output_file"
 
 echo "updated: $output_file"
