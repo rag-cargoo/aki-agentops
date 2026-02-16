@@ -30,11 +30,11 @@
 <!-- DOC_TOC_END -->
 
 ## External Sync
-- Source of Truth: `rag-cargoo/2602` issue/PR 기록
-- Linked Issue: https://github.com/rag-cargoo/2602/issues/66
+- Source of Truth: `rag-cargoo/aki-agentops` issue/PR 기록
+- Linked Issue: https://github.com/rag-cargoo/aki-agentops/issues/66
 - Linked PRs:
-  - https://github.com/rag-cargoo/2602/pull/65
-  - https://github.com/rag-cargoo/2602/pull/67
+  - https://github.com/rag-cargoo/aki-agentops/pull/65
+  - https://github.com/rag-cargoo/aki-agentops/pull/67
 - Sync Action: issue + pr 상태 연동 완료
 
 ## 안건 1: 문제정의 및 범위

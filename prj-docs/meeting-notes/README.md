@@ -1,9 +1,9 @@
-# Meeting Notes Index (AKI AgentOps, legacy: 2602)
+# Meeting Notes Index (AKI AgentOps)
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 04:24:00`
-> - **Updated At**: `2026-02-17 08:13:59`
+> - **Updated At**: `2026-02-17 08:40:03`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->

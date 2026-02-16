@@ -4,7 +4,7 @@
 
 ---
 
-* **REPOSITORY (AKI AgentOps, legacy: 2602)**
+* **REPOSITORY (AKI AgentOps)**
   * [Task Dashboard](/prj-docs/task.md)
   * [Project Sidecar Index](/prj-docs/projects/README.md)
   * [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)

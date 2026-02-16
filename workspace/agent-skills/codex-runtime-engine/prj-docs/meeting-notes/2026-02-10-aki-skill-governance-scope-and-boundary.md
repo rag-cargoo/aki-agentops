@@ -44,7 +44,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-11
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/22
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/22
 
 ## 안건 2: 비-`aki` 스킬 프로젝트 위임 원칙
 - Created At: 2026-02-10 03:40:47
@@ -58,7 +58,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-11
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/22
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/22
 
 ## 안건 3: 역할 경계 충돌 정리(`session-reload` vs `workflows`)
 - Created At: 2026-02-10 03:40:47
@@ -73,7 +73,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-11
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/24
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/24
 
 ## 안건 4: GitHub MCP init 계약-구현 정합성
 - Created At: 2026-02-10 03:40:47
@@ -87,7 +87,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-11
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/23
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/23
 
 ## 안건 5: 스킬 문서 스키마/메타 통일
 - Created At: 2026-02-10 03:40:47
@@ -103,7 +103,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-11
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/25
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/25
 
 ## 안건 6: `aki-codex-workflows` 2차 플로우 확장
 - Created At: 2026-02-10 04:14:19
@@ -119,7 +119,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/26
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/26
 
 ## 안건 7: SoT 드리프트 점검 규칙 문서화
 - Created At: 2026-02-10 04:14:19
@@ -133,7 +133,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/27
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/27
 
 ## 안건 8: `develop -> main` 병합 전 Pages 최종 릴리즈 체크
 - Created At: 2026-02-10 04:28:10
@@ -146,7 +146,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/28
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/28
 
 ## 안건 9: precommit 정책 스크립트 안전옵션 정합화
 - Created At: 2026-02-10 05:10:31
@@ -159,7 +159,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/29
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/29
 
 ## 안건 10: docsify 검증 pre-commit 체인 자동 연동
 - Created At: 2026-02-10 05:10:31
@@ -172,7 +172,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/30
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/30
 
 ## 안건 11: docsify_validator CLI 개선
 - Created At: 2026-02-10 05:10:31
@@ -185,7 +185,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/31
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/31
 
 ## 안건 12: GitHub MCP init 재시도/백오프 규칙 명문화
 - Created At: 2026-02-10 05:10:31
@@ -198,7 +198,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/32
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/32
 
 ## 안건 13: workflows Owner Skill lint 스크립트 추가
 - Created At: 2026-02-10 05:10:31
@@ -211,7 +211,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/33
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/33
 
 ## 안건 14: Issue Reopen-First 강제(템플릿/PR 게이트/upsert)
 - Created At: 2026-02-10 05:30:04
@@ -225,7 +225,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/34
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/34
 
 ## 안건 15: 세션 환경 부트스트랩/검증 자동화(.codex/.githooks)
 - Created At: 2026-02-10 05:53:55
@@ -239,7 +239,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/35
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/35
 
 ## 안건 16: Runtime Flags 상태표/옵션 즉시 동기화
 - Created At: 2026-02-10 06:54:11
@@ -254,7 +254,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/36
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/36
 
 ## 안건 17: Runtime Status 표 분리(User Controls/Agent Checks)
 - Created At: 2026-02-10 07:14:16
@@ -268,7 +268,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/37
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/37
 
 ## 안건 18: Runtime Status Pages/품질 가드 항목 확장
 - Created At: 2026-02-10 07:22:38
@@ -282,7 +282,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/38
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/38
 
 ## 안건 19: Runtime Status 전체 Skill Inventory 표시
 - Created At: 2026-02-10 07:27:53
@@ -296,7 +296,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/39
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/39
 
 ## 안건 20: Runtime Status MCP Inventory 표시
 - Created At: 2026-02-10 07:33:55
@@ -310,4 +310,4 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/40
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/40

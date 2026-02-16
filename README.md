@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 08:13:59`
+> - **Updated At**: `2026-02-17 08:40:03`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -31,8 +31,8 @@
 멀티 프로젝트 워크스페이스에서 세션 규칙, 스킬 자동화, 문서 거버넌스, 사이드카 문서 체계를 관리합니다.
 
 > [!NOTE]
-> - Legacy Repository Name: `2602`
-> - 현재 GitHub Pages 경로와 기존 링크는 호환을 위해 `2602` slug를 유지합니다.
+> - Previous Repository Slug: `2602`
+> - Current Repository Slug: `aki-agentops` (renamed on 2026-02-17)
 
 ## Primary Use Cases
 
@@ -68,7 +68,7 @@ bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick
 
 ## GitHub Pages Home
 
-- URL: [https://rag-cargoo.github.io/2602/](https://rag-cargoo.github.io/2602/)
+- URL: [https://rag-cargoo.github.io/aki-agentops/](https://rag-cargoo.github.io/aki-agentops/)
 - Main Test URL (U1, Local): [http://localhost:8080/ux/u1/index.html](http://localhost:8080/ux/u1/index.html)
 
 URL은 현재 워크스페이스 문서 허브(Docsify) 메인 페이지입니다.
@@ -87,7 +87,7 @@ U1 테스트 URL은 로컬 백엔드 실행 상태에서 확인할 수 있습니
 - `skills/`: 전역 규칙, 자동화, 운영 가이드
 - `workspace/`: 실제 제품/서비스 프로젝트 구현 영역
 - `mcp/`: MCP 런타임 운영 문서 및 매니페스트
-- `prj-docs/`: 2602 루트 레벨 회의록/거버넌스 문서
+- `prj-docs/`: AKI AgentOps 루트 레벨 회의록/거버넌스 문서
 
 ---
 
@@ -100,7 +100,7 @@ U1 테스트 URL은 로컬 백엔드 실행 상태에서 확인할 수 있습니
 - Backend
   - Ticket Core Service (`진행중`)
     - 프로젝트 저장소: [rag-cargoo/ticket-core-service](https://github.com/rag-cargoo/ticket-core-service)
-    - Sidecar Docs (2602): [Ticket Core Service Sidecar Docs](/prj-docs/projects/ticket-core-service/README.md)
+    - Sidecar Docs (AKI AgentOps): [Ticket Core Service Sidecar Docs](/prj-docs/projects/ticket-core-service/README.md)
     - UI/UX 테스트 페이지 (U1, Local): [http://localhost:8080/ux/u1/index.html](http://localhost:8080/ux/u1/index.html)
 
 ### 2. Agent Skills
@@ -171,7 +171,7 @@ workspace/
 - [MCP TODO](/mcp/TODO.md)
 - [MCP Experience Log](/mcp/references/experience-log.md)
 
-### 2602 Repository
+### AKI AgentOps Repository
 - [AKI AgentOps Meeting Notes Index](/prj-docs/meeting-notes/README.md)
 - [AKI AgentOps Task Dashboard](/prj-docs/task.md)
 - [Project Sidecar Index](/prj-docs/projects/README.md)
@@ -184,5 +184,5 @@ workspace/
 
 - 루트 `README.md`는 저장소 전체 분류/진입점만 다룹니다.
 - 프로젝트 상세 구현/실험 내역은 각 제품 레포 또는 sidecar `prj-docs/projects/<project-id>/`에서 관리합니다.
-- 루트 `prj-docs/`는 2602 공통 구조/거버넌스 논의와 회의록만 관리합니다.
+- 루트 `prj-docs/`는 AKI AgentOps 공통 구조/거버넌스 논의와 회의록만 관리합니다.
 - 신규 프로젝트가 생기면 `Apps|Agent Skills|Infra` 분류 아래에 상태(`진행중/예정`)와 대표 문서 링크를 등록합니다.

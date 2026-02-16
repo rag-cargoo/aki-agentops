@@ -7,7 +7,7 @@ Usage:
   safe-gh.sh --repo <owner/repo> <gh-args...>
 
 Examples:
-  ./skills/aki-codex-core/scripts/safe-gh.sh --repo rag-cargoo/2602 issue list --state open
+  ./skills/aki-codex-core/scripts/safe-gh.sh --repo rag-cargoo/aki-agentops issue list --state open
   ./skills/aki-codex-core/scripts/safe-gh.sh --repo rag-cargoo/ticket-core-service pr list
 EOF
 }

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:51:30`
-> - **Updated At**: `2026-02-17 08:13:59`
+> - **Updated At**: `2026-02-17 08:40:03`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -19,7 +19,7 @@
 <!-- DOC_TOC_END -->
 
 ## Mandatory Runtime Gate
-- Checked At: 2026-02-17 08:13:59
+- Checked At: 2026-02-17 08:40:03
 - `session_start.sh`: PASS
 - `mcp_toolset(context/repos/issues/projects/pull_requests/labels)`: PASS
 - `validate-precommit-chain.sh`: PASS
@@ -34,19 +34,19 @@
     - GitHub MCP 기본 6개 toolset enabled 확인
 
 ## External Sync
-- Source of Truth: `rag-cargoo/2602` issue `#70`
+- Source of Truth: `rag-cargoo/aki-agentops` issue `#70`
 - Sync Action: issue-comment + task-update + readme-update
-- Last Synced At: 2026-02-17 08:13:59
+- Last Synced At: 2026-02-17 08:40:03
 
 ## 안건 1: 프로젝트/레포 이름 변경 필요성 판단
 - Created At: 2026-02-17 06:51:30
-- Updated At: 2026-02-17 07:03:18
+- Updated At: 2026-02-17 08:40:03
 - Status: DONE
 - 결정사항:
   - `2602` 숫자 기반 명칭은 의미 전달력이 낮아 운영/온보딩에 불리하다.
   - 표시명(Display Name)과 실제 레포 슬러그(rename)는 분리해서 단계적으로 진행한다.
   - 프로젝트 표시명은 `AKI AgentOps`로 확정한다. (한글 표기는 `아키에이전트옵스` 사용 가능)
-  - 레포 slug는 당분간 `2602`를 유지하고, 필요 시 2차로 rename을 별도 안건으로 처리한다.
+  - 사용자 GO 결정에 따라 2차 slug rename을 실행해 `rag-cargoo/aki-agentops`로 전환 완료했다. (2026-02-17)
 - 후속작업:
   - 담당: User + Codex
   - 기한: 2026-02-20
@@ -90,19 +90,19 @@
 
 ## 안건 4: 실행 순서와 리스크
 - Created At: 2026-02-17 06:51:30
-- Updated At: 2026-02-17 06:51:30
-- Status: TODO
+- Updated At: 2026-02-17 08:40:03
+- Status: DONE
 - 결정사항:
   - 권장 순서:
     1) 표시명/README 구조 개편
     2) 링크/문서/스크립트 하드코딩 치환
     3) 필요 시 레포 slug rename + Pages URL 검증
   - 주요 리스크:
-    - Pages 경로(`/2602/`) 변경 시 링크 대량 수정 필요
+    - Pages 경로(`/2602/` -> `/aki-agentops/`) 변경 시 링크 대량 수정 필요
     - 이슈/PR/회의록의 과거 URL 무결성 관리 필요
     - 스크립트 내부 하드코딩 누락 시 회귀 발생 가능
 - 후속작업:
   - 담당: User + Codex
-  - 기한: 2026-02-19
-  - 상태: TODO
-  - 메모: rename 여부 확정 전에는 기능 변경 없이 문서/정책만 준비한다.
+  - 기한: 2026-02-17
+  - 상태: DONE
+  - 메모: slug rename + Pages URL 검증까지 완료했으며, 잔여 작업은 레거시 표기 정리(안건 3)로 분리한다.
