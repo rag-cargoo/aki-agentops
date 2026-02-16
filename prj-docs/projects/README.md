@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 05:11:38`
+> - **Updated At**: `2026-02-17 06:03:20`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -13,6 +13,7 @@
 > - Purpose
 > - Project Map
 > - Projects
+> - Operations Reference
 <!-- DOC_TOC_END -->
 
 ## Purpose
@@ -24,3 +25,6 @@
 
 ## Projects
 - [ticket-core-service](./ticket-core-service/README.md)
+
+## Operations Reference
+- [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)

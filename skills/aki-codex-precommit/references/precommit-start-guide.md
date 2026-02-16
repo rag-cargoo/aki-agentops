@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 00:54:04`
-> - **Updated At**: `2026-02-11 11:06:00`
+> - **Updated At**: `2026-02-17 06:03:20`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -13,7 +13,7 @@
 > - 1. 모드 지시 방법
 > - 2. 내부 검사 흐름
 > - 3. 모드별 검사 수준
-> - 4. Ticket Core Service에서 strict 시 추가 검증
+> - 4. strict 시 추가 검증(현재 기준)
 > - 5. 커밋 성공 조건
 > - 6. 실무 권장 패턴
 <!-- DOC_TOC_END -->
@@ -87,28 +87,16 @@ CHAIN_VALIDATION_MODE=strict git commit -m "..."
 
 ---
 
-## 4. Ticket Core Service에서 strict 시 추가 검증
+## 4. strict 시 추가 검증(현재 기준)
 
 > [!WARNING]
-> 아래 조건 중 하나라도 불만족하면 커밋이 차단됩니다.
+> strict 모드에서는 아래 검증이 활성화됩니다.
 
-1. `build/`, `.gradle/` 산출물 staged 금지
-2. `knowledge/*.md` 품질 토큰 검증
-   - Failure-First
-   - Before/After
-   - Execution Log
-3. `api-specs/*.md` 6-Step 토큰 검증
-   - Endpoint / Description / Parameters / Request Example / Response Summary / Response Example
-4. 프로젝트 기준선 존재 검증
-   - `README.md`, `prj-docs/PROJECT_AGENT.md`, `prj-docs/task.md`, `prj-docs/meeting-notes/README.md`, `prj-docs/rules/`
-5. 코드/설정/API 스크립트 변경 시 동반 문서 세트 staged 요구
-   - `task.md`, `api-specs/*.md`, `knowledge/*.md`, `scripts/http/*.http`, `scripts/api/*.sh`
-6. 신규 문서 추가 시 `sidebar-manifest.md` 동시 staged 요구
-7. 런타임 API 스크립트 변경 시:
-   - `scripts/api/run-api-script-tests.sh` 실제 실행
-   - `prj-docs/api-test/latest.md` 최신 리포트 staged 및 최신 상태 요구
-8. temp-like 산출물(`*.log`, `*.tmp`, 대시보드 HTML/PNG)이 `.codex/tmp/` 밖에서 stage되면 warning 출력
-9. `--strict-remote` 사용 시 Issue/PR 링크가 있는 `task.md`/`meeting-notes/*.md`는 원격 상태(CLOSED/MERGED)와 TODO/DOING/[ ] 상태 충돌 여부를 추가 검증
+1. 정책 미커버 staged 경로 차단
+2. `.githooks/*.sh`, `skills/**/*.sh`, `mcp/manifest/**/*.sh` 문법 검사
+3. `AGENTS.md`/`skills/*`/`*/prj-docs/PROJECT_AGENT.md`/`project-map.yaml` 변경 시 session reload 검증
+4. temp-like 산출물(`*.log`, `*.tmp`, 대시보드 HTML/PNG)이 `.codex/tmp/` 밖에서 stage되면 warning 출력
+5. `--strict-remote` 사용 시 `task.md`/`meeting-notes/*.md`의 Issue/PR 원격 상태와 TODO/DOING/[ ] 충돌을 검사
 
 ---
 

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 05:14:18`
+> - **Updated At**: `2026-02-17 06:03:20`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -130,6 +130,8 @@ workspace/
 - [2602 Meeting Notes Index](/prj-docs/meeting-notes/README.md)
 - [2602 Task Dashboard](/prj-docs/task.md)
 - [Project Sidecar Index](/prj-docs/projects/README.md)
+- [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)
+- [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)
 
 ---
 

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 04:24:00`
-> - **Updated At**: `2026-02-17 04:47:33`
+> - **Updated At**: `2026-02-17 06:03:20`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -14,6 +14,7 @@
 > - Naming Convention
 > - Scope Boundary
 > - Mandatory Runtime Gate
+> - External Sync Contract
 > - Current Notes
 > - Template
 <!-- DOC_TOC_END -->
@@ -41,6 +42,11 @@
   - `validate-precommit-chain.sh` 실행 가능 상태 확인
 - 게이트 실패 시 해당 안건은 `BLOCKED`로 기록하고 원인/복구조치를 남긴다.
 
+## External Sync Contract
+- sidecar 문서에서 외부 공유가 필요한 결정은 대상 제품 레포 이슈/PR 링크를 반드시 남긴다.
+- 문서 상단에 `source-of-truth`를 명시하고, sidecar 보관본은 운영 기록으로 사용한다.
+- 회의 안건이 제품 동작/릴리즈에 영향을 주면 `Sync Action`(이슈 코멘트/PR 코멘트/README 반영)을 기록한다.
+
 ## Current Notes
 - [2026-02-17 Repository Architecture Refactoring Agenda](./2026-02-17-repo-architecture-refactoring-agenda.md)
 
@@ -56,6 +62,11 @@
 - Evidence:
   - command:
   - result:
+
+## External Sync
+- Source of Truth: <owner/repo + issue/pr/link>
+- Sync Action: not-required | issue-comment | pr-comment | readme-update
+- Last Synced At: YYYY-MM-DD HH:MM:SS
 
 ## 안건 1: <주제>
 - Created At: YYYY-MM-DD HH:MM:SS
