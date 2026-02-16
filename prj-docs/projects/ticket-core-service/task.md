@@ -20,5 +20,9 @@
 
 ## Current Items
 - TCS-SC-001 외부 레포 분리 전환 운영 확인
-  - Status: TODO
+  - Status: DONE
   - Description: code_root, docs_root, repo_remote가 `project-map.yaml`과 일치하는지 점검
+  - Evidence:
+    - `project-map.yaml`에 `workspace/apps/backend/ticket-core-service` + `prj-docs/projects/ticket-core-service` + `https://github.com/rag-cargoo/ticket-core-service`
+    - `session_start.sh` 출력에서 Active Project `Docs Root: prj-docs/projects/ticket-core-service` 확인
+    - PR `#65` merged (`2026-02-16`) 및 연계 이슈 `#66` closed
