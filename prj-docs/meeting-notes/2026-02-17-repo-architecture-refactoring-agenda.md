@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 04:24:00`
-> - **Updated At**: `2026-02-17 06:03:20`
+> - **Updated At**: `2026-02-17 06:14:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -193,7 +193,7 @@
   - 담당: Codex
   - 기한: 2026-02-19
   - 상태: DOING
-  - 메모: `prj-docs/references/sidecar-operations-runbook.md`에 5개 항목 통합. 이슈 템플릿 반영은 후속.
+  - 메모: `prj-docs/references/sidecar-operations-runbook.md`에 5개 항목 통합. `strict --all --strict-remote`에서 legacy 회의록 불일치가 검출되어 정리 작업이 후속으로 남음.
 
 ## 안건 12: 스킬/MCP 동작 검증 및 재클론 운영
 - Created At: 2026-02-17 04:45:22

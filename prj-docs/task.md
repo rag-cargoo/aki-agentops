@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 06:03:20`
+> - **Updated At**: `2026-02-17 06:14:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -148,6 +148,7 @@
   - 회의록 안건 11 상태와 동기화
 - Evidence:
   - `prj-docs/references/sidecar-operations-runbook.md` 초안 생성
+  - `validate-precommit-chain.sh --mode strict --all --strict-remote` 실행 시 legacy 회의록(예: `workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/*`) 원격 상태 불일치 검출
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.
