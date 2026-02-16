@@ -4,7 +4,7 @@
 
 ---
 
-* **REPOSITORY (2602)**
+* **REPOSITORY (AKI AgentOps, legacy: 2602)**
   * [Task Dashboard](/prj-docs/task.md)
   * [Project Sidecar Index](/prj-docs/projects/README.md)
   * [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)
@@ -21,7 +21,7 @@
     * **Backend**
       * **Ticket Core Service**
         * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-core-service)
-        * [Sidecar Docs (2602)](/prj-docs/projects/ticket-core-service/README.md)
+        * [Sidecar Docs (AKI AgentOps)](/prj-docs/projects/ticket-core-service/README.md)
         * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
         * [Sidecar Meeting Notes](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
         * [Main Test URL (U1, Local)](http://localhost:8080/ux/u1/index.html)

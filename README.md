@@ -1,15 +1,19 @@
-#  홍구 Workspace Repository Guide
+# AKI AgentOps Workspace Repository Guide
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 06:03:20`
+> - **Updated At**: `2026-02-17 08:13:59`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
 ## 문서 목차 (Quick Index)
 ---
 > [!TIP]
+> - Project Overview
+> - Primary Use Cases
+> - Quick Start
+> - Repository Boundaries
 > - GitHub Pages Home
 > - 상위 영역 맵 (Top-Level Domains)
 > - 프로젝트 분류 (Workspace Classification)
@@ -18,6 +22,47 @@
 > - 운영 문서 바로가기
 > - 유지 원칙 (README Scope)
 <!-- DOC_TOC_END -->
+
+---
+
+## Project Overview
+
+이 저장소는 `AKI AgentOps` 운영 허브입니다.
+멀티 프로젝트 워크스페이스에서 세션 규칙, 스킬 자동화, 문서 거버넌스, 사이드카 문서 체계를 관리합니다.
+
+> [!NOTE]
+> - Legacy Repository Name: `2602`
+> - 현재 GitHub Pages 경로와 기존 링크는 호환을 위해 `2602` slug를 유지합니다.
+
+## Primary Use Cases
+
+- 세션 시작 표준화: `AGENTS.md` 기반 로드/검증 자동화
+- 프로젝트 경계 관리: 제품 코드 레포와 운영/거버넌스 레포 분리
+- 문서 동기화 운영: 회의록/태스크/이슈/PR 연계와 strict-remote 검증
+- 내비게이션 허브 제공: Docsify 기반 루트 탐색 엔트리 운영
+
+## Quick Start
+
+```bash
+git status --short
+git branch --show-current
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
+bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick --all
+```
+
+멀티 프로젝트에서 Active Project가 비어 있으면 아래를 먼저 실행합니다.
+
+```bash
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>
+```
+
+## Repository Boundaries
+
+- 이 저장소(`AKI AgentOps`)가 관리하는 것:
+  - `skills/`, `mcp/`, 루트 거버넌스 문서, sidecar docs 매핑
+- 외부 제품 레포가 관리하는 것:
+  - 실제 앱 코드, 제품 단위 빌드/테스트/배포 파이프라인
+- sidecar 문서(`prj-docs/projects/<project-id>/`)는 운영 기록이며, 제품 소스코드 저장소와 분리 유지합니다.
 
 ---
 
@@ -32,7 +77,7 @@ U1 테스트 URL은 로컬 백엔드 실행 상태에서 확인할 수 있습니
 
 ---
 
-이 README는 루트 저장소 관점에서 **전체 워크스페이스 구조**를 안내합니다.
+이 README는 `AKI AgentOps` 루트 저장소 관점에서 **전체 워크스페이스 구조**를 안내합니다.
 실제 제품 코드는 각 독립 레포에서 관리하며, `skills/`와 `mcp/`는 운영/자동화 문서 영역으로 분리되어 있습니다.
 
 ---
@@ -127,8 +172,8 @@ workspace/
 - [MCP Experience Log](/mcp/references/experience-log.md)
 
 ### 2602 Repository
-- [2602 Meeting Notes Index](/prj-docs/meeting-notes/README.md)
-- [2602 Task Dashboard](/prj-docs/task.md)
+- [AKI AgentOps Meeting Notes Index](/prj-docs/meeting-notes/README.md)
+- [AKI AgentOps Task Dashboard](/prj-docs/task.md)
 - [Project Sidecar Index](/prj-docs/projects/README.md)
 - [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)
 - [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)

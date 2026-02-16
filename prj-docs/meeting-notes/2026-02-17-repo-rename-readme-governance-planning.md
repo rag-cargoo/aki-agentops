@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:51:30`
-> - **Updated At**: `2026-02-17 07:03:18`
+> - **Updated At**: `2026-02-17 08:13:59`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -19,7 +19,7 @@
 <!-- DOC_TOC_END -->
 
 ## Mandatory Runtime Gate
-- Checked At: 2026-02-17 06:50:53
+- Checked At: 2026-02-17 08:13:59
 - `session_start.sh`: PASS
 - `mcp_toolset(context/repos/issues/projects/pull_requests/labels)`: PASS
 - `validate-precommit-chain.sh`: PASS
@@ -35,8 +35,8 @@
 
 ## External Sync
 - Source of Truth: `rag-cargoo/2602` issue `#70`
-- Sync Action: issue-comment + task-update
-- Last Synced At: 2026-02-17 07:03:18
+- Sync Action: issue-comment + task-update + readme-update
+- Last Synced At: 2026-02-17 08:13:59
 
 ## 안건 1: 프로젝트/레포 이름 변경 필요성 판단
 - Created At: 2026-02-17 06:51:30
@@ -55,8 +55,8 @@
 
 ## 안건 2: README 정보구조 재정의(자체 프로젝트 소개/사용방법)
 - Created At: 2026-02-17 06:51:30
-- Updated At: 2026-02-17 06:51:30
-- Status: TODO
+- Updated At: 2026-02-17 08:13:59
+- Status: DONE
 - 결정사항:
   - 루트 `README.md`에 `이 프로젝트가 무엇인지`, `누가 언제 쓰는지`, `빠른 시작(Quick Start)`를 명시한다.
   - 최소 포함 섹션:
@@ -67,9 +67,9 @@
   - 기존 링크 중심 README는 유지하되, 구조를 상단에서 목적 중심으로 재배치한다.
 - 후속작업:
   - 담당: Codex
-  - 기한: 2026-02-18
-  - 상태: TODO
-  - 메모: 기존 링크/목차는 하위 섹션으로 내리고, 상단 1화면에 소개+사용법을 배치한다.
+  - 기한: 2026-02-17
+  - 상태: DONE
+  - 메모: `README.md` 상단에 `Project Overview / Primary Use Cases / Quick Start / Repository Boundaries`를 반영했고 기존 링크 섹션은 보존했다.
 
 ## 안건 3: 기존 문서 처리 원칙(보존/이관/폐기)
 - Created At: 2026-02-17 06:51:30
