@@ -28,10 +28,10 @@
   - GitHub MCP 기본 toolset이 6개(`context,repos,issues,projects,pull_requests,labels`)로 확장됨.
   - 회의록 기반 GitHub 운영이 통합됨: `skills/aki-mcp-github/SKILL.md`
   - 코어 스킬 리팩터링 실행 이슈가 생성됨:
-    - #1 https://github.com/rag-cargoo/2602/issues/1
-    - #2 https://github.com/rag-cargoo/2602/issues/2
-    - #3 https://github.com/rag-cargoo/2602/issues/3
-    - #4 https://github.com/rag-cargoo/2602/issues/4
+    - #1 https://github.com/rag-cargoo/aki-agentops/issues/1
+    - #2 https://github.com/rag-cargoo/aki-agentops/issues/2
+    - #3 https://github.com/rag-cargoo/aki-agentops/issues/3
+    - #4 https://github.com/rag-cargoo/aki-agentops/issues/4
   - 코어 스킬 분해 1차 스캐폴딩 추가:
     - `skills/aki-codex-core`
     - `skills/aki-codex-session-reload`
@@ -94,7 +94,7 @@
   - 이슈 #28 생성:
     - `develop -> main` 병합 전 GitHub Pages 최종 릴리즈 체크 추적 이슈 등록
     - 상태: OPEN (릴리즈 직전 실행)
-    - 링크: https://github.com/rag-cargoo/2602/issues/28
+    - 링크: https://github.com/rag-cargoo/aki-agentops/issues/28
   - 이슈 #29 완료:
     - precommit `core-workspace.sh` 안전옵션(`set -euo pipefail`) 정합화
     - 반영 경로: `skills/aki-codex-precommit/policies/core-workspace.sh`
@@ -200,4 +200,4 @@
     - 도메인 실행 권위 소스: 각 Owner Skill
 - 다음 작업:
   - GitHub Pages 최종 릴리즈 체크: `develop -> main` 병합 직전에 Pages source를 `main`으로 복귀하고 배포 상태를 재확인
-    - 이슈: https://github.com/rag-cargoo/2602/issues/28
+    - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/28

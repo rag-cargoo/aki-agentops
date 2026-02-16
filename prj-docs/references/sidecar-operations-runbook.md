@@ -1,9 +1,9 @@
-# Sidecar Operations Runbook (2602)
+# Sidecar Operations Runbook (AKI AgentOps)
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:03:20`
-> - **Updated At**: `2026-02-17 06:22:42`
+> - **Updated At**: `2026-02-17 08:40:03`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -31,7 +31,7 @@
 ```
 2. GitHub CLI 명령은 대상 `owner/repo`를 반드시 명시한다.
 ```bash
-./skills/aki-codex-core/scripts/safe-gh.sh --repo rag-cargoo/2602 issue list --state open
+./skills/aki-codex-core/scripts/safe-gh.sh --repo rag-cargoo/aki-agentops issue list --state open
 ./skills/aki-codex-core/scripts/safe-gh.sh --repo rag-cargoo/ticket-core-service pr list
 ```
 3. 명시 없는 `git`, `gh` 직접 실행은 금지하지 않지만 운영 표준에서는 wrapper를 우선한다.
@@ -72,7 +72,7 @@ bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick
 ```
 
 ## CI Responsibility Split
-1. `2602` CI:
+1. `AKI AgentOps` CI:
    - 문서/거버넌스/워크플로우 규칙 검증 전용.
 2. 제품 레포 CI:
    - 빌드/테스트/배포 파이프라인 전용.

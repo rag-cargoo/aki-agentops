@@ -35,7 +35,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/1
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/1
   - 진행기록: 스캐폴딩 + 책임 매트릭스 공존/이관 계획 + 사이드바 코어 참조 링크 동기화 완료
 
 ## 안건 2: 스킬 네이밍 정책 정렬
@@ -50,7 +50,7 @@
   - 담당: Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/2
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/2
   - 진행기록: `skill-naming-policy.md` 작성 + `check-skill-naming.sh` 자동 점검 스크립트/가이드 연결 완료
 
 ## 안건 3: Active Project 운영 원칙 확정
@@ -78,7 +78,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/3
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/3
   - 진행기록: 브랜치 체크포인트 문서 + 중첩 구조 미채택 원칙 + skill-creator 생성 규칙 + 회의록/task 역기록 반영 완료
 
 ## 안건 5: precommit 정책 경로 이관
@@ -93,7 +93,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-10
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/4
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/4
   - 진행기록: 정책 파일 이관 + `validate-precommit-chain.sh` 경로 갱신 + quick/strict 동작 검증 완료
 
 ## 안건 6: [AGENT-PROPOSAL] Runtime Orchestrator 도입
@@ -112,7 +112,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-11
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/5
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/5
   - 진행기록: `engine.yaml` + `run-skill-hooks.sh` + JSON 리포트 샘플/README + `aki-codex-session-reload` 공존 원칙 문서화 + 실행 검증 완료
 
 ## 안건 7: scripts 소유권 이관 + 호환 래퍼 정책
@@ -127,7 +127,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-11
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/8
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/8
   - 진행기록: 소스 스크립트(`aki-codex-core`, `aki-codex-precommit`, `aki-codex-session-reload`) 이관 + `skills/bin` 래퍼 전환 + `runtime_orchestrator` 호환 링크 + 소유권 매핑 문서(`bin-script-ownership-map.md`) + 실행/문서 검증 완료
   - 추가완료: 잔여 `skills/bin` 스크립트(`codex_skills_reload/`, `create-backup-point.sh`, `sync-skill.sh`, `run-project-api-script-tests.sh`)도 각 소유 스킬 `scripts/`로 이관하고 `bin`은 래퍼/링크로 정리 완료
 
@@ -143,7 +143,7 @@
   - 담당: Aki + Agent
   - 기한: 2026-02-12
   - 상태: DONE
-  - 이슈: https://github.com/rag-cargoo/2602/issues/10
+  - 이슈: https://github.com/rag-cargoo/aki-agentops/issues/10
   - 진행기록: `bin-wrapper-deprecation-inventory.md` + `bin-wrapper-deprecation-checklist.md` 작성, 내부 실행 경로(`.githooks`, `.github/workflows`, precommit strict policy) 전환 완료, `skills/bin` 실제 제거 완료
 
 ## 안건 9: 레거시 거버넌스 스킬 제거 및 소유 스킬 분산

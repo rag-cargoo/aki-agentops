@@ -1,9 +1,9 @@
-# Task Dashboard (2602 Repository)
+# Task Dashboard (AKI AgentOps Repository)
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 08:13:59`
+> - **Updated At**: `2026-02-17 08:40:03`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -18,7 +18,7 @@
 <!-- DOC_TOC_END -->
 
 ## Scope
-- 본 문서는 `2602` 루트 구조/거버넌스 작업만 관리한다.
+- 본 문서는 `AKI AgentOps` 루트 구조/거버넌스 작업만 관리한다.
 - 제품 구현 상세는 각 제품 레포에서 관리한다.
 
 ## P0: 분리 준비 단계 (Blockers)
@@ -179,7 +179,7 @@
   - `display-name only` 1차 적용 + `repo slug rename` 2차 검토 전략 문서화
 - Evidence:
   - `prj-docs/meeting-notes/2026-02-17-repo-rename-readme-governance-planning.md`
-  - `https://github.com/rag-cargoo/2602/issues/70`
+  - `https://github.com/rag-cargoo/aki-agentops/issues/70`
 
 ### TSK-2602-012 루트 README 자체 프로젝트 소개/사용방법 재구성
 - Status: DONE
@@ -200,7 +200,7 @@
 - Due: 2026-02-17
 - Description:
   - 루트 문서에서 프로젝트 표시명을 `AKI AgentOps`로 정렬한다.
-  - 링크 경로/slug(`/2602/`)는 유지하고 표기명만 교체한다.
+  - 1차 단계에서는 링크 경로/slug는 유지하고 표기명만 교체한다.
 - Done Criteria:
   - `README.md`, `sidebar-manifest.md`, `prj-docs/meeting-notes/README.md`에 `AKI AgentOps` 표기가 반영됨
   - 기존 `2602` 표기는 호환 맥락(구 명칭)으로만 남음
@@ -209,18 +209,21 @@
   - `sidebar-manifest.md` repository 표시명 반영
   - `prj-docs/meeting-notes/README.md` 제목/목적 문구 반영
 
-### TSK-2602-014 레포 slug rename 사전 체크리스트(실행 보류)
-- Status: BLOCKED
+### TSK-2602-014 레포 slug rename 실행 및 링크 동기화
+- Status: DONE
 - Owner: User + Codex
-- Due: 2026-03-05
+- Due: 2026-02-17
 - Description:
-  - 레포 slug rename(`2602` -> 신규 slug) 수행 전 체크리스트와 영향 범위를 문서화한다.
-  - 실제 rename 실행은 사용자 GO 신호 이후에만 진행한다.
+  - 사용자 GO 이후 레포 slug를 `2602`에서 `aki-agentops`로 변경한다.
+  - GitHub Pages 경로 및 루트 문서/설정의 레포 URL을 신규 slug로 동기화한다.
 - Done Criteria:
-  - Pages URL/링크/스크립트/remote URL 영향 항목 체크리스트 완성
-  - GO/NO-GO 결정 기준 문서화
+  - `gh repo view` 기준 `nameWithOwner`가 `rag-cargoo/aki-agentops`로 확인됨
+  - Pages URL `https://rag-cargoo.github.io/aki-agentops/` 응답이 정상임
+  - `README.md`, `index.html`, `.github/ISSUE_TEMPLATE/config.yml` 핵심 URL이 신규 slug로 반영됨
 - Evidence:
-  - 체크리스트 문서 링크(추후)
+  - `gh repo view --json name,nameWithOwner,url`
+  - `curl -I https://rag-cargoo.github.io/aki-agentops/`
+  - 문서 반영 PR 링크(추후)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.
