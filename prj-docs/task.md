@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 05:27:42`
+> - **Updated At**: `2026-02-17 06:14:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -12,6 +12,7 @@
 > [!TIP]
 > - Scope
 > - P0: 분리 준비 단계 (Blockers)
+> - P1: 구조 고도화 단계
 > - Governance Rules
 <!-- DOC_TOC_END -->
 
@@ -81,6 +82,73 @@
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh` 패치 완료
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh` 패치 완료
   - `skills/aki-codex-precommit/policies/core-workspace.sh` 패치 완료
+
+## P1: 구조 고도화 단계
+
+### TSK-2602-005 구조 진단 프레임 4축 갭맵 문서화
+- Status: DONE
+- Owner: Codex
+- Due: 2026-02-19
+- Description:
+  - 안건 2 기준 4축(`경계/문서/자동화/실행책임`) 갭맵을 단일 문서로 확정한다.
+- Done Criteria:
+  - `현행 구조/문제 근거/목표 구조/전환 리스크` 4단 표 완성
+  - 루트 내비게이션에서 문서 진입 가능
+- Evidence:
+  - `prj-docs/references/repo-architecture-gap-map.md` 생성
+  - `README.md`, `sidebar-manifest.md`에 링크 반영
+
+### TSK-2602-006 project-map 호환 모드 완료 판정
+- Status: DONE
+- Owner: Codex
+- Due: 2026-02-19
+- Description:
+  - sidecar `docs_root` 기반 active project 로딩/표시를 완료 상태로 고정한다.
+- Done Criteria:
+  - session/project reload 출력에서 `docs_root` 기준 문서 경로가 일관되게 표출됨
+  - 분리 전환 PR이 머지됨
+- Evidence:
+  - PR `#65` merged
+  - `.codex/runtime/codex_session_start.md` Active Project `Docs Root` 출력 확인
+
+### TSK-2602-007 strict-remote 가드레일 복구
+- Status: DONE
+- Owner: Codex
+- Due: 2026-02-19
+- Description:
+  - `--strict-remote` 옵션이 실제 원격 상태 대조를 수행하도록 precommit/prepush 경로를 복구한다.
+- Done Criteria:
+  - 공통 원격 대조 스크립트가 존재하고 strict 체인에 연결됨
+  - pre-push 훅이 삭제된 구 경로를 참조하지 않음
+- Evidence:
+  - `skills/aki-codex-precommit/scripts/check-doc-remote-sync.sh` 추가
+  - `skills/aki-codex-precommit/policies/core-workspace.sh` strict-remote 연결
+  - `.githooks/pre-push` 경로 결함 제거
+
+### TSK-2602-008 문서 External Sync 템플릿 반영
+- Status: DONE
+- Owner: Codex
+- Due: 2026-02-19
+- Description:
+  - 회의록 인덱스 템플릿에 외부 동기화 계약(`External Sync`)을 추가한다.
+- Done Criteria:
+  - 템플릿에 Source of Truth/Sync Action/Last Synced At 필드 포함
+  - 운영 규칙 섹션에 외부 동기화 원칙이 반영됨
+- Evidence:
+  - `prj-docs/meeting-notes/README.md` 업데이트
+
+### TSK-2602-009 sidecar 운영 Runbook 통합
+- Status: DOING
+- Owner: Codex
+- Due: 2026-02-20
+- Description:
+  - 안건 11 항목(시크릿/드리프트/복구/CI 분리/온보딩)을 단일 운영 런북으로 통합한다.
+- Done Criteria:
+  - 단일 문서에 5개 항목 체크리스트 완성
+  - 회의록 안건 11 상태와 동기화
+- Evidence:
+  - `prj-docs/references/sidecar-operations-runbook.md` 초안 생성
+  - `validate-precommit-chain.sh --mode strict --all --strict-remote` 실행 시 legacy 회의록(예: `workspace/agent-skills/codex-runtime-engine/prj-docs/meeting-notes/*`) 원격 상태 불일치 검출
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.

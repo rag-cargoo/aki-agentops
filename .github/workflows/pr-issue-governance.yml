@@ -93,25 +93,19 @@ jobs:
             const pr = context.payload.pull_request;
             const headSha = pr.head.sha;
 
-            const pathTargets = [
-              {
-                task: "workspace/apps/backend/ticket-core-service/prj-docs/task.md",
-                meetingNotesReadme: "workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md",
-                meetingNotesRegex: /^workspace\/apps\/backend\/ticket-core-service\/prj-docs\/meeting-notes\/.+\.md$/,
-              },
-              {
-                task: "prj-docs/projects/ticket-core-service/task.md",
-                meetingNotesReadme: "prj-docs/projects/ticket-core-service/meeting-notes/README.md",
-                meetingNotesRegex: /^prj-docs\/projects\/ticket-core-service\/meeting-notes\/.+\.md$/,
-              },
-            ];
-
             const isTargetDoc = (path) => {
-              for (const target of pathTargets) {
-                if (path === target.task) return true;
-                if (path === target.meetingNotesReadme) return false;
-                if (target.meetingNotesRegex.test(path)) return true;
-              }
+              if (path === "prj-docs/task.md") return true;
+              if (path === "prj-docs/meeting-notes/README.md") return false;
+              if (/^prj-docs\/meeting-notes\/.+\.md$/.test(path)) return true;
+
+              if (/^prj-docs\/projects\/[^/]+\/task\.md$/.test(path)) return true;
+              if (/^prj-docs\/projects\/[^/]+\/meeting-notes\/README\.md$/.test(path)) return false;
+              if (/^prj-docs\/projects\/[^/]+\/meeting-notes\/.+\.md$/.test(path)) return true;
+
+              if (/^.+\/prj-docs\/task\.md$/.test(path)) return true;
+              if (/^.+\/prj-docs\/meeting-notes\/README\.md$/.test(path)) return false;
+              if (/^.+\/prj-docs\/meeting-notes\/.+\.md$/.test(path)) return true;
+
               return false;
             };
 

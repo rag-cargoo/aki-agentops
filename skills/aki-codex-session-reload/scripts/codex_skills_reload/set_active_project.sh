@@ -135,8 +135,22 @@ fi
 project_abs="$repo_root/$input_path"
 docs_root_rel="$(resolve_docs_root_for_project "$input_path")"
 docs_abs="$repo_root/$docs_root_rel"
+has_map_entry="false"
+if [[ -n "${map_docs_root_by_code[$input_path]:-}" ]]; then
+  has_map_entry="true"
+fi
+
+code_root_missing="false"
+if [[ ! -d "$project_abs" ]]; then
+  if [[ "$has_map_entry" == "true" ]]; then
+    code_root_missing="true"
+  else
+    echo "error: project root not found: $input_path" >&2
+    exit 1
+  fi
+fi
+
 required_files=(
-  "$project_abs/README.md"
   "$docs_abs/PROJECT_AGENT.md"
   "$docs_abs/task.md"
   "$docs_abs/meeting-notes/README.md"
@@ -144,11 +158,6 @@ required_files=(
 required_dirs=(
   "$docs_abs/rules"
 )
-
-if [[ ! -d "$project_abs" ]]; then
-  echo "error: project root not found: $input_path" >&2
-  exit 1
-fi
 
 missing=()
 for req_file in "${required_files[@]}"; do
@@ -176,6 +185,11 @@ if [[ "${#missing[@]}" -gt 0 ]]; then
 fi
 
 printf '%s\n' "$input_path" > "$active_file"
-echo "active project set: $input_path (docs: $docs_root_rel)"
+if [[ "$code_root_missing" == "true" ]]; then
+  echo "active project set: $input_path (docs: $docs_root_rel)"
+  echo "warning: code_root directory is missing; docs-only mode enabled for this project"
+else
+  echo "active project set: $input_path (docs: $docs_root_rel)"
+fi
 
 "$script_dir/project_reload.sh"

@@ -3,13 +3,14 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 04:24:00`
-> - **Updated At**: `2026-02-17 05:27:42`
+> - **Updated At**: `2026-02-17 06:14:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
 ## 문서 목차 (Quick Index)
 ---
 > [!TIP]
+> - External Sync
 > - 안건 1: 문제정의 및 범위
 > - 안건 2: 구조 진단 프레임
 > - 안건 3: 진행 원칙
@@ -28,10 +29,18 @@
 > - 안건 16: 이슈 생성 기준
 <!-- DOC_TOC_END -->
 
+## External Sync
+- Source of Truth: `rag-cargoo/2602` issue/PR 기록
+- Linked Issue: https://github.com/rag-cargoo/2602/issues/66
+- Linked PRs:
+  - https://github.com/rag-cargoo/2602/pull/65
+  - https://github.com/rag-cargoo/2602/pull/67
+- Sync Action: issue + pr 상태 연동 완료
+
 ## 안건 1: 문제정의 및 범위
 - Created At: 2026-02-17 04:24:00
-- Updated At: 2026-02-17 04:24:00
-- Status: DOING
+- Updated At: 2026-02-17 06:03:20
+- Status: DONE
 - 결정사항:
   - 본 회의록은 `workspace` 하위 프로젝트가 아니라 `2602` 루트 저장소 자체 이슈를 다룬다.
   - 하위 프로젝트 구현 상세 회의록은 기존 프로젝트별 `prj-docs/meeting-notes`에 유지한다.
@@ -39,13 +48,13 @@
 - 후속작업:
   - 담당: User + Codex
   - 기한: 2026-02-18
-  - 상태: DOING
-  - 메모: 사용자 관점 문제 제기 항목(무엇이 잘못되었는지)을 수집해 우선순위를 확정한다.
+  - 상태: DONE
+  - 메모: 문제정의가 루트 저장소 구조/운영 경계로 고정되었고, 후속 안건을 P1 태스크로 분해해 추적 시작.
 
 ## 안건 2: 구조 진단 프레임
 - Created At: 2026-02-17 04:24:00
-- Updated At: 2026-02-17 04:24:00
-- Status: TODO
+- Updated At: 2026-02-17 06:03:20
+- Status: DONE
 - 결정사항:
   - 진단 축을 `경계(Repository vs Project)`, `문서/내비게이션`, `운영 자동화`, `실행 책임` 4개로 고정한다.
   - 결과물은 `현행 구조`, `문제 근거`, `목표 구조`, `전환 리스크` 4단 표로 정리한다.
@@ -53,8 +62,8 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-18
-  - 상태: TODO
-  - 메모: 다음 회의록 업데이트 시점에 갭 맵 초안을 첨부한다.
+  - 상태: DONE
+  - 메모: `prj-docs/references/repo-architecture-gap-map.md`에 4축 갭맵 초안 반영 완료.
 
 ## 안건 3: 진행 원칙
 - Created At: 2026-02-17 04:24:00
@@ -102,7 +111,7 @@
 
 ## 안건 6: 분리 운영 원칙 합의
 - Created At: 2026-02-17 04:32:18
-- Updated At: 2026-02-17 04:32:18
+- Updated At: 2026-02-17 06:03:20
 - Status: DOING
 - 결정사항:
   - 제품 작업 시 Git/CLI 대상 레포를 명시(`git -C <project-root>`, `gh -R <owner>/<repo>`)한다.
@@ -112,12 +121,12 @@
   - 담당: User + Codex
   - 기한: 2026-02-18
   - 상태: DOING
-  - 메모: 다음 회의에서 `ticket-core-service` 분리 이행 절차(추적 해제/문서 링크 교체/운영 체크리스트) 확정.
+  - 메모: 분리 이행(PR #65) 및 sidecar 운영 체크리스트는 완료. `git -C`/`gh -R` 강제 래퍼 도입 여부를 후속 결정.
 
 ## 안건 7: Sidecar prj-docs 분리 전략
 - Created At: 2026-02-17 04:41:43
-- Updated At: 2026-02-17 04:41:43
-- Status: DOING
+- Updated At: 2026-02-17 06:03:20
+- Status: DONE
 - 결정사항:
   - 회사/외부 레포는 원칙적으로 `prj-docs`를 직접 주입하지 않는다.
   - 프로젝트 운영 문서는 `2602/prj-docs/projects/<project-id>/`에 sidecar 형태로 관리한다.
@@ -125,13 +134,13 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-18
-  - 상태: DOING
-  - 메모: `project-id`, `code_root`, `docs_root`, `repo_remote`를 묶은 매핑 스키마 초안 작성.
+  - 상태: DONE
+  - 메모: `project-map.yaml` + `prj-docs/projects/ticket-core-service/*` sidecar 구조 적용 완료.
 
 ## 안건 8: Project Map 및 호환 모드
 - Created At: 2026-02-17 04:41:43
-- Updated At: 2026-02-17 04:41:43
-- Status: TODO
+- Updated At: 2026-02-17 06:03:20
+- Status: DONE
 - 결정사항:
   - `project-map` 기반으로 Active Project를 해석하고, `docs_root`를 분리 경로로 지정한다.
   - 1차 전환은 레거시 `<project-root>/prj-docs` fallback을 유지하는 호환 모드로 진행한다.
@@ -139,13 +148,13 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-19
-  - 상태: TODO
-  - 메모: 영향 파일(약 37개) 중 실행 로직 우선순위 목록부터 패치한다.
+  - 상태: DONE
+  - 메모: `project_reload.sh`/`set_active_project.sh`/`session_start.sh`가 `docs_root` 인식하도록 패치 완료.
 
 ## 안건 9: 오작동 방지 가드레일
 - Created At: 2026-02-17 04:41:43
-- Updated At: 2026-02-17 04:41:43
-- Status: TODO
+- Updated At: 2026-02-17 06:03:20
+- Status: DOING
 - 결정사항:
   - GitHub 작업 커맨드는 대상 레포 명시를 기본(`git -C`, `gh -R`)으로 강제한다.
   - `2602`에서 제품 코드 변경이 발생하면 경고 또는 차단하는 pre-commit/pre-push 규칙을 도입한다.
@@ -153,13 +162,13 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-19
-  - 상태: TODO
-  - 메모: 실수 방지용 `safe-git` 래퍼와 훅 정책안을 분리 제안한다.
+  - 상태: DOING
+  - 메모: `strict-remote` 공통 스크립트 + pre-push 결함 제거 완료. `safe-git` 래퍼는 후속 안건으로 유지.
 
 ## 안건 10: 문서 동기화 운영 규칙
 - Created At: 2026-02-17 04:41:43
-- Updated At: 2026-02-17 04:41:43
-- Status: TODO
+- Updated At: 2026-02-17 06:03:20
+- Status: DONE
 - 결정사항:
   - sidecar 회의록은 제품 레포 이슈/PR 링크를 반드시 포함한다.
   - 제품팀 공유가 필요한 합의는 sidecar 단독 보관 금지, 대상 레포에 요약본을 남긴다.
@@ -167,13 +176,13 @@
 - 후속작업:
   - 담당: User + Codex
   - 기한: 2026-02-19
-  - 상태: TODO
-  - 메모: 회의록 템플릿에 `External Sync` 섹션 추가 여부를 다음 회의에서 확정.
+  - 상태: DONE
+  - 메모: `prj-docs/meeting-notes/README.md` 템플릿에 `External Sync` 섹션 반영 완료.
 
 ## 안건 11: 추가 개선 포인트(누락 방지)
 - Created At: 2026-02-17 04:42:28
-- Updated At: 2026-02-17 04:42:28
-- Status: TODO
+- Updated At: 2026-02-17 06:03:20
+- Status: DOING
 - 결정사항:
   - 시크릿/인증 정보는 sidecar 문서에도 원문 저장 금지, 참조 키/링크만 허용한다.
   - sidecar 문서와 대상 레포 상태 간 drift를 점검하는 자동 검증(주기 배치 또는 pre-push)을 도입한다.
@@ -183,8 +192,8 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-19
-  - 상태: TODO
-  - 메모: 위 5개 항목을 실행 가능한 체크리스트로 분해해 이슈 템플릿에 반영한다.
+  - 상태: DOING
+  - 메모: `prj-docs/references/sidecar-operations-runbook.md`에 5개 항목 통합. `strict --all --strict-remote`에서 legacy 회의록 불일치가 검출되어 정리 작업이 후속으로 남음.
 
 ## 안건 12: 스킬/MCP 동작 검증 및 재클론 운영
 - Created At: 2026-02-17 04:45:22
@@ -223,8 +232,8 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-19
-  - 상태: DOING
-  - 메모: 회의록 인덱스 템플릿에 `Mandatory Runtime Gate` 섹션을 추가해 신규 문서부터 강제 적용한다.
+  - 상태: DONE
+  - 메모: 회의록 인덱스 템플릿에 `Mandatory Runtime Gate` 섹션 반영 완료.
 
 ## 안건 14: 준비단계 완료 정의
 - Created At: 2026-02-17 05:07:46
