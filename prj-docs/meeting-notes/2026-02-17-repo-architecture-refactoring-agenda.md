@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 04:24:00`
-> - **Updated At**: `2026-02-17 05:13:18`
+> - **Updated At**: `2026-02-17 05:27:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -188,8 +188,8 @@
 
 ## 안건 12: 스킬/MCP 동작 검증 및 재클론 운영
 - Created At: 2026-02-17 04:45:22
-- Updated At: 2026-02-17 04:47:33
-- Status: DOING
+- Updated At: 2026-02-17 05:27:42
+- Status: DONE
 - 결정사항:
   - 현재 구조 기준 스모크 검증 결과:
     - `session_start.sh` 정상 동작 (`skills: 9`, `project: workspace/apps/backend/ticket-core-service`)
@@ -201,9 +201,9 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-19
-  - 상태: DOING
+  - 상태: DONE
   - 메모:
-    - 필수 패치 대상: `project_reload.sh`, `set_active_project.sh`, `session_start.sh`, `core-workspace.sh`
+    - 필수 패치 대상(`project_reload.sh`, `set_active_project.sh`, `session_start.sh`, `core-workspace.sh`) 반영 완료
     - 재클론 운영 기준: `project-id` 고정 + `code_root` 갱신 + `repo_remote` 검증 + 이전 회의록/태스크 재연결
 
 ## 안건 13: 매 안건 필수 게이트 제도화

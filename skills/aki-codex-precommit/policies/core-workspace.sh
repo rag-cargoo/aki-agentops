@@ -110,6 +110,14 @@ policy_validate() {
       requires_reload="true"
       break
     fi
+    if [[ "$file_path" =~ ^prj-docs/projects/.+/PROJECT_AGENT\.md$ ]]; then
+      requires_reload="true"
+      break
+    fi
+    if [[ "$file_path" == "prj-docs/projects/project-map.yaml" ]]; then
+      requires_reload="true"
+      break
+    fi
   done <<< "$staged_files"
 
   if [[ "$requires_reload" == "true" ]]; then

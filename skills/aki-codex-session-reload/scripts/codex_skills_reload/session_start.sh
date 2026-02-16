@@ -43,12 +43,14 @@ for abs_path in "${loaded_skills[@]}"; do
 done
 
 active_project=""
+active_docs_root=""
 active_readme=""
 active_task=""
 active_agent=""
 active_meeting_notes=""
 if [[ -f "$project_snapshot" ]]; then
   active_project="$(grep -E '^- Project Root:' "$project_snapshot" | sed -E 's/^- Project Root: `([^`]+)`/\1/' || true)"
+  active_docs_root="$(grep -E '^- Docs Root:' "$project_snapshot" | sed -E 's/^- Docs Root: `([^`]+)`/\1/' || true)"
   active_readme="$(grep -E '^- Project README:' "$project_snapshot" | sed -E 's/^- Project README: `([^`]+)`/\1/' || true)"
   active_task="$(grep -E '^- Task Doc:' "$project_snapshot" | sed -E 's/^- Task Doc: `([^`]+)`/\1/' || true)"
   active_agent="$(grep -E '^- Project Agent:' "$project_snapshot" | sed -E 's/^- Project Agent: `([^`]+)`/\1/' || true)"
@@ -338,6 +340,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "## Active Project"
   if [[ -n "$active_project" && "$active_project" != "(not selected)" ]]; then
     echo "- Project Root: \`$active_project\`"
+    [[ -n "$active_docs_root" ]] && echo "- Docs Root: \`$active_docs_root\`"
     [[ -n "$active_readme" ]] && echo "- Project README: \`$active_readme\`"
     [[ -n "$active_task" ]] && echo "- Task Doc: \`$active_task\`"
     [[ -n "$active_agent" ]] && echo "- Project Agent: \`$active_agent\`"
@@ -384,7 +387,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo
   echo "## How It Works"
   echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\`에서 로드"
-  echo "2. 프로젝트 컨텍스트는 Active Project의 \`README.md\` + \`prj-docs/PROJECT_AGENT.md\` + \`prj-docs/meeting-notes/README.md\`에서 로드"
+  echo "2. 프로젝트 컨텍스트는 Active Project의 \`README.md\` + Project Snapshot의 \`Task/Project Agent/Meeting Notes\` 경로(Docs Root 기준)에서 로드"
   echo "3. 멀티 프로젝트에서는 Active Project를 명시적으로 전환해서 충돌 방지"
   echo
   echo "## Multi Project Guide"

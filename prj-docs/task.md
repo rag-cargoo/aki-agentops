@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 05:12:43`
+> - **Updated At**: `2026-02-17 05:27:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -64,6 +64,23 @@
   - `prj-docs/projects/ticket-core-service/README.md` 생성
   - `prj-docs/projects/ticket-core-service/task.md` 생성
   - `prj-docs/projects/ticket-core-service/meeting-notes/README.md` 생성
+
+### TSK-2602-004 session-reload/precommit sidecar 호환 패치
+- Status: DONE
+- Owner: Codex
+- Due: 2026-02-19
+- Description:
+  - session-reload 스크립트가 `project-map`의 `docs_root`를 인식하도록 확장한다.
+  - precommit strict reload 트리거에 sidecar 경로(`prj-docs/projects/**`)를 추가한다.
+- Done Criteria:
+  - `set_active_project.sh --list` 결과에 map 기반 docs 경로가 노출됨
+  - `project_reload.sh` 출력에서 Active Project `Docs Root`가 sidecar 경로로 표시됨
+  - `session_start.sh` 출력에서 `Task/Project Agent/Meeting Notes`가 sidecar 경로로 출력됨
+- Evidence:
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/project_reload.sh` 패치 완료
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh` 패치 완료
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh` 패치 완료
+  - `skills/aki-codex-precommit/policies/core-workspace.sh` 패치 완료
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.

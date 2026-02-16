@@ -8,6 +8,64 @@ if [[ -z "$repo_root" ]]; then
 fi
 workspace_dir="$repo_root/workspace"
 active_file="$workspace_dir/.active_project"
+project_map_file="$repo_root/prj-docs/projects/project-map.yaml"
+
+strip_quotes() {
+  local value="$1"
+  value="${value%\"}"
+  value="${value#\"}"
+  value="${value%\'}"
+  value="${value#\'}"
+  printf '%s' "$value"
+}
+
+declare -A map_docs_root_by_code=()
+load_project_map() {
+  [[ -f "$project_map_file" ]] || return 0
+
+  local current_code=""
+  local current_docs=""
+  local raw_line=""
+  local line=""
+  local parsed=""
+  while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
+    line="${raw_line#"${raw_line%%[![:space:]]*}"}"
+    case "$line" in
+      -\ project_id:*)
+        if [[ -n "$current_code" ]]; then
+          map_docs_root_by_code["$current_code"]="${current_docs:-$current_code/prj-docs}"
+        fi
+        current_code=""
+        current_docs=""
+        ;;
+      code_root:*)
+        parsed="${line#code_root:}"
+        parsed="$(strip_quotes "$parsed")"
+        current_code="$(echo "$parsed" | xargs)"
+        ;;
+      docs_root:*)
+        parsed="${line#docs_root:}"
+        parsed="$(strip_quotes "$parsed")"
+        current_docs="$(echo "$parsed" | xargs)"
+        ;;
+    esac
+  done < "$project_map_file"
+
+  if [[ -n "$current_code" ]]; then
+    map_docs_root_by_code["$current_code"]="${current_docs:-$current_code/prj-docs}"
+  fi
+}
+
+resolve_docs_root_for_project() {
+  local project_rel="$1"
+  if [[ -n "${map_docs_root_by_code[$project_rel]:-}" ]]; then
+    printf '%s\n' "${map_docs_root_by_code[$project_rel]}"
+  else
+    printf '%s\n' "$project_rel/prj-docs"
+  fi
+}
+
+load_project_map
 
 usage() {
   cat <<'EOF'
@@ -22,15 +80,36 @@ EOF
 }
 
 list_projects() {
+  declare -A project_roots=()
+  local task_file=""
+  local task_rel=""
+  local project_root=""
+  local code_root=""
+  local docs_root_rel=""
+
   mapfile -t task_files < <(find "$workspace_dir" -type f -path "*/prj-docs/task.md" 2>/dev/null | sort || true)
-  if [[ "${#task_files[@]}" -eq 0 ]]; then
+  for task_file in "${task_files[@]}"; do
+    task_rel="${task_file#$repo_root/}"
+    project_root="$(dirname "$(dirname "$task_rel")")"
+    project_roots["$project_root"]="1"
+  done
+
+  for code_root in "${!map_docs_root_by_code[@]}"; do
+    docs_root_rel="$(resolve_docs_root_for_project "$code_root")"
+    if [[ -f "$repo_root/$docs_root_rel/task.md" ]]; then
+      project_roots["$code_root"]="1"
+    fi
+  done
+
+  if [[ "${#project_roots[@]}" -eq 0 ]]; then
     echo "no projects found under workspace"
     return 0
   fi
   echo "detected projects:"
-  for task_file in "${task_files[@]}"; do
-    project_root="$(dirname "$(dirname "$task_file")")"
-    echo "- ${project_root#$repo_root/}"
+  mapfile -t sorted_roots < <(printf '%s\n' "${!project_roots[@]}" | sort)
+  for project_root in "${sorted_roots[@]}"; do
+    docs_root_rel="$(resolve_docs_root_for_project "$project_root")"
+    echo "- $project_root (docs: $docs_root_rel)"
   done
 }
 
@@ -54,14 +133,16 @@ if [[ "$input_path" == "$repo_root"* ]]; then
 fi
 
 project_abs="$repo_root/$input_path"
+docs_root_rel="$(resolve_docs_root_for_project "$input_path")"
+docs_abs="$repo_root/$docs_root_rel"
 required_files=(
   "$project_abs/README.md"
-  "$project_abs/prj-docs/PROJECT_AGENT.md"
-  "$project_abs/prj-docs/task.md"
-  "$project_abs/prj-docs/meeting-notes/README.md"
+  "$docs_abs/PROJECT_AGENT.md"
+  "$docs_abs/task.md"
+  "$docs_abs/meeting-notes/README.md"
 )
 required_dirs=(
-  "$project_abs/prj-docs/rules"
+  "$docs_abs/rules"
 )
 
 if [[ ! -d "$project_abs" ]]; then
@@ -86,11 +167,15 @@ if [[ "${#missing[@]}" -gt 0 ]]; then
   for item in "${missing[@]}"; do
     echo "  - $item" >&2
   done
-  echo "hint: run ./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh $input_path" >&2
+  if [[ "$docs_root_rel" == "$input_path/prj-docs" ]]; then
+    echo "hint: run ./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh $input_path" >&2
+  else
+    echo "hint: create baseline docs under $docs_root_rel (PROJECT_AGENT.md, task.md, meeting-notes/README.md, rules/)" >&2
+  fi
   exit 1
 fi
 
 printf '%s\n' "$input_path" > "$active_file"
-echo "active project set: $input_path"
+echo "active project set: $input_path (docs: $docs_root_rel)"
 
 "$script_dir/project_reload.sh"

@@ -22,6 +22,8 @@
 ## Sidecar Docs
 - [Task Dashboard](./task.md)
 - [Meeting Notes Index](./meeting-notes/README.md)
+- [Project Agent](./PROJECT_AGENT.md)
+- [Architecture Rule](./rules/architecture.md)
 
 ## Operation Rule
 - 제품 코드/테스트 변경은 `ticket-core-service` 레포에서만 커밋/PR 처리한다.
