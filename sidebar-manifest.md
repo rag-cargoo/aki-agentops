@@ -4,40 +4,24 @@
 
 ---
 
+* **REPOSITORY (2602)**
+  * [Task Dashboard](/prj-docs/task.md)
+  * [Project Sidecar Index](/prj-docs/projects/README.md)
+  * **Meeting Notes**
+    * [Index](/prj-docs/meeting-notes/README.md)
+    * [2026-02-17 Repository Architecture Refactoring Agenda](/prj-docs/meeting-notes/2026-02-17-repo-architecture-refactoring-agenda.md)
+
+---
+
 * **WORKSPACE**
   * **Apps**
     * **Backend**
       * **Ticket Core Service**
-        * [Project README](/workspace/apps/backend/ticket-core-service/README.md)
-        * [Project Agent (Rules)](/workspace/apps/backend/ticket-core-service/prj-docs/PROJECT_AGENT.md)
-        * [Current Tasks](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
-        * [Architecture](/workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)
-        * **API Specification**
-          * [Social Auth API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/social-auth-api.md)
-          * [User API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/user-api.md)
-          * [Concert API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/concert-api.md)
-          * [Reservation API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/reservation-api.md)
-          * [Waiting Queue API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/waiting-queue-api.md)
-        * **API Test**
-          * [API Script Guide](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/README.md)
-          * [Latest API Script Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/latest.md)
-          * [Step11 Sales Policy Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step11-sales-policy-latest.md)
-          * [Step12 Abuse Audit Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/step12-abuse-audit-latest.md)
-          * [Social Auth Contract Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/auth-track-a1-social-auth-latest.md)
-          * [UX Track U1 Integration Report](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/ux-track-u1-integration-latest.md)
-        * **Engineering Knowledge**
-          * [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
-          * [소셜 로그인 OAuth 연동 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/social-login-oauth-연동-전략.md)
-          * [UX Track U1 Frontend MVP Playbook](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/ux-track-u1-frontend-mvp-playbook.md)
-          * [MSA Data Strategy](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/msa-data-strategy.md)
-        * **Meeting Notes**
-          * [Index](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/README.md)
-          * [2026-02-17 U1 Integration Scenario Validation](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-17-u1-integration-scenario-validation.md)
-          * [2026-02-17 Artist Agency Domain Expansion Kickoff](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-17-artist-agency-domain-expansion-kickoff.md)
-          * [2026-02-17 Concert Search Cache Batch2](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-17-concert-search-cache-batch2.md)
-          * [2026-02-16 Service Boundary Port Phase2 Kickoff](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-16-service-boundary-port-phase2-kickoff.md)
-          * [2026-02-16 Service Interface Split Rollout](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-16-service-interface-split-rollout.md)
-          * [2026-02-11 Develop-Main Release Readiness](/workspace/apps/backend/ticket-core-service/prj-docs/meeting-notes/2026-02-11-develop-main-release-readiness.md)
+        * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-core-service)
+        * [Sidecar Docs (2602)](/prj-docs/projects/ticket-core-service/README.md)
+        * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
+        * [Sidecar Meeting Notes](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+        * [Main Test URL (U1, Local)](http://localhost:8080/ux/u1/index.html)
   * **Agent Skills**
     * **Codex Runtime Engine**
       * [Project README](/workspace/agent-skills/codex-runtime-engine/README.md)

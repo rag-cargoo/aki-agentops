@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-16 00:58:00`
+> - **Updated At**: `2026-02-17 05:14:18`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -33,7 +33,7 @@ U1 테스트 URL은 로컬 백엔드 실행 상태에서 확인할 수 있습니
 ---
 
 이 README는 루트 저장소 관점에서 **전체 워크스페이스 구조**를 안내합니다.
-현재 구현이 진행된 서비스는 `workspace/apps/backend/ticket-core-service`이며, `skills/`와 `mcp/`는 운영/자동화 문서 영역으로 분리되어 있습니다.
+실제 제품 코드는 각 독립 레포에서 관리하며, `skills/`와 `mcp/`는 운영/자동화 문서 영역으로 분리되어 있습니다.
 
 ---
 
@@ -42,6 +42,7 @@ U1 테스트 URL은 로컬 백엔드 실행 상태에서 확인할 수 있습니
 - `skills/`: 전역 규칙, 자동화, 운영 가이드
 - `workspace/`: 실제 제품/서비스 프로젝트 구현 영역
 - `mcp/`: MCP 런타임 운영 문서 및 매니페스트
+- `prj-docs/`: 2602 루트 레벨 회의록/거버넌스 문서
 
 ---
 
@@ -53,7 +54,8 @@ U1 테스트 URL은 로컬 백엔드 실행 상태에서 확인할 수 있습니
 ### 1. Apps
 - Backend
   - Ticket Core Service (`진행중`)
-    - 프로젝트 README: [Ticket Core Service README](/workspace/apps/backend/ticket-core-service/README.md)
+    - 프로젝트 저장소: [rag-cargoo/ticket-core-service](https://github.com/rag-cargoo/ticket-core-service)
+    - Sidecar Docs (2602): [Ticket Core Service Sidecar Docs](/prj-docs/projects/ticket-core-service/README.md)
     - UI/UX 테스트 페이지 (U1, Local): [http://localhost:8080/ux/u1/index.html](http://localhost:8080/ux/u1/index.html)
 
 ### 2. Agent Skills
@@ -102,9 +104,10 @@ workspace/
 ## 프로젝트 진입 링크
 
 > [!TIP]
-> 각 프로젝트의 소개/실행 방법은 프로젝트 루트 README에서 관리합니다.
+> 각 프로젝트의 소개/실행 방법은 제품 레포 또는 sidecar 문서에서 관리합니다.
 
-- [Ticket Core Service README](/workspace/apps/backend/ticket-core-service/README.md)
+- [Ticket Core Service Repository](https://github.com/rag-cargoo/ticket-core-service)
+- [Ticket Core Service Sidecar Docs](/prj-docs/projects/ticket-core-service/README.md)
 
 ---
 
@@ -123,10 +126,16 @@ workspace/
 - [MCP TODO](/mcp/TODO.md)
 - [MCP Experience Log](/mcp/references/experience-log.md)
 
+### 2602 Repository
+- [2602 Meeting Notes Index](/prj-docs/meeting-notes/README.md)
+- [2602 Task Dashboard](/prj-docs/task.md)
+- [Project Sidecar Index](/prj-docs/projects/README.md)
+
 ---
 
 ## 유지 원칙 (README Scope)
 
 - 루트 `README.md`는 저장소 전체 분류/진입점만 다룹니다.
-- 프로젝트 상세 구현/실험 내역은 각 프로젝트의 `prj-docs/`에서 관리합니다.
+- 프로젝트 상세 구현/실험 내역은 각 제품 레포 또는 sidecar `prj-docs/projects/<project-id>/`에서 관리합니다.
+- 루트 `prj-docs/`는 2602 공통 구조/거버넌스 논의와 회의록만 관리합니다.
 - 신규 프로젝트가 생기면 `Apps|Agent Skills|Infra` 분류 아래에 상태(`진행중/예정`)와 대표 문서 링크를 등록합니다.
