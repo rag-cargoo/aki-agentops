@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 04:24:00`
-> - **Updated At**: `2026-02-17 06:14:42`
+> - **Updated At**: `2026-02-17 06:22:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -111,8 +111,8 @@
 
 ## 안건 6: 분리 운영 원칙 합의
 - Created At: 2026-02-17 04:32:18
-- Updated At: 2026-02-17 06:03:20
-- Status: DOING
+- Updated At: 2026-02-17 06:22:42
+- Status: DONE
 - 결정사항:
   - 제품 작업 시 Git/CLI 대상 레포를 명시(`git -C <project-root>`, `gh -R <owner>/<repo>`)한다.
   - `2602`는 프로젝트 코드를 직접 변경/배포하는 레포가 아니라 운영 기준과 링크 허브에 집중한다.
@@ -120,8 +120,8 @@
 - 후속작업:
   - 담당: User + Codex
   - 기한: 2026-02-18
-  - 상태: DOING
-  - 메모: 분리 이행(PR #65) 및 sidecar 운영 체크리스트는 완료. `git -C`/`gh -R` 강제 래퍼 도입 여부를 후속 결정.
+  - 상태: DONE
+  - 메모: 분리 이행(PR #65) + repo-target wrapper(`safe-git.sh`, `safe-gh.sh`) 적용으로 운영 기준 확정.
 
 ## 안건 7: Sidecar prj-docs 분리 전략
 - Created At: 2026-02-17 04:41:43
@@ -153,8 +153,8 @@
 
 ## 안건 9: 오작동 방지 가드레일
 - Created At: 2026-02-17 04:41:43
-- Updated At: 2026-02-17 06:03:20
-- Status: DOING
+- Updated At: 2026-02-17 06:22:42
+- Status: DONE
 - 결정사항:
   - GitHub 작업 커맨드는 대상 레포 명시를 기본(`git -C`, `gh -R`)으로 강제한다.
   - `2602`에서 제품 코드 변경이 발생하면 경고 또는 차단하는 pre-commit/pre-push 규칙을 도입한다.
@@ -162,8 +162,8 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-19
-  - 상태: DOING
-  - 메모: `strict-remote` 공통 스크립트 + pre-push 결함 제거 완료. `safe-git` 래퍼는 후속 안건으로 유지.
+  - 상태: DONE
+  - 메모: `strict-remote` 공통 스크립트, pre-push 결함 제거, `safe-git`/`safe-gh` 래퍼 적용 완료.
 
 ## 안건 10: 문서 동기화 운영 규칙
 - Created At: 2026-02-17 04:41:43
@@ -181,8 +181,8 @@
 
 ## 안건 11: 추가 개선 포인트(누락 방지)
 - Created At: 2026-02-17 04:42:28
-- Updated At: 2026-02-17 06:03:20
-- Status: DOING
+- Updated At: 2026-02-17 06:22:42
+- Status: DONE
 - 결정사항:
   - 시크릿/인증 정보는 sidecar 문서에도 원문 저장 금지, 참조 키/링크만 허용한다.
   - sidecar 문서와 대상 레포 상태 간 drift를 점검하는 자동 검증(주기 배치 또는 pre-push)을 도입한다.
@@ -192,8 +192,8 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-19
-  - 상태: DOING
-  - 메모: `prj-docs/references/sidecar-operations-runbook.md`에 5개 항목 통합. `strict --all --strict-remote`에서 legacy 회의록 불일치가 검출되어 정리 작업이 후속으로 남음.
+  - 상태: DONE
+  - 메모: runbook 5개 항목 통합 + legacy 회의록 상태 드리프트 정리 후 `strict --all --strict-remote` 실패 항목 제거.
 
 ## 안건 12: 스킬/MCP 동작 검증 및 재클론 운영
 - Created At: 2026-02-17 04:45:22

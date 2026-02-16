@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:03:20`
-> - **Updated At**: `2026-02-17 06:03:20`
+> - **Updated At**: `2026-02-17 06:22:42`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -11,6 +11,7 @@
 ---
 > [!TIP]
 > - Purpose
+> - Repo Target Guard
 > - Security Rules
 > - Drift Check
 > - Rollback Standard
@@ -21,6 +22,19 @@
 ## Purpose
 - sidecar 문서 운영 시 누락되기 쉬운 공통 규칙을 단일 체크리스트로 고정한다.
 - 대상: `prj-docs/projects/*` 문서를 쓰는 운영자/에이전트.
+
+## Repo Target Guard
+1. Git 명령은 대상 레포를 반드시 명시한다.
+```bash
+./skills/aki-codex-core/scripts/safe-git.sh --repo /home/aki/2602 status --short
+./skills/aki-codex-core/scripts/safe-git.sh --repo workspace/apps/backend/ticket-core-service branch --show-current
+```
+2. GitHub CLI 명령은 대상 `owner/repo`를 반드시 명시한다.
+```bash
+./skills/aki-codex-core/scripts/safe-gh.sh --repo rag-cargoo/2602 issue list --state open
+./skills/aki-codex-core/scripts/safe-gh.sh --repo rag-cargoo/ticket-core-service pr list
+```
+3. 명시 없는 `git`, `gh` 직접 실행은 금지하지 않지만 운영 표준에서는 wrapper를 우선한다.
 
 ## Security Rules
 1. sidecar 문서에 Access Token, Client Secret, Callback code 원문 저장 금지.

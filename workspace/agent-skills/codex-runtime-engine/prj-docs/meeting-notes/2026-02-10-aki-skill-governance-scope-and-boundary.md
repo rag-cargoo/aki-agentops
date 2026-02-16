@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 03:40:47`
-> - **Updated At**: `2026-02-10 07:33:55`
+> - **Updated At**: `2026-02-17 06:18:00`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -138,14 +138,14 @@
 ## 안건 8: `develop -> main` 병합 전 Pages 최종 릴리즈 체크
 - Created At: 2026-02-10 04:28:10
 - Updated At: 2026-02-10 04:28:10
-- Status: TODO
+- Status: DONE
 - 결정사항:
   - 메인 병합 직전 Pages source branch를 `main`으로 복귀하고 배포 상태를 재확인한다.
   - 결과를 `task.md`와 이슈에 동기화한 뒤 최종 머지 Go/No-Go를 판정한다.
 - 후속작업:
   - 담당: Aki + Agent
   - 기한: 2026-02-10
-  - 상태: TODO
+  - 상태: DONE
   - 이슈: https://github.com/rag-cargoo/2602/issues/28
 
 ## 안건 9: precommit 정책 스크립트 안전옵션 정합화
