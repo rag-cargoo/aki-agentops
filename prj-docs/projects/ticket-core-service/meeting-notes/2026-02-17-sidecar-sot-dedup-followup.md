@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 21:07:43`
-> - **Updated At**: `2026-02-17 22:38:23`
+> - **Updated At**: `2026-02-17 22:45:08`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -19,6 +19,7 @@
 > - 안건 3: 마무리 작업 범위
 > - 안건 4: Doc State Sync 오탐 보정
 > - 안건 5: 제품 레포 정리 PR 완료
+> - 안건 6: Pages Docs 라벨/정책 정합화
 <!-- DOC_TOC_END -->
 
 ## Mandatory Runtime Gate
@@ -87,9 +88,18 @@
 
 ## 안건 5: 제품 레포 정리 PR 완료
 - Created At: 2026-02-17 22:22:30
-- Updated At: 2026-02-17 22:38:23
+- Updated At: 2026-02-17 22:45:08
 - Status: DONE
 - 결정사항:
   - 제품 레포 PR `#2`를 통해 `prj-docs` 제거 및 sidecar SoT 단일화를 완료했다.
   - `ticket-core-service#1`은 `CLOSED` 상태로 종료됐다.
   - 검증 결과는 `scripts/check-doc-remote-sync.sh --scope all` pass(skip), `./gradlew compileJava` pass, `./gradlew test`는 Redis 미기동으로 fail(환경 이슈)로 기록한다.
+
+## 안건 6: Pages Docs 라벨/정책 정합화
+- Created At: 2026-02-17 22:45:08
+- Updated At: 2026-02-17 22:45:08
+- Status: DONE
+- 결정사항:
+  - `Pages Mirror` 표기를 `Pages Docs`로 정렬해 현재 SoT 구조와 용어를 일치시켰다.
+  - `product-docs` 문서 상단 정책을 `Publication Policy`로 전환하고 sidecar SoT 경로를 명시했다.
+  - 삭제된 upstream 경로(`ticket-core-service/prj-docs/**`) 참조를 제거/교체했다.

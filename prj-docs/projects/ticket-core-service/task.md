@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 22:38:23`
+> - **Updated At**: `2026-02-17 22:45:08`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -46,3 +46,13 @@
     - 동기화 코멘트(ticket-core-service): `rag-cargoo/ticket-core-service#1 comment 3914422354`
     - 동기화 코멘트(ticket-core-service 최신): `rag-cargoo/ticket-core-service#1 comment 3914680685`
     - 비고: `doc-state-sync`가 동일 저장소 기준으로 URL 이슈 번호를 해석하므로, cross-repo 이슈는 shorthand 표기로 유지
+
+- TCS-SC-003 Pages 문서 라벨/Source 안내 정합화
+  - Status: DONE
+  - Description:
+    - `product-docs`가 더 이상 mirror가 아님에 따라 제목/정책/링크 라벨을 `Pages Docs` 기준으로 정렬
+    - 삭제된 upstream(`ticket-core-service/prj-docs/**`) 참조를 sidecar SoT 기준으로 교체
+  - Evidence:
+    - sidecar docs 갱신 PR: `https://github.com/rag-cargoo/aki-agentops/pull/92` (merged)
+    - `github-pages/sidebar-manifest.md`의 Ticket Core Service 라벨을 `(Pages Docs)`로 정렬
+    - `prj-docs/projects/ticket-core-service/product-docs/**` 상단 정책을 `Publication Policy`로 정렬
