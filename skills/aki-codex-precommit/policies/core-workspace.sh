@@ -10,7 +10,9 @@ POLICY_ROOTS=(
   "index.html"
   ".githooks"
   "skills"
+  "prj-docs"
   "sidebar-manifest.md"
+  "sidebar-agent-manifest.md"
   "mcp"
   ".github"
 )
@@ -49,6 +51,25 @@ policy_validate() {
   if [[ "$has_managed_md_changes" == "true" ]]; then
     echo "[chain-check][${POLICY_ID}] running docsify validation"
     python3 skills/aki-github-pages-expert/scripts/docsify_validator.py "${managed_docs[@]}"
+  fi
+
+  local requires_target_surface_check="false"
+  while IFS= read -r file_path; do
+    [[ -z "$file_path" ]] && continue
+    if [[ "$file_path" == *.md || "$file_path" == "index.html" || "$file_path" == "sidebar-manifest.md" || "$file_path" == "sidebar-agent-manifest.md" ]]; then
+      requires_target_surface_check="true"
+      break
+    fi
+  done <<< "$staged_files"
+
+  if [[ "$requires_target_surface_check" == "true" ]]; then
+    local target_surface_script="skills/aki-codex-precommit/scripts/check-target-surface-governance.sh"
+    if [[ ! -x "$target_surface_script" ]]; then
+      echo "[chain-check][${POLICY_ID}] missing executable ${target_surface_script}" >&2
+      return 1
+    fi
+    echo "[chain-check][${POLICY_ID}] checking target/surface governance"
+    bash "$target_surface_script" --scope "${CHAIN_VALIDATION_SCOPE:-staged}"
   fi
 
   local has_workflow_ref_changes="false"

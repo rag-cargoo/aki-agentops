@@ -3,7 +3,9 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 11:22:41`
+> - **Updated At**: `2026-02-17 11:36:24`
+> - **Target**: `BOTH`
+> - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -295,9 +297,9 @@
   - 연계 PR 링크(추후)
 
 ### TSK-2602-019 Target/Surface 메타/노출 lint 게이트 도입
-- Status: TODO
+- Status: DONE
 - Owner: Codex
-- Due: 2026-02-20
+- Due: 2026-02-17
 - Description:
   - pre-commit 단계에서 문서 메타의 `Target`/`Surface` 누락, 허용값 위반, 노출 충돌(`AGENT`가 `PUBLIC_NAV`에 노출되는 경우) 검사를 자동화한다.
 - Done Criteria:
@@ -305,9 +307,10 @@
   - 규칙 위반 샘플 케이스가 차단됨
   - 운영 문서에 실패/복구 가이드가 기록됨
 - Evidence:
-  - lint 스크립트 링크(추후)
-  - precommit policy 반영 링크(추후)
-  - 검증 로그/PR 링크(추후)
+  - lint 스크립트: `skills/aki-codex-precommit/scripts/check-target-surface-governance.sh`
+  - precommit policy 연결: `skills/aki-codex-precommit/policies/core-workspace.sh`
+  - 검증: `validate-precommit-chain.sh --mode quick`, `validate-precommit-chain.sh --mode strict --all` 통과
+  - 연계 PR 링크(추후)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.
