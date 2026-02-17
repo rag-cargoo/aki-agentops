@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 17:14:21`
+> - **Updated At**: `2026-02-17 21:25:58`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,4 +24,4 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
-- (none)
+- [2026-02-17 Sidecar SoT Dedup Follow-up](./2026-02-17-sidecar-sot-dedup-followup.md)

@@ -46,6 +46,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+      * [2026-02-17 Sidecar SoT Dedup Follow-up](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md)
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-core-service)
     * [Main Test URL (U1, Local)](http://localhost:8080/ux/u1/index.html)
 

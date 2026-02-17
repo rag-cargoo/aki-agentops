@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 17:14:21`
+> - **Updated At**: `2026-02-17 21:25:58`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -28,3 +28,16 @@
     - `project-map.yaml`에 `workspace/apps/backend/ticket-core-service` + `prj-docs/projects/ticket-core-service` + `https://github.com/rag-cargoo/ticket-core-service`
     - `session_start.sh` 출력에서 Active Project `Docs Root: prj-docs/projects/ticket-core-service` 확인
     - PR `#65` merged (`2026-02-16`) 및 연계 이슈 `#66` closed
+
+- TCS-SC-002 sidecar 분리 이후 제품 레포 문서 SoT 중복 정리
+  - Status: DOING
+  - Description:
+    - sidecar 분리는 완료됐지만 제품 레포(`ticket-core-service`) 내부 `prj-docs`가 남아 운영 문서 SoT가 중복된 상태를 정리
+    - 제품 레포 문서 유지 정책(전부 제거 vs 최소 유지)을 확정하고 경로 참조를 일관화
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md`
+    - AKI AgentOps 이슈 재오픈: `https://github.com/rag-cargoo/aki-agentops/issues/66`
+    - 제품 레포 이슈: `rag-cargoo/ticket-core-service#1` (cross-repo shorthand)
+    - 동기화 코멘트(AgentOps): `https://github.com/rag-cargoo/aki-agentops/issues/66#issuecomment-3914421398`
+    - 동기화 코멘트(ticket-core-service): `rag-cargoo/ticket-core-service#1 comment 3914422354`
+    - 비고: `doc-state-sync`가 동일 저장소 기준으로 URL 이슈 번호를 해석하므로, cross-repo 이슈는 shorthand 표기로 유지
