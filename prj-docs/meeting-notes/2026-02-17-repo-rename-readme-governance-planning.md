@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:51:30`
-> - **Updated At**: `2026-02-17 08:40:03`
+> - **Updated At**: `2026-02-17 09:07:32`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -73,8 +73,8 @@
 
 ## 안건 3: 기존 문서 처리 원칙(보존/이관/폐기)
 - Created At: 2026-02-17 06:51:30
-- Updated At: 2026-02-17 06:51:30
-- Status: TODO
+- Updated At: 2026-02-17 09:07:32
+- Status: DONE
 - 결정사항:
   - 기존 문서는 원칙적으로 삭제하지 않고 보존한다.
   - 이름 변경 시 처리 원칙:
@@ -85,8 +85,8 @@
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-18
-  - 상태: TODO
-  - 메모: `prj-docs/references/`에 migration note를 추가하고 README에서 링크한다.
+  - 상태: DONE
+  - 메모: `prj-docs/references/repository-rename-migration-note.md`를 추가하고 루트 `README.md`에 링크를 반영했다.
 
 ## 안건 4: 실행 순서와 리스크
 - Created At: 2026-02-17 06:51:30
@@ -105,4 +105,4 @@
   - 담당: User + Codex
   - 기한: 2026-02-17
   - 상태: DONE
-  - 메모: slug rename + Pages URL 검증까지 완료했으며, 잔여 작업은 레거시 표기 정리(안건 3)로 분리한다.
+  - 메모: slug rename + Pages URL 검증까지 완료했고, 분리된 레거시 표기 정리(안건 3)도 완료했다.

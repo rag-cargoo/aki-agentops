@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 08:40:03`
+> - **Updated At**: `2026-02-17 09:07:32`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -20,6 +20,7 @@
 > - 권장 디렉터리 스케치 (Infra)
 > - 프로젝트 진입 링크
 > - 운영 문서 바로가기
+> - 레거시 표기 마이그레이션 노트
 > - 유지 원칙 (README Scope)
 <!-- DOC_TOC_END -->
 
@@ -177,6 +178,10 @@ workspace/
 - [Project Sidecar Index](/prj-docs/projects/README.md)
 - [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)
 - [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)
+
+## 레거시 표기 마이그레이션 노트
+
+- [Repository Rename Migration Note](/prj-docs/references/repository-rename-migration-note.md)
 
 ---
 
