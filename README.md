@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 09:25:34`
+> - **Updated At**: `2026-02-17 09:37:07`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -178,6 +178,7 @@ workspace/
 - [Project Sidecar Index](/prj-docs/projects/README.md)
 - [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)
 - [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)
+- [Document Target/Surface Governance](/prj-docs/references/document-target-surface-governance.md)
 
 ## 레거시 표기 마이그레이션 노트
 
