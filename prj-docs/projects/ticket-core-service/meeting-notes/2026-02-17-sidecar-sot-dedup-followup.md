@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 21:07:43`
-> - **Updated At**: `2026-02-17 21:23:23`
+> - **Updated At**: `2026-02-17 21:25:58`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -74,9 +74,10 @@
 
 ## 안건 4: Doc State Sync 오탐 보정
 - Created At: 2026-02-17 21:13:30
-- Updated At: 2026-02-17 21:23:23
+- Updated At: 2026-02-17 21:25:58
 - Status: DONE
 - 결정사항:
   - `doc-state-sync`는 문서 내 `https://github.com/.../issues/<number>`를 현재 저장소 이슈 번호로 해석한다.
   - sidecar `task.md`의 cross-repo 이슈 표기는 URL 대신 `owner/repo#number` shorthand를 기본으로 사용한다.
   - 이번 작업에서 `TCS-SC-002` 증빙 항목을 shorthand로 정렬했다.
+  - 추가 보정: cross-repo 이슈 comment URL(`.../issues/1#issuecomment...`)도 issue URL로 해석되므로 `task.md`에서는 URL 대신 텍스트 표기를 사용한다.
