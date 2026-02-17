@@ -3,7 +3,9 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-12 17:33:56`
+> - **Updated At**: `2026-02-17 13:37:59`
+> - **Target**: `AGENT`
+> - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -21,6 +23,7 @@
 > - 9) Issue Lifecycle Governance
 > - 10) Branch Governance
 > - 11) Playwright Evidence Policy
+> - 12) Runtime Status Query Contract (Critical)
 <!-- DOC_TOC_END -->
 
 ## 1) Single Entry Rule
@@ -138,3 +141,26 @@ GitHub MCP가 등록되어 있으면 세션 시작 보고에서 기본 6개 tool
 2. 스크린샷(`take_screenshot`, `*.png`) 생성은 사용자가 명시적으로 요청한 경우에만 수행한다.
 3. 스크린샷이 필요한 경우에도 저장 경로는 `.codex/tmp/<tool>/<run-id>/`를 우선 사용한다.
 4. 사용자 요청이 없으면 루트/프로젝트 경로에 PNG를 생성하지 않는다.
+
+## 12) Runtime Status Query Contract (Critical)
+아래 트리거는 "런타임 상태표 요청"으로 고정 처리한다.
+
+트리거:
+1. `상태정보`
+2. `상태정보 보여줘`
+3. `상태 보여줘`
+4. `런타임 상태 보여줘`
+5. `런타임 경고만 보여줘`
+
+강제 실행 순서:
+1. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh`
+2. 경고만 요청이면:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh --alerts-only`
+
+출력 규칙:
+1. 기본은 명령 출력 원문 그대로 제시한다(가공/요약 금지).
+2. 사용자가 명시적으로 "요약"을 요청한 경우에만 요약한다.
+3. 상태정보 요청에서 아래 항목은 대체 출력으로 사용하지 않는다:
+   - `git status`
+   - open issue/pr 목록
+   - task TODO/DOING 목록

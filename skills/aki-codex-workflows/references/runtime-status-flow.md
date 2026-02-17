@@ -4,6 +4,12 @@
 - 세션 시작 직후
 - 런타임 옵션 변경 직후(예: precommit mode 전환)
 - 사용자가 상태 조회를 명시 요청한 시점(`상태 보여줘`)
+- 상태조회 트리거 키워드:
+  - `상태정보`
+  - `상태정보 보여줘`
+  - `상태 보여줘`
+  - `런타임 상태 보여줘`
+  - `런타임 경고만 보여줘`
 
 ## Why
 - 현재 운영 모드/핵심 기능 ON/OFF를 즉시 확인해 오판을 줄인다.
@@ -15,13 +21,13 @@
    - 세션 시작/옵션 변경/사용자 조회 요청 중 어떤 트리거인지 식별한다.
 2. 런타임 플래그 동기화
    - Owner Skill: `aki-codex-session-reload`
-   - `runtime_flags.sh sync`로 `.codex/state/runtime_flags.yaml`와 `.codex/runtime/current_status.txt`를 갱신한다.
+   - `show_runtime_status.sh`가 내부에서 `runtime_flags.sh sync --quiet`를 수행해 `.codex/state/runtime_flags.yaml`와 `.codex/runtime/current_status.txt`를 갱신한다.
 3. 상태표 출력
    - Owner Skill: `aki-codex-session-reload`
-   - `runtime_flags.sh status` 또는 세션 스냅샷의 `Runtime Status` 섹션으로 상태를 노출한다.
+   - 기본: `show_runtime_status.sh` 실행으로 `runtime_flags.sh status` + `alerts` 원문을 노출한다.
 4. 경고 전용 출력(필요 시)
    - Owner Skill: `aki-codex-session-reload`
-   - `runtime_flags.sh alerts`로 경고 항목만 빠르게 점검한다.
+   - `show_runtime_status.sh --alerts-only`로 `runtime_flags.sh alerts` 원문만 노출한다.
 5. 옵션 변경 연계 확인(해당 시)
    - Owner Skill: 각 도메인 스킬(예: `aki-codex-precommit`)
    - 변경된 옵션이 도메인 실행 스크립트에 반영됐는지 확인한다.
@@ -35,6 +41,10 @@
   - 트리거 이벤트 기반 출력만 허용
   - **기본 출력은 원문 그대로**(`runtime_flags.sh status/alerts` 출력 가공 금지)
   - **요약은 사용자 명시 요청 시에만 허용**
+  - **상태조회 요청에서 다른 상태출력으로 대체 금지**:
+    - `git status`
+    - GitHub open issue/pr 목록
+    - `task.md` TODO/DOING 스캔
 - 출력 실패:
   - `runtime_flags.sh sync` 재시도 후 실패 원인 보고
 - 경계 규칙:
