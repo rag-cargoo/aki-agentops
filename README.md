@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 09:07:32`
+> - **Updated At**: `2026-02-17 09:25:34`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -182,6 +182,7 @@ workspace/
 ## 레거시 표기 마이그레이션 노트
 
 - [Repository Rename Migration Note](/prj-docs/references/repository-rename-migration-note.md)
+- [Legacy Label Cleanup Report (2026-02-17)](/prj-docs/references/legacy-label-cleanup-report-2026-02-17.md)
 
 ---
 

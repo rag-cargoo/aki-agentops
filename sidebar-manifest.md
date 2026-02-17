@@ -9,6 +9,7 @@
   * [Project Sidecar Index](/prj-docs/projects/README.md)
   * [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)
   * [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)
+  * [Legacy Label Cleanup Report (2026-02-17)](/prj-docs/references/legacy-label-cleanup-report-2026-02-17.md)
   * **Meeting Notes**
     * [Index](/prj-docs/meeting-notes/README.md)
     * [2026-02-17 Repository Architecture Refactoring Agenda](/prj-docs/meeting-notes/2026-02-17-repo-architecture-refactoring-agenda.md)
