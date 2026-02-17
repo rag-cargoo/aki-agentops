@@ -3,7 +3,9 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 09:37:07`
-> - **Updated At**: `2026-02-17 11:21:48`
+> - **Updated At**: `2026-02-17 11:36:24`
+> - **Target**: `BOTH`
+> - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -86,3 +88,8 @@
 1. 신규/수정 문서는 `Target`/`Surface` 누락 없이 기록한다.
 2. 허용값 외 enum 사용 시 pre-commit에서 차단한다.
 3. `AGENT` 문서가 `PUBLIC_NAV`에 들어갈 경우 의도 검토 코멘트를 남긴다.
+4. 자동 검증 스크립트:
+   - `bash skills/aki-codex-precommit/scripts/check-target-surface-governance.sh --scope staged`
+5. 실패 시 복구:
+   - 문서 메타에 `Target`/`Surface`를 보완한 뒤 재검증한다.
+   - public 사이드바에 `AGENT` 문서 직접 링크가 있으면 `sidebar-agent-manifest.md`로 이동한다.

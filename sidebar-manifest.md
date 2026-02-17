@@ -33,4 +33,3 @@
 * **MCP & GUIDE**
   * [MCP Workspace Guide](/mcp/README.md)
   * [MCP Experience Log](/mcp/references/experience-log.md)
-  * [GitHub Pages 배포 가이드](/skills/aki-github-pages-expert/references/docsify-setup.md)
