@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 09:24:40`
+> - **Updated At**: `2026-02-17 09:38:52`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -255,8 +255,40 @@
 - Evidence:
   - 분류 리포트: `prj-docs/references/legacy-label-cleanup-report-2026-02-17.md`
   - 치환 반영: `prj-docs/projects/README.md`, `prj-docs/projects/ticket-core-service/rules/architecture.md`, `prj-docs/references/repo-architecture-gap-map.md`
-  - 판정: `TSK-2602-017+` 추가 불필요(현재 범위에서 치환 완료)
+  - 당시 판정: `TSK-2602-017+` 추가 불필요(레거시 표기 2차 정리 범위 기준)
   - 연계 PR 링크(추후)
+
+## P3: 문서 대상/노출 거버넌스 단계
+
+### TSK-2602-017 문서 메타 스키마(Target/Surface) 규정 수립
+- Status: DONE
+- Owner: Codex
+- Due: 2026-02-17
+- Description:
+  - 문서 메타에 `Target`/`Surface` 필드를 도입하기 위한 enum과 의미를 표준화한다.
+  - `Surface`가 메뉴 노출 정책이며 접근 제어와 별개임을 명시한다.
+- Done Criteria:
+  - 표준 문서에 `Target`/`Surface` 스키마가 기록됨
+  - 허용값(`HUMAN|AGENT|BOTH|FUTURE:*`, `PUBLIC_NAV|AGENT_NAV|HIDDEN`)이 확정됨
+- Evidence:
+  - `prj-docs/references/document-target-surface-governance.md`
+  - `prj-docs/meeting-notes/2026-02-17-doc-target-surface-governance-kickoff.md`
+
+### TSK-2602-018 문서 인벤토리 분류 및 Pages 노출 분리 설계
+- Status: DOING
+- Owner: User + Codex
+- Due: 2026-02-20
+- Description:
+  - 전 문서를 `Target`/`Surface` 기준으로 분류한 인벤토리를 작성한다.
+  - GitHub Pages에서 `PUBLIC_NAV`(사용자용)와 `AGENT_NAV`(에이전트용) 분리 구조를 설계한다.
+- Done Criteria:
+  - 분류 인벤토리 문서가 생성되고 분류 근거가 기록됨
+  - `sidebar-manifest.md` 분리 전략(또는 보조 manifest)이 문서화됨
+  - 외부 트래킹 이슈/PR 링크가 task와 회의록에 동기화됨
+- Evidence:
+  - `prj-docs/meeting-notes/2026-02-17-doc-target-surface-governance-kickoff.md`
+  - `prj-docs/references/document-target-surface-governance.md`
+  - `https://github.com/rag-cargoo/aki-agentops/issues/79`
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.
