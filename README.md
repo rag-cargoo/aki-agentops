@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 09:37:07`
+> - **Updated At**: `2026-02-17 11:21:48`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -15,6 +15,7 @@
 > - Quick Start
 > - Repository Boundaries
 > - GitHub Pages Home
+> - Navigation Modes
 > - 상위 영역 맵 (Top-Level Domains)
 > - 프로젝트 분류 (Workspace Classification)
 > - 권장 디렉터리 스케치 (Infra)
@@ -75,6 +76,12 @@ bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick
 URL은 현재 워크스페이스 문서 허브(Docsify) 메인 페이지입니다.
 README, SKILLS, WORKSPACE 문서를 한 곳에서 탐색할 때 사용합니다.
 U1 테스트 URL은 로컬 백엔드 실행 상태에서 확인할 수 있습니다.
+
+## Navigation Modes
+
+- Public Navigation (기본): [https://rag-cargoo.github.io/aki-agentops/](https://rag-cargoo.github.io/aki-agentops/)
+- Agent Navigation: [https://rag-cargoo.github.io/aki-agentops/?surface=agent#/AGENTS.md](https://rag-cargoo.github.io/aki-agentops/?surface=agent#/AGENTS.md)
+- 참고: `surface`는 메뉴 노출 정책이며 접근제어가 아닙니다.
 
 ---
 
@@ -179,6 +186,7 @@ workspace/
 - [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)
 - [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)
 - [Document Target/Surface Governance](/prj-docs/references/document-target-surface-governance.md)
+- [Document Target/Surface Inventory (2026-02-17)](/prj-docs/references/document-target-surface-inventory-2026-02-17.md)
 
 ## 레거시 표기 마이그레이션 노트
 

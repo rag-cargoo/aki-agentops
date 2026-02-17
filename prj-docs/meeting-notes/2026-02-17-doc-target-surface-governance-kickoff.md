@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 09:37:07`
-> - **Updated At**: `2026-02-17 09:38:52`
+> - **Updated At**: `2026-02-17 11:22:41`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -35,7 +35,7 @@
 ## External Sync
 - Source of Truth: `rag-cargoo/aki-agentops` issue `#79`
 - Sync Action: issue-comment + task-update + readme-update
-- Last Synced At: 2026-02-17 09:38:52
+- Last Synced At: 2026-02-17 11:22:41
 
 ## 안건 1: 문제정의(문서 대상 혼재)
 - Created At: 2026-02-17 09:37:07
@@ -74,7 +74,7 @@
 
 ## 안건 3: 적용 전략(인벤토리/노출 정책)
 - Created At: 2026-02-17 09:37:07
-- Updated At: 2026-02-17 09:38:52
+- Updated At: 2026-02-17 11:22:41
 - Status: DOING
 - 결정사항:
   - 1차: 정책/스키마 정의 + 루트 task/이슈 등록.
@@ -85,4 +85,4 @@
   - 담당: User + Codex
   - 기한: 2026-02-20
   - 상태: DOING
-  - 메모: task(`TSK-2602-017+`)와 GitHub 이슈 `#79`를 연계해 단계별 실행한다.
+  - 메모: `TSK-2602-018`(인벤토리+메뉴 분리)은 완료했고, 잔여는 `TSK-2602-019`(lint 게이트 도입)이다.

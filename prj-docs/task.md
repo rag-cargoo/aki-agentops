@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 09:38:52`
+> - **Updated At**: `2026-02-17 11:22:41`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -275,9 +275,9 @@
   - `prj-docs/meeting-notes/2026-02-17-doc-target-surface-governance-kickoff.md`
 
 ### TSK-2602-018 문서 인벤토리 분류 및 Pages 노출 분리 설계
-- Status: DOING
+- Status: DONE
 - Owner: User + Codex
-- Due: 2026-02-20
+- Due: 2026-02-17
 - Description:
   - 전 문서를 `Target`/`Surface` 기준으로 분류한 인벤토리를 작성한다.
   - GitHub Pages에서 `PUBLIC_NAV`(사용자용)와 `AGENT_NAV`(에이전트용) 분리 구조를 설계한다.
@@ -288,7 +288,26 @@
 - Evidence:
   - `prj-docs/meeting-notes/2026-02-17-doc-target-surface-governance-kickoff.md`
   - `prj-docs/references/document-target-surface-governance.md`
+  - `prj-docs/references/document-target-surface-inventory-2026-02-17.md`
+  - `sidebar-manifest.md` (public), `sidebar-agent-manifest.md` (agent)
+  - `index.html` (`surface` query 기반 sidebar 분기)
   - `https://github.com/rag-cargoo/aki-agentops/issues/79`
+  - 연계 PR 링크(추후)
+
+### TSK-2602-019 Target/Surface 메타/노출 lint 게이트 도입
+- Status: TODO
+- Owner: Codex
+- Due: 2026-02-20
+- Description:
+  - pre-commit 단계에서 문서 메타의 `Target`/`Surface` 누락, 허용값 위반, 노출 충돌(`AGENT`가 `PUBLIC_NAV`에 노출되는 경우) 검사를 자동화한다.
+- Done Criteria:
+  - lint 스크립트가 추가되고 quick/strict 체인에 연결됨
+  - 규칙 위반 샘플 케이스가 차단됨
+  - 운영 문서에 실패/복구 가이드가 기록됨
+- Evidence:
+  - lint 스크립트 링크(추후)
+  - precommit policy 반영 링크(추후)
+  - 검증 로그/PR 링크(추후)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 09:37:07`
-> - **Updated At**: `2026-02-17 09:37:07`
+> - **Updated At**: `2026-02-17 11:21:48`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -15,6 +15,7 @@
 > - Classification Rules
 > - Surface Semantics
 > - Default Mapping by Path
+> - Current Baseline (2026-02-17)
 > - Rollout Stages
 > - Validation Gate
 <!-- DOC_TOC_END -->
@@ -62,6 +63,18 @@
 3. `prj-docs/task.md`, `prj-docs/references/**`, `prj-docs/projects/**`:
    - 권장 `Target=BOTH`
    - 권장 `Surface=PUBLIC_NAV` (필요 시 일부 `AGENT_NAV`/`HIDDEN`)
+
+## Current Baseline (2026-02-17)
+1. 인벤토리:
+   - `prj-docs/references/document-target-surface-inventory-2026-02-17.md`
+2. 메뉴 분리:
+   - Public: `sidebar-manifest.md`
+   - Agent: `sidebar-agent-manifest.md`
+3. 런타임 전환:
+   - 기본 `/?surface=public`
+   - 에이전트 `/?surface=agent#/AGENTS.md`
+4. 구현 위치:
+   - `index.html`에서 `surface` query 값으로 sidebar manifest 선택
 
 ## Rollout Stages
 1. Stage 1: 정책/스키마 확정 + task/issue 등록
