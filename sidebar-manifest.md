@@ -56,4 +56,5 @@
 ---
 
 * **SKILLS**
+  * [Aki Skills User Prompt Guide](/prj-docs/references/aki-skills-user-prompt-guide.md)
   * [Skills Navigation Guide](/prj-docs/references/skills-navigation-guide.md)

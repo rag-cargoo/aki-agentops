@@ -25,7 +25,7 @@
 
 ## Human Entry Points
 - Prompt Guide:
-  - [Aki Skills User Prompt Guide](/skills/aki-codex-workflows/references/aki-skills-user-prompt-guide.md)
+  - [Aki Skills User Prompt Guide](/prj-docs/references/aki-skills-user-prompt-guide.md)
 - Runtime Status:
   - [Runtime Status Visibility Flow](/skills/aki-codex-workflows/references/runtime-status-flow.md)
   - [Session Reload Runbook](/skills/aki-codex-session-reload/references/session-reload-runbook.md)
