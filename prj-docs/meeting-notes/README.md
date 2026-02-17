@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 04:24:00`
-> - **Updated At**: `2026-02-17 17:14:21`
+> - **Updated At**: `2026-02-17 17:58:10`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -50,6 +50,7 @@
 - 회의 안건이 제품 동작/릴리즈에 영향을 주면 `Sync Action`(이슈 코멘트/PR 코멘트/README 반영)을 기록한다.
 
 ## Current Notes
+- [2026-02-17 GitHub Pages Structure Governance Planning](./2026-02-17-github-pages-structure-governance-planning.md)
 - [2026-02-17 Document Target/Surface Governance Kickoff](./2026-02-17-doc-target-surface-governance-kickoff.md)
 - [2026-02-17 Repository Architecture Refactoring Agenda](./2026-02-17-repo-architecture-refactoring-agenda.md)
 - [2026-02-17 Repo Rename and README Governance Planning](./2026-02-17-repo-rename-readme-governance-planning.md)

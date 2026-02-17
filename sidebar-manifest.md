@@ -17,6 +17,7 @@
     * [Task Dashboard](/prj-docs/task.md)
   * **Meeting Notes**
     * [Meeting Notes Index](/prj-docs/meeting-notes/README.md)
+    * [2026-02-17 GitHub Pages Structure Governance Planning](/prj-docs/meeting-notes/2026-02-17-github-pages-structure-governance-planning.md)
     * [2026-02-17 Repository Architecture Refactoring Agenda](/prj-docs/meeting-notes/2026-02-17-repo-architecture-refactoring-agenda.md)
     * [2026-02-17 Repo Rename and README Governance Planning](/prj-docs/meeting-notes/2026-02-17-repo-rename-readme-governance-planning.md)
     * [2026-02-17 Target/Surface Governance Kickoff](/prj-docs/meeting-notes/2026-02-17-doc-target-surface-governance-kickoff.md)

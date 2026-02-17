@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 11:36:24`
+> - **Updated At**: `2026-02-17 17:58:10`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -16,6 +16,8 @@
 > - P0: 분리 준비 단계 (Blockers)
 > - P1: 구조 고도화 단계
 > - P2: 리네이밍/README 재정의 단계
+> - P3: 문서 대상/노출 거버넌스 단계
+> - P4: GitHub Pages 구조 정리 단계
 > - Governance Rules
 <!-- DOC_TOC_END -->
 
@@ -311,6 +313,27 @@
   - precommit policy 연결: `skills/aki-codex-precommit/policies/core-workspace.sh`
   - 검증: `validate-precommit-chain.sh --mode quick`, `validate-precommit-chain.sh --mode strict --all` 통과
   - 연계 PR 링크(추후)
+
+## P4: GitHub Pages 구조 정리 단계
+
+### TSK-2602-020 Pages 루트 아티팩트(`index/sidebar/home`) 구조 정리 및 명명 규칙 일치
+- Status: DOING
+- Owner: User + Codex
+- Due: 2026-02-18
+- Description:
+  - 루트 배치된 Pages 아티팩트(`index.html`, `sidebar-manifest.md`, `sidebar-agent-manifest.md`, `HOME.md`)의 경계/명명을 재정의한다.
+  - `github-pages/` 디렉터리 명명 기준을 적용하되, 현재 Pages 소스(`main:/`, legacy) 제약에 맞는 이행 전략(직접 이동 또는 호환 레이어)을 선택한다.
+  - 스킬/훅/검증 스크립트의 하드코딩 경로를 함께 정렬한다.
+- Done Criteria:
+  - 선택된 구조에서 GitHub Pages 기본 URL(`https://rag-cargoo.github.io/aki-agentops/`)이 정상 렌더링된다.
+  - Public/Agent navigation 전환(`?surface=public|agent`)이 유지된다.
+  - `core-workspace` 정책, Target/Surface lint, docsify validator가 새 경로 기준으로 통과한다.
+  - 운영 문서(`task`, `meeting-notes`, `issue #79`)에 결정/근거가 동기화된다.
+- Evidence:
+  - 회의록: `prj-docs/meeting-notes/2026-02-17-github-pages-structure-governance-planning.md`
+  - 이슈: `https://github.com/rag-cargoo/aki-agentops/issues/79`
+  - 관련 PR: `https://github.com/rag-cargoo/aki-agentops/pull/90`
+  - 후속 PR 링크(구조 이행 완료 후 추가)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.
