@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 21:07:43`
-> - **Updated At**: `2026-02-17 21:07:43`
+> - **Updated At**: `2026-02-17 21:23:23`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -17,10 +17,11 @@
 > - 안건 1: 현황 확인(분리 완료 vs 중복 잔존)
 > - 안건 2: 추적 축 정리(이슈/태스크)
 > - 안건 3: 마무리 작업 범위
+> - 안건 4: Doc State Sync 오탐 보정
 <!-- DOC_TOC_END -->
 
 ## Mandatory Runtime Gate
-- Checked At: 2026-02-17 21:07:43
+- Checked At: 2026-02-17 21:13:30
 - `session_start.sh`: PASS
 - `mcp_toolset(context/repos/issues/projects/pull_requests/labels)`: PASS
 - `validate-precommit-chain.sh`: PASS
@@ -38,8 +39,11 @@
 - Source of Truth:
   - `https://github.com/rag-cargoo/aki-agentops/issues/66`
   - `https://github.com/rag-cargoo/ticket-core-service/issues/1`
-- Sync Action: issue-comment + task-update
-- Last Synced At: 2026-02-17 21:07:43
+- Sync Action: issue-comment + task-update + doc-state-sync-guard
+- Sync Evidence:
+  - `https://github.com/rag-cargoo/aki-agentops/issues/66#issuecomment-3914421398`
+  - `https://github.com/rag-cargoo/ticket-core-service/issues/1#issuecomment-3914422354`
+- Last Synced At: 2026-02-17 21:23:23
 
 ## 안건 1: 현황 확인(분리 완료 vs 중복 잔존)
 - Created At: 2026-02-17 21:07:43
@@ -61,9 +65,18 @@
 
 ## 안건 3: 마무리 작업 범위
 - Created At: 2026-02-17 21:07:43
-- Updated At: 2026-02-17 21:07:43
+- Updated At: 2026-02-17 21:13:30
 - Status: DOING
 - 결정사항:
   - 제품 레포 문서 유지 정책을 확정한다(전부 제거 vs 최소 유지).
   - 정책 확정 후 `ticket-core-service` PR에서 문서/링크/스크립트 참조를 일괄 정리한다.
   - sidecar 문서(`task`, `meeting-notes`)와 제품 레포 이슈/PR 링크를 양방향으로 동기화한다.
+
+## 안건 4: Doc State Sync 오탐 보정
+- Created At: 2026-02-17 21:13:30
+- Updated At: 2026-02-17 21:23:23
+- Status: DONE
+- 결정사항:
+  - `doc-state-sync`는 문서 내 `https://github.com/.../issues/<number>`를 현재 저장소 이슈 번호로 해석한다.
+  - sidecar `task.md`의 cross-repo 이슈 표기는 URL 대신 `owner/repo#number` shorthand를 기본으로 사용한다.
+  - 이번 작업에서 `TCS-SC-002` 증빙 항목을 shorthand로 정렬했다.

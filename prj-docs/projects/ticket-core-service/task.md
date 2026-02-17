@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 21:07:43`
+> - **Updated At**: `2026-02-17 21:23:23`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -37,4 +37,7 @@
   - Evidence:
     - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md`
     - AKI AgentOps 이슈 재오픈: `https://github.com/rag-cargoo/aki-agentops/issues/66`
-    - 제품 레포 이슈 생성: `https://github.com/rag-cargoo/ticket-core-service/issues/1`
+    - 제품 레포 이슈: `rag-cargoo/ticket-core-service#1` (cross-repo shorthand)
+    - 동기화 코멘트(AgentOps): `https://github.com/rag-cargoo/aki-agentops/issues/66#issuecomment-3914421398`
+    - 동기화 코멘트(ticket-core-service): `https://github.com/rag-cargoo/ticket-core-service/issues/1#issuecomment-3914422354`
+    - 비고: `doc-state-sync`가 동일 저장소 기준으로 URL 이슈 번호를 해석하므로, cross-repo 이슈는 shorthand 표기로 유지
