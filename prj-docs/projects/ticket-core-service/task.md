@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 22:22:30`
+> - **Updated At**: `2026-02-17 22:38:23`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -38,7 +38,7 @@
     - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md`
     - AKI AgentOps 이슈 재오픈: `https://github.com/rag-cargoo/aki-agentops/issues/66`
     - 제품 레포 이슈: `rag-cargoo/ticket-core-service#1` (cross-repo shorthand)
-    - 제품 레포 PR: `https://github.com/rag-cargoo/ticket-core-service/pull/2` (merged)
+    - 제품 레포 PR: `rag-cargoo/ticket-core-service PR #2` (merged, cross-repo shorthand)
     - 제품 레포 머지 커밋: `f0f798b0dfee0428b1d807acd0f4c25206f3e94a`
     - 제품 레포 이슈 상태: `#1 CLOSED`
     - 동기화 코멘트(AgentOps): `https://github.com/rag-cargoo/aki-agentops/issues/66#issuecomment-3914421398`

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 21:07:43`
-> - **Updated At**: `2026-02-17 22:22:30`
+> - **Updated At**: `2026-02-17 22:38:23`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -87,7 +87,7 @@
 
 ## 안건 5: 제품 레포 정리 PR 완료
 - Created At: 2026-02-17 22:22:30
-- Updated At: 2026-02-17 22:22:30
+- Updated At: 2026-02-17 22:38:23
 - Status: DONE
 - 결정사항:
   - 제품 레포 PR `#2`를 통해 `prj-docs` 제거 및 sidecar SoT 단일화를 완료했다.
