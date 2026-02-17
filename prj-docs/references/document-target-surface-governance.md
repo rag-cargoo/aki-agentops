@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 09:37:07`
-> - **Updated At**: `2026-02-17 11:36:24`
+> - **Updated At**: `2026-02-17 17:43:45`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -17,6 +17,7 @@
 > - Classification Rules
 > - Surface Semantics
 > - Default Mapping by Path
+> - Repository vs Project Boundary
 > - Current Baseline (2026-02-17)
 > - Rollout Stages
 > - Validation Gate
@@ -65,6 +66,14 @@
 3. `prj-docs/task.md`, `prj-docs/references/**`, `prj-docs/projects/**`:
    - 권장 `Target=BOTH`
    - 권장 `Surface=PUBLIC_NAV` (필요 시 일부 `AGENT_NAV`/`HIDDEN`)
+
+## Repository vs Project Boundary
+1. `workspace/**` 경로는 물리 배치(도메인) 기준이며, 경로만으로 `PROJECT`로 확정하지 않는다.
+2. `PROJECT`는 아래 기준 중 하나를 충족해야 한다.
+   - `prj-docs/projects/project-map.yaml`에 `project_id/code_root/docs_root/repo_remote`가 등록되고 `docs_root/task.md`가 존재한다.
+   - 레거시 호환으로 `workspace/**/prj-docs/task.md`가 존재하고 세션 리로드 기준(`PROJECT_AGENT.md`, `meeting-notes/README.md`)을 충족한다.
+3. Public 메뉴의 `REPOSITORY (AKI AgentOps)`는 루트 운영 문서(거버넌스/회의록/태스크) 전용 영역이다.
+4. Public 메뉴의 `PROJECTS`는 등록된 프로젝트 sidecar 문서 묶음이며, 외부 제품 레포 링크는 보조 링크(`Repository (GitHub)`)로 표기한다.
 
 ## Current Baseline (2026-02-17)
 1. 인벤토리:

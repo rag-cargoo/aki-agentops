@@ -27,8 +27,9 @@
 
 ---
 
-* **PROJECTS**
+* **PROJECTS (Registered Sidecars)**
   * **Ticket Core Service**
+    * [Project Sidecar Index](/prj-docs/projects/README.md)
     * [Service README (Pages Mirror)](/prj-docs/projects/ticket-core-service/product-docs/README.md)
     * [API Specs Index (Pages Mirror)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
     * **API Specs (Pages Mirror)**
