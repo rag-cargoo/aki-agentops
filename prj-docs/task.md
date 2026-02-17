@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 09:19:56`
+> - **Updated At**: `2026-02-17 09:24:40`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -242,19 +242,21 @@
   - PR 링크(추후)
 
 ### TSK-2602-016 레거시 표기 2차 정리 범위 정의
-- Status: TODO
+- Status: DONE
 - Owner: User + Codex
-- Due: 2026-02-20
+- Due: 2026-02-17
 - Description:
   - 레거시 표기(`2602`, 이전 로컬 경로) 잔여를 전수 스캔해 `보존 대상(증빙/역사)`과 `치환 대상(실행 예시/운영 가이드)`으로 분류한다.
   - 분류 결과를 기준으로 2차 정리 실행 목록을 확정한다.
 - Done Criteria:
   - `rg` 기반 잔여 목록 리포트가 문서로 정리됨
   - 각 항목에 `보존/치환` 판단 근거가 기록됨
-  - 후속 실행용 태스크(필요 시 `TSK-2602-017+`)가 정의됨
+  - 후속 실행용 태스크 필요 여부(`TSK-2602-017+`)가 판정됨
 - Evidence:
-  - 분류 리포트 문서 링크(추후)
-  - 연계 이슈/PR 링크(추후)
+  - 분류 리포트: `prj-docs/references/legacy-label-cleanup-report-2026-02-17.md`
+  - 치환 반영: `prj-docs/projects/README.md`, `prj-docs/projects/ticket-core-service/rules/architecture.md`, `prj-docs/references/repo-architecture-gap-map.md`
+  - 판정: `TSK-2602-017+` 추가 불필요(현재 범위에서 치환 완료)
+  - 연계 PR 링크(추후)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.
