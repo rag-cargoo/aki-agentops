@@ -23,9 +23,18 @@
 * **PROJECTS**
   * **Ticket Core Service**
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-core-service)
-    * [Sidecar Docs](/prj-docs/projects/ticket-core-service/README.md)
+    * [Service README (Repository)](https://github.com/rag-cargoo/ticket-core-service/blob/main/README.md)
+    * [Sidecar README](/prj-docs/projects/ticket-core-service/README.md)
     * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
     * [Sidecar Meeting Notes](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+    * **API Specs (Repository)**
+      * [Auth Session API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/auth-session-api.md)
+      * [User API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/user-api.md)
+      * [Concert API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/concert-api.md)
+      * [Reservation API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/reservation-api.md)
+      * [Waiting Queue API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/waiting-queue-api.md)
+      * [Social Auth API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/social-auth-api.md)
+    * [API Test Guide (Repository)](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-test/README.md)
     * [Main Test URL (U1, Local)](http://localhost:8080/ux/u1/index.html)
 
 ---
@@ -33,3 +42,4 @@
 * **MCP & GUIDE**
   * [MCP Workspace Guide](/mcp/README.md)
   * [MCP Experience Log](/mcp/references/experience-log.md)
+  * [Skills Navigation Guide](/prj-docs/references/skills-navigation-guide.md)
