@@ -1,9 +1,9 @@
-# Ticket Core Service API Specs (Pages Mirror)
+# Ticket Core Service API Specs
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 17:03:13`
+> - **Updated At**: `2026-02-17 22:42:50`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -25,5 +25,5 @@
 - [Social Auth API](./social-auth-api.md)
 
 ## Notes
-- 본 문서는 `rag-cargoo/ticket-core-service/prj-docs/api-specs/*`를 GitHub Pages에서 탐색하기 위한 인덱스다.
-- 원본 레포에서 변경되면 미러 문서를 재동기화해야 한다.
+- 본 문서는 `AKI AgentOps` sidecar가 관리하는 공개 API 명세 인덱스다.
+- API 명세 변경은 `rag-cargoo/aki-agentops`의 sidecar 문서 PR에서 반영한다.

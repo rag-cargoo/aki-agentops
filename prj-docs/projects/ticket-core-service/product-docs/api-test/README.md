@@ -1,9 +1,9 @@
-# API Script Test Guide (Pages Mirror)
+# API Script Test Guide
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 17:03:13`
+> - **Updated At**: `2026-02-17 22:42:50`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -13,17 +13,17 @@
 ---
 > [!TIP]
 > - Source
-> - Mirror Policy
+> - Publication Policy
 > - Content
 <!-- DOC_TOC_END -->
 
 ## Source
-- Upstream: [ticket-core-service/prj-docs/api-test/README.md](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-test/README.md)
-- Synced At: 2026-02-17 17:03:13
+- SoT: `AKI AgentOps sidecar` (`prj-docs/projects/ticket-core-service/product-docs/**`)
+- Updated For Dedup: 2026-02-17 22:38:23
 
-## Mirror Policy
-- 이 문서는 GitHub Pages 탐색을 위한 읽기 전용 미러다.
-- 원본 수정/PR은 `rag-cargoo/ticket-core-service`에서 진행한다.
+## Publication Policy
+- 이 문서는 GitHub Pages 사용자 탐색용 공식 문서다.
+- 변경은 `rag-cargoo/aki-agentops` sidecar PR에서 관리한다.
 
 ## Content
 
@@ -50,7 +50,7 @@ make test-suite
 
 ## 2. 산출물
 
-- 최신 실행 리포트: `prj-docs/api-test/latest.md`
+- 최신 실행 리포트: `.codex/tmp/ticket-core-service/api-test/latest.md`
 - 커밋 체인에서 `scripts/api/*.sh` 변경이 감지되면 위 리포트를 함께 stage해야 합니다.
 
 ---
@@ -73,7 +73,7 @@ bash scripts/api/run-step7-regression.sh
 
 - 실행 내용:
   - 인프라/앱 기동 후 `v7-sse-rank-push.sh` 회귀 검증
-  - 결과 리포트(`prj-docs/api-test/latest.md`)와 런타임 로그(`.codex/tmp/ticket-core-service/step7/<run-id>/step7-regression.log`) 생성
+  - 결과 리포트(`.codex/tmp/ticket-core-service/api-test/latest.md`)와 런타임 로그(`.codex/tmp/ticket-core-service/step7/<run-id>/step7-regression.log`) 생성
 - 기본 안정화 옵션:
   - `STEP7_COMPOSE_BUILD=true` (기본): app 이미지를 다시 빌드하여 로컬 코드 반영 보장
   - `STEP7_FORCE_RECREATE=true` (기본): `down -> up` 재생성으로 docker-compose 재기동 오류 회피
@@ -97,15 +97,15 @@ make test-k6
   - `K6_DURATION=60s`
 - Step 8 권장 재현(동일 조건 before/after):
   - `K6_VUS=20 K6_DURATION=300s make test-k6`
-  - `cp prj-docs/api-test/k6-latest.md prj-docs/api-test/k6-before-step8.md`
-  - `cp prj-docs/api-test/k6-summary.json prj-docs/api-test/k6-summary-before-step8.json`
+  - `cp .codex/tmp/ticket-core-service/k6/latest/k6-latest.md .codex/tmp/ticket-core-service/k6/latest/k6-before-step8.md`
+  - `cp .codex/tmp/ticket-core-service/k6/latest/k6-summary.json .codex/tmp/ticket-core-service/k6/latest/k6-summary-before-step8.json`
   - 코드 변경 후 동일 명령 재실행
 - 결과 산출물:
-  - `prj-docs/api-test/k6-latest.md`
-  - `prj-docs/api-test/k6-before-step8.md` (baseline 보관 시)
+  - `.codex/tmp/ticket-core-service/k6/latest/k6-latest.md`
+  - `.codex/tmp/ticket-core-service/k6/latest/k6-before-step8.md` (baseline 보관 시)
   - `.codex/tmp/ticket-core-service/k6/<run-id>/k6-latest.log`
-  - `prj-docs/api-test/k6-summary.json`
-  - `prj-docs/api-test/k6-summary-before-step8.json` (baseline 보관 시)
+  - `.codex/tmp/ticket-core-service/k6/latest/k6-summary.json`
+  - `.codex/tmp/ticket-core-service/k6/latest/k6-summary-before-step8.json` (baseline 보관 시)
   - `.codex/tmp/ticket-core-service/k6/<run-id>/k6-web-dashboard.html` (대시보드 활성 시)
 - 실행 환경에 로컬 `k6`가 없으면 Docker(`grafana/k6`) fallback으로 자동 실행합니다.
 - Docker fallback 기본 네트워크는 `host`이며, 필요 시 `K6_DOCKER_NETWORK`로 변경합니다.
@@ -134,7 +134,7 @@ bash scripts/api/v8-reservation-lifecycle.sh
   - `CONFIRMED` 전이
   - 최종 상태 조회
 - Step 9 실행 리포트:
-  - `prj-docs/api-test/step9-lifecycle-latest.md`
+  - `.codex/tmp/ticket-core-service/api-test/step9-lifecycle-latest.md`
 
 ---
 
@@ -151,7 +151,7 @@ bash scripts/api/v9-cancel-refund-resale.sh
   - `CANCELLED` 전이 + 대기열 상위 유저 `ACTIVE` 승격
   - `REFUNDED` 전이 + 최종 상태 확인
 - Step 10 실행 리포트:
-  - `prj-docs/api-test/step10-cancel-refund-latest.md`
+  - `.codex/tmp/ticket-core-service/api-test/step10-cancel-refund-latest.md`
 
 ---
 
@@ -169,7 +169,7 @@ bash scripts/api/v10-sales-policy-engine.sh
   - VIP 유저 두 번째 HOLD 차단(`409`, 1인 제한)
   - 정책 조회 API 응답 일치 확인
 - Step 11 실행 리포트:
-  - `prj-docs/api-test/step11-sales-policy-latest.md`
+  - `.codex/tmp/ticket-core-service/api-test/step11-sales-policy-latest.md`
 
 ---
 
@@ -186,7 +186,7 @@ bash scripts/api/v11-abuse-audit.sh
   - 다계정 `deviceFingerprint` 차단(`DEVICE_FINGERPRINT_MULTI_ACCOUNT`)
   - 감사 조회 API(`GET /api/reservations/v6/audit/abuse`)에서 차단 사유 조회 확인
 - Step 12 실행 리포트:
-  - `prj-docs/api-test/step12-abuse-audit-latest.md`
+  - `.codex/tmp/ticket-core-service/api-test/step12-abuse-audit-latest.md`
 
 ---
 
@@ -202,7 +202,7 @@ bash scripts/api/v12-social-auth-contract.sh
   - 네이버 authorize-url + state 생성 계약 확인
   - exchange 입력값 검증(`code`/`state`) 400 응답 계약 확인
 - 실행 리포트:
-  - `prj-docs/api-test/auth-track-a1-social-auth-latest.md`
+  - `.codex/tmp/ticket-core-service/api-test/auth-track-a1-social-auth-latest.md`
 
 ---
 
@@ -218,7 +218,7 @@ bash scripts/api/a2-auth-track-session-guard.sh
   - `POST /api/auth/token/refresh` 입력 검증(`400`, `refresh token is required`)
   - `POST /api/reservations/v7/holds` 무토큰 접근 차단(`401`)
 - 실행 리포트:
-  - `prj-docs/api-test/auth-track-a2-session-guard-latest.md`
+  - `.codex/tmp/ticket-core-service/api-test/auth-track-a2-session-guard-latest.md`
 
 ---
 
@@ -292,6 +292,6 @@ bash scripts/api/v8-reservation-lifecycle.sh
   - `GET /api/concerts/search` (`keyword`, `agencyName`, `sort=agencyName,asc`)
   - `GET /api/v1/waiting-queue/subscribe` (SSE `INIT/RANK_UPDATE/KEEPALIVE`)
 - 최신 통합 검증 리포트:
-  - `prj-docs/api-test/ux-track-u1-integration-latest.md`
+  - `.codex/tmp/ticket-core-service/api-test/ux-track-u1-integration-latest.md`
 
 실패 시 `skills/aki-mcp-playwright/references/troubleshooting.md`의 "`Local HTML Cannot Be Opened Directly by MCP`" 항목을 확인합니다.

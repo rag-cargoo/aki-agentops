@@ -31,16 +31,16 @@
 * **PROJECTS (Registered Sidecars)**
   * **Ticket Core Service**
     * [Project Sidecar Index](/prj-docs/projects/README.md)
-    * [Service README (Pages Mirror)](/prj-docs/projects/ticket-core-service/product-docs/README.md)
-    * [API Specs Index (Pages Mirror)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
-    * **API Specs (Pages Mirror)**
+    * [Service README (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/README.md)
+    * [API Specs Index (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
+    * **API Specs (Pages Docs)**
       * [Auth Session API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-session-api.md)
       * [User API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/user-api.md)
       * [Concert API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md)
       * [Reservation API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/reservation-api.md)
       * [Waiting Queue API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/waiting-queue-api.md)
       * [Social Auth API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/social-auth-api.md)
-    * [API Test Guide (Pages Mirror)](/prj-docs/projects/ticket-core-service/product-docs/api-test/README.md)
+    * [API Test Guide (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/api-test/README.md)
     * [Sidecar README](/prj-docs/projects/ticket-core-service/README.md)
     * **Tasks**
       * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)

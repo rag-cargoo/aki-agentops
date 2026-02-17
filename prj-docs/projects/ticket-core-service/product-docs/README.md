@@ -1,9 +1,9 @@
-# Ticket Core Service README (Pages Mirror)
+# Ticket Core Service README
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 17:03:13`
+> - **Updated At**: `2026-02-17 22:42:50`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -13,17 +13,17 @@
 ---
 > [!TIP]
 > - Source
-> - Mirror Policy
+> - Publication Policy
 > - Content
 <!-- DOC_TOC_END -->
 
 ## Source
-- Upstream: [ticket-core-service/README.md](https://github.com/rag-cargoo/ticket-core-service/blob/main/README.md)
-- Synced At: 2026-02-17 17:03:13
+- SoT: `AKI AgentOps sidecar` (`prj-docs/projects/ticket-core-service/product-docs/**`)
+- Updated For Dedup: 2026-02-17 22:38:23
 
-## Mirror Policy
-- 이 문서는 GitHub Pages 탐색을 위한 읽기 전용 미러다.
-- 원본 수정/PR은 `rag-cargoo/ticket-core-service`에서 진행한다.
+## Publication Policy
+- 이 문서는 GitHub Pages 사용자 탐색용 공식 문서다.
+- 변경은 `rag-cargoo/aki-agentops` sidecar PR에서 관리한다.
 
 ## Content
 
@@ -70,16 +70,17 @@ make test-k6
 
 ## 검증/운영 포인트
 
-- API 스크립트 가이드: [API Script Guide](/workspace/apps/backend/ticket-core-service/prj-docs/api-test/README.md)
-- 현재 작업/백로그 통합 보드: [Project Task Dashboard](/workspace/apps/backend/ticket-core-service/prj-docs/task.md)
+- API 스크립트 실행 리포트 기본 경로: `.codex/tmp/ticket-core-service/api-test/latest.md`
+- k6 실행 리포트 기본 경로: `.codex/tmp/ticket-core-service/k6/latest/k6-latest.md`
 
 ---
 
 ## 대표 문서 링크
 
-- 프로젝트 에이전트 규칙: [Project Agent (Rules)](/workspace/apps/backend/ticket-core-service/prj-docs/PROJECT_AGENT.md)
-- 아키텍처: [Architecture](/workspace/apps/backend/ticket-core-service/prj-docs/rules/architecture.md)
-- 동시성 전략 기록: [동시성 제어 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/동시성-제어-전략.md)
-- 소셜 로그인 전략 기록: [소셜 로그인 OAuth 연동 전략](/workspace/apps/backend/ticket-core-service/prj-docs/knowledge/social-login-oauth-연동-전략.md)
-- 예약 API 명세: [Reservation API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/reservation-api.md)
-- 소셜 인증 API 명세: [Social Auth API](/workspace/apps/backend/ticket-core-service/prj-docs/api-specs/social-auth-api.md)
+- Service README (Pages Docs): [AKI AgentOps Pages](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/README.md)
+- API Specs Index (Pages Docs): [API Specs](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
+- API Test Guide (Pages Docs): [API Test Guide](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-test/README.md)
+- Sidecar Task (운영 추적): [Task Dashboard](https://github.com/rag-cargoo/aki-agentops/blob/main/prj-docs/projects/ticket-core-service/task.md)
+- Sidecar Meeting Notes (운영 기록): [Meeting Notes](https://github.com/rag-cargoo/aki-agentops/blob/main/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+
+참고: 제품 레포에서는 `prj-docs`를 운영 SoT로 사용하지 않으며, 문서 거버넌스는 `AKI AgentOps` sidecar에서 관리합니다.

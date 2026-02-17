@@ -1,9 +1,9 @@
-# Waiting Queue API Specification (Pages Mirror)
+# Waiting Queue API Specification
 
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 17:03:13`
+> - **Updated At**: `2026-02-17 22:42:50`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -13,17 +13,17 @@
 ---
 > [!TIP]
 > - Source
-> - Mirror Policy
+> - Publication Policy
 > - Content
 <!-- DOC_TOC_END -->
 
 ## Source
-- Upstream: [ticket-core-service/prj-docs/api-specs/waiting-queue-api.md](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/waiting-queue-api.md)
-- Synced At: 2026-02-17 17:03:13
+- SoT: `AKI AgentOps sidecar` (`prj-docs/projects/ticket-core-service/product-docs/**`)
+- Updated For Dedup: 2026-02-17 22:38:23
 
-## Mirror Policy
-- 이 문서는 GitHub Pages 탐색을 위한 읽기 전용 미러다.
-- 원본 수정/PR은 `rag-cargoo/ticket-core-service`에서 진행한다.
+## Publication Policy
+- 이 문서는 GitHub Pages 사용자 탐색용 공식 문서다.
+- 변경은 `rag-cargoo/aki-agentops` sidecar PR에서 관리한다.
 
 ## Content
 

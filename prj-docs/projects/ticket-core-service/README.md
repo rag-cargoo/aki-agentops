@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 17:14:21`
+> - **Updated At**: `2026-02-17 22:42:50`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -29,9 +29,9 @@
 - [Architecture Rule](./rules/architecture.md)
 
 ## External Product Docs
-- Service README (Pages Mirror):
+- Service README (Pages Docs):
   - [product-docs/README.md](./product-docs/README.md)
-- API Specs (Pages Mirror):
+- API Specs (Pages Docs):
   - [API Specs Index](./product-docs/api-specs/README.md)
   - [Auth Session API](./product-docs/api-specs/auth-session-api.md)
   - [User API](./product-docs/api-specs/user-api.md)
@@ -39,7 +39,7 @@
   - [Reservation API](./product-docs/api-specs/reservation-api.md)
   - [Waiting Queue API](./product-docs/api-specs/waiting-queue-api.md)
   - [Social Auth API](./product-docs/api-specs/social-auth-api.md)
-- API Test Guide (Pages Mirror):
+- API Test Guide (Pages Docs):
   - [product-docs/api-test/README.md](./product-docs/api-test/README.md)
 - Upstream Repository:
   - [rag-cargoo/ticket-core-service](https://github.com/rag-cargoo/ticket-core-service)
