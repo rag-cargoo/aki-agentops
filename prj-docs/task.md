@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 08:40:03`
+> - **Updated At**: `2026-02-17 09:15:47`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -224,6 +224,22 @@
   - `gh repo view --json name,nameWithOwner,url`
   - `curl -I https://rag-cargoo.github.io/aki-agentops/`
   - 문서 반영 PR 링크(추후)
+
+### TSK-2602-015 레거시 로컬 경로(`/home/aki/2602`) 잔여 정리
+- Status: DONE
+- Owner: Codex
+- Due: 2026-02-17
+- Description:
+  - 레거시 로컬 경로(`/home/aki/2602`) 예시가 남아 있는 운영 문서/스크립트를 현재 저장소 경로(`/home/aki/aki-agentops`) 기준으로 정렬한다.
+  - 기존 회의록/증빙 원문은 보존하고, 실행 예시성 문서/스크립트만 갱신한다.
+- Done Criteria:
+  - `prj-docs/references/sidecar-operations-runbook.md`의 `safe-git` 예시가 `/home/aki/aki-agentops`를 사용함
+  - `skills/aki-codex-core/scripts/safe-git.sh`의 usage example이 `/home/aki/aki-agentops`를 사용함
+  - quick/strict precommit 체인이 통과함
+- Evidence:
+  - `prj-docs/references/sidecar-operations-runbook.md` Repo Target Guard 예시 경로 갱신
+  - `skills/aki-codex-core/scripts/safe-git.sh` usage 예시 경로 갱신
+  - PR 링크(추후)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:03:20`
-> - **Updated At**: `2026-02-17 08:40:03`
+> - **Updated At**: `2026-02-17 09:15:47`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
@@ -26,7 +26,7 @@
 ## Repo Target Guard
 1. Git 명령은 대상 레포를 반드시 명시한다.
 ```bash
-./skills/aki-codex-core/scripts/safe-git.sh --repo /home/aki/2602 status --short
+./skills/aki-codex-core/scripts/safe-git.sh --repo /home/aki/aki-agentops status --short
 ./skills/aki-codex-core/scripts/safe-git.sh --repo workspace/apps/backend/ticket-core-service branch --show-current
 ```
 2. GitHub CLI 명령은 대상 `owner/repo`를 반드시 명시한다.
