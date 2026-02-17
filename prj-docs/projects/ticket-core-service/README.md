@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 16:52:40`
+> - **Updated At**: `2026-02-17 17:14:21`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -29,17 +29,20 @@
 - [Architecture Rule](./rules/architecture.md)
 
 ## External Product Docs
-- Service README:
-  - [README.md](https://github.com/rag-cargoo/ticket-core-service/blob/main/README.md)
-- API Specs:
-  - [Auth Session API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/auth-session-api.md)
-  - [User API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/user-api.md)
-  - [Concert API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/concert-api.md)
-  - [Reservation API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/reservation-api.md)
-  - [Waiting Queue API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/waiting-queue-api.md)
-  - [Social Auth API](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/social-auth-api.md)
-- API Test Guide:
-  - [prj-docs/api-test/README.md](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-test/README.md)
+- Service README (Pages Mirror):
+  - [product-docs/README.md](./product-docs/README.md)
+- API Specs (Pages Mirror):
+  - [API Specs Index](./product-docs/api-specs/README.md)
+  - [Auth Session API](./product-docs/api-specs/auth-session-api.md)
+  - [User API](./product-docs/api-specs/user-api.md)
+  - [Concert API](./product-docs/api-specs/concert-api.md)
+  - [Reservation API](./product-docs/api-specs/reservation-api.md)
+  - [Waiting Queue API](./product-docs/api-specs/waiting-queue-api.md)
+  - [Social Auth API](./product-docs/api-specs/social-auth-api.md)
+- API Test Guide (Pages Mirror):
+  - [product-docs/api-test/README.md](./product-docs/api-test/README.md)
+- Upstream Repository:
+  - [rag-cargoo/ticket-core-service](https://github.com/rag-cargoo/ticket-core-service)
 
 ## Operation Rule
 - 제품 코드/테스트 변경은 `ticket-core-service` 레포에서만 커밋/PR 처리한다.

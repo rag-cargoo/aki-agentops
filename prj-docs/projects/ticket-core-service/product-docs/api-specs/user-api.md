@@ -1,0 +1,125 @@
+# User API Specification (Pages Mirror)
+
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-17 17:03:13`
+> - **Updated At**: `2026-02-17 17:03:13`
+> - **Target**: `BOTH`
+> - **Surface**: `PUBLIC_NAV`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Source
+> - Mirror Policy
+> - Content
+<!-- DOC_TOC_END -->
+
+## Source
+- Upstream: [ticket-core-service/prj-docs/api-specs/user-api.md](https://github.com/rag-cargoo/ticket-core-service/blob/main/prj-docs/api-specs/user-api.md)
+- Synced At: 2026-02-17 17:03:13
+
+## Mirror Policy
+- 이 문서는 GitHub Pages 탐색을 위한 읽기 전용 미러다.
+- 원본 수정/PR은 `rag-cargoo/ticket-core-service`에서 진행한다.
+
+## Content
+
+
+
+티켓 서비스 이용을 위한 사용자 프로필을 관리하는 API입니다. 모든 요청과 응답은 일관된 규격을 따릅니다.
+
+---
+
+## 1. API 상세 명세 (Endpoint Details)
+
+### 1.1. 신규 유저 생성 (Sign-up)
+- **Endpoint**: `POST /api/users`
+- **Description**: 시스템 이용을 위한 새로운 유저를 등록합니다.
+
+**Parameters**
+
+| Location | Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| Body | `username` | String | Yes | 사용자 식별 이름 (중복 불가) |
+| Body | `tier` | String | No | 사용자 등급 (`BASIC`, `SILVER`, `GOLD`, `VIP`), 미입력 시 `BASIC` |
+
+**Request Example**
+
+```json
+{
+  "username": "tester1",
+  "tier": "BASIC"
+}
+```
+
+**Response Summary (200 OK)**
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `id` | Long | 발급된 유저 고유 ID |
+| `username` | String | 등록된 사용자 이름 |
+| `tier` | String | 사용자 등급 |
+
+**Response Example**
+
+```json
+{
+  "id": 1,
+  "username": "tester1",
+  "tier": "BASIC"
+}
+```
+
+---
+
+### 1.2. 유저 단건 조회
+- **Endpoint**: `GET /api/users/{id}`
+- **Description**: ID를 기반으로 유저의 상세 정보를 조회합니다.
+
+**Parameters**
+
+| Location | Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| Path | `id` | Long | Yes | 조회할 유저 고유 ID |
+
+**Response Example**
+
+```json
+{
+  "id": 1,
+  "username": "tester1",
+  "tier": "BASIC"
+}
+```
+
+---
+
+### 1.3. 유저 삭제
+- **Endpoint**: `DELETE /api/users/{id}`
+- **Description**: 유저 계정을 삭제합니다. (진행 중인 예약이 있을 경우 실패할 수 있음)
+
+**Parameters**
+
+| Location | Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| Path | `id` | Long | Yes | 삭제할 유저 고유 ID |
+
+**Response Summary (204 No Content)**
+
+- 성공 시 응답 바디 없음.
+
+---
+
+## 2. 공통 에러 응답 (Common Error)
+
+```json
+{
+  "timestamp": "2026-02-05T21:30:00.000",
+  "status": 404,
+  "error": "Not Found",
+  "path": "/api/users/999"
+}
+```
