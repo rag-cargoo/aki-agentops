@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:58:10`
-> - **Updated At**: `2026-02-17 17:58:10`
+> - **Updated At**: `2026-02-17 18:00:15`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -35,9 +35,9 @@
     - precommit quick chain 통과
 
 ## External Sync
-- Source of Truth: `rag-cargoo/aki-agentops` issue `#79`
+- Source of Truth: `https://github.com/rag-cargoo/aki-agentops/issues/79`
 - Sync Action: issue-comment + task-update
-- Last Synced At: 2026-02-17 17:58:10
+- Last Synced At: 2026-02-17 18:00:15
 
 ## 안건 1: 문제정의(루트 Pages 아티팩트 혼재)
 - Created At: 2026-02-17 17:58:10
@@ -74,6 +74,7 @@
   - 신규 범위는 기존 umbrella 이슈 `#79`에 누적 관리한다(동일 거버넌스 범위).
   - 실행 단위는 `task.md`의 `TSK-2602-020`으로 추적하고, 구현 PR은 해당 이슈와 링크한다.
   - 상태 전환은 `회의록 -> task -> issue comment` 순서로 기록한다.
+  - 기준 PR: `https://github.com/rag-cargoo/aki-agentops/pull/90`
 - 후속작업:
   - 담당: User + Codex
   - 기한: 2026-02-18
