@@ -229,8 +229,8 @@
 
     var docsSurface = resolveDocsSurface();
     var sidebarManifestFile = docsSurface === 'agent'
-      ? 'sidebar-agent-manifest.md'
-      : 'sidebar-manifest.md';
+      ? 'github-pages/sidebar-agent-manifest.md'
+      : 'github-pages/sidebar-manifest.md';
     var sidebarManifestPath = sidebarManifestFile + '?v=' + Date.now();
     window.$docsify = {
       name: docsSurface === 'agent' ? 'AKI AgentOps (Agent Nav)' : 'AKI AgentOps',

@@ -4,15 +4,13 @@ set -euo pipefail
 POLICY_ID="core-workspace"
 POLICY_ROOTS=(
   "AGENTS.md"
-  "HOME.md"
   "README.md"
   ".gitignore"
   "index.html"
   ".githooks"
   "skills"
   "prj-docs"
-  "sidebar-manifest.md"
-  "sidebar-agent-manifest.md"
+  "github-pages"
   "mcp"
   ".github"
 )
@@ -56,7 +54,7 @@ policy_validate() {
   local requires_target_surface_check="false"
   while IFS= read -r file_path; do
     [[ -z "$file_path" ]] && continue
-    if [[ "$file_path" == *.md || "$file_path" == "index.html" || "$file_path" == "sidebar-manifest.md" || "$file_path" == "sidebar-agent-manifest.md" ]]; then
+    if [[ "$file_path" == *.md || "$file_path" == "index.html" ]]; then
       requires_target_surface_check="true"
       break
     fi

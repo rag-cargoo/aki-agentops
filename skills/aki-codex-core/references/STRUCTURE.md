@@ -65,7 +65,7 @@ skills/
 
 ### 2. 문서 분류 및 사이드바 운영 표준 (Sidebar Policy)
 
-Docsify 사이드바(`sidebar-manifest.md`)는 프로젝트의 **실제 물리적 폴더 구조(Physical Tree)를 1:1로 완벽하게 투영**해야 한다.
+Docsify 사이드바(`github-pages/sidebar-manifest.md`)는 프로젝트의 **실제 물리적 폴더 구조(Physical Tree)를 1:1로 완벽하게 투영**해야 한다.
 
 *   **물리적 동기화**: 사이드바의 대분류와 소분류는 실제 루트 디렉토리의 `skills/`, `workspace/apps/` 등의 계층 구조와 일치해야 한다.
 *   **경로 투명성**: 사용자가 사이드바만 보고도 "이 문서는 실제 어디에 위치한 파일이다"라고 직관적으로 알 수 있어야 한다.
@@ -80,7 +80,7 @@ Docsify 사이드바(`sidebar-manifest.md`)는 프로젝트의 **실제 물리�
 ###  새 프로젝트 부트스트랩 (Bootstrap)
 새로운 레포지토리에 아래 항목을 복사하면 별도의 프롬프트 없이도 일관된 개발 문화가 이식됩니다.
 1.  **`AGENTS.md` + `skills/`**: AI가 규칙과 스킬 지식을 로드함.
-2.  **`index.html`, `.nojekyll`, `sidebar-manifest.md`**: 문서화 시스템.
+2.  **`index.html`, `.nojekyll`, `github-pages/sidebar-manifest.md`**: 문서화 시스템.
 
 ---
 
@@ -105,5 +105,5 @@ Docsify 사이드바(`sidebar-manifest.md`)는 프로젝트의 **실제 물리�
 ---
 
 ## 6. [부록] 기술 가이드 (Docsify Spec)
-*   **사이드바 로딩**: `loadSidebar: true` (파일명 `sidebar-manifest.md` 추천).
+*   **사이드바 로딩**: `loadSidebar: true` (파일명 `github-pages/sidebar-manifest.md` 권장).
 *   **경로 규칙**: 404 방지를 위해 반드시 **루트 기준 절대 경로(`/` 시작)**를 사용하십시오.

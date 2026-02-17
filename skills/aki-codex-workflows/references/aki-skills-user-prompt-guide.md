@@ -87,7 +87,7 @@
   - `사이드바 링크 깨짐 확인해줘`
 - 기대 결과:
   - Docsify 스타일/링크/무결성 검증 결과를 보고한다.
-  - 필요 시 `sidebar-manifest.md` 보정 포인트를 함께 제시한다.
+  - 필요 시 `github-pages/sidebar-manifest.md` 보정 포인트를 함께 제시한다.
 
 ## 운영 확장 프롬프트
 

@@ -77,7 +77,7 @@ skills/
 모든 구현이 끝난 후, **커밋(Commit) 전**에 반드시 아래 사항을 점검합니다.
 1. **문서 동기화**: 구현된 코드가 `README`, `knowledge` 등 기존 문서의 설명과 일치하는가?
 2. **규칙 현행화**: 기존 규칙(`RULES`)이 현실과 맞지 않다면, **규칙 문서를 먼저 수정**하십시오.
-3. **사이드바 갱신**: 새 문서(`.md`)가 생성되었다면 반드시 `sidebar-manifest.md`에 링크를 추가하십시오.
+3. **사이드바 갱신**: 새 문서(`.md`)가 생성되었다면 반드시 `github-pages/sidebar-manifest.md`에 링크를 추가하십시오.
 4. **스킬 네이밍 점검**: 스킬 추가/리네임이 있으면 `./skills/aki-codex-core/scripts/check-skill-naming.sh`를 실행하십시오.
 
 ### 4단계: 문서화 표준 (Documentation Policy)
@@ -109,4 +109,4 @@ skills/
 ## 3. 새로운 프로젝트 추가 방법
 1. `workspace/<category>` 하위에 프로젝트 폴더를 생성합니다.
 2. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh <project-root>`를 실행해 기준선 문서(`README.md`, `PROJECT_AGENT.md`, `task.md`, `meeting-notes/README.md`)와 `prj-docs` 골격을 자동 생성합니다.
-3. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>` 및 `sidebar-manifest.md` 등록으로 활성 타겟과 문서 링크를 동기화합니다.
+3. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>` 및 `github-pages/sidebar-manifest.md` 등록으로 활성 타겟과 문서 링크를 동기화합니다.

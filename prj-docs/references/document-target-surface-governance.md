@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 09:37:07`
-> - **Updated At**: `2026-02-17 11:36:24`
+> - **Updated At**: `2026-02-17 18:06:11`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -17,6 +17,7 @@
 > - Classification Rules
 > - Surface Semantics
 > - Default Mapping by Path
+> - Repository vs Project Boundary
 > - Current Baseline (2026-02-17)
 > - Rollout Stages
 > - Validation Gate
@@ -59,24 +60,32 @@
 1. `AGENTS.md`, `skills/**`, `.codex/runtime/**`:
    - 권장 `Target=AGENT`
    - 권장 `Surface=AGENT_NAV` 또는 `HIDDEN`
-2. `README.md`, `HOME.md`, `prj-docs/meeting-notes/**`:
+2. `README.md`, `github-pages/HOME.md`, `prj-docs/meeting-notes/**`:
    - 권장 `Target=HUMAN`
    - 권장 `Surface=PUBLIC_NAV`
 3. `prj-docs/task.md`, `prj-docs/references/**`, `prj-docs/projects/**`:
    - 권장 `Target=BOTH`
    - 권장 `Surface=PUBLIC_NAV` (필요 시 일부 `AGENT_NAV`/`HIDDEN`)
 
+## Repository vs Project Boundary
+1. `workspace/**` 경로는 물리 배치(도메인) 기준이며, 경로만으로 `PROJECT`로 확정하지 않는다.
+2. `PROJECT`는 아래 기준 중 하나를 충족해야 한다.
+   - `prj-docs/projects/project-map.yaml`에 `project_id/code_root/docs_root/repo_remote`가 등록되고 `docs_root/task.md`가 존재한다.
+   - 레거시 호환으로 `workspace/**/prj-docs/task.md`가 존재하고 세션 리로드 기준(`PROJECT_AGENT.md`, `meeting-notes/README.md`)을 충족한다.
+3. Public 메뉴의 `REPOSITORY (AKI AgentOps)`는 루트 운영 문서(거버넌스/회의록/태스크) 전용 영역이다.
+4. Public 메뉴의 `PROJECTS`는 등록된 프로젝트 sidecar 문서 묶음이며, 외부 제품 레포 링크는 보조 링크(`Repository (GitHub)`)로 표기한다.
+
 ## Current Baseline (2026-02-17)
 1. 인벤토리:
    - `prj-docs/references/document-target-surface-inventory-2026-02-17.md`
 2. 메뉴 분리:
-   - Public: `sidebar-manifest.md`
-   - Agent: `sidebar-agent-manifest.md`
+   - Public: `github-pages/sidebar-manifest.md`
+   - Agent: `github-pages/sidebar-agent-manifest.md`
 3. 런타임 전환:
    - 기본 `/?surface=public`
    - 에이전트 `/?surface=agent#/AGENTS.md`
 4. 구현 위치:
-   - `index.html`에서 `surface` query 값으로 sidebar manifest 선택
+   - `index.html`에서 `surface` query 값으로 `github-pages/sidebar manifest` 선택
 
 ## Rollout Stages
 1. Stage 1: 정책/스키마 확정 + task/issue 등록
@@ -92,4 +101,4 @@
    - `bash skills/aki-codex-precommit/scripts/check-target-surface-governance.sh --scope staged`
 5. 실패 시 복구:
    - 문서 메타에 `Target`/`Surface`를 보완한 뒤 재검증한다.
-   - public 사이드바에 `AGENT` 문서 직접 링크가 있으면 `sidebar-agent-manifest.md`로 이동한다.
+   - public 사이드바에 `AGENT` 문서 직접 링크가 있으면 `github-pages/sidebar-agent-manifest.md`로 이동한다.

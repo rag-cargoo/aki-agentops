@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 06:03:20`
-> - **Updated At**: `2026-02-17 17:14:21`
+> - **Updated At**: `2026-02-17 18:07:35`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -85,4 +85,4 @@ bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick
 2. `prj-docs/projects/project-map.yaml`에 `project_id/code_root/docs_root/repo_remote/default_branch` 등록.
 3. `prj-docs/projects/<project-id>/`에 `README.md`, `task.md`, `meeting-notes/README.md`, `PROJECT_AGENT.md` 생성.
 4. `set_active_project.sh --list`와 `session_start.sh`로 로드 검증.
-5. `sidebar-manifest.md`와 루트 `README.md`에 sidecar 진입 링크 반영.
+5. `github-pages/sidebar-manifest.md`와 루트 `README.md`에 sidecar 진입 링크 반영.
