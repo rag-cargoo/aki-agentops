@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-17 23:01:31`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -28,6 +28,7 @@ description: |
 > - 6. 전용 도구 세트
 > - 7. 오케스트레이션 경계
 > - 8. 로컬 실행 계약
+> - 9. 프로젝트 문서 반입/공개 경계
 <!-- DOC_TOC_END -->
 
 GitHub Pages와 Docsify를 활용하여 기술 지식을 고품질 웹 문서로 변환하고 관리합니다.
@@ -82,3 +83,10 @@ GitHub Pages와 Docsify를 활용하여 기술 지식을 고품질 웹 문서로
   - docsify 렌더링 오류가 없고 무결성 검증이 통과
 - Failure:
   - 실패 로그 보존 후 수정 포인트 보고, 필요 시 롤백/재검증
+
+## 9. 프로젝트 문서 반입/공개 경계
+1. 기본값은 "프로젝트 원본 문서는 프로젝트 레포 SoT"다.
+2. Pages 내 프로젝트 문서는 기본적으로 원본 레포 링크 연결을 우선한다.
+3. sidecar 반입/복제 문서를 공개할 때는 왜 반입했는지 근거(공개 탐색, snapshot, 명시 전환)를 먼저 확인한다.
+4. 원본 경로가 삭제/전환된 경우, `Pages Mirror` 같은 오해 가능한 용어를 유지하지 않고 현재 SoT 기준(`Pages Docs`)으로 정렬한다.
+5. 상세 정책은 `skills/aki-codex-core/references/project-doc-sot-boundary-policy.md`를 따른다.

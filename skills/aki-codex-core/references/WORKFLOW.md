@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-17 23:01:31`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -103,6 +103,11 @@ skills/
 ### 5단계: 보고 및 커밋
 1. **커밋 메시지**: 반드시 **한글**로 작성하며, 변경 이유와 내역을 명확히 요약합니다.
 2. **진행 상황 기록**: 작업 내용을 프로젝트의 `prj-docs/task.md`에 상세히 기록하고 상태를 업데이트합니다.
+
+### 프로젝트 문서 SoT 경계 (필수)
+1. 기본값은 프로젝트 원본 문서를 프로젝트 레포 SoT로 유지한다.
+2. `AKI AgentOps`는 sidecar 운영 문서(`task`, `meeting-notes`, 거버넌스)를 기본 관리 대상으로 한다.
+3. 외부 프로젝트 문서 반입/복제는 예외 케이스로만 허용하며, 정책은 `skills/aki-codex-core/references/project-doc-sot-boundary-policy.md`를 따른다.
 
 ---
 
