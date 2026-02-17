@@ -3,7 +3,9 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 09:07:32`
-> - **Updated At**: `2026-02-17 09:07:32`
+> - **Updated At**: `2026-02-17 17:28:03`
+> - **Target**: `BOTH`
+> - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->

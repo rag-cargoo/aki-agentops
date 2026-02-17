@@ -8,7 +8,9 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-12 17:33:56`
+> - **Updated At**: `2026-02-17 17:28:03`
+> - **Target**: `AGENT`
+> - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
 
 <!-- DOC_TOC_START -->
