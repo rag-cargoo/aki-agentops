@@ -7,7 +7,7 @@ Usage:
   safe-git.sh --repo <path> <git-args...>
 
 Examples:
-  ./skills/aki-codex-core/scripts/safe-git.sh --repo /home/aki/2602 status --short
+  ./skills/aki-codex-core/scripts/safe-git.sh --repo /home/aki/aki-agentops status --short
   ./skills/aki-codex-core/scripts/safe-git.sh --repo workspace/apps/backend/ticket-core-service rev-parse --short HEAD
 EOF
 }
