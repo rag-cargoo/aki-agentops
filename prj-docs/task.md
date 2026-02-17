@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:07:46`
-> - **Updated At**: `2026-02-17 17:58:10`
+> - **Updated At**: `2026-02-17 18:05:35`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -317,7 +317,7 @@
 ## P4: GitHub Pages 구조 정리 단계
 
 ### TSK-2602-020 Pages 루트 아티팩트(`index/sidebar/home`) 구조 정리 및 명명 규칙 일치
-- Status: DOING
+- Status: DONE
 - Owner: User + Codex
 - Due: 2026-02-18
 - Description:
@@ -330,10 +330,26 @@
   - `core-workspace` 정책, Target/Surface lint, docsify validator가 새 경로 기준으로 통과한다.
   - 운영 문서(`task`, `meeting-notes`, `issue #79`)에 결정/근거가 동기화된다.
 - Evidence:
+  - 구조 이행:
+    - `HOME.md` -> `github-pages/HOME.md`
+    - `sidebar-manifest.md` -> `github-pages/sidebar-manifest.md`
+    - `sidebar-agent-manifest.md` -> `github-pages/sidebar-agent-manifest.md`
+  - 런타임/검증 경로 동기화:
+    - `index.html` (`github-pages/sidebar-*.md` 로딩)
+    - `skills/aki-codex-precommit/policies/core-workspace.sh`
+    - `skills/aki-codex-precommit/scripts/check-target-surface-governance.sh`
+    - `skills/aki-github-pages-expert/scripts/docsify_validator.py`
+    - `skills/aki-github-pages-expert/scripts/doc_meta_toc_sync.py`
+    - `AGENTS.md`
+    - `prj-docs/references/document-target-surface-governance.md`
+  - 검증:
+    - `bash skills/aki-codex-precommit/scripts/check-target-surface-governance.sh --scope all` PASS
+    - `python3 skills/aki-github-pages-expert/scripts/docsify_validator.py --all-managed` PASS
+    - `bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode quick --all` PASS
+    - `bash skills/aki-codex-precommit/scripts/validate-precommit-chain.sh --mode strict --all --strict-remote` PASS (`warnings=2`)
   - 회의록: `prj-docs/meeting-notes/2026-02-17-github-pages-structure-governance-planning.md`
   - 이슈: `https://github.com/rag-cargoo/aki-agentops/issues/79`
   - 관련 PR: `https://github.com/rag-cargoo/aki-agentops/pull/90`
-  - 후속 PR 링크(구조 이행 완료 후 추가)
 
 ## Governance Rules
 - 안건 착수/종료 시 Mandatory Runtime Gate를 필수 체크한다.

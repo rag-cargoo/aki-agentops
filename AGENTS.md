@@ -44,7 +44,7 @@
    - `mcp__github__enable_toolset`: `context`, `repos`, `issues`, `projects`, `pull_requests`, `labels`
    - `mcp__github__list_available_toolsets` 재호출로 `currently_enabled=true` 재검증
 6. 필요 시 `.codex/runtime/codex_skills_reload.md`, `.codex/runtime/codex_project_reload.md` 상세 확인
-7. `sidebar-manifest.md` 확인
+7. `github-pages/sidebar-manifest.md` 확인
 
 멀티 프로젝트에서 Active Project가 비어 있으면 먼저 실행:
 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
@@ -56,7 +56,7 @@
 - Skills Snapshot: `.codex/runtime/codex_skills_reload.md`
 - Project Snapshot: `.codex/runtime/codex_project_reload.md`
 - Session Snapshot: `.codex/runtime/codex_session_start.md`
-- Sidebar Index: `sidebar-manifest.md`
+- Sidebar Index: `github-pages/sidebar-manifest.md`
 
 ## 3) Safety Rules
 1. 기존 문서의 상세 내용은 요약/삭제하지 않고 구조화만 수행

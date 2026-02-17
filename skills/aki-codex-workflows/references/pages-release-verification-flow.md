@@ -14,7 +14,7 @@
    - 현재 Pages source branch/path와 릴리즈 대상 브랜치를 확인한다.
 2. 사이드바/문서 링크 정합성 점검
    - Owner Skill: `aki-github-pages-expert`
-   - `sidebar-manifest.md` 링크와 문서 경로 무결성을 점검한다.
+   - `github-pages/sidebar-manifest.md` 링크와 문서 경로 무결성을 점검한다.
 3. 배포 상태 확인
    - Owner Skill: `aki-mcp-github` (`repos` context)
    - Pages 상태(`built`/오류)를 확인한다.

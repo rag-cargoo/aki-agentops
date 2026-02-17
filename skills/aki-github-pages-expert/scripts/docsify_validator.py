@@ -13,6 +13,9 @@ TOC_END = "<!-- DOC_TOC_END -->"
 
 EXCLUDED_FILES = {
     "sidebar-manifest.md",
+    "sidebar-agent-manifest.md",
+    "github-pages/sidebar-manifest.md",
+    "github-pages/sidebar-agent-manifest.md",
     "workspace/apps/backend/ticket-core-service/prj-docs/api-test/latest.md",
 }
 EXCLUDED_PREFIXES = (
@@ -22,7 +25,7 @@ EXCLUDED_PREFIXES = (
 
 FORCE_MANAGED_FILES = {
     "AGENTS.md",
-    "HOME.md",
+    "github-pages/HOME.md",
     "README.md",
 }
 

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-17 18:07:35`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -12,7 +12,7 @@
 ## 단계 목차 (Step Index)
 ---
 > [!TIP]
-> - Step 1: 필수 파일 생성 (Root)
+> - Step 1: 필수 파일 생성 (Root + github-pages)
 > - Step 2: GitHub Pages 배포 설정
 > - Step 3: 확인
 <!-- DOC_TOC_END -->
@@ -29,8 +29,8 @@
 
 ## 2. 단계별 구축 (Step-by-Step)
 
-### Step 1: 필수 파일 생성 (Root)
-프로젝트 최상위 루트(`/`)에 다음 3개 파일을 생성합니다.
+### Step 1: 필수 파일 생성 (Root + github-pages)
+프로젝트 최상위 루트(`/`)에 다음 파일을 생성합니다.
 
 **1. `index.html`**
 웹사이트의 뼈대입니다. 아래 코드를 그대로 복사해서 쓰세요.
@@ -58,7 +58,7 @@
     window.$docsify = {
       name: 'Project Docs',
       repo: '', // GitHub URL (선택)
-      loadSidebar: 'sidebar-manifest.md', // 사이드바 파일 지정
+      loadSidebar: 'github-pages/sidebar-manifest.md', // 사이드바 파일 지정
       subMaxLevel: 0, // 사이드바에 페이지 내부 목차 표시 안 함
       sidebarDisplayLevel: 1, // 1레벨만 펼침
       auto2top: true
@@ -74,11 +74,14 @@
 *   빈 파일로 만듭니다.
 *   **역할**: GitHub가 `_`로 시작하는 파일(`_sidebar.md` 등)을 무시하지 않게 합니다.
 
-**3. `sidebar-manifest.md`**
+**3. `github-pages/HOME.md`**
+*   사이트 홈 페이지 문서입니다.
+
+**4. `github-pages/sidebar-manifest.md`**
 *   왼쪽 메뉴를 정의합니다.
 *   **중요**: 링크는 반드시 **루트 기준 절대 경로(`/`)**를 사용하세요.
 ```markdown
-* [Home](/HOME.md)
+* [Home](/github-pages/HOME.md)
 
 * **WORKSPACE**
   * [Current Tasks](/workspace/apps/<domain>/<service>/prj-docs/task.md)
@@ -105,7 +108,7 @@
 
 ### Q2. 메뉴를 눌렀는데 깨진 페이지가 나와요.
 *   **원인**: 링크 경로 문제.
-*   **해결**: `sidebar-manifest.md`에서 모든 링크 앞에 `/`를 붙였는지 확인하세요. (예: `workspace/apps/...` -> `/workspace/apps/...`)
+*   **해결**: `github-pages/sidebar-manifest.md`에서 모든 링크 앞에 `/`를 붙였는지 확인하세요. (예: `workspace/apps/...` -> `/workspace/apps/...`)
 
 ### Q3. 사이드바가 안 보여요.
-*   **해결**: `.nojekyll` 파일이 있는지 확인하고, `index.html`의 `loadSidebar` 설정이 올바른 파일명을 가리키는지 확인하세요.
+*   **해결**: `.nojekyll` 파일이 있는지 확인하고, `index.html`의 `loadSidebar` 설정이 `github-pages/sidebar-manifest.md`를 가리키는지 확인하세요.

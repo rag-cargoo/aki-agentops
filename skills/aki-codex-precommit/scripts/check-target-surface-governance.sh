@@ -25,7 +25,7 @@ Rules:
   - conflict:
     - Target=AGENT and Surface=PUBLIC_NAV is invalid.
   - sidebar guard:
-    - sidebar-manifest.md must not directly expose AGENT docs
+    - github-pages/sidebar-manifest.md must not directly expose AGENT docs
       (/skills/*, /AGENTS.md, /workspace/agent-skills/*)
 EOF
 }
@@ -139,19 +139,26 @@ while IFS= read -r file_path; do
   fi
 done <<< "$files"
 
-if [[ -f "sidebar-manifest.md" ]]; then
-  mapfile -t bad_public_links < <(grep -nE '\]\(/skills/|\]\(/AGENTS\.md\)|\]\(/workspace/agent-skills/' sidebar-manifest.md || true)
+public_sidebar_path=""
+if [[ -f "github-pages/sidebar-manifest.md" ]]; then
+  public_sidebar_path="github-pages/sidebar-manifest.md"
+elif [[ -f "sidebar-manifest.md" ]]; then
+  public_sidebar_path="sidebar-manifest.md"
+fi
+
+if [[ -n "$public_sidebar_path" ]]; then
+  mapfile -t bad_public_links < <(grep -nE '\]\(/skills/|\]\(/AGENTS\.md\)|\]\(/workspace/agent-skills/' "$public_sidebar_path" || true)
   if [[ "${#bad_public_links[@]}" -gt 0 ]]; then
-    errors+=("sidebar-manifest.md: contains AGENT-only direct links")
+    errors+=("${public_sidebar_path}: contains AGENT-only direct links")
     for line in "${bad_public_links[@]}"; do
-      errors+=("sidebar-manifest.md:$line")
+      errors+=("${public_sidebar_path}:$line")
     done
   fi
 fi
 
 if [[ -f "index.html" ]]; then
-  if ! grep -q "sidebar-agent-manifest.md" index.html; then
-    errors+=("index.html: missing sidebar-agent-manifest.md routing")
+  if ! grep -q "github-pages/sidebar-agent-manifest.md" index.html; then
+    errors+=("index.html: missing github-pages/sidebar-agent-manifest.md routing")
   fi
 fi
 

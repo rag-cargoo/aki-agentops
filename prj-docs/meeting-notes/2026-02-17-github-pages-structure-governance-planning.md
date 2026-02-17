@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:58:10`
-> - **Updated At**: `2026-02-17 18:00:15`
+> - **Updated At**: `2026-02-17 18:05:35`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -37,7 +37,7 @@
 ## External Sync
 - Source of Truth: `https://github.com/rag-cargoo/aki-agentops/issues/79`
 - Sync Action: issue-comment + task-update
-- Last Synced At: 2026-02-17 18:00:15
+- Last Synced At: 2026-02-17 18:05:35
 
 ## 안건 1: 문제정의(루트 Pages 아티팩트 혼재)
 - Created At: 2026-02-17 17:58:10
@@ -54,29 +54,39 @@
 
 ## 안건 2: 경계 규칙(명명 vs 배포 제약) 확정
 - Created At: 2026-02-17 17:58:10
-- Updated At: 2026-02-17 17:58:10
+- Updated At: 2026-02-17 18:05:35
 - Status: DONE
 - 결정사항:
   - 문서/디렉터리 명명은 `github-pages/`가 목적상 더 명확하므로 해당 명명을 채택한다.
   - 단, 현재 Pages 설정이 `main:/`(legacy)이므로 `.nojekyll`은 배포 루트 유지가 필요하다.
   - 이동 전략은 Pages 소스 제약과 스크립트 의존성(`core-workspace`, lint, validator)을 함께 고려해 결정한다.
+  - 구조 이행 결과:
+    - `HOME.md` -> `github-pages/HOME.md`
+    - `sidebar-manifest.md` -> `github-pages/sidebar-manifest.md`
+    - `sidebar-agent-manifest.md` -> `github-pages/sidebar-agent-manifest.md`
+    - `index.html`에서 `github-pages/sidebar-*.md`를 로딩하도록 변경
 - 후속작업:
   - 담당: Codex
   - 기한: 2026-02-18
-  - 상태: DOING
-  - 메모: 호환 레이어 포함 이행안(루트 최소화 + 경로 참조 전환)을 작성하고 검증한다.
+  - 상태: DONE
+  - 메모: 경로 전환 + 호환 검증 완료.
 
 ## 안건 3: 실행 관리(회의록/태스크/이슈 동기화)
 - Created At: 2026-02-17 17:58:10
-- Updated At: 2026-02-17 17:58:10
-- Status: DOING
+- Updated At: 2026-02-17 18:05:35
+- Status: DONE
 - 결정사항:
   - 신규 범위는 기존 umbrella 이슈 `#79`에 누적 관리한다(동일 거버넌스 범위).
   - 실행 단위는 `task.md`의 `TSK-2602-020`으로 추적하고, 구현 PR은 해당 이슈와 링크한다.
   - 상태 전환은 `회의록 -> task -> issue comment` 순서로 기록한다.
   - 기준 PR: `https://github.com/rag-cargoo/aki-agentops/pull/90`
+  - 검증 완료:
+    - `check-target-surface-governance --scope all`: PASS
+    - `docsify_validator --all-managed`: PASS
+    - `validate-precommit-chain --mode quick --all`: PASS
+    - `validate-precommit-chain --mode strict --all --strict-remote`: PASS
 - 후속작업:
   - 담당: User + Codex
   - 기한: 2026-02-18
-  - 상태: DOING
-  - 메모: 이행 시작 시 issue `#79`에 결정사항과 작업 브랜치를 코멘트로 동기화한다.
+  - 상태: DONE
+  - 메모: issue `#79`와 task 동기화까지 완료.

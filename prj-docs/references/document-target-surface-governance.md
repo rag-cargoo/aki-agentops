@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 09:37:07`
-> - **Updated At**: `2026-02-17 17:43:45`
+> - **Updated At**: `2026-02-17 18:06:11`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -60,7 +60,7 @@
 1. `AGENTS.md`, `skills/**`, `.codex/runtime/**`:
    - 권장 `Target=AGENT`
    - 권장 `Surface=AGENT_NAV` 또는 `HIDDEN`
-2. `README.md`, `HOME.md`, `prj-docs/meeting-notes/**`:
+2. `README.md`, `github-pages/HOME.md`, `prj-docs/meeting-notes/**`:
    - 권장 `Target=HUMAN`
    - 권장 `Surface=PUBLIC_NAV`
 3. `prj-docs/task.md`, `prj-docs/references/**`, `prj-docs/projects/**`:
@@ -79,13 +79,13 @@
 1. 인벤토리:
    - `prj-docs/references/document-target-surface-inventory-2026-02-17.md`
 2. 메뉴 분리:
-   - Public: `sidebar-manifest.md`
-   - Agent: `sidebar-agent-manifest.md`
+   - Public: `github-pages/sidebar-manifest.md`
+   - Agent: `github-pages/sidebar-agent-manifest.md`
 3. 런타임 전환:
    - 기본 `/?surface=public`
    - 에이전트 `/?surface=agent#/AGENTS.md`
 4. 구현 위치:
-   - `index.html`에서 `surface` query 값으로 sidebar manifest 선택
+   - `index.html`에서 `surface` query 값으로 `github-pages/sidebar manifest` 선택
 
 ## Rollout Stages
 1. Stage 1: 정책/스키마 확정 + task/issue 등록
@@ -101,4 +101,4 @@
    - `bash skills/aki-codex-precommit/scripts/check-target-surface-governance.sh --scope staged`
 5. 실패 시 복구:
    - 문서 메타에 `Target`/`Surface`를 보완한 뒤 재검증한다.
-   - public 사이드바에 `AGENT` 문서 직접 링크가 있으면 `sidebar-agent-manifest.md`로 이동한다.
+   - public 사이드바에 `AGENT` 문서 직접 링크가 있으면 `github-pages/sidebar-agent-manifest.md`로 이동한다.

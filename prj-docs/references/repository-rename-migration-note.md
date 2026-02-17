@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 09:07:32`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-17 18:07:35`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,7 +21,7 @@
 
 ## Purpose
 - 저장소 표시명/슬러그 변경 이후에도 문서 탐색과 과거 증빙 링크를 안정적으로 유지하기 위한 기준을 기록한다.
-- 범위: `AKI AgentOps` 루트 문서(`README.md`, `sidebar-manifest.md`, `prj-docs/**`).
+- 범위: `AKI AgentOps` 루트 문서(`README.md`, `github-pages/sidebar-manifest.md`, `prj-docs/**`).
 
 ## Compatibility Policy
 1. 과거 문서 원문은 삭제하지 않는다.

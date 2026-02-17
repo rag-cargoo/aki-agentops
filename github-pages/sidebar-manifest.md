@@ -1,4 +1,4 @@
-* [Home](/HOME.md)
+* [Home](/github-pages/HOME.md)
 * [README](/README.md)
 * [Agent Navigation (Advanced)](/?surface=agent#/AGENTS.md)
 
