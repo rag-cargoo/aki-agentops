@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 01:57:30`
-> - **Updated At**: `2026-02-19 01:57:30`
+> - **Updated At**: `2026-02-19 06:08:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -39,8 +39,8 @@
 
 ## 안건 3: 후속 잔여 이슈
 - Created At: 2026-02-19 01:57:30
-- Updated At: 2026-02-19 01:57:30
-- Status: TODO
-- 후속작업:
-  - 프론트 e2e 파이프라인에서 auth-social 시나리오 자동 실행/검증 연결
-  - 운영 로그 기반 auth 예외 코드 집계 대시보드 기준 정리
+- Updated At: 2026-02-19 06:08:30
+- Status: DONE
+- 후속작업 처리:
+  - [x] 프론트 e2e 파이프라인 auth-social 자동 실행/검증 연결 (`TCS-SC-010`, `2026-02-19-auth-social-e2e-pipeline-completion.md`)
+  - [x] 운영 로그 기반 auth 예외 코드 집계 기준 정리 (`TCS-SC-011`, `2026-02-19-auth-error-monitoring-criteria-completion.md`)

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 04:49:54`
+> - **Updated At**: `2026-02-19 06:08:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -188,3 +188,21 @@
     - Verification:
       - `bash -n scripts/api/run-auth-social-real-provider-e2e.sh` pass
       - `./gradlew test --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.domain.auth.service.SocialAuthServiceTest` pass
+
+- TCS-SC-013 프론트 릴리즈 계약 체크리스트 고정 및 회의록 TODO 정합화
+  - Status: DONE
+  - Description:
+    - 과거 완료 회의록의 잔존 `Status: TODO`를 완료 근거와 함께 정합화
+    - `API Specs + API Test Guide + auth-social.http` 기준 프론트 릴리즈 계약 체크리스트 1장을 공개 문서로 고정
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-release-handoff-checklist-completion.md`
+    - 정합화 대상:
+      - `2026-02-18-realtime-transport-implementation-completion.md`
+      - `2026-02-18-wallet-payment-ledger-implementation-completion.md`
+      - `2026-02-19-auth-session-hardening-completion.md`
+      - `2026-02-19-auth-session-regression-followup-completion.md`
+      - `2026-02-19-api-spec-front-readiness-sync.md`
+    - 신규 체크리스트:
+      - `prj-docs/projects/ticket-core-service/product-docs/frontend-release-contract-checklist.md`
+    - 이슈 동기화:
+      - `rag-cargoo/aki-agentops#101` (reopened -> closed)

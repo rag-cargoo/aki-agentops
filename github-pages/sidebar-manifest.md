@@ -46,11 +46,13 @@
       * [Realtime Push API (SSE/WebSocket)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/realtime-push-api.md)
       * [Social Auth API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/social-auth-api.md)
     * [API Test Guide (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/api-test/README.md)
+    * [Frontend Release Contract Checklist (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/frontend-release-contract-checklist.md)
     * [Sidecar README](/prj-docs/projects/ticket-core-service/README.md)
     * **Tasks**
       * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+      * [2026-02-19 Frontend Release Handoff Checklist Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-release-handoff-checklist-completion.md)
       * [2026-02-17 Sidecar SoT Dedup Follow-up](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md)
       * [2026-02-19 Auth Error Monitoring Criteria Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-error-monitoring-criteria-completion.md)
       * [2026-02-19 Auth-Social Real Provider E2E Split Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-social-real-provider-e2e-split-completion.md)

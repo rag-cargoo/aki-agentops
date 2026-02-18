@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-18 23:54:21`
-> - **Updated At**: `2026-02-18 23:54:21`
+> - **Updated At**: `2026-02-19 06:08:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -39,8 +39,8 @@
 
 ## 안건 3: 다음 이월 범위
 - Created At: 2026-02-18 23:54:21
-- Updated At: 2026-02-18 23:54:21
-- Status: TODO
-- 이월 범위:
-  - OAuth/JWT 만료/재발급/로그아웃 무효화 정책 고도화
-  - 프론트 출시 계약(에러코드/시간대/권한 경계) 보강
+- Updated At: 2026-02-19 06:08:30
+- Status: DONE
+- 이월 범위 처리:
+  - [x] OAuth/JWT 만료/재발급/로그아웃 무효화 정책 고도화 (`TCS-SC-007`, `2026-02-19-auth-session-hardening-completion.md`)
+  - [x] 프론트 출시 계약(에러코드/시간대/권한 경계) 보강 (`TCS-SC-008`, `2026-02-19-api-spec-front-readiness-sync.md`)
