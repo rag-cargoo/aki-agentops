@@ -875,6 +875,7 @@ collect_runtime_state() {
   pr_merge_flow_ref="$workflow_refs_dir/pr-merge-readiness-flow.md"
   issue_lifecycle_flow_ref="$workflow_refs_dir/issue-lifecycle-governance-flow.md"
   runtime_status_flow_ref="$workflow_refs_dir/runtime-status-flow.md"
+  development_progress_flow_ref="$workflow_refs_dir/development-progress-visibility-flow.md"
 
   precommit_mode_script="$repo_root/skills/aki-codex-precommit/scripts/precommit_mode.sh"
   precommit_chain_script="$repo_root/skills/aki-codex-precommit/scripts/validate-precommit-chain.sh"
@@ -882,6 +883,7 @@ collect_runtime_state() {
   skills_reload_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/skills_reload.sh"
   project_reload_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/project_reload.sh"
   runtime_flags_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
+  show_dev_progress_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh"
   issue_upsert_script="$repo_root/skills/aki-mcp-github/scripts/issue-upsert.sh"
   meeting_skill_file="$repo_root/skills/aki-meeting-notes-task-sync/SKILL.md"
   mcp_github_skill_file="$repo_root/skills/aki-mcp-github/SKILL.md"
@@ -1039,6 +1041,24 @@ collect_runtime_state() {
     issue_lifecycle_ready_state="NOT_READY"
   fi
   set_workflow_state "issue_lifecycle_governance" "$issue_lifecycle_ready_state" "UNVERIFIED" "$(format_missing_detail "${issue_lifecycle_missing[@]}")"
+
+  development_progress_missing=()
+  [[ -f "$development_progress_flow_ref" ]] || development_progress_missing+=("flow_ref")
+  [[ -x "$show_dev_progress_script" ]] || development_progress_missing+=("show_dev_progress_script")
+  if [[ "$active_project_state" != "SELECTED" ]]; then
+    development_progress_missing+=("active_project")
+  elif [[ -n "$active_task_doc" ]]; then
+    if [[ ! -f "$repo_root/$active_task_doc" ]]; then
+      development_progress_missing+=("task_doc")
+    fi
+  else
+    development_progress_missing+=("task_doc")
+  fi
+  development_progress_ready_state="READY"
+  if [[ "${#development_progress_missing[@]}" -gt 0 ]]; then
+    development_progress_ready_state="NOT_READY"
+  fi
+  set_workflow_state "development_progress_visibility" "$development_progress_ready_state" "UNVERIFIED" "$(format_missing_detail "${development_progress_missing[@]}")"
 
   runtime_status_missing=()
   [[ -f "$runtime_status_flow_ref" ]] || runtime_status_missing+=("flow_ref")

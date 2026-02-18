@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-19 00:15:05`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -15,6 +15,12 @@
 > - Source
 > - Publication Policy
 > - Content
+> - 1. 개요 (Overview)
+> - 2. API 상세 명세 (Endpoint Details)
+> - 3. 에러 코드 (Error Codes)
+> - 4. 테스트 케이스 (Test Cases)
+> - 5. 비고 (Notes)
+> - 6. UX Track U1 연동 계약 메모
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -37,13 +43,15 @@
 ---
 > [!NOTE]
 > **Base URL**: `/api/v1/waiting-queue`
-> **Status**: Active (Step 7 완료, 운영 안정화 단계)
+> **Status**: Active (Step 7 완료, SSE/WebSocket 병행 지원)
 >
 > | 기능 | Method | Path | Auth |
 > | :--- | :--- | :--- | :--- |
 > | 대기열 진입 | POST | `/join` | Public |
 > | 대기 상태 조회 | GET | `/status` | Public |
 > | 실시간 순번 구독 | GET | `/subscribe` | Public |
+> | WS 구독 등록 | POST | `/api/push/websocket/waiting-queue/subscriptions` | Public |
+> | WS 구독 해제 | DELETE | `/api/push/websocket/waiting-queue/subscriptions` | Public |
 
 ---
 
@@ -176,6 +184,35 @@ GET /api/v1/waiting-queue/status?userId=100&concertId=1
 
 ---
 
+### 2.4. 실시간 순번 구독 등록 (WebSocket Subscribe Registration)
+- **Endpoint**: `POST /api/push/websocket/waiting-queue/subscriptions`
+- **Description**: WebSocket topic destination을 발급받기 위한 구독 등록 API입니다.
+- **Prerequisite**: 서버 설정 `APP_PUSH_MODE=websocket`
+
+**Request Example**
+
+```json
+{
+  "userId": 100,
+  "concertId": 1
+}
+```
+
+**Response Example (200)**
+
+```json
+{
+  "transport": "websocket",
+  "destination": "/topic/waiting-queue/1/100"
+}
+```
+
+### 2.5. 실시간 순번 구독 해제 (WebSocket Unsubscribe)
+- **Endpoint**: `DELETE /api/push/websocket/waiting-queue/subscriptions?userId={userId}&concertId={concertId}`
+- **Response**: `204 No Content`
+
+---
+
 ## 3. 에러 코드 (Error Codes)
 
 | Code | Message | Description |
@@ -209,4 +246,8 @@ GET /api/v1/waiting-queue/status?userId=100&concertId=1
 | Queue Join | `POST /api/v1/waiting-queue/join` | 입력값이 비어 있으면 `userId=/api/auth/me.userId`, `concertId=선택된 콘서트 ID`를 우선 사용 |
 | Queue Status | `GET /api/v1/waiting-queue/status` | 응답 `status/rank`를 Queue State 패널에 반영 |
 | Queue Subscribe | `GET /api/v1/waiting-queue/subscribe` (SSE) | 이벤트 `INIT/RANK_UPDATE/ACTIVE/KEEPALIVE`를 상태 패널 + 콘솔에 동시 기록 |
-| Queue Unsubscribe | (클라이언트 로컬 동작) | `EventSource.close()`로 SSE 연결 종료, 서버 API 호출 없음 |
+| Queue WS Register | `POST /api/push/websocket/waiting-queue/subscriptions` | 응답 `destination`으로 STOMP subscribe 경로를 확정 |
+| Queue WS Unregister | `DELETE /api/push/websocket/waiting-queue/subscriptions` | 서버 구독 레지스트리에서 제거 |
+| Queue Unsubscribe | (클라이언트 로컬 동작) | SSE는 `EventSource.close()`로 종료, WebSocket은 STOMP unsubscribe 수행 |
+
+관련 상세 계약은 `./realtime-push-api.md`를 참조합니다.

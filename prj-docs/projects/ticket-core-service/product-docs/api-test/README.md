@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-18 08:52:22`
+> - **Updated At**: `2026-02-19 00:15:05`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -29,6 +29,8 @@
 > - 12. Auth Track A2 인증 세션/가드 검증 실행
 > - 13. Playwright MCP로 k6 HTML 열기
 > - 14. UX Track U1 통합 시나리오 검증 실행
+> - 15. v13 WebSocket 전환 검증 실행
+> - 16. v14 지갑/결제/환불 연계 검증 실행
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -55,10 +57,11 @@ make test-suite
 ```
 
 - 내부적으로 `scripts/api/run-api-script-tests.sh`를 호출합니다.
-- 기본 실행 세트는 `v1`~`v12` + `a*`(Track) 스크립트입니다.
+- 기본 실행 세트는 `v1`~`v14` + `a*`(Track) 스크립트입니다.
 - 기본 헬스체크 URL은 `http://127.0.0.1:8080/api/concerts` 입니다.
 - 필요하면 `API_SCRIPT_HEALTH_URL` 환경변수로 변경할 수 있습니다.
 - 기존 환경과의 호환을 위해 `TICKETRUSH_HEALTH_URL`도 별칭으로 지원합니다.
+- WebSocket 채널 검증(`v13`)은 `APP_PUSH_MODE=websocket` 설정에서 실행하는 것을 권장합니다.
 
 ---
 
@@ -67,15 +70,15 @@ make test-suite
 `scripts/http/*.http`는 "위에서 아래 순차 실행" 기준으로 유지합니다.
 
 - `scripts/http/user.http`
-  - 유저 생성 -> 목록/단건 조회 -> 수정 -> 삭제
+  - 유저 생성 -> 목록/단건 조회 -> 수정 -> 지갑 조회/충전/거래 조회 -> 삭제
 - `scripts/http/catalog.http`
   - 기획사 생성/조회/수정 -> 아티스트 생성/조회/수정 -> 정리 삭제
 - `scripts/http/concert.http`
   - 공연 셋업 -> 목록/검색 -> 옵션/좌석 조회 -> 정리 삭제
 - `scripts/http/reservation.http`
-  - 유저/공연 준비 -> v1/v2/v3/v4/v6 흐름 -> 정책 검증 -> 정리
+  - 유저/공연 준비 -> v1/v2/v3/v4/v6 흐름 -> SSE/WS 구독 -> 정책 검증 -> 정리
 - `scripts/http/waiting-queue.http`
-  - 유저/공연 준비 -> 대기열 진입/조회/SSE -> 정리
+  - 유저/공연 준비 -> 대기열 진입/조회/SSE/WS -> 정리
 - `scripts/http/auth-social.http`
   - OAuth 인가 URL -> code 교환 -> 토큰 재발급 -> 인증 API
   - `@kakaoCode`, `@naverCode`는 수동 입력이 필요
@@ -331,3 +334,36 @@ bash scripts/api/v8-reservation-lifecycle.sh
   - `.codex/tmp/ticket-core-service/api-test/ux-track-u1-integration-latest.md`
 
 실패 시 `skills/aki-mcp-playwright/references/troubleshooting.md`의 "`Local HTML Cannot Be Opened Directly by MCP`" 항목을 확인합니다.
+
+---
+
+## 15. v13 WebSocket 전환 검증 실행
+
+```bash
+cd workspace/apps/backend/ticket-core-service
+APP_PUSH_MODE=websocket ./gradlew bootRun --args='--spring.profiles.active=local'
+
+# 다른 터미널
+bash scripts/api/v13-websocket-switching.sh
+```
+
+- 검증 흐름:
+  - 대기열 WS 구독 등록/해제 API 확인
+  - 예약 WS 구독 등록/해제 API 확인
+  - destination 경로(`/topic/waiting-queue/...`, `/topic/reservations/...`) 계약 확인
+
+---
+
+## 16. v14 지갑/결제/환불 연계 검증 실행
+
+```bash
+cd workspace/apps/backend/ticket-core-service
+bash scripts/api/v14-wallet-payment-flow.sh
+```
+
+- 검증 흐름:
+  - 초기 지갑 잔액(200000) 확인
+  - 충전 후 잔액 증가 확인
+  - `HOLD -> PAYING -> CONFIRMED`에서 결제 차감 확인
+  - `CANCELLED -> REFUNDED`에서 환불 복구 확인
+  - 거래원장에 `PAYMENT`, `REFUND` 기록 확인

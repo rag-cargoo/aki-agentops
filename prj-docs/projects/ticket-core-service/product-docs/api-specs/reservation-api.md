@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-19 00:15:05`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -15,6 +15,9 @@
 > - Source
 > - Publication Policy
 > - Content
+> - 0. 보안 및 진입 정책 (Security Policy)
+> - 1. API 상세 명세 (Endpoint Details)
+> - 2. 공통 에러 응답 (Common Error)
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -87,9 +90,11 @@ Step 6 유입량 제어 전략에 따라, 모든 예약 관련 API(`v1` ~ `v4`) 
 
 ---
 
-### 1.2. 비동기 예약 요청 (v4)
-- **Endpoint**: `POST /api/reservations/v4/queue`
-- **Description**: 예약을 위해 Kafka 대기열에 등록합니다. **반드시 대기열을 통과하여 활성화된 유저여야 합니다.**
+### 1.2. 비동기 예약 요청 (v4 Polling)
+- **Endpoint**:
+  - `POST /api/reservations/v4-opt/queue-polling` (낙관적 락)
+  - `POST /api/reservations/v4-pes/queue-polling` (비관적 락)
+- **Description**: 예약을 위해 Kafka 대기열에 등록합니다.
 
 **Parameters**
 
@@ -118,10 +123,24 @@ Step 6 유입량 제어 전략에 따라, 모든 예약 관련 API(`v1` ~ `v4`) 
 
 **Response Example**
 
+`strategy` 값은 호출한 엔드포인트에 따라 `OPTIMISTIC` 또는 `PESSIMISTIC`으로 반환됩니다.
+
 ```json
 {
   "message": "Reservation request enqueued",
   "strategy": "OPTIMISTIC"
+}
+```
+
+### 1.2.1. 비동기 예약 상태 조회 (v4 Polling)
+- **Endpoint**: `GET /api/reservations/v4/status?userId={userId}&seatId={seatId}`
+- **Description**: 비동기 예약 상태를 폴링으로 조회합니다.
+
+**Response Example**
+
+```json
+{
+  "status": "PENDING"
 }
 ```
 
@@ -133,7 +152,7 @@ Step 6 유입량 제어 전략에 따라, 모든 예약 관련 API(`v1` ~ `v4`) 
   "status": 403,
   "error": "Forbidden",
   "message": "Not an active user in waiting queue",
-  "path": "/api/reservations/v4/queue"
+  "path": "/api/reservations/v4-opt/queue-polling"
 }
 ```
 
@@ -352,6 +371,7 @@ data: SUCCESS
 ### 1.10. Step 9: 결제 확정 전이 (PAYING -> CONFIRMED)
 - **Endpoint**: `POST /api/reservations/v6/{reservationId}/confirm`
 - **Description**: 결제 완료를 반영하고 좌석을 최종 점유(`RESERVED`)로 확정합니다.
+- **Payment Side Effect**: 지갑 잔액에서 `app.payment.default-ticket-price-amount`가 차감되고 거래 타입 `PAYMENT`가 기록됩니다.
 
 **Parameters**
 
@@ -431,6 +451,7 @@ data: SUCCESS
 ### 1.13. Step 10: 환불 완료 처리 (CANCELLED -> REFUNDED)
 - **Endpoint**: `POST /api/reservations/v6/{reservationId}/refund`
 - **Description**: 취소된 예약에 대해 환불 완료 상태를 기록합니다.
+- **Payment Side Effect**: 해당 예약의 결제 금액이 지갑으로 복구되고 거래 타입 `REFUND`가 기록됩니다.
 
 **Parameters**
 
@@ -547,6 +568,23 @@ data: SUCCESS
   }
 ]
 ```
+
+---
+
+### 1.17. Auth Track A2 (v7) 인증 사용자 예약 API
+
+- **대상 엔드포인트**
+  - `POST /api/reservations/v7/holds`
+  - `POST /api/reservations/v7/{reservationId}/paying`
+  - `POST /api/reservations/v7/{reservationId}/confirm`
+  - `POST /api/reservations/v7/{reservationId}/cancel`
+  - `POST /api/reservations/v7/{reservationId}/refund`
+  - `GET /api/reservations/v7/{reservationId}`
+  - `GET /api/reservations/v7/me`
+  - `GET /api/reservations/v7/audit/abuse` (`ADMIN` 전용)
+- **Auth Contract**: `Authorization: Bearer {accessToken}` 필수
+- **Rule**: v7에서는 `userId`를 body/query로 받지 않고 서버 인증 컨텍스트를 사용합니다.
+- **참조 문서**: `./auth-session-api.md`
 
 ---
 

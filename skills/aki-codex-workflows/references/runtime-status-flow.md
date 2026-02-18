@@ -45,6 +45,8 @@
     - `git status`
     - GitHub open issue/pr 목록
     - `task.md` TODO/DOING 스캔
+- 예외:
+  - 사용자가 `진행상태/체크리스트`를 명시 요청한 경우는 `development-progress-visibility-flow.md`를 따른다.
 - 출력 실패:
   - `runtime_flags.sh sync` 재시도 후 실패 원인 보고
 - 경계 규칙:

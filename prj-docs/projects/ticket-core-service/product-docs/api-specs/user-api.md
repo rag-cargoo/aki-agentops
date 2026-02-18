@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-18 08:52:22`
+> - **Updated At**: `2026-02-19 00:15:05`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -59,7 +59,8 @@
   "socialProvider": null,
   "socialId": null,
   "email": null,
-  "displayName": null
+  "displayName": null,
+  "walletBalanceAmount": 200000
 }
 ```
 
@@ -81,6 +82,7 @@
 | `socialId` | String\|Null | 소셜 계정 식별자 |
 | `email` | String\|Null | 이메일 |
 | `displayName` | String\|Null | 표시 이름 |
+| `walletBalanceAmount` | Long | 지갑 잔액 |
 
 ---
 
@@ -125,7 +127,8 @@
   "socialProvider": "KAKAO",
   "socialId": "1234567890",
   "email": "tester1@example.com",
-  "displayName": "Tester One"
+  "displayName": "Tester One",
+  "walletBalanceAmount": 200000
 }
 ```
 
@@ -135,6 +138,12 @@
 - **Endpoint**: `DELETE /api/users/{id}`
 - **Description**: 유저 계정을 삭제합니다.
 - **Response**: `204 No Content`
+
+---
+
+### 1.6. 지갑/결제 API 연계
+- 지갑 조회/충전/거래내역은 별도 문서 `./wallet-payment-api.md`를 참조합니다.
+- 유저 응답(`POST/GET/PUT /api/users`)의 `walletBalanceAmount`는 현재 잔액 스냅샷입니다.
 
 ---
 

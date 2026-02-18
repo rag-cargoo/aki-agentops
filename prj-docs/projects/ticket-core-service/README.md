@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-19 00:15:05`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -33,11 +33,14 @@
   - [product-docs/README.md](./product-docs/README.md)
 - API Specs (Pages Docs):
   - [API Specs Index](./product-docs/api-specs/README.md)
+  - [API Contract Conventions](./product-docs/api-specs/api-contract-conventions.md)
   - [Auth Session API](./product-docs/api-specs/auth-session-api.md)
   - [User API](./product-docs/api-specs/user-api.md)
+  - [Wallet/Payment API](./product-docs/api-specs/wallet-payment-api.md)
   - [Concert API](./product-docs/api-specs/concert-api.md)
   - [Reservation API](./product-docs/api-specs/reservation-api.md)
   - [Waiting Queue API](./product-docs/api-specs/waiting-queue-api.md)
+  - [Realtime Push API (SSE/WebSocket)](./product-docs/api-specs/realtime-push-api.md)
   - [Social Auth API](./product-docs/api-specs/social-auth-api.md)
 - API Test Guide (Pages Docs):
   - [product-docs/api-test/README.md](./product-docs/api-test/README.md)

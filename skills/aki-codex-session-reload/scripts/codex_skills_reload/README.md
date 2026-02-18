@@ -27,6 +27,8 @@
 6. `validate_env.sh` - `.codex/runtime`/`.githooks`/실행권한 상태 점검
 7. `bootstrap_env.sh` - 환경 자동 복구(idempotent) + 세션 스냅샷 재생성
 8. `runtime_flags.sh` - 런타임 플래그 파일/고정폭 상태표 생성(`.codex/state/runtime_flags.yaml`, `.codex/runtime/current_status.txt`)
+9. `show_runtime_status.sh` - 런타임 상태표/경고를 원문 출력(옵션: `--alerts-only`, `--with-progress`)
+10. `show_dev_progress.sh` - Active Project `task.md` 기반 개발 진행 체크리스트 출력
 
 ## Notes
 1. 기본 진입점은 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`다.
@@ -36,3 +38,4 @@
 5. 기본 toolset 목록은 `GITHUB_MCP_DEFAULT_TOOLSETS` 환경 변수로 오버라이드할 수 있다.
 6. 새 PC/세션 초기화는 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`를 권장한다.
 7. 현재 런타임 상태표 조회는 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh status`를 사용한다.
+8. 개발 진행 체크 포함 조회는 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh --with-progress`를 사용한다.

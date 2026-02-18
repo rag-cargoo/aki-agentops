@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 13:37:59`
+> - **Updated At**: `2026-02-19 00:30:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 > - 10) Branch Governance
 > - 11) Playwright Evidence Policy
 > - 12) Runtime Status Query Contract (Critical)
+> - 13) Development Progress Query Contract (Critical)
 <!-- DOC_TOC_END -->
 
 ## 1) Single Entry Rule
@@ -164,3 +165,23 @@ GitHub MCP가 등록되어 있으면 세션 시작 보고에서 기본 6개 tool
    - `git status`
    - open issue/pr 목록
    - task TODO/DOING 목록
+
+## 13) Development Progress Query Contract (Critical)
+아래 트리거는 "개발 진행 체크표 요청"으로 고정 처리한다.
+
+트리거:
+1. `진행상태`
+2. `진행상태 보여줘`
+3. `개발 진행상태 보여줘`
+4. `체크리스트 보여줘`
+5. `할일 체크 보여줘`
+
+강제 실행 순서:
+1. `./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh`
+2. 상태정보 + 진행상태 동시 요청이면:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh --with-progress`
+
+출력 규칙:
+1. 기본은 명령 출력 원문 그대로 제시한다(요약 금지).
+2. 진행표는 체크표(`[ ]/[~]/[x]/[!]`)와 Summary를 포함해야 한다.
+3. Active Project의 `task.md`를 우선 소스로 사용한다.

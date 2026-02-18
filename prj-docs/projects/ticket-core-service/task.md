@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-18 23:54:21`
+> - **Updated At**: `2026-02-19 00:20:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -102,7 +102,19 @@
     - 로그아웃 이후 토큰 무효화 경계와 예외 응답 규약 보강
 
 - TCS-SC-008 프론트 출시 계약(에러코드/시간대/권한 경계) 보강
-  - Status: TODO
+  - Status: DONE
   - Description:
     - 예약/결제/대기열 API의 오류 응답 표준 및 시간대 규칙(UTC/KST) 정리
     - 공개/인증/관리자 권한 경계 계약을 문서/테스트 케이스로 고정
+  - Evidence:
+    - 공통 계약 문서 추가:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/api-contract-conventions.md`
+    - 도메인 명세 보강:
+      - `wallet-payment-api.md` 신규 추가
+      - `realtime-push-api.md` 신규 추가
+      - `reservation-api.md` v4 경로/결제 side effect/v7 인증 경계 보강
+      - `waiting-queue-api.md` WS 구독 등록/해제 계약 보강
+      - `user-api.md` `walletBalanceAmount` 필드 반영
+    - 테스트 가이드 보강:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-test/README.md`
+      - `run-api-script-tests` 기본 세트(`v1~v14 + a*`) 및 `v13/v14` 검증 절차 반영
