@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-19 04:05:21`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -72,6 +72,8 @@ make test-k6
 
 - API 스크립트 실행 리포트 기본 경로: `.codex/tmp/ticket-core-service/api-test/latest.md`
 - k6 실행 리포트 기본 경로: `.codex/tmp/ticket-core-service/k6/latest/k6-latest.md`
+- 인증 오류 응답은 `errorCode`(`AUTH_*`) 필드를 포함
+- 운영 집계 로그 키: `AUTH_MONITOR`
 
 ---
 

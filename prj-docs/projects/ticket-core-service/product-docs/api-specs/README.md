@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 00:15:05`
+> - **Updated At**: `2026-02-19 04:05:21`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -19,6 +19,7 @@
 ## API Specs
 - [API Contract Conventions](./api-contract-conventions.md)
 - [Auth Session API](./auth-session-api.md)
+- [Auth Error Monitoring Guide](./auth-error-monitoring-guide.md)
 - [User API](./user-api.md)
 - [Wallet/Payment API](./wallet-payment-api.md)
 - [Catalog API (Agency/Artist)](./catalog-api.md)
