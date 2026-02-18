@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 00:20:00`
+> - **Updated At**: `2026-02-19 01:31:31`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-19 OAuth/JWT Session Hardening Completion](./2026-02-19-auth-session-hardening-completion.md)
 - [2026-02-19 API Spec Frontend Readiness Sync](./2026-02-19-api-spec-front-readiness-sync.md)
 - [2026-02-18 Wallet/Payment Ledger Implementation Completion](./2026-02-18-wallet-payment-ledger-implementation-completion.md)
 - [2026-02-18 Realtime Transport Implementation Completion](./2026-02-18-realtime-transport-implementation-completion.md)
