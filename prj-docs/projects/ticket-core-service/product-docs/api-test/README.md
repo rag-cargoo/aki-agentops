@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 04:05:21`
+> - **Updated At**: `2026-02-19 04:25:14`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -84,6 +84,7 @@ make test-suite
 - `scripts/http/auth-social.http`
   - OAuth 인가 URL -> code 교환 -> 토큰 재발급 -> 인증 API
   - `@kakaoCode`, `@naverCode`는 수동 입력이 필요
+  - 로그아웃 이후 재사용 차단/무토큰 접근/refresh body 누락의 `errorCode(AUTH_*)` 검증 포함
 
 JetBrains HTTP Client(`> {% ... %}` 스크립트 지원) 기준으로 작성되어, 응답 ID를 전역 변수로 캡처해 다음 요청에 연결합니다.
 
