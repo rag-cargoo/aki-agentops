@@ -74,7 +74,7 @@
     - 기존 SSE 경로 하위호환 유지 + 채널별 테스트/문서 정합화
   - Evidence:
     - Tracking Issue: `rag-cargoo/ticket-core-service#3` (closed)
-    - Product PR: `https://github.com/rag-cargoo/ticket-core-service/pull/4` (merged)
+    - Product PR: `rag-cargoo/ticket-core-service PR #4` (merged, cross-repo shorthand)
     - Merge Commit: `72f57d7a0dfedf08305d4d6ed73af41d97800359`
     - Included:
       - `PushNotifier` + `SsePushNotifier` + `WebSocketPushNotifier`
