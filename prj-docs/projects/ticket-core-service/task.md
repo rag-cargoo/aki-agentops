@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-18 22:21:40`
+> - **Updated At**: `2026-02-18 23:06:26`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -67,10 +67,17 @@
     - 제품 레포 이슈: `rag-cargoo/ticket-core-service#3` (cross-repo shorthand)
 
 - TCS-SC-005 실시간 전송 채널 추상화 및 WebSocket 병행 구현
-  - Status: TODO
+  - Status: DONE
   - Description:
     - `ticket-core-service` 제품 레포에서 notifier 인터페이스 + SSE/WS 구현체 분리
     - 설정값 기반 모드 스위칭(`sse`, `websocket`)과 채널별 컨트롤러 분리 적용
     - 기존 SSE 경로 하위호환 유지 + 채널별 테스트/문서 정합화
   - Evidence:
-    - Tracking Issue: `rag-cargoo/ticket-core-service#3` (cross-repo shorthand)
+    - Tracking Issue: `rag-cargoo/ticket-core-service#3` (closed)
+    - Product PR: `https://github.com/rag-cargoo/ticket-core-service/pull/4` (merged)
+    - Merge Commit: `72f57d7a0dfedf08305d4d6ed73af41d97800359`
+    - Included:
+      - `PushNotifier` + `SsePushNotifier` + `WebSocketPushNotifier`
+      - `app.push.mode` (`APP_PUSH_MODE=sse|websocket`)
+      - WebSocket endpoint `/ws` + subscription APIs
+      - `./gradlew clean test` pass
