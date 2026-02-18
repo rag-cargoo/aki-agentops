@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 06:08:30`
-> - **Updated At**: `2026-02-19 06:24:50`
+> - **Updated At**: `2026-02-19 06:44:20`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -50,7 +50,7 @@
   - 현재 상태:
     - `make test-suite`: FAIL(1) - `APP_PUSH_MODE=websocket` 실행에서 `v7-sse-rank-push.sh` 단일 실패
     - `make test-auth-social-pipeline`: PASS
-    - real provider: PREPARED(`AUTH_REAL_E2E_CODE` 수동 입력 후 execute 1회 필요)
+    - real provider: PASS (kakao real code 교환 + me/logout/reuse guard 검증 완료)
 
 ## Sign-off
 - Front Owner: Pending (Owner assign required)
