@@ -53,6 +53,7 @@
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
       * [2026-02-17 Sidecar SoT Dedup Follow-up](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md)
       * [2026-02-19 Auth Error Monitoring Criteria Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-error-monitoring-criteria-completion.md)
+      * [2026-02-19 Auth-Social Real Provider E2E Split Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-social-real-provider-e2e-split-completion.md)
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-core-service)
     * [Main Test URL (U1, Local)](http://localhost:8080/ux/u1/index.html)
 

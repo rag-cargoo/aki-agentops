@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-19 04:49:54`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -212,6 +212,7 @@ Location: https://ui.example.com/ux/u1/callback.html?code=abc123&state=u1_naver_
 - 환경 변수:
   - `U1_CALLBACK_URL` (optional, default: `/ux/u1/callback.html`)
   - `FRONTEND_ALLOWED_ORIGINS` (optional, default: `http://localhost:8080,http://127.0.0.1:8080`)
+  - `APP_AUTH_SOCIAL_REAL_E2E_ENABLED` (optional, default: `false`, real provider E2E 선택 실행 플래그)
 - 권장:
   - 백엔드/프론트 동일 도메인: default 유지
   - 백엔드/프론트 분리 도메인:
@@ -251,3 +252,17 @@ Location: https://ui.example.com/ux/u1/callback.html?code=abc123&state=u1_naver_
 
 실패 시에는 부분 저장된 토큰/사용자 스냅샷을 제거하고 오류를 callback 콘솔에 기록한다.
 U1 메인 콘솔(`index.html`)의 상단 액션 상태는 `HH:MM:SS` 타임스탬프 + 성공(초록)/실패(빨강)으로 표시하며, 콘솔 로그에서는 토큰 원문 대신 길이 요약(`stored (len=...)`)만 기록한다.
+
+---
+
+## 5. Real Provider E2E 분리 운영
+
+- 목적:
+  - CI-safe 회귀와 외부 provider 실연동 검증을 분리해 운영 안정성을 높인다.
+- 기본 원칙:
+  - 기본 CI는 `scripts/api/run-auth-social-e2e-pipeline.sh`만 필수 실행
+  - 실 provider 검증은 `scripts/api/run-auth-social-real-provider-e2e.sh`로 선택 실행
+- 실행 플래그:
+  - `APP_AUTH_SOCIAL_REAL_E2E_ENABLED=true`일 때만 real provider 스크립트 실행 허용
+- 검증 리포트:
+  - `.codex/tmp/ticket-core-service/api-test/auth-social-real-provider-e2e-latest.md`
