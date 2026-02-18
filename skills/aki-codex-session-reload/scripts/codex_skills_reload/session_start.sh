@@ -12,6 +12,9 @@ bootstrap_env_entry="./skills/aki-codex-session-reload/scripts/codex_skills_relo
 runtime_flags_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
 workflow_mark_entry="./skills/aki-codex-workflows/scripts/workflow_mark.sh"
 workflow_mark_script="$repo_root/skills/aki-codex-workflows/scripts/workflow_mark.sh"
+show_dev_progress_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh"
+show_runtime_status_with_progress_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh --with-progress"
+show_dev_progress_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh"
 
 runtime_dir="$repo_root/.codex/runtime"
 runtime_status_file="$runtime_dir/current_status.txt"
@@ -92,6 +95,8 @@ project_status="OK"
 runtime_status="OK"
 
 workflow_mark_recorded="false"
+development_progress_snapshot_status="UNAVAILABLE"
+development_progress_snapshot_output=""
 record_session_reload_mark() {
   local workflow_status="$1"
   local detail=""
@@ -204,6 +209,43 @@ fi
 
 seed_github_init_mark_if_missing
 
+capture_development_progress_snapshot() {
+  local mark_status="FAIL"
+  local mark_detail="source=session_start;reason=show_dev_progress_failed"
+  local task_doc_from_output=""
+
+  if [[ ! -x "$show_dev_progress_script" ]]; then
+    development_progress_snapshot_status="UNAVAILABLE"
+    development_progress_snapshot_output="[Development Progress]
+[Unavailable] show_dev_progress.sh not executable"
+    mark_status="NOT_RUN"
+    mark_detail="source=session_start;reason=show_dev_progress_script_missing"
+  elif development_progress_snapshot_output="$("$show_dev_progress_script" 2>&1)"; then
+    development_progress_snapshot_status="OK"
+    mark_status="PASS"
+    task_doc_from_output="$(awk -F': ' '/^Task Doc:/ {print $2; exit}' <<< "$development_progress_snapshot_output" || true)"
+    mark_detail="source=session_start;task_doc=${task_doc_from_output:-unknown}"
+  else
+    development_progress_snapshot_status="UNAVAILABLE"
+    if [[ -z "$active_task" || "$active_task" == "(not selected)" ]]; then
+      mark_status="NOT_RUN"
+      mark_detail="source=session_start;reason=task_doc_not_selected"
+    else
+      mark_detail="source=session_start;reason=show_dev_progress_failed;task_doc=${active_task}"
+    fi
+  fi
+
+  if [[ -x "$workflow_mark_script" ]]; then
+    "$workflow_mark_script" set \
+      --workflow "development_progress_visibility" \
+      --status "$mark_status" \
+      --source "session_start.sh" \
+      --detail "$mark_detail" >/dev/null 2>&1 || true
+  fi
+}
+
+capture_development_progress_snapshot
+
 flags_status="OK"
 if [[ -x "$script_dir/runtime_flags.sh" ]]; then
   if ! "$script_dir/runtime_flags.sh" sync --quiet >/dev/null 2>&1; then
@@ -306,6 +348,21 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   else
     echo "- Status: \`UNAVAILABLE\`"
     echo "- Action: \`$runtime_flags_entry sync\`"
+  fi
+  echo
+  echo "## Development Progress"
+  if [[ "$development_progress_snapshot_status" == "OK" ]]; then
+    echo "\`\`\`text"
+    printf '%s\n' "$development_progress_snapshot_output"
+    echo "\`\`\`"
+    echo "- Show Command: \`$show_dev_progress_entry\`"
+    echo "- Combined View: \`$show_runtime_status_with_progress_entry\`"
+  else
+    echo "- Status: \`UNAVAILABLE\`"
+    if [[ -n "$active_task" && "$active_task" != "(not selected)" ]]; then
+      echo "- Task Doc: \`$active_task\`"
+    fi
+    echo "- Action: \`$show_dev_progress_entry\`"
   fi
   echo
   echo "## Loaded Skills"
