@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 00:20:00`
+> - **Updated At**: `2026-02-19 01:31:31`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -96,10 +96,16 @@
     - Verification: `./gradlew test` pass
 
 - TCS-SC-007 OAuth/JWT 만료/재발급/로그아웃 무효화 고도화
-  - Status: TODO
+  - Status: DONE
   - Description:
     - Access/Refresh 만료/재발급 계약을 API/문서 기준으로 명확화
     - 로그아웃 이후 토큰 무효화 경계와 예외 응답 규약 보강
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-session-hardening-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#7` (closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #8` (merged, cross-repo shorthand)
+    - Merge Commit: `f3cd910632bddf266bda904a382b977d20538b05`
+    - Verification: `./gradlew test` pass
 
 - TCS-SC-008 프론트 출시 계약(에러코드/시간대/권한 경계) 보강
   - Status: DONE

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-19 01:31:31`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -89,9 +89,45 @@
 }
 ```
 
+**Response Example (200)**
+
+```json
+{
+  "tokenType": "Bearer",
+  "accessToken": "eyJ...",
+  "refreshToken": "eyJ...",
+  "accessTokenExpiresInSeconds": 1800,
+  "refreshTokenExpiresInSeconds": 1209600
+}
+```
+
+**Response Summary**
+
+- `200`: refresh 토큰 검증 성공, access/refresh 토큰 회전 발급
+- `400`: refresh 토큰 만료/폐기/유형 불일치/사용자 불일치
+- `401`: 인증 필터 단계에서 access 토큰 자체가 유효하지 않은 경우
+
 ### 1.3 로그아웃
 - **Endpoint**: `POST /api/auth/logout`
-- **Description**: 전달된 Refresh Token을 폐기(revoke)한다.
+- **Description**: 현재 세션의 refresh/access를 동시에 무효화한다.
+
+**Headers**
+
+- `Authorization: Bearer {accessToken}` (필수)
+
+**Request Example**
+
+```json
+{
+  "refreshToken": "eyJ..."
+}
+```
+
+**Response Summary**
+
+- `200`: refresh revoke + access denylist 등록 완료
+- `400`: refresh/access 누락, 토큰 유형 불일치, 사용자 불일치
+- `401`: 만료 또는 무효 access 토큰
 
 ### 1.4 내 정보 조회
 - **Endpoint**: `GET /api/auth/me`
