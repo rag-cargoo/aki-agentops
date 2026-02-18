@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 06:08:30`
+> - **Updated At**: `2026-02-19 06:53:46`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -206,3 +206,22 @@
       - `prj-docs/projects/ticket-core-service/product-docs/frontend-release-contract-checklist.md`
     - 이슈 동기화:
       - `rag-cargoo/aki-agentops#101` (reopened -> closed)
+
+- TCS-SC-014 Playwright OAuth HITL + callback preflight 운영 규칙 고정
+  - Status: DONE
+  - Description:
+    - 사용자 로그인/동의가 필요한 OAuth 요청에서 Playwright HITL을 기본으로 사용하도록 규칙을 고정
+    - callback redirect 대상이 로컬 백엔드인 경우 인증 페이지 오픈 전 포트/헬스 preflight를 필수화
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-playwright-oauth-hitl-preflight-governance-completion.md`
+    - 반영 문서:
+      - `AGENTS.md`
+      - `skills/aki-mcp-playwright/SKILL.md`
+      - `skills/aki-mcp-playwright/references/troubleshooting.md`
+      - `skills/aki-mcp-playwright/references/setup-linux-wsl.md`
+    - 신규 스크립트:
+      - `skills/aki-mcp-playwright/scripts/preflight_callback_health.sh`
+    - 이슈/PR 동기화:
+      - `rag-cargoo/aki-agentops#114` (closed)
+      - `https://github.com/rag-cargoo/aki-agentops/pull/115` (merged)
