@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-18 23:06:26`
-> - **Updated At**: `2026-02-18 23:06:26`
+> - **Updated At**: `2026-02-19 06:08:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -39,9 +39,9 @@
 
 ## 안건 3: 다음 회의로 이월할 범위
 - Created At: 2026-02-18 23:06:26
-- Updated At: 2026-02-18 23:06:26
-- Status: TODO
-- 이월 범위:
-  - 결제/환불/보유머니 원장 정합성 상세 설계
-  - OAuth/JWT 만료/재발급/로그아웃 무효화 정책 고도화
-  - 프론트 출시 계약(에러코드/시간대/권한 경계) 보강
+- Updated At: 2026-02-19 06:08:30
+- Status: DONE
+- 이월 범위 처리:
+  - [x] 결제/환불/보유머니 원장 정합성 상세 설계 (`TCS-SC-006`, `2026-02-18-wallet-payment-ledger-implementation-completion.md`)
+  - [x] OAuth/JWT 만료/재발급/로그아웃 무효화 정책 고도화 (`TCS-SC-007`, `2026-02-19-auth-session-hardening-completion.md`)
+  - [x] 프론트 출시 계약(에러코드/시간대/권한 경계) 보강 (`TCS-SC-008`, `2026-02-19-api-spec-front-readiness-sync.md`)

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 04:49:54`
+> - **Updated At**: `2026-02-19 06:08:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-19 Frontend Release Handoff Checklist Completion](./2026-02-19-frontend-release-handoff-checklist-completion.md)
 - [2026-02-19 Auth-Social Real Provider E2E Split Completion](./2026-02-19-auth-social-real-provider-e2e-split-completion.md)
 - [2026-02-19 Auth Error Monitoring Criteria Completion](./2026-02-19-auth-error-monitoring-criteria-completion.md)
 - [2026-02-19 Auth-Social E2E Pipeline Automation Completion](./2026-02-19-auth-social-e2e-pipeline-completion.md)

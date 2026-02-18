@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 04:49:54`
+> - **Updated At**: `2026-02-19 06:08:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -34,6 +34,7 @@
 > - 17. Auth-Social CI-safe 파이프라인 검증 실행
 > - 18. Auth 예외코드 운영 집계 점검
 > - 19. Auth-Social Real Provider E2E 선택 실행
+> - 20. 프론트 릴리즈 계약 체크리스트
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -453,3 +454,14 @@ bash scripts/api/run-auth-social-real-provider-e2e.sh
 
 - 기본 CI는 `make test-auth-social-pipeline`(CI-safe)만 필수로 유지한다.
 - real provider E2E는 릴리즈 전 수동 점검 또는 별도 운영 창구에서만 실행한다.
+
+---
+
+## 20. 프론트 릴리즈 계약 체크리스트
+
+- 릴리즈 게이트 문서:
+  - `../frontend-release-contract-checklist.md`
+- 사용 기준:
+  - API 계약 확인은 `api-specs/*.md`를 우선 기준으로 확인
+  - 실행 검증은 본 문서의 Step + Track 명령(`make test-suite`, `make test-auth-social-pipeline`) 결과 리포트로 확인
+  - auth-social 상세 시나리오는 `scripts/http/auth-social.http`를 구현 계약의 실행 예시로 사용

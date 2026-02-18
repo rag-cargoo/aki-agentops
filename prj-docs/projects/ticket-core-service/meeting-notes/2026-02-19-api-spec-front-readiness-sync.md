@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 00:20:00`
-> - **Updated At**: `2026-02-19 00:20:00`
+> - **Updated At**: `2026-02-19 06:08:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -38,8 +38,9 @@
 
 ## 안건 3: 후속 이월 항목
 - Created At: 2026-02-19 00:20:00
-- Updated At: 2026-02-19 00:20:00
-- Status: TODO
-- 이월:
-  - OAuth/JWT 만료/재발급/로그아웃 무효화 고도화(`TCS-SC-007`)
-  - API 오류 응답의 JSON 표준화(현재 도메인 예외는 plain text 기반)
+- Updated At: 2026-02-19 06:08:30
+- Status: DONE
+- 이월 처리:
+  - [x] OAuth/JWT 만료/재발급/로그아웃 무효화 고도화 완료 (`TCS-SC-007`, `2026-02-19-auth-session-hardening-completion.md`)
+  - [x] 오류 응답 계약 정리 완료 (`api-contract-conventions.md`: auth 영역 `errorCode` JSON, 비-auth 도메인 예외는 plain text 유지로 계약 고정)
+  - [x] 프론트 릴리즈 계약 확정 체크리스트 1장 고정 (`../product-docs/frontend-release-contract-checklist.md`)

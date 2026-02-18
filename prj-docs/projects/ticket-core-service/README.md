@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 00:15:05`
+> - **Updated At**: `2026-02-19 06:08:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -44,6 +44,8 @@
   - [Social Auth API](./product-docs/api-specs/social-auth-api.md)
 - API Test Guide (Pages Docs):
   - [product-docs/api-test/README.md](./product-docs/api-test/README.md)
+- Frontend Release Contract Checklist (Pages Docs):
+  - [product-docs/frontend-release-contract-checklist.md](./product-docs/frontend-release-contract-checklist.md)
 - Upstream Repository:
   - [rag-cargoo/ticket-core-service](https://github.com/rag-cargoo/ticket-core-service)
 
