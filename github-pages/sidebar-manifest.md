@@ -36,6 +36,7 @@
     * **API Specs (Pages Docs)**
       * [Auth Session API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-session-api.md)
       * [User API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/user-api.md)
+      * [Catalog API (Agency/Artist)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md)
       * [Concert API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md)
       * [Reservation API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/reservation-api.md)
       * [Waiting Queue API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/waiting-queue-api.md)

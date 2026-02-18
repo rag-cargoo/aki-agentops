@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-18 08:52:22`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -15,6 +15,8 @@
 > - Source
 > - Publication Policy
 > - Content
+> - 1. API 상세 명세 (Endpoint Details)
+> - 2. 공통 에러 응답 (Common Error)
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -29,87 +31,110 @@
 
 
 
-티켓 서비스 이용을 위한 사용자 프로필을 관리하는 API입니다. 모든 요청과 응답은 일관된 규격을 따릅니다.
+티켓 서비스 이용자의 사용자 프로필을 관리하는 API입니다.
 
 ---
 
 ## 1. API 상세 명세 (Endpoint Details)
 
-### 1.1. 신규 유저 생성 (Sign-up)
+### 1.1. 신규 유저 생성
 - **Endpoint**: `POST /api/users`
-- **Description**: 시스템 이용을 위한 새로운 유저를 등록합니다.
+- **Description**: 시스템 이용을 위한 유저를 생성합니다.
 
-**Parameters**
+**Request Body**
 
-| Location | Field | Type | Required | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| Body | `username` | String | Yes | 사용자 식별 이름 (중복 불가) |
-| Body | `tier` | String | No | 사용자 등급 (`BASIC`, `SILVER`, `GOLD`, `VIP`), 미입력 시 `BASIC` |
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `username` | String | Yes | 사용자 식별 이름 (중복 불가) |
+| `tier` | String | No | 사용자 등급 (`BASIC`, `SILVER`, `GOLD`, `VIP`) |
 
-**Request Example**
+**Response (200 OK)**
 
 ```json
 {
+  "id": 1,
   "username": "tester1",
-  "tier": "BASIC"
+  "tier": "BASIC",
+  "role": "USER",
+  "socialProvider": null,
+  "socialId": null,
+  "email": null,
+  "displayName": null
 }
 ```
+
+---
+
+### 1.2. 유저 목록 조회
+- **Endpoint**: `GET /api/users`
+- **Description**: 전체 유저 목록을 조회합니다.
 
 **Response Summary (200 OK)**
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `id` | Long | 발급된 유저 고유 ID |
-| `username` | String | 등록된 사용자 이름 |
+| `id` | Long | 유저 ID |
+| `username` | String | 사용자 이름 |
 | `tier` | String | 사용자 등급 |
-
-**Response Example**
-
-```json
-{
-  "id": 1,
-  "username": "tester1",
-  "tier": "BASIC"
-}
-```
+| `role` | String | 권한 (`USER`, `ADMIN`) |
+| `socialProvider` | String\|Null | 소셜 공급자 (`KAKAO`, `NAVER`) |
+| `socialId` | String\|Null | 소셜 계정 식별자 |
+| `email` | String\|Null | 이메일 |
+| `displayName` | String\|Null | 표시 이름 |
 
 ---
 
-### 1.2. 유저 단건 조회
+### 1.3. 유저 단건 조회
 - **Endpoint**: `GET /api/users/{id}`
-- **Description**: ID를 기반으로 유저의 상세 정보를 조회합니다.
+- **Description**: ID를 기반으로 유저 상세 정보를 조회합니다.
 
-**Parameters**
+---
 
-| Location | Field | Type | Required | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| Path | `id` | Long | Yes | 조회할 유저 고유 ID |
+### 1.4. 유저 수정
+- **Endpoint**: `PUT /api/users/{id}`
+- **Description**: 유저 프로필을 수정합니다.
 
-**Response Example**
+**Request Body**
+
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `username` | String | No | 사용자 이름 |
+| `tier` | String | No | 사용자 등급 |
+| `email` | String | No | 이메일 |
+| `displayName` | String | No | 표시 이름 |
+
+**Request Example**
+
+```json
+{
+  "username": "tester1-updated",
+  "tier": "VIP",
+  "email": "tester1@example.com",
+  "displayName": "Tester One"
+}
+```
+
+**Response (200 OK)**
 
 ```json
 {
   "id": 1,
-  "username": "tester1",
-  "tier": "BASIC"
+  "username": "tester1-updated",
+  "tier": "VIP",
+  "role": "USER",
+  "socialProvider": "KAKAO",
+  "socialId": "1234567890",
+  "email": "tester1@example.com",
+  "displayName": "Tester One"
 }
 ```
 
 ---
 
-### 1.3. 유저 삭제
+### 1.5. 유저 삭제
 - **Endpoint**: `DELETE /api/users/{id}`
-- **Description**: 유저 계정을 삭제합니다. (진행 중인 예약이 있을 경우 실패할 수 있음)
-
-**Parameters**
-
-| Location | Field | Type | Required | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| Path | `id` | Long | Yes | 삭제할 유저 고유 ID |
-
-**Response Summary (204 No Content)**
-
-- 성공 시 응답 바디 없음.
+- **Description**: 유저 계정을 삭제합니다.
+- **Response**: `204 No Content`
 
 ---
 
@@ -117,7 +142,7 @@
 
 ```json
 {
-  "timestamp": "2026-02-05T21:30:00.000",
+  "timestamp": "2026-02-18T08:35:00.000",
   "status": 404,
   "error": "Not Found",
   "path": "/api/users/999"

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-18 08:52:22`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -15,6 +15,20 @@
 > - Source
 > - Publication Policy
 > - Content
+> - 1. 실행 방법
+> - 2. HTTP 시나리오 파일 (순차 실행)
+> - 3. 산출물
+> - 4. 트러블슈팅 기준
+> - 5. Step 7 회귀 실행 스크립트
+> - 6. k6 부하 테스트 실행
+> - 7. Step 9 상태머신 검증 실행
+> - 8. Step 10 취소/환불/재판매 연계 검증 실행
+> - 9. Step 11 판매 정책 엔진 검증 실행
+> - 10. Step 12 부정사용 방지/감사 추적 검증 실행
+> - 11. Auth Track: 소셜 로그인 계약 검증 실행
+> - 12. Auth Track A2 인증 세션/가드 검증 실행
+> - 13. Playwright MCP로 k6 HTML 열기
+> - 14. UX Track U1 통합 시나리오 검증 실행
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -48,14 +62,36 @@ make test-suite
 
 ---
 
-## 2. 산출물
+## 2. HTTP 시나리오 파일 (순차 실행)
+
+`scripts/http/*.http`는 "위에서 아래 순차 실행" 기준으로 유지합니다.
+
+- `scripts/http/user.http`
+  - 유저 생성 -> 목록/단건 조회 -> 수정 -> 삭제
+- `scripts/http/catalog.http`
+  - 기획사 생성/조회/수정 -> 아티스트 생성/조회/수정 -> 정리 삭제
+- `scripts/http/concert.http`
+  - 공연 셋업 -> 목록/검색 -> 옵션/좌석 조회 -> 정리 삭제
+- `scripts/http/reservation.http`
+  - 유저/공연 준비 -> v1/v2/v3/v4/v6 흐름 -> 정책 검증 -> 정리
+- `scripts/http/waiting-queue.http`
+  - 유저/공연 준비 -> 대기열 진입/조회/SSE -> 정리
+- `scripts/http/auth-social.http`
+  - OAuth 인가 URL -> code 교환 -> 토큰 재발급 -> 인증 API
+  - `@kakaoCode`, `@naverCode`는 수동 입력이 필요
+
+JetBrains HTTP Client(`> {% ... %}` 스크립트 지원) 기준으로 작성되어, 응답 ID를 전역 변수로 캡처해 다음 요청에 연결합니다.
+
+---
+
+## 3. 산출물
 
 - 최신 실행 리포트: `.codex/tmp/ticket-core-service/api-test/latest.md`
 - 커밋 체인에서 `scripts/api/*.sh` 변경이 감지되면 위 리포트를 함께 stage해야 합니다.
 
 ---
 
-## 3. 트러블슈팅 기준
+## 4. 트러블슈팅 기준
 
 1. 백엔드 헬스체크 실패 시 앱/인프라를 먼저 기동한다.
 2. 스크립트 실패 시 `latest.md`의 실패 로그 요약을 확인한다.
@@ -64,7 +100,7 @@ make test-suite
 
 ---
 
-## 4. Step 7 회귀 실행 스크립트
+## 5. Step 7 회귀 실행 스크립트
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
@@ -83,7 +119,7 @@ bash scripts/api/run-step7-regression.sh
 
 ---
 
-## 5. k6 부하 테스트 실행
+## 6. k6 부하 테스트 실행
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
@@ -121,7 +157,7 @@ make test-k6-dashboard
 
 ---
 
-## 6. Step 9 상태머신 검증 실행
+## 7. Step 9 상태머신 검증 실행
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
@@ -138,7 +174,7 @@ bash scripts/api/v8-reservation-lifecycle.sh
 
 ---
 
-## 7. Step 10 취소/환불/재판매 연계 검증 실행
+## 8. Step 10 취소/환불/재판매 연계 검증 실행
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
@@ -155,7 +191,7 @@ bash scripts/api/v9-cancel-refund-resale.sh
 
 ---
 
-## 8. Step 11 판매 정책 엔진 검증 실행
+## 9. Step 11 판매 정책 엔진 검증 실행
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
@@ -173,7 +209,7 @@ bash scripts/api/v10-sales-policy-engine.sh
 
 ---
 
-## 9. Step 12 부정사용 방지/감사 추적 검증 실행
+## 10. Step 12 부정사용 방지/감사 추적 검증 실행
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
@@ -190,7 +226,7 @@ bash scripts/api/v11-abuse-audit.sh
 
 ---
 
-## 10. Auth Track: 소셜 로그인 계약 검증 실행
+## 11. Auth Track: 소셜 로그인 계약 검증 실행
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
@@ -206,7 +242,7 @@ bash scripts/api/v12-social-auth-contract.sh
 
 ---
 
-## 11. Auth Track A2 인증 세션/가드 검증 실행
+## 12. Auth Track A2 인증 세션/가드 검증 실행
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
@@ -222,7 +258,7 @@ bash scripts/api/a2-auth-track-session-guard.sh
 
 ---
 
-## 12. Playwright MCP로 k6 HTML 열기
+## 13. Playwright MCP로 k6 HTML 열기
 
 `k6-web-dashboard.html`은 로컬 파일이므로 Playwright MCP에서 `file://` 직접 열기가 실패할 수 있습니다.
 표준 절차는 "로컬 HTTP 서빙 + MCP `navigate`" 입니다.
@@ -266,7 +302,7 @@ pkill -f "google-chrome.*remote-debugging-port=9222"
 
 ---
 
-## 13. UX Track U1 통합 시나리오 검증 실행
+## 14. UX Track U1 통합 시나리오 검증 실행
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
