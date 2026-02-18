@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 04:25:14`
+> - **Updated At**: `2026-02-19 04:49:54`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -33,6 +33,7 @@
 > - 16. v14 지갑/결제/환불 연계 검증 실행
 > - 17. Auth-Social CI-safe 파이프라인 검증 실행
 > - 18. Auth 예외코드 운영 집계 점검
+> - 19. Auth-Social Real Provider E2E 선택 실행
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -409,3 +410,46 @@ grep "AUTH_MONITOR" app.log | tail -n 500 | sed -n 's/.*code=\\([^ ]*\\).*/\\1/p
   - `AUTH_TOKEN_INVALID` (파싱/서명 실패)
   - `AUTH_FORBIDDEN` (권한 부족)
 - 임계치 기준은 `api-specs/auth-error-monitoring-guide.md`를 따른다.
+
+---
+
+## 19. Auth-Social Real Provider E2E 선택 실행
+
+real provider(카카오/네이버) 실제 code 교환 검증은 CI-safe 파이프라인과 분리해 선택 실행한다.
+
+### 19.1 Prepare 단계 (인가 URL 발급)
+
+```bash
+cd workspace/apps/backend/ticket-core-service
+APP_AUTH_SOCIAL_REAL_E2E_ENABLED=true \
+AUTH_REAL_E2E_PROVIDER=kakao \
+AUTH_REAL_E2E_PREPARE_ONLY=true \
+bash scripts/api/run-auth-social-real-provider-e2e.sh
+```
+
+- 출력된 authorize URL로 브라우저 로그인 후 callback `code`를 확보한다.
+- 네이버는 필요 시 `AUTH_REAL_E2E_STATE`를 함께 지정한다.
+
+### 19.2 Execute 단계 (실코드 검증)
+
+```bash
+cd workspace/apps/backend/ticket-core-service
+APP_AUTH_SOCIAL_REAL_E2E_ENABLED=true \
+AUTH_REAL_E2E_PROVIDER=kakao \
+AUTH_REAL_E2E_CODE=<callback-code> \
+bash scripts/api/run-auth-social-real-provider-e2e.sh
+```
+
+- 검증 흐름:
+  - social `exchange` 성공
+  - `GET /api/auth/me` 성공
+  - `POST /api/auth/logout` 성공
+  - access 재사용 차단(`401`, `AUTH_ACCESS_TOKEN_REVOKED`)
+  - refresh 재사용 차단(`400`, `AUTH_REFRESH_TOKEN_EXPIRED_OR_REVOKED`)
+- 실행 리포트:
+  - `.codex/tmp/ticket-core-service/api-test/auth-social-real-provider-e2e-latest.md`
+
+### 19.3 운영 규칙
+
+- 기본 CI는 `make test-auth-social-pipeline`(CI-safe)만 필수로 유지한다.
+- real provider E2E는 릴리즈 전 수동 점검 또는 별도 운영 창구에서만 실행한다.

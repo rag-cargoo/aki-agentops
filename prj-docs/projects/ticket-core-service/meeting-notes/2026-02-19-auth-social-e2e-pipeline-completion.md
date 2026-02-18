@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 03:50:54`
-> - **Updated At**: `2026-02-19 03:50:54`
+> - **Updated At**: `2026-02-19 04:49:54`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -42,8 +42,12 @@
 
 ## 안건 3: 후속 작업
 - Created At: 2026-02-19 03:50:54
-- Updated At: 2026-02-19 03:50:54
-- Status: TODO
+- Updated At: 2026-02-19 04:49:54
+- Status: DONE
 - 후속작업:
-  - 외부 OAuth 실제 코드 교환(E2E real provider) 경로는 선택 시나리오로 분리 운영
-  - `TCS-SC-011`(운영 auth 예외코드 집계/모니터링 기준 정리)로 운영 가시성 확장
+  - [x] 외부 OAuth 실제 코드 교환(E2E real provider) 경로 선택 실행 분리
+    - 제품 이슈 `rag-cargoo/ticket-core-service#10` 재오픈 -> closed
+    - 제품 PR `rag-cargoo/ticket-core-service PR #14` merged
+    - 상세: `2026-02-19-auth-social-real-provider-e2e-split-completion.md`
+  - [x] `TCS-SC-011`(운영 auth 예외코드 집계/모니터링 기준 정리) 완료
+    - 상세: `2026-02-19-auth-error-monitoring-criteria-completion.md`

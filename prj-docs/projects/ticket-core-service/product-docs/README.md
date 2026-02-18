@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 04:05:21`
+> - **Updated At**: `2026-02-19 04:49:54`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -63,6 +63,19 @@ make test-suite
 make test-k6
 ```
 
+### 5. Auth-Social CI-safe 파이프라인 테스트
+```bash
+make test-auth-social-pipeline
+```
+
+### 6. Auth-Social Real Provider E2E 테스트 (선택)
+```bash
+APP_AUTH_SOCIAL_REAL_E2E_ENABLED=true \
+AUTH_REAL_E2E_PROVIDER=kakao \
+AUTH_REAL_E2E_PREPARE_ONLY=true \
+make test-auth-social-real-provider
+```
+
 - 로컬 `k6`가 없으면 Docker(`grafana/k6`) fallback으로 자동 실행됩니다.
 - 웹 대시보드 포함 실행: `make test-k6-dashboard` (기본 URL: `http://127.0.0.1:5665`)
 
@@ -71,6 +84,8 @@ make test-k6
 ## 검증/운영 포인트
 
 - API 스크립트 실행 리포트 기본 경로: `.codex/tmp/ticket-core-service/api-test/latest.md`
+- auth-social 파이프라인 리포트 기본 경로: `.codex/tmp/ticket-core-service/api-test/auth-social-e2e-latest.md`
+- auth-social real provider e2e 리포트 기본 경로: `.codex/tmp/ticket-core-service/api-test/auth-social-real-provider-e2e-latest.md`
 - k6 실행 리포트 기본 경로: `.codex/tmp/ticket-core-service/k6/latest/k6-latest.md`
 - 인증 오류 응답은 `errorCode`(`AUTH_*`) 필드를 포함
 - 운영 집계 로그 키: `AUTH_MONITOR`

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 04:05:21`
+> - **Updated At**: `2026-02-19 04:49:54`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -170,3 +170,21 @@
     - Verification:
       - `./gradlew test --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest` pass
       - `./scripts/api/run-auth-social-e2e-pipeline.sh` pass
+
+- TCS-SC-012 외부 OAuth real provider E2E 경로 분리 운영
+  - Status: DONE
+  - Description:
+    - CI-safe auth-social 파이프라인과 real provider E2E 경로를 분리해 선택 실행으로 운영
+    - `application.yml` 플래그(`APP_AUTH_SOCIAL_REAL_E2E_ENABLED`) 기반으로 실운영 검증 절차를 명시
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-social-real-provider-e2e-split-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#10` (reopened -> closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #14` (merged, cross-repo shorthand)
+    - Merge Commit: `181088803826d0b235c5c15e320e21d9274594e6`
+    - Included:
+      - `scripts/api/run-auth-social-real-provider-e2e.sh` 신규(prepare-only + real code exchange 검증)
+      - `app.social.real-e2e.enabled` 설정값 도입
+      - `Makefile`/`README` real provider 선택 실행 절차 반영
+    - Verification:
+      - `bash -n scripts/api/run-auth-social-real-provider-e2e.sh` pass
+      - `./gradlew test --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.domain.auth.service.SocialAuthServiceTest` pass
