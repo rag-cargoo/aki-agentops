@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 01:31:31`
+> - **Updated At**: `2026-02-19 01:57:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -124,3 +124,15 @@
     - 테스트 가이드 보강:
       - `prj-docs/projects/ticket-core-service/product-docs/api-test/README.md`
       - `run-api-script-tests` 기본 세트(`v1~v14 + a*`) 및 `v13/v14` 검증 절차 반영
+
+- TCS-SC-009 인증 세션 후속 회귀(로그아웃 경계/e2e) 보강
+  - Status: DONE
+  - Description:
+    - 로그아웃 헤더 누락/토큰 재사용 실패 경계를 통합테스트로 고정
+    - 프론트 연동 기준으로 auth-social 스크립트/명세 예외 케이스를 보강
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-session-regression-followup-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#7` (reopened -> closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #9` (merged, cross-repo shorthand)
+    - Merge Commit: `68c08e990f28a1e96f9f13daf29ee9a03f4f57f6`
+    - Verification: `./gradlew test` pass
