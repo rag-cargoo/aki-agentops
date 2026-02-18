@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 06:08:30`
-> - **Updated At**: `2026-02-19 06:08:30`
+> - **Updated At**: `2026-02-19 06:24:50`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -30,30 +30,34 @@
 - HTTP 시나리오: `workspace/apps/backend/ticket-core-service/scripts/http/auth-social.http`
 
 ## Release Checklist
-- [ ] C1 인증/세션 계약 확인
+- [x] C1 인증/세션 계약 확인
   - `social exchange -> auth/me -> logout -> 재사용 차단` 시나리오가 명세/스크립트와 일치
   - `AUTH_*` 오류코드(`401/403/400`)가 프론트 분기 로직과 일치
-- [ ] C2 권한/오류/시간대 계약 확인
+- [x] C2 권한/오류/시간대 계약 확인
   - `api-contract-conventions.md`의 권한 경계(공개/인증/관리자) 기준을 화면 접근 정책에 반영
   - 시간대 규칙(UTC 저장, KST 표시)을 UI 포맷터 기준으로 고정
   - 비-auth 도메인 예외 plain text 계약을 오류 메시지 파서에서 허용
-- [ ] C3 실시간 채널 계약 확인
+- [x] C3 실시간 채널 계약 확인
   - `APP_PUSH_MODE=sse|websocket` 중 배포 모드 선택값을 프론트 환경설정과 맞춤
   - 선택 채널 기준 endpoint/topic/payload 파서 검증 완료
-- [ ] C4 예약/결제 연계 확인
+- [x] C4 예약/결제 연계 확인
   - 예약 상태 전이(`HOLD -> PAYING -> CONFIRMED -> CANCELLED/REFUNDED`) 화면 상태머신과 일치
   - 지갑 잔액/거래내역 화면이 `wallet-payment-api.md` 응답 필드와 일치
 - [ ] C5 회귀/운영 검증 실행
   - `make test-suite` 결과 리포트 확인: `.codex/tmp/ticket-core-service/api-test/latest.md`
   - `make test-auth-social-pipeline` 결과 리포트 확인: `.codex/tmp/ticket-core-service/api-test/auth-social-e2e-latest.md`
   - 필요 시 real provider 선택 검증: `make test-auth-social-real-provider`
+  - 현재 상태:
+    - `make test-suite`: FAIL(1) - `APP_PUSH_MODE=websocket` 실행에서 `v7-sse-rank-push.sh` 단일 실패
+    - `make test-auth-social-pipeline`: PASS
+    - real provider: PREPARED(`AUTH_REAL_E2E_CODE` 수동 입력 후 execute 1회 필요)
 
 ## Sign-off
-- Front Owner:
-- Backend Owner:
-- QA Owner:
-- Release Date:
+- Front Owner: Pending (Owner assign required)
+- Backend Owner: Pending (Owner assign required)
+- QA Owner: Pending (Owner assign required)
+- Release Date: Pending final approval
 - Evidence Links:
-  - API report:
-  - Auth-social pipeline report:
-  - (Optional) Real provider report:
+  - API report: `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/api-test/latest.md`
+  - Auth-social pipeline report: `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/api-test/auth-social-e2e-latest.md`
+  - (Optional) Real provider report: `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/api-test/auth-social-real-provider-e2e-latest.md`
