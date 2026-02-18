@@ -64,7 +64,7 @@
     - 구현 착수 전 관리 순서(회의록 -> task -> 제품 이슈)를 확정
   - Evidence:
     - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-18-realtime-transport-sse-ws-switching-plan.md`
-    - 제품 레포 이슈: `https://github.com/rag-cargoo/ticket-core-service/issues/3`
+    - 제품 레포 이슈: `rag-cargoo/ticket-core-service#3` (cross-repo shorthand)
 
 - TCS-SC-005 실시간 전송 채널 추상화 및 WebSocket 병행 구현
   - Status: TODO
@@ -73,4 +73,4 @@
     - 설정값 기반 모드 스위칭(`sse`, `websocket`)과 채널별 컨트롤러 분리 적용
     - 기존 SSE 경로 하위호환 유지 + 채널별 테스트/문서 정합화
   - Evidence:
-    - Tracking Issue: `https://github.com/rag-cargoo/ticket-core-service/issues/3`
+    - Tracking Issue: `rag-cargoo/ticket-core-service#3` (cross-repo shorthand)
