@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-18 23:06:26`
+> - **Updated At**: `2026-02-18 23:54:21`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -81,3 +81,28 @@
       - `app.push.mode` (`APP_PUSH_MODE=sse|websocket`)
       - WebSocket endpoint `/ws` + subscription APIs
       - `./gradlew clean test` pass
+
+- TCS-SC-006 결제/환불/보유머니 원장 구현 및 예약 연동
+  - Status: DONE
+  - Description:
+    - 지갑 잔액(wallet) + 결제 원장(ledger) 최소 구현 도입
+    - 예약 `confirm/refund` 흐름에 결제 차감/환불 복구 연동
+    - 지갑 충전/조회/거래내역 API 및 테스트 스크립트 추가
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-18-wallet-payment-ledger-implementation-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#5` (closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #6` (merged, cross-repo shorthand)
+    - Merge Commit: `34033788d38c51ed43205856d9d6f752335e1cbb`
+    - Verification: `./gradlew test` pass
+
+- TCS-SC-007 OAuth/JWT 만료/재발급/로그아웃 무효화 고도화
+  - Status: TODO
+  - Description:
+    - Access/Refresh 만료/재발급 계약을 API/문서 기준으로 명확화
+    - 로그아웃 이후 토큰 무효화 경계와 예외 응답 규약 보강
+
+- TCS-SC-008 프론트 출시 계약(에러코드/시간대/권한 경계) 보강
+  - Status: TODO
+  - Description:
+    - 예약/결제/대기열 API의 오류 응답 표준 및 시간대 규칙(UTC/KST) 정리
+    - 공개/인증/관리자 권한 경계 계약을 문서/테스트 케이스로 고정
