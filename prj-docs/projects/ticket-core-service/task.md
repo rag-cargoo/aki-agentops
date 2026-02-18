@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 01:57:30`
+> - **Updated At**: `2026-02-19 03:50:54`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -136,3 +136,24 @@
     - Product PR: `rag-cargoo/ticket-core-service PR #9` (merged, cross-repo shorthand)
     - Merge Commit: `68c08e990f28a1e96f9f13daf29ee9a03f4f57f6`
     - Verification: `./gradlew test` pass
+
+- TCS-SC-010 프론트 e2e 파이프라인 auth-social 자동 검증 연결
+  - Status: DONE
+  - Description:
+    - auth-social 핵심 시나리오(로그인/재발급/로그아웃/재사용 차단)를 e2e 파이프라인에 자동 연결
+    - CI 실행 시 필수/선택 구간 분리를 정의해 외부 OAuth 의존성 리스크를 관리
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-social-e2e-pipeline-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#10` (closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #11` (merged, cross-repo shorthand)
+    - Merge Commit: `b3343bd97b470ecbd1ee11848bc4554ad9f2c8f0`
+    - Verification:
+      - `./scripts/api/run-auth-social-e2e-pipeline.sh` pass
+      - `make test-auth-social-pipeline` pass
+      - `./gradlew test` pass
+
+- TCS-SC-011 운영 auth 예외코드 집계/모니터링 기준 정리
+  - Status: TODO
+  - Description:
+    - 로그아웃 실패/토큰 만료/무효 토큰 등 auth 예외코드 집계 기준 정의
+    - 운영 대시보드 및 알람 임계치 기준을 문서화

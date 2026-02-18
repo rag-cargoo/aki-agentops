@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 00:15:05`
+> - **Updated At**: `2026-02-19 03:50:54`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -31,6 +31,7 @@
 > - 14. UX Track U1 통합 시나리오 검증 실행
 > - 15. v13 WebSocket 전환 검증 실행
 > - 16. v14 지갑/결제/환불 연계 검증 실행
+> - 17. Auth-Social CI-safe 파이프라인 검증 실행
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -367,3 +368,24 @@ bash scripts/api/v14-wallet-payment-flow.sh
   - `HOLD -> PAYING -> CONFIRMED`에서 결제 차감 확인
   - `CANCELLED -> REFUNDED`에서 환불 복구 확인
   - 거래원장에 `PAYMENT`, `REFUND` 기록 확인
+
+---
+
+## 17. Auth-Social CI-safe 파이프라인 검증 실행
+
+```bash
+cd workspace/apps/backend/ticket-core-service
+make test-auth-social-pipeline
+```
+
+- 검증 흐름:
+  - `SocialAuthControllerIntegrationTest`
+  - `SocialAuthServiceTest`
+  - `AuthSecurityIntegrationTest`
+  - `AuthSessionServiceTest`
+- 실행 스크립트:
+  - `scripts/api/run-auth-social-e2e-pipeline.sh`
+- 실행 리포트:
+  - `.codex/tmp/ticket-core-service/api-test/auth-social-e2e-latest.md`
+- 비고:
+  - 외부 OAuth 실코드/실비밀값 없이 재현 가능한 CI-safe 경로를 기본값으로 사용한다.

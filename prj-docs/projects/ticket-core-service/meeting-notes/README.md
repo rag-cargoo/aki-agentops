@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 01:57:30`
+> - **Updated At**: `2026-02-19 03:50:54`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-19 Auth-Social E2E Pipeline Automation Completion](./2026-02-19-auth-social-e2e-pipeline-completion.md)
 - [2026-02-19 Auth Session Regression Follow-up Completion](./2026-02-19-auth-session-regression-followup-completion.md)
 - [2026-02-19 OAuth/JWT Session Hardening Completion](./2026-02-19-auth-session-hardening-completion.md)
 - [2026-02-19 API Spec Frontend Readiness Sync](./2026-02-19-api-spec-front-readiness-sync.md)
