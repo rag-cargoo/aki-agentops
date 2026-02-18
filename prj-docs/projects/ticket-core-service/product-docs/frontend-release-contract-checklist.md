@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 06:08:30`
-> - **Updated At**: `2026-02-19 06:44:20`
+> - **Updated At**: `2026-02-19 07:03:29`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -15,7 +15,7 @@
 > - Scope
 > - Required References
 > - Release Checklist
-> - Sign-off
+> - Sign-off (Optional for Solo Mode)
 <!-- DOC_TOC_END -->
 
 ## Scope
@@ -52,7 +52,9 @@
     - `make test-auth-social-pipeline`: PASS
     - real provider: PASS (kakao real code 교환 + me/logout/reuse guard 검증 완료)
 
-## Sign-off
+## Sign-off (Optional for Solo Mode)
+- 팀 협업 릴리즈에서는 아래 승인 기록을 채운다.
+- 1인 개발(솔로 모드)에서는 이 섹션 입력을 생략해도 된다.
 - Front Owner: Pending (Owner assign required)
 - Backend Owner: Pending (Owner assign required)
 - QA Owner: Pending (Owner assign required)
