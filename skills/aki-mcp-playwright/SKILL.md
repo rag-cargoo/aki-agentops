@@ -8,7 +8,7 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-19 06:47:46`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,7 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 > - 오케스트레이션 경계
 > - 기본 원칙
 > - 실행 절차
+> - 인증/인가(HITL) 운영
 > - 핵심 구분
 > - 산출물 규칙
 > - 리소스 안내
@@ -49,6 +50,8 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
   - `forbid`(기본): 설치 금지. 기존 브라우저만 사용
   - `allow`: 사용자가 설치를 요청한 경우에만 설치 수행
 - 브라우저 경로가 커스텀이면 `MCP_BROWSER_BIN=<binary>`를 사용한다.
+- OAuth/SSO/세션만료 재인증처럼 사용자 로그인/동의가 필요한 흐름은 Human-in-the-loop로 처리한다.
+- 인증 페이지를 열기 전에 callback target(예: `localhost:8080`)의 헬스가 살아있는지 먼저 확인한다.
 - 스크린샷(`take_screenshot`, `*.png`)은 사용자가 명시적으로 요청한 경우에만 생성한다.
 - 사용자 요청이 없으면 텍스트 증빙(`snapshot`, `console/network logs`)으로 결과를 보고한다.
 
@@ -59,9 +62,19 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 3. 필요 시에만 `references/setup-linux-wsl.md`의 설치 레시피를 사용한다.
 4. GUI 창 유지 검증은 `scripts/chrome_gui_smoke.sh <url>`로 수행한다.
 5. CDP endpoint 모드면 `scripts/ensure_cdp_chrome.sh`로 `9222` 상태를 먼저 보정한다.
-6. MCP 도구로 `navigate -> snapshot -> click/type` 순서로 기본 검증한다.
-7. 사용자가 요청한 경우에만 `take_screenshot`으로 이미지 증빙을 추가한다.
-8. 실패 시 `references/troubleshooting.md`에서 증상별 원인을 찾아 교정한다.
+6. OAuth callback이 로컬 백엔드면 `scripts/preflight_callback_health.sh <callback-url>`로 포트/헬스(2xx)를 선확인한다.
+7. MCP 도구로 `navigate -> snapshot -> click/type` 순서로 기본 검증한다.
+8. 사용자가 요청한 경우에만 `take_screenshot`으로 이미지 증빙을 추가한다.
+9. 실패 시 `references/troubleshooting.md`에서 증상별 원인을 찾아 교정한다.
+
+## 인증/인가(HITL) 운영
+
+1. 사용자 인증이 필요한 요청(로그인, 동의, 세션 재인증)이면 Playwright로 인증 페이지를 먼저 연다.
+2. 인증 페이지 오픈 전 callback target이 로컬 서버(`localhost`/`127.0.0.1`)인지 확인한다.
+3. 로컬 서버라면 `preflight_callback_health.sh`로 헬스 체크를 수행한다.
+4. 헬스 실패 시 로그인 플로우를 시작하지 않고, 백엔드 기동/복구 후 재시도한다.
+5. 로그인 완료 후 callback URL의 `code/state`를 확보해 API execute 단계로 넘긴다.
+6. callback 실패(`ERR_CONNECTION_REFUSED`)가 발생하면 troubleshooting 15번 절차로 즉시 분기한다.
 
 ## 핵심 구분
 
@@ -88,6 +101,7 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 - 환경 점검: `scripts/diagnose_playwright_mcp.sh`
 - GUI 실행 점검: `scripts/chrome_gui_smoke.sh`
 - CDP endpoint 보정: `scripts/ensure_cdp_chrome.sh`
+- OAuth callback preflight: `scripts/preflight_callback_health.sh`
 
 ## 운영 원칙
 

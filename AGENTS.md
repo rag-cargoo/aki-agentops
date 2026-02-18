@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-19 00:30:00`
+> - **Updated At**: `2026-02-19 06:47:46`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -74,6 +74,7 @@
 4. 실행 순서/분기/완료판정은 `skills/aki-codex-workflows` 기준 적용
 5. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
 6. `aki-*` 스킬 문서/메타 스키마는 `skills/aki-codex-core/references/skill-schema-policy.md` 기준 적용
+7. OAuth/SSO/세션만료 재인증처럼 사용자 로그인/동의가 필요한 흐름은 `skills/aki-mcp-playwright`를 우선 로드하고, 브라우저 오픈 전 callback target(예: `localhost:8080`) 헬스체크를 먼저 수행한다.
 
 ## 5) Skill Management Scope
 1. 전역 관리 대상 스킬은 `skills/aki-*` prefix로 고정한다.
@@ -142,6 +143,8 @@ GitHub MCP가 등록되어 있으면 세션 시작 보고에서 기본 6개 tool
 2. 스크린샷(`take_screenshot`, `*.png`) 생성은 사용자가 명시적으로 요청한 경우에만 수행한다.
 3. 스크린샷이 필요한 경우에도 저장 경로는 `.codex/tmp/<tool>/<run-id>/`를 우선 사용한다.
 4. 사용자 요청이 없으면 루트/프로젝트 경로에 PNG를 생성하지 않는다.
+5. OAuth/SSO 인증처럼 사용자 클릭이 필요한 경우, Playwright로 인증 페이지를 먼저 열어 사용자에게 로그인/동의를 요청한다(Human-in-the-loop).
+6. OAuth callback redirect가 로컬 백엔드(`localhost`/`127.0.0.1`)를 향하면, 인증 페이지 오픈 전에 백엔드 포트/헬스(`2xx`)를 확인한다. 미기동이면 인증 플로우를 시작하지 않는다.
 
 ## 12) Runtime Status Query Contract (Critical)
 아래 트리거는 "런타임 상태표 요청"으로 고정 처리한다.

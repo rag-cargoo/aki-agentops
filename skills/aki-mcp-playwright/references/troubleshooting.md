@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-19 06:47:46`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -26,6 +26,7 @@
 > - 12. `Transport closed` After Long Session
 > - 13. Korean Text Looks Broken (Tofu/Boxes)
 > - 14. Local HTML Cannot Be Opened Directly by MCP
+> - 15. OAuth Callback Redirect Fails (`ERR_CONNECTION_REFUSED`)
 <!-- DOC_TOC_END -->
 
 ## 1. Browser Opens Then Closes Immediately
@@ -238,3 +239,29 @@ curl -sS -I http://127.0.0.1:18080/k6-web-dashboard.html | head -n 1
 ```
 3. MCP는 `navigate`로 `http://127.0.0.1:18080/k6-web-dashboard.html`에 접속한다.
 4. 세션 중단/재시작이 잦으면 `nohup` 또는 세션 분리 실행으로 서버 생존성을 보장한다.
+
+## 15. OAuth Callback Redirect Fails (`ERR_CONNECTION_REFUSED`)
+
+증상:
+- OAuth 로그인/동의는 완료되는데 callback redirect(`http://localhost:8080/login/oauth2/code/...`)에서 에러 페이지로 전환됨
+- 네트워크 로그에 `net::ERR_CONNECTION_REFUSED`가 반복됨
+
+원인:
+- callback을 받을 로컬 백엔드(`localhost:8080`)가 미기동
+- 또는 포트는 열려 있어도 헬스 endpoint가 비정상(`non-2xx`)
+
+조치:
+1. callback preflight를 먼저 실행한다.
+```bash
+bash skills/aki-mcp-playwright/scripts/preflight_callback_health.sh "http://localhost:8080/login/oauth2/code/kakao"
+```
+2. 실패 시 백엔드를 기동/복구한다.
+```bash
+cd workspace/apps/backend/ticket-core-service
+./gradlew bootRun --args='--spring.profiles.active=local'
+```
+3. 헬스 확인 후 인증 페이지를 다시 연다.
+```bash
+curl -sS -o /tmp/oauth-health.out -w '%{http_code}' http://127.0.0.1:8080/api/concerts
+```
+4. callback URL의 `code/state`를 확보해 execute 단계로 즉시 전달한다.
