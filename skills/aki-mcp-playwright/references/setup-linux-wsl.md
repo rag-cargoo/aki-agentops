@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-19 06:47:46`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,7 @@
 > - 5-1. Korean Font Rendering Check
 > - 6. Optional: Install Recipe (Only If Allowed)
 > - 7. Optional: Code-Based Playwright Runtime
+> - 8. OAuth Callback Preflight (Required for Local Redirect)
 <!-- DOC_TOC_END -->
 
 ## 1. Baseline Check
@@ -156,3 +157,16 @@ sudo apt-get install -y curl ca-certificates gnupg
 npm install -D playwright
 npx playwright install --with-deps chromium
 ```
+
+## 8. OAuth Callback Preflight (Required for Local Redirect)
+
+OAuth callback redirect가 로컬 백엔드(`localhost`/`127.0.0.1`)로 돌아오는 경우, 인증 페이지 오픈 전에 아래를 선행한다.
+
+```bash
+bash skills/aki-mcp-playwright/scripts/preflight_callback_health.sh "http://localhost:8080/login/oauth2/code/kakao"
+```
+
+실패 시:
+1. 백엔드 기동/복구
+2. 헬스 2xx 확인
+3. 인증 페이지 재오픈
