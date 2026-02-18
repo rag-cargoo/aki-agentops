@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-17 22:45:08`
+> - **Updated At**: `2026-02-18 22:21:40`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,4 +24,6 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-18 Realtime Transport SSE/WS Switching Plan](./2026-02-18-realtime-transport-sse-ws-switching-plan.md)
 - [2026-02-17 Sidecar SoT Dedup Follow-up](./2026-02-17-sidecar-sot-dedup-followup.md)
+- [2026-02-18 Frontend Readiness and Implementation Deferral](./2026-02-18-frontend-readiness-and-implementation-deferral.md)
