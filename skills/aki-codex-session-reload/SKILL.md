@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-19 00:30:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -53,6 +53,8 @@ description: |
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh`
 - runtime orchestrator 소스:
   - `skills/aki-codex-session-reload/scripts/run-skill-hooks.sh`
   - `skills/aki-codex-session-reload/scripts/runtime_orchestrator/engine.yaml`
@@ -92,15 +94,19 @@ description: |
    - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh status`
 3. 경고 전용 조회:
    - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh alerts`
-4. 상태 산출물:
+4. 개발 진행 체크 포함 조회:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh --with-progress`
+5. 개발 진행 체크 단독 조회:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh`
+6. 상태 산출물:
    - `.codex/state/runtime_flags.yaml`
    - `.codex/runtime/current_status.txt`
-5. 소유 원칙:
+7. 소유 원칙:
    - 상태 파일 생성/갱신/표 출력은 `aki-codex-session-reload`가 소유한다.
    - 출력 타이밍(언제 보여줄지)은 `aki-codex-workflows` 규칙을 따른다.
-6. 표시 구분:
+8. 표시 구분:
    - `User Controls`와 `Agent Checks`를 분리해 사용자 제어값과 자동 점검값을 구분한다.
-7. Agent Checks 기본 항목:
+9. Agent Checks 기본 항목:
    - GitHub MCP 구성 상태
    - GitHub 토큰 소스 상태(`github_token_source`)
    - 환경/훅 무결성 상태
@@ -108,19 +114,19 @@ description: |
    - CDP endpoint health(`mcp:playwright` detail의 `cdp:...:up|down`)
    - Pages 운영 가드(`pages_skill`, `pages_docsify_validator`, `pages_release_flow`)
    - pre-commit 품질 가드(`docsify_precommit_guard`, `owner_skill_lint_guard`, `skill_naming_guard`)
-8. Skill Inventory:
+10. Skill Inventory:
    - `skills_total`, `skills_managed_count`, `skills_delegated_count`를 출력한다.
    - `skill:<name>` 행으로 모든 로컬 스킬 존재 상태를 표시한다.
-9. Workflow Health:
+11. Workflow Health:
    - 주요 워크플로우별 준비 상태(`READY/NOT_READY`)와 마지막 상태(`PASS/FAIL/UNVERIFIED/NOT_RUN`)를 출력한다.
    - `workflow_marks_count`/`workflow_marks_file`로 실행 결과 마크 저장소 연동 상태를 확인한다.
    - `workflow:*:detail` 행에서 누락 의존성/실행 근거를 확인한다.
-10. Alerts 요약:
+12. Alerts 요약:
    - 상태표 상단 `Alerts` 섹션에 문제 항목(`WARN`/`MISSING`/`MISMATCH`/`IDLE`)만 요약 표시한다.
    - `all_clear`면 경고 없음으로 간주한다.
-11. Session Snapshot 요약:
+13. Session Snapshot 요약:
    - `session_start.sh`는 `Runtime Status` 아래 `Workflow Summary` 1줄을 자동 삽입해 핵심 판정을 빠르게 제공한다.
-12. Branch Context:
+14. Branch Context:
    - `session_start.sh`는 `Git Branch Context` 섹션에 `Current Branch`/`HEAD`/`Default Branch`/`Branch Guard`를 출력한다.
 
 ## 점검 포인트
