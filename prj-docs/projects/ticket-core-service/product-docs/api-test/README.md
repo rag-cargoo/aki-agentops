@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 03:50:54`
+> - **Updated At**: `2026-02-19 04:05:21`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -32,6 +32,7 @@
 > - 15. v13 WebSocket 전환 검증 실행
 > - 16. v14 지갑/결제/환불 연계 검증 실행
 > - 17. Auth-Social CI-safe 파이프라인 검증 실행
+> - 18. Auth 예외코드 운영 집계 점검
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -254,9 +255,9 @@ bash scripts/api/a2-auth-track-session-guard.sh
 ```
 
 - 검증 흐름:
-  - `/api/auth/me` 무토큰 접근 차단(`401`)
-  - `POST /api/auth/token/refresh` 입력 검증(`400`, `refresh token is required`)
-  - `POST /api/reservations/v7/holds` 무토큰 접근 차단(`401`)
+  - `/api/auth/me` 무토큰 접근 차단(`401`, `AUTH_ACCESS_TOKEN_REQUIRED`)
+  - `POST /api/auth/token/refresh` 입력 검증(`400`, `AUTH_REFRESH_TOKEN_REQUIRED`)
+  - `POST /api/reservations/v7/holds` 무토큰 접근 차단(`401`, `AUTH_ACCESS_TOKEN_REQUIRED`)
 - 실행 리포트:
   - `.codex/tmp/ticket-core-service/api-test/auth-track-a2-session-guard-latest.md`
 
@@ -389,3 +390,21 @@ make test-auth-social-pipeline
   - `.codex/tmp/ticket-core-service/api-test/auth-social-e2e-latest.md`
 - 비고:
   - 외부 OAuth 실코드/실비밀값 없이 재현 가능한 CI-safe 경로를 기본값으로 사용한다.
+
+---
+
+## 18. Auth 예외코드 운영 집계 점검
+
+운영 로그(`AUTH_MONITOR`)가 수집되는 환경에서 code별 집계를 확인한다.
+
+```bash
+# 예시: 애플리케이션 로그에서 auth code별 5분 집계 확인
+grep "AUTH_MONITOR" app.log | tail -n 500 | sed -n 's/.*code=\\([^ ]*\\).*/\\1/p' | sort | uniq -c | sort -nr
+```
+
+- 최소 확인 항목:
+  - `AUTH_ACCESS_TOKEN_REQUIRED` (무토큰 요청)
+  - `AUTH_TOKEN_EXPIRED` (만료 토큰)
+  - `AUTH_TOKEN_INVALID` (파싱/서명 실패)
+  - `AUTH_FORBIDDEN` (권한 부족)
+- 임계치 기준은 `api-specs/auth-error-monitoring-guide.md`를 따른다.

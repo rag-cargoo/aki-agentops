@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 00:15:00`
-> - **Updated At**: `2026-02-19 00:15:05`
+> - **Updated At**: `2026-02-19 04:05:21`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -94,6 +94,7 @@
 ```json
 {
   "status": 401,
+  "errorCode": "AUTH_ACCESS_TOKEN_REQUIRED",
   "message": "unauthorized"
 }
 ```
@@ -101,16 +102,37 @@
 ```json
 {
   "status": 403,
+  "errorCode": "AUTH_FORBIDDEN",
   "message": "forbidden"
 }
 ```
 
-도메인 예외(`GlobalExceptionHandler`) 기본 응답:
+auth path(`/api/auth`, `/api/reservations/v7`)의 도메인 예외(`GlobalExceptionHandler`):
+- `IllegalArgumentException` -> `400` + JSON(`status`, `errorCode`, `message`)
+- `HttpMessageNotReadableException` -> `400` + JSON(`AUTH_REQUEST_BODY_INVALID`)
+
+예시:
+
+```json
+{
+  "status": 400,
+  "errorCode": "AUTH_REFRESH_TOKEN_REQUIRED",
+  "message": "refresh token is required"
+}
+```
+
+비-auth path의 기본 응답:
 - `IllegalArgumentException` -> `400` + plain text
 - `IllegalStateException` -> `409` + plain text
 - 기타 예외 -> `500` + plain text
 
-예시:
+주요 auth errorCode:
+- `AUTH_ACCESS_TOKEN_REQUIRED`, `AUTH_TOKEN_EXPIRED`, `AUTH_TOKEN_INVALID`, `AUTH_ACCESS_TOKEN_REVOKED`
+- `AUTH_REFRESH_TOKEN_REQUIRED`, `AUTH_REFRESH_TOKEN_NOT_FOUND`, `AUTH_REFRESH_TOKEN_EXPIRED_OR_REVOKED`
+- `AUTH_REFRESH_TOKEN_USER_MISMATCH`, `AUTH_REFRESH_TOKEN_TYPE_INVALID`, `AUTH_ACCESS_TOKEN_TYPE_INVALID`
+- `AUTH_LOGOUT_TOKEN_USER_MISMATCH`, `AUTH_AUTHENTICATED_USER_REQUIRED`, `AUTH_USER_NOT_FOUND`, `AUTH_REQUEST_BODY_INVALID`
+
+비-auth plain text 예시:
 
 ```text
 Insufficient wallet balance.

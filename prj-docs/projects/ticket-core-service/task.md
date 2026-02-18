@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 03:50:54`
+> - **Updated At**: `2026-02-19 04:05:21`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -153,7 +153,20 @@
       - `./gradlew test` pass
 
 - TCS-SC-011 운영 auth 예외코드 집계/모니터링 기준 정리
-  - Status: TODO
+  - Status: DONE
   - Description:
     - 로그아웃 실패/토큰 만료/무효 토큰 등 auth 예외코드 집계 기준 정의
     - 운영 대시보드 및 알람 임계치 기준을 문서화
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-error-monitoring-criteria-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#7` (reopened -> closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #12` (merged, cross-repo shorthand)
+    - Merge Commit: `cae3a9df6ef36e6fe0e9b41f6b5e554c7849851d`
+    - Included:
+      - `AUTH_*` 예외코드 표준화(`SecurityConfig`, `GlobalExceptionHandler`, `JwtAuthenticationFilter`)
+      - auth 예외 응답 `errorCode` 필드 도입 + `AUTH_MONITOR` 로그 키 추가
+      - `a2-auth-track-session-guard.sh`/`AuthSecurityIntegrationTest` 회귀 보강
+      - API 명세/운영 임계치 문서 반영
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest` pass
+      - `./scripts/api/run-auth-social-e2e-pipeline.sh` pass

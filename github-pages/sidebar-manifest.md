@@ -36,6 +36,7 @@
     * **API Specs (Pages Docs)**
       * [API Contract Conventions](/prj-docs/projects/ticket-core-service/product-docs/api-specs/api-contract-conventions.md)
       * [Auth Session API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-session-api.md)
+      * [Auth Error Monitoring Guide](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-error-monitoring-guide.md)
       * [User API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/user-api.md)
       * [Wallet/Payment API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/wallet-payment-api.md)
       * [Catalog API (Agency/Artist)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md)
@@ -51,6 +52,7 @@
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
       * [2026-02-17 Sidecar SoT Dedup Follow-up](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md)
+      * [2026-02-19 Auth Error Monitoring Criteria Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-error-monitoring-criteria-completion.md)
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-core-service)
     * [Main Test URL (U1, Local)](http://localhost:8080/ux/u1/index.html)
 

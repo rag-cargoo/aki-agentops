@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 01:31:31`
+> - **Updated At**: `2026-02-19 04:05:21`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -179,3 +179,15 @@
 
 - API 체인 규칙은 Step(`v*.sh`) + Track(`a*.sh`)를 함께 사용한다.
   - A2 검증 스크립트: `scripts/api/a2-auth-track-session-guard.sh`
+
+---
+
+## 5. 운영 예외코드/모니터링 기준
+
+- 인증 실패 응답은 `errorCode`를 포함한다.
+  - 401 계열: `AUTH_ACCESS_TOKEN_REQUIRED`, `AUTH_TOKEN_EXPIRED`, `AUTH_TOKEN_INVALID`, `AUTH_ACCESS_TOKEN_REVOKED`, `AUTH_ACCESS_TOKEN_TYPE_INVALID`
+  - 403 계열: `AUTH_FORBIDDEN`
+  - 400 계열(auth path): `AUTH_REFRESH_TOKEN_*`, `AUTH_LOGOUT_TOKEN_USER_MISMATCH`, `AUTH_USER_NOT_FOUND`, `AUTH_REQUEST_BODY_INVALID`
+- 운영 로그 집계 키: `AUTH_MONITOR`
+  - 예: `AUTH_MONITOR code=AUTH_TOKEN_EXPIRED status=401 method=GET path=/api/auth/me detail=expired jwt token`
+- 대시보드/알람 상세 기준은 `./auth-error-monitoring-guide.md`를 따른다.
