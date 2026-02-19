@@ -1,0 +1,4 @@
+interface:
+  display_name: "Aki Frontend Delivery Governance"
+  short_description: "Global frontend delivery rules with sidecar docs + Playwright partitioned verification"
+  default_prompt: "Apply global frontend delivery governance and run Playwright verification by scope with evidence logs"

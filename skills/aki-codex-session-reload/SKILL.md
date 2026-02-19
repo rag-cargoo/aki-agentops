@@ -28,6 +28,7 @@ description: |
 > - 신규 프로젝트 감지 안내 계약
 > - 환경 부트스트랩
 > - 런타임 상태표
+> - 프론트 리마인더 자동 노출
 > - 점검 포인트
 > - 실패 복구
 > - 참고 문서
@@ -146,6 +147,14 @@ description: |
 15. MCP Config Bootstrap:
    - `runtime_flags.sh`는 `mcp_config_sync` 상태를 집계해 guide/apply 필요 여부를 표시한다.
    - 필수 MCP 엔트리(`github/playwright/openaiDeveloperDocs/figma/figma-desktop`) 누락 시 액션을 노출한다.
+
+## 프론트 리마인더 자동 노출
+1. Active Project가 `workspace/apps/frontend/*`이면 `session_start.sh` 결과에 `Frontend Quick Remind (Auto)` 섹션을 출력한다.
+2. 섹션에는 아래 항목을 포함한다.
+   - feature spec / Playwright catalog / Playwright runbook 경로
+   - list-first 실행 명령
+   - scope 실행 명령(`smoke|nav|contract|all`)
+   - 재호출 프롬프트 shortcut
 
 ## 점검 포인트
 - `Skills Snapshot`: `OK`

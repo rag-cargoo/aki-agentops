@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 16:52:40`
-> - **Updated At**: `2026-02-17 16:52:40`
+> - **Updated At**: `2026-02-19 21:12:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -26,6 +26,8 @@
 ## Human Entry Points
 - Prompt Guide:
   - [Aki Skills User Prompt Guide](/prj-docs/references/aki-skills-user-prompt-guide.md)
+- Frontend Recall:
+  - [Frontend Long-Gap Recall Card](/prj-docs/references/frontend-long-gap-recall-card.md)
 - Runtime Status:
   - [Runtime Status Visibility Flow](/skills/aki-codex-workflows/references/runtime-status-flow.md)
   - [Session Reload Runbook](/skills/aki-codex-session-reload/references/session-reload-runbook.md)
@@ -50,6 +52,8 @@
   - [aki-mcp-playwright](/skills/aki-mcp-playwright/SKILL.md)
 - Meeting Notes Sync:
   - [aki-meeting-notes-task-sync](/skills/aki-meeting-notes-task-sync/SKILL.md)
+- Frontend Delivery Governance:
+  - [aki-frontend-delivery-governance](/skills/aki-frontend-delivery-governance/SKILL.md)
 
 ## Skill Catalog (Delegated)
 - Java/Spring:

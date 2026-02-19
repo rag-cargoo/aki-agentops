@@ -10,6 +10,7 @@ reload_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/sess
 set_active_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh"
 bootstrap_env_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh"
 runtime_flags_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
+frontend_playwright_entry="./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh"
 mcp_config_sync_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh"
 workflow_mark_entry="./skills/aki-codex-workflows/scripts/workflow_mark.sh"
 workflow_mark_script="$repo_root/skills/aki-codex-workflows/scripts/workflow_mark.sh"
@@ -73,6 +74,19 @@ if [[ -f "$project_snapshot" ]]; then
   active_task="$(grep -E '^- Task Doc:' "$project_snapshot" | sed -E 's/^- Task Doc: `([^`]+)`/\1/' || true)"
   active_agent="$(grep -E '^- Project Agent:' "$project_snapshot" | sed -E 's/^- Project Agent: `([^`]+)`/\1/' || true)"
   active_meeting_notes="$(grep -E '^- Meeting Notes:' "$project_snapshot" | sed -E 's/^- Meeting Notes: `([^`]+)`/\1/' || true)"
+fi
+
+frontend_project_active="false"
+frontend_service_name=""
+frontend_docs_root=""
+if [[ -n "$active_project" && "$active_project" == workspace/apps/frontend/* ]]; then
+  frontend_project_active="true"
+  frontend_service_name="$(basename "$active_project")"
+  if [[ -n "$active_docs_root" ]]; then
+    frontend_docs_root="$active_docs_root"
+  else
+    frontend_docs_root="prj-docs/projects/$frontend_service_name"
+  fi
 fi
 
 default_work_branch="${CODEX_DEFAULT_WORK_BRANCH:-main}"
@@ -489,6 +503,17 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   echo "- 임시 산출물 정책: \`.codex/tmp/<tool>/<run-id>/\` 경로 사용 (로그/대시보드/스크린샷)"
   echo "- 영구 증빙 정책: \`prj-docs/**\`에는 \`.md/.json\` 증빙만 유지"
   echo "- 문제 시 재동기화: \`$reload_entry\`"
+  if [[ "$frontend_project_active" == "true" ]]; then
+    echo
+    echo "## Frontend Quick Remind (Auto)"
+    echo "- Active Frontend: \`$frontend_service_name\`"
+    echo "- Feature Spec: \`$frontend_docs_root/product-docs/frontend-feature-spec.md\`"
+    echo "- Playwright Catalog: \`$frontend_docs_root/testing/playwright-suite-catalog.md\`"
+    echo "- Playwright Runbook: \`$frontend_docs_root/testing/playwright-runbook.md\`"
+    echo "- List First: \`$frontend_playwright_entry --project-root $active_project --list\`"
+    echo "- Run by Scope: \`$frontend_playwright_entry --project-root $active_project --scope smoke|nav|contract|all\`"
+    echo "- Prompt Shortcut: \`프론트 Playwright 테스트 목록 보여주고 scope별로 실행해줘\`"
+  fi
   echo
   echo "## Usage"
   echo "1. 세션 시작 시 \`$reload_entry\` 실행"
