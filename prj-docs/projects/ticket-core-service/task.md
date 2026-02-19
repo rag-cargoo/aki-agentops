@@ -236,9 +236,14 @@
   - Evidence:
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-preflight-preparation-plan.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-api-script-mode-aware-followup.md`
     - Tracking Issue:
       - `https://github.com/rag-cargoo/aki-agentops/issues/118`
+      - `https://github.com/rag-cargoo/aki-agentops/issues/118#issuecomment-3925573862`
     - Baseline PR:
-      - `https://github.com/rag-cargoo/aki-agentops/pull/119` (open)
+      - `https://github.com/rag-cargoo/aki-agentops/pull/119` (merged)
     - Baseline Product Commit:
       - `rag-cargoo/ticket-core-service@1988f2c`
+    - Latest Verification:
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/api-test/latest.md` (`Result: PASS`, `Push Mode: websocket`, `Skipped: v7-sse`)
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/step7/20260219T084701Z/step7-regression.log` (`run-step7-regression.sh` completed, `PASS`)
