@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 07:17:00`
+> - **Updated At**: `2026-02-20 07:45:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -46,6 +46,7 @@
 - `Access Token`/`Device Fingerprint` 입력값을 사용해 예약 API(v7) 호출 파라미터를 제어한다.
 - `예매하기` 클릭 시 `options -> seats -> hold -> paying -> confirm` 체인을 수행한다.
 - 카드 단위 예약 상태(`running/success/error`)와 로그 패널을 통해 실행 결과를 표시한다.
+- `My Reservations` 패널에서 내 예약 목록/상세상태를 확인하고 취소/환불 액션을 수행한다.
 - API 실패 시 오류 패널과 수동 재시도 버튼을 노출한다.
 
 5. Realtime Mode Lab (개발 전용)
@@ -104,6 +105,17 @@
     - `Authorization: Bearer {accessToken}` 필수
   - 에러 처리:
     - auth/domain 에러는 카드 단위 상태 메시지 + 재시도 라벨로 반영
+- My Reservations v7 Action:
+  - 목록:
+    - `GET /api/reservations/v7/me`
+  - 상세:
+    - `GET /api/reservations/v7/{reservationId}`
+  - 상태 전이:
+    - `POST /api/reservations/v7/{reservationId}/cancel`
+    - `POST /api/reservations/v7/{reservationId}/refund`
+  - 버튼 규칙:
+    - `CONFIRMED` 상태에서만 `취소` 활성
+    - `CANCELLED` 상태에서만 `환불` 활성
 - Auth Session Integration:
   - 인가 URL:
     - `GET /api/auth/social/{provider}/authorize-url?state=...`

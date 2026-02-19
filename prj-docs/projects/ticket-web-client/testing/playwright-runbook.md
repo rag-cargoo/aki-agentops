@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 07:17:00`
+> - **Updated At**: `2026-02-20 07:45:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -76,6 +76,8 @@ cd /home/aki/aki-agentops
   --project-root workspace/apps/frontend/ticket-web-client \
   --scope realtime
 ```
+
+- `queue` scope는 예매 체인 + My Reservations(`v7/me`, cancel/refund)까지 포함해 검증한다.
 
 ## Auth Scope Note
 - `auth` scope는 OAuth provider 실제 로그인 없이도 회귀 가능하도록 Playwright route mocking을 사용한다.

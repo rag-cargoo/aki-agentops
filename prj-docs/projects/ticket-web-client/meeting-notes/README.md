@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 07:17:00`
+> - **Updated At**: `2026-02-20 07:45:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-20 My Reservations Cancel/Refund Integration](./2026-02-20-my-reservations-cancel-refund-integration.md)
 - [2026-02-20 OAuth Session and Auth Me Integration](./2026-02-20-oauth-session-and-auth-me-integration.md)
 - [2026-02-20 Queue Reservation v7 Flow Implementation](./2026-02-20-queue-reservation-v7-flow-implementation.md)
 - [2026-02-20 Queue Real API Integration and Seed Handoff](./2026-02-20-queue-real-api-integration-and-seed-handoff.md)

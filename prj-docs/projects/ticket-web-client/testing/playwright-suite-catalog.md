@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 07:17:00`
+> - **Updated At**: `2026-02-20 07:45:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -43,6 +43,7 @@
 - Queue 카드 예매 버튼 클릭 시 `options -> seats -> holds -> paying -> confirm` 호출이 순서대로 실행되는지 확인
 - 카드 상태 메시지가 `예매 확정 완료`로 전환되는지 확인
 - Queue 로그 패널에 confirmed 로그가 기록되는지 확인
+- My Reservations 패널에서 `확정 -> 취소 -> 환불` 상태 전이가 반영되는지 확인
 
 5. `auth`
 - authorize-url 요청/코드 교환으로 access/refresh 토큰이 발급되는지 확인

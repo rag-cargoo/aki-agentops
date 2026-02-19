@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 07:17:00`
+> - **Updated At**: `2026-02-20 07:45:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -34,6 +34,7 @@
 - [x] TWC-SC-009 티켓 목록 판매상태/카운트다운 계약 + 예매 버튼 노출 연동
 - [x] TWC-SC-010 Queue 카드 `예매하기` v7 hold/paying/confirm 연동
 - [x] TWC-SC-011 OAuth 세션 발급 + `/api/auth/me` 사용자 컨텍스트 연동
+- [x] TWC-SC-012 Queue 예약 후 `v7/me` 내 예약 조회 + 취소/환불 액션 UX 연동
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -200,5 +201,25 @@
     - `ticket-web-client Issue #2`: `https://github.com/rag-cargoo/ticket-web-client/issues/2`
     - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/2#issuecomment-3930457139`
 
-## Next Items
 - TWC-SC-012 Queue 예약 후 `v7/me` 내 예약 조회 + 취소/환불 액션 UX 연동
+  - Status: DONE
+  - Description:
+    - Queue 섹션에 `My Reservations` 패널을 추가해 `GET /api/reservations/v7/me` 목록과 상세 상태(`GET /api/reservations/v7/{reservationId}`)를 노출한다.
+    - 상태별 액션:
+      - `CONFIRMED` -> `취소(POST .../cancel)`
+      - `CANCELLED` -> `환불(POST .../refund)`
+    - 수동 Queue 토큰 입력 모드와 Auth 세션 토큰 모드 모두에서 동일하게 동작하도록 토큰 해석을 통합했다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/reservation-v7-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-073839-3697342/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-073839-3697342/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-073901-3698087/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-073901-3698087/summary.txt`
+    - `ticket-web-client Issue #3`: `https://github.com/rag-cargoo/ticket-web-client/issues/3`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/3#issuecomment-3930562072`
+
+## Next Items
+- TWC-SC-013 Queue/Reservation 상태를 WS/SSE 이벤트와 병합해 실시간 반영
