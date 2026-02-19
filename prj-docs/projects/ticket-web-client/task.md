@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 08:12:00`
+> - **Updated At**: `2026-02-20 08:35:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -36,6 +36,7 @@
 - [x] TWC-SC-011 OAuth 세션 발급 + `/api/auth/me` 사용자 컨텍스트 연동
 - [x] TWC-SC-012 Queue 예약 후 `v7/me` 내 예약 조회 + 취소/환불 액션 UX 연동
 - [x] TWC-SC-013 Queue/Reservation 상태를 WS/SSE 이벤트와 병합해 실시간 반영
+- [x] TWC-SC-014 실백엔드 STOMP/SSE 구독 등록 API 연동 및 재연결(backoff) 복구 고도화
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -242,5 +243,26 @@
     - `ticket-web-client Issue #4`: `https://github.com/rag-cargoo/ticket-web-client/issues/4`
     - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/4#issuecomment-3930665171`
 
-## Next Items
 - TWC-SC-014 실백엔드 STOMP/SSE 구독 등록 API 연동 및 재연결(backoff) 복구 고도화
+  - Status: DONE
+  - Description:
+    - websocket 모드에서 대기열/예약 WS 구독 등록 API 호출 후 STOMP destination subscribe로 연결한다.
+    - SSE transport를 명시 이벤트(`INIT/RANK_UPDATE/ACTIVE/KEEPALIVE/RESERVATION_STATUS`) 수신 가능하도록 확장한다.
+    - transport 오류 시 지수 backoff 재연결을 수행하고, disconnect/unmount에서 WS 구독 등록을 해제한다.
+    - `@realtime`에 재연결 회귀 케이스를 추가해 복구 동작을 자동 검증한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/realtime-subscription-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/transports/stomp-ws-transport.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/transports/sse-transport.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/transports/ws-transport.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083058-3768649/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083058-3768649/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083143-3770214/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083143-3770214/run.log`
+    - `ticket-web-client Issue #5`: `https://github.com/rag-cargoo/ticket-web-client/issues/5`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/5#issuecomment-3930734644`
+
+## Next Items
+- TWC-SC-015 실백엔드 OAuth+Queue+Realtime 통합 스모크 런북/자동화 시나리오 정리

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 08:12:00`
+> - **Updated At**: `2026-02-20 08:35:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-20 STOMP/SSE Registration and Reconnect Backoff Recovery](./2026-02-20-stomp-sse-registration-and-reconnect-backoff-recovery.md)
 - [2026-02-20 Queue/Reservation Realtime Merge Integration](./2026-02-20-queue-reservation-realtime-merge-integration.md)
 - [2026-02-20 My Reservations Cancel/Refund Integration](./2026-02-20-my-reservations-cancel-refund-integration.md)
 - [2026-02-20 OAuth Session and Auth Me Integration](./2026-02-20-oauth-session-and-auth-me-integration.md)

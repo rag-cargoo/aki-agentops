@@ -74,6 +74,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-20 STOMP/SSE Registration and Reconnect Backoff Recovery](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-stomp-sse-registration-and-reconnect-backoff-recovery.md)
       * [2026-02-20 Queue/Reservation Realtime Merge Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-queue-reservation-realtime-merge-integration.md)
       * [2026-02-20 My Reservations Cancel/Refund Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-my-reservations-cancel-refund-integration.md)
       * [2026-02-20 OAuth Session and Auth Me Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-oauth-session-and-auth-me-integration.md)

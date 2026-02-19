@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 08:12:00`
+> - **Updated At**: `2026-02-20 08:35:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -79,6 +79,7 @@ cd /home/aki/aki-agentops
 
 - `queue` scope는 예매 체인 + My Reservations(`v7/me`, cancel/refund)까지 포함해 검증한다.
 - `realtime` scope는 websocket->sse fallback + Queue/My Reservations 상태 병합까지 포함해 검증한다.
+- `realtime` scope에는 transport interruption 이후 reconnect backoff 복구 케이스가 포함된다.
 
 ## Auth Scope Note
 - `auth` scope는 OAuth provider 실제 로그인 없이도 회귀 가능하도록 Playwright route mocking을 사용한다.
@@ -116,6 +117,17 @@ cd /home/aki/aki-agentops
   - `.codex/tmp/frontend-playwright/ticket-web-client/latest`
 - HTML 리포트(프로젝트 로컬):
   - `workspace/apps/frontend/ticket-web-client/playwright-report/index.html`
+
+## Realtime Runtime Toggle
+- mock 강제:
+  - `VITE_APP_REALTIME_MOCK=1`
+- 실 transport 강제:
+  - `VITE_APP_REALTIME_MOCK=0`
+- reconnect 제어:
+  - `VITE_APP_REALTIME_RECONNECT=1`
+  - `VITE_APP_REALTIME_RECONNECT_MAX_ATTEMPTS=5`
+  - `VITE_APP_REALTIME_RECONNECT_BASE_DELAY_MS=1000`
+  - `VITE_APP_REALTIME_RECONNECT_MAX_DELAY_MS=15000`
 
 ## MCP Demonstration
 - Codex 사용자는 아래 순서로 증빙을 보여준다.

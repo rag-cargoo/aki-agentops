@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 08:12:00`
+> - **Updated At**: `2026-02-20 08:35:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -50,6 +50,8 @@
 - Queue 섹션에서 실시간 연결 파라미터(`userId`, `concertId`)를 설정하고 connect/disconnect를 제어한다.
 - 실시간 대기열 이벤트(`RANK_UPDATE`, `ACTIVE`)를 Queue 카드 상태와 버튼 활성 규칙에 병합 반영한다.
 - 실시간 예약 이벤트(`RESERVATION_STATUS`)를 My Reservations 상태/액션 메시지에 병합 반영한다.
+- websocket 모드에서 WS 구독 등록 API 호출 후 destination 기반 STOMP subscribe를 수행한다.
+- transport 오류 시 지수 backoff 재연결 상태를 UI 메타(`attempt`, `next delay`, `reason`)로 노출한다.
 - API 실패 시 오류 패널과 수동 재시도 버튼을 노출한다.
 
 5. Realtime Mode Lab (개발 전용)
@@ -128,6 +130,12 @@
     - `RANK_UPDATE`/`ACTIVE` 이벤트를 `queueRealtimeState`로 저장하고 카드 상태/버튼 활성에 반영
   - Reservation 병합:
     - `RESERVATION_STATUS(SUCCESS|FAIL)`를 각각 `CONFIRMED`/`EXPIRED`로 정규화해 카드 상태에 반영
+  - WebSocket registration API:
+    - `POST /api/push/websocket/waiting-queue/subscriptions`
+    - `POST /api/push/websocket/reservations/subscriptions`
+    - disconnect/unmount/reconnect 시 아래 해제 API를 호출한다.
+      - `DELETE /api/push/websocket/waiting-queue/subscriptions`
+      - `DELETE /api/push/websocket/reservations/subscriptions`
 - Auth Session Integration:
   - 인가 URL:
     - `GET /api/auth/social/{provider}/authorize-url?state=...`
@@ -152,6 +160,16 @@
   - 로컬 개발 프록시 타깃(`http://127.0.0.1:8080` 기본)
 - `VITE_APP_DEV_LABS`:
   - `1`일 때 Dev Lab 섹션 노출
+- `VITE_APP_REALTIME_MOCK`:
+  - `1`이면 mock transport 강제, `0`이면 실 transport 사용
+- `VITE_APP_REALTIME_RECONNECT`:
+  - `1`이면 reconnect backoff 활성
+- `VITE_APP_REALTIME_RECONNECT_MAX_ATTEMPTS`:
+  - 최대 재시도 횟수(기본 5)
+- `VITE_APP_REALTIME_RECONNECT_BASE_DELAY_MS`:
+  - 재시도 기본 지연(기본 1000ms)
+- `VITE_APP_REALTIME_RECONNECT_MAX_DELAY_MS`:
+  - 재시도 최대 지연(기본 15000ms)
 - Queue Access Token:
   - `Access Token` 입력값은 `localStorage(ticket-web-client.queue.access-token)`에 저장하여 새로고침 후 재사용한다.
 - Auth Session:
@@ -161,9 +179,12 @@
 - Baseline(완료):
   - WebSocket 우선 연결 + transport 실패 시 SSE fallback
   - Queue/My Reservations 상태 병합 실시간 반영
+- SC014(완료):
+  - WS registration API + STOMP destination subscribe 연동
+  - transport interruption 시 reconnect backoff 복구
 - Next:
-  - 실백엔드 STOMP 구독 등록/해제 API 연동
-  - auth 만료/네트워크 오류 재연결(backoff) + 구독 복구
+  - auth 세션 만료/재발급과 reconnect 정책을 결합한 통합 시나리오 자동화
+  - 실백엔드 통합 스모크 런북 고정
 
 ## Error/Recovery Strategy
 - 비정상 API 응답 본문은 공통 에러 파서로 강제 정규화한다.
@@ -177,3 +198,4 @@
 - `@contract`: Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
 - `@auth`: OAuth authorize-url/exchange + refresh/logout + `/api/auth/me` 컨텍스트 검증
 - `@realtime`: websocket 실패 -> sse fallback + Queue/My Reservations 실시간 상태 병합 검증
+- `@realtime`: transport interruption 발생 시 reconnect backoff 복구 검증
