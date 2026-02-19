@@ -71,6 +71,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-19 WS/SSE Playwright Expansion Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-19-ws-sse-playwright-expansion-kickoff.md)
       * [2026-02-19 Frontend Governance and Playwright Baseline](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-19-frontend-governance-and-playwright-baseline.md)
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-web-client)
 

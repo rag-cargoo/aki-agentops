@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-19 21:26:00`
+> - **Updated At**: `2026-02-19 22:15:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -66,8 +66,19 @@
     - `prj-docs/references/frontend-long-gap-recall-card.md`
     - `prj-docs/references/aki-skills-user-prompt-guide.md`
 
-## Next Items
 - TWC-SC-005 WS/SSE 실시간 시나리오 Playwright 케이스 확장
-  - Status: TODO
+  - Status: DONE
+  - Description:
+    - Realtime demo panel + websocket 실패 시 sse fallback 시뮬레이션 추가
+    - Playwright `realtime` scope 추가 및 목록/실행 스크립트 반영
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/create-realtime-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/transports/mock/create-mock-transports.ts`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-011504-3212976/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-011504-3212976/summary.txt`
+
+## Next Items
 - TWC-SC-006 Auth/session 흐름 e2e + CI 파이프라인 분리(smoke/nightly)
   - Status: TODO

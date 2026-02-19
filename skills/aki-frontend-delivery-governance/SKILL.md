@@ -72,7 +72,7 @@ description: |
 
 ## Playwright 시연 계약
 1. 테스트 목록은 실행 전에 반드시 제시한다.
-   - 예: `smoke`, `nav`, `contract`, `all`
+   - 예: `smoke`, `nav`, `contract`, `realtime`, `all`
 2. 사용자가 범위를 지정하면 해당 범위만 실행한다.
 3. 사용자가 지정하지 않으면 목록을 보여주고 선택을 받는다.
 4. 실행은 아래 공통 래퍼를 기본으로 사용한다.
@@ -103,7 +103,7 @@ description: |
 ## 로컬 실행 계약
 - Input:
   - Active frontend project root
-  - 실행 scope(`smoke`/`nav`/`contract`/`all`)
+  - 실행 scope(`smoke`/`nav`/`contract`/`realtime`/`all`)
 - Output:
   - 테스트 실행 로그, 콘솔 로그, 요약 리포트
 - Success:
