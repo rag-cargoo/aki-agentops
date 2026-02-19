@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-20 05:13:19`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -53,6 +53,8 @@
 | `agencyName` | String | 기획사 이름(옵션) |
 | `agencyCountryCode` | String | 기획사 국가코드(옵션) |
 | `agencyHomepageUrl` | String | 기획사 홈페이지 URL(옵션) |
+| `youtubeVideoUrl` | String | 공연 대표 YouTube URL(옵션) |
+| `thumbnailUrl` | String | 공연 썸네일 조회 URL(없으면 `null`) |
 | `saleStatus` | String | 판매 상태 (`UNSCHEDULED`/`PREOPEN`/`OPEN_SOON_1H`/`OPEN_SOON_5M`/`OPEN`/`SOLD_OUT`) |
 | `saleOpensAt` | DateTime | 일반 예매 오픈 시각(정책 없으면 `null`) |
 | `saleOpensInSeconds` | Long | 오픈까지 남은 초(오픈 이후는 `0`, 미정은 `null`) |
@@ -76,6 +78,8 @@
     "agencyName": "EDAM",
     "agencyCountryCode": "KR",
     "agencyHomepageUrl": "https://www.edam-ent.com",
+    "youtubeVideoUrl": "https://www.youtube.com/watch?v=0-q1KafFCLU",
+    "thumbnailUrl": "/api/concerts/1/thumbnail",
     "saleStatus": "OPEN_SOON_1H",
     "saleOpensAt": "2026-02-20T20:00:00",
     "saleOpensInSeconds": 1800,
@@ -135,6 +139,8 @@
       "agencyName": "EDAM",
       "agencyCountryCode": "KR",
       "agencyHomepageUrl": "https://www.edam-ent.com",
+      "youtubeVideoUrl": "https://www.youtube.com/watch?v=0-q1KafFCLU",
+      "thumbnailUrl": "/api/concerts/1/thumbnail",
       "saleStatus": "OPEN_SOON_1H",
       "saleOpensAt": "2026-02-20T20:00:00",
       "saleOpensInSeconds": 1800,
@@ -164,7 +170,7 @@
 - `reservationButtonVisible=true`이면 프론트에서 CTA를 노출한다.
 - `reservationButtonEnabled=true`이면 즉시 예매 가능 상태로 처리한다.
 
-### 1.1-3. 포트폴리오 더미 시드(선택)
+### 1.1-3. 샘플 더미 시드(선택)
 - 런타임 플래그:
   - `APP_PORTFOLIO_SEED_ENABLED=true`일 때 서버 기동 시 샘플 공연/정책/좌석 데이터를 자동 생성한다.
   - 기본값은 `false`이며, 운영/실서비스 환경에서는 비활성 상태를 유지한다.
@@ -191,6 +197,7 @@
 | :--- | :--- | :--- |
 | `id` | Long | 날짜 옵션 고유 ID |
 | `concertDate` | DateTime | 공연 시작 일시 |
+| `ticketPriceAmount` | Long | 해당 회차 결제 금액 |
 
 **Response Example**
 
@@ -198,7 +205,8 @@
 [
   {
     "id": 1,
-    "concertDate": "2026-02-15T19:00:00"
+    "concertDate": "2026-02-15T19:00:00",
+    "ticketPriceAmount": 120000
   }
 ]
 ```
@@ -237,7 +245,76 @@
 
 ---
 
-### 1.4. [Admin] 테스트 데이터 일괄 셋업
+### 1.4. 공연 썸네일 조회
+- **Endpoint**: `GET /api/concerts/{id}/thumbnail`
+- **Description**: 공연에 등록된 썸네일 이미지를 바이너리로 반환합니다.
+
+**Parameters**
+
+| Location | Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| Path | `id` | Long | Yes | 공연 고유 ID |
+
+**Response Summary**
+
+- `200 OK`: `image/jpeg` 또는 업로드된 썸네일 MIME 타입
+- `404 Not Found`: 썸네일 미등록
+
+---
+
+### 1.5. 운영 관리자 API (`ROLE_ADMIN`)
+- **Auth**: `/api/admin/**`는 `ROLE_ADMIN` 권한이 필요합니다.
+
+#### 1.5-1. 콘서트 CRUD
+- `POST /api/admin/concerts`
+- `GET /api/admin/concerts/{concertId}`
+- `PUT /api/admin/concerts/{concertId}`
+- `DELETE /api/admin/concerts/{concertId}`
+
+요청 본문(`POST`, `PUT`) 주요 필드:
+
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | String | Yes | 공연명 |
+| `artistName` | String | Yes | 아티스트명 |
+| `agencyName` | String | Yes | 기획사명 |
+| `artistDisplayName` | String | No | 아티스트 표시명 |
+| `artistGenre` | String | No | 장르 |
+| `artistDebutDate` | Date | No | 데뷔일 |
+| `agencyCountryCode` | String | No | 국가코드 |
+| `agencyHomepageUrl` | String | No | 기획사 URL |
+| `youtubeVideoUrl` | String | No | YouTube 영상 URL |
+
+#### 1.5-2. 회차(옵션) CRUD
+- `POST /api/admin/concerts/{concertId}/options`
+- `PUT /api/admin/concerts/options/{optionId}`
+- `DELETE /api/admin/concerts/options/{optionId}`
+
+요청 본문:
+
+| Endpoint | Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `POST .../options` | `concertDate` | DateTime | Yes | 공연 일시 |
+| `POST .../options` | `seatCount` | Integer | Yes | 생성 좌석 수 (`>=1`) |
+| `POST .../options` | `ticketPriceAmount` | Long | No | 회차 결제금액(미지정 시 기본값) |
+| `PUT .../options/{optionId}` | `concertDate` | DateTime | Yes | 수정 공연 일시 |
+| `PUT .../options/{optionId}` | `ticketPriceAmount` | Long | No | 수정 결제금액 |
+
+#### 1.5-3. 판매정책 관리자 경로
+- `PUT /api/admin/concerts/{concertId}/sales-policy`
+
+#### 1.5-4. 썸네일 업로드/삭제
+- `POST /api/admin/concerts/{concertId}/thumbnail` (`multipart/form-data`, field=`image`)
+- `DELETE /api/admin/concerts/{concertId}/thumbnail`
+
+썸네일 업로드 규칙:
+- 입력은 `image/*` MIME 타입만 허용
+- 업로드 최대 크기: 5MB
+- 서버가 640x360 JPEG 썸네일을 생성해 저장
+
+---
+
+### 1.6. [Admin/Test] 테스트 데이터 일괄 셋업
 - **Endpoint**: `POST /api/concerts/setup`
 - **Description**: 공연, 아티스트, 기획사, 좌석을 한 번에 생성하여 테스트 환경을 구축합니다.
 
@@ -279,7 +356,7 @@
 
 ---
 
-### 1.5. [Admin] 테스트 데이터 삭제 (Cleanup)
+### 1.7. [Admin/Test] 테스트 데이터 삭제 (Cleanup)
 - **Endpoint**: `DELETE /api/concerts/cleanup/{concertId}`
 - **Description**: 특정 공연과 연관된 모든 데이터(옵션, 좌석)를 영구 삭제합니다.
 
@@ -295,7 +372,7 @@
 
 ---
 
-### 1.6. [Admin/Test] Step 11 판매 정책 생성/수정
+### 1.8. [Admin/Test] Step 11 판매 정책 생성/수정
 - **Endpoint**: `PUT /api/concerts/{concertId}/sales-policy`
 - **Description**: 공연별 판매 정책(선예매 기간, 선예매 최소 등급, 일반 오픈 시각, 1인 최대 예약 수)을 생성/수정합니다.
 
@@ -338,7 +415,7 @@
 
 ---
 
-### 1.7. [Read] Step 11 판매 정책 조회
+### 1.9. [Read] Step 11 판매 정책 조회
 - **Endpoint**: `GET /api/concerts/{concertId}/sales-policy`
 - **Description**: 대상 공연의 현재 판매 정책을 조회합니다.
 
@@ -358,10 +435,10 @@ Concert read-path 캐시는 `concert:list`, `concert:search`, `concert:options`,
 
 | Cache Name | 대상 API | 기본 TTL | 무효화 트리거 |
 | :--- | :--- | :--- | :--- |
-| `concert:list` | `GET /api/concerts` | `30s` | 공연/옵션/좌석 생성, 공연 삭제 |
-| `concert:search` | `GET /api/concerts/search` | `20s` | 공연/옵션/좌석 생성, 공연 삭제 |
-| `concert:options` | `GET /api/concerts/{id}/options` | `30s` | 공연/옵션/좌석 생성, 공연 삭제 |
-| `concert:available-seats` | `GET /api/concerts/options/{optionId}/seats` | `5s` | 좌석 생성/공연 삭제 + 예약 상태 전이(`reserve/hold/confirm/cancel/expire`) |
+| `concert:list` | `GET /api/concerts` | `30s` | 공연/옵션/좌석 생성, 공연/옵션 수정, 썸네일 변경, 공연/옵션 삭제 |
+| `concert:search` | `GET /api/concerts/search` | `20s` | 공연/옵션/좌석 생성, 공연/옵션 수정, 썸네일 변경, 공연/옵션 삭제 |
+| `concert:options` | `GET /api/concerts/{id}/options` | `30s` | 공연/옵션/좌석 생성, 옵션 수정/삭제, 공연 삭제 |
+| `concert:available-seats` | `GET /api/concerts/options/{optionId}/seats` | `5s` | 좌석 생성/공연 삭제/옵션 삭제 + 예약 상태 전이(`reserve/hold/confirm/cancel/expire`) |
 
 환경별 튜닝은 아래 env로 조정한다.
 

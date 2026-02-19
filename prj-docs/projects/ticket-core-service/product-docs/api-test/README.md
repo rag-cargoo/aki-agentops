@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-20 05:13:19`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -36,7 +36,8 @@
 > - 19. Auth-Social Real Provider E2E 선택 실행
 > - 20. 프론트 릴리즈 계약 체크리스트
 > - 21. v15 콘서트 판매상태 계약 검증 실행
-> - 22. 포트폴리오 더미 시드 스모크 검증
+> - 22. 샘플 더미 시드 스모크 검증
+> - 23. 운영 관리자 CRUD/미디어 회귀 검증
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -485,18 +486,36 @@ bash scripts/api/v15-concert-sale-status-contract.sh
 
 ---
 
-## 22. 포트폴리오 더미 시드 스모크 검증
+## 22. 샘플 더미 시드 스모크 검증
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
 APP_PORTFOLIO_SEED_ENABLED=true ./gradlew bootRun --args='--spring.profiles.active=local'
 
 # 다른 터미널
-curl -s "http://127.0.0.1:8080/api/concerts/search?keyword=Portfolio&page=0&size=20&sort=id,desc"
+curl -s "http://127.0.0.1:8080/api/concerts/search?keyword=Sample&page=0&size=20&sort=id,desc"
 ```
 
 - 기대 결과:
-  - 응답 `items`에 포트폴리오 샘플 공연이 1건 이상 포함된다.
+  - 응답 `items`에 샘플 시드 공연이 1건 이상 포함된다.
   - 상태 필드(`saleStatus`, `saleOpensInSeconds`, `reservationButtonVisible`, `reservationButtonEnabled`)가 함께 내려온다.
 - 참고:
   - 시드는 아이템포턴시 마커 기반이므로 동일 DB에서는 중복 생성되지 않는다.
+
+---
+
+## 23. 운영 관리자 CRUD/미디어 회귀 검증
+
+운영 관리자 API(`/api/admin/concerts/**`)는 `ROLE_ADMIN` 권한이 필요하므로,
+현재 기본 자동화는 Spring 통합테스트로 고정한다.
+
+```bash
+cd workspace/apps/backend/ticket-core-service
+./gradlew test --tests com.ticketrush.api.controller.AdminConcertControllerIntegrationTest --tests com.ticketrush.domain.reservation.service.ReservationLifecyclePricingIntegrationTest
+```
+
+- 검증 항목:
+  - 관리자 콘서트 CRUD
+  - 회차(옵션) CRUD + `ticketPriceAmount` 반영
+  - 썸네일 multipart 업로드 -> 공개 조회(`GET /api/concerts/{id}/thumbnail`)
+  - 예약 확정 시 회차 가격 우선 차감

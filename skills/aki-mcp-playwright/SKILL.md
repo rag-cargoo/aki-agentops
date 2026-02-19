@@ -76,6 +76,14 @@ description: 코드 작성 없이 Playwright MCP 도구로 Linux/WSL 브라우�
 5. 로그인 완료 후 callback URL의 `code/state`를 확보해 API execute 단계로 넘긴다.
 6. callback 실패(`ERR_CONNECTION_REFUSED`)가 발생하면 troubleshooting 15번 절차로 즉시 분기한다.
 
+### HITL 사용자 요청 계약 (Mandatory)
+
+1. OAuth/SSO 재인증이 필요한 순간, 아래 문구를 사용자에게 먼저 고지한다.
+   - `OAuth 세션이 만료되어 자동 진행이 불가합니다. 지금 로그인 페이지를 열겠습니다. 브라우저에서 직접 로그인/동의해주세요.`
+   - `완료되면 '로그인 완료'라고 답해주세요.`
+2. 사용자가 `로그인 완료`를 명시하기 전에는 execute 단계(토큰 교환/후속 API 호출)를 시작하지 않는다.
+3. URL 공유가 필요할 때는 보안상 URL 전체 대신 `code/state` 값만 요청한다.
+
 ## 핵심 구분
 
 - GUI 검증:

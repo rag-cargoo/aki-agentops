@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-20 05:13:19`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -287,10 +287,10 @@
       - `./gradlew test --tests com.ticketrush.domain.concert.service.ConcertExplorerIntegrationTest` PASS
       - `API_HOST=http://127.0.0.1:18081 bash scripts/api/v15-concert-sale-status-contract.sh` PASS
 
-- TCS-SC-018 포트폴리오 더미 시드 + 프론트 개발 연결 기본값 정렬
+- TCS-SC-018 샘플 더미 시드 + 프론트 개발 연결 기본값 정렬
   - Status: DONE
   - Description:
-    - `DataInitializer`에 포트폴리오 더미 시드 토글(`APP_PORTFOLIO_SEED_ENABLED`)을 추가
+    - `DataInitializer`에 샘플 더미 시드 토글(`APP_PORTFOLIO_SEED_ENABLED`)을 추가
     - CORS/WS 기본 허용 오리진에 `5173`, `4173`을 포함해 프론트 개발 연결 기본값을 정렬
     - 문서(`concert-api.md`, `api-test/README.md`, `social-auth-api.md`)를 새 런타임 기준으로 동기화
   - Evidence:
@@ -301,6 +301,28 @@
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/WebSocketConfig.java`
       - `workspace/apps/backend/ticket-core-service/docker-compose.yml`
     - Sidecar Docs:
-      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md`
-      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/social-auth-api.md`
-      - `prj-docs/projects/ticket-core-service/product-docs/api-test/README.md`
+    - `prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md`
+    - `prj-docs/projects/ticket-core-service/product-docs/api-specs/social-auth-api.md`
+    - `prj-docs/projects/ticket-core-service/product-docs/api-test/README.md`
+
+- TCS-SC-019 관리자 운영 CRUD(콘서트/세션/가격/미디어) 구현 착수
+  - Status: DOING
+  - Description:
+    - 운영 관리자 기준의 콘서트/세션/가격 정책 CRUD API를 추가해 프론트 서비스 화면 구현 기반을 마련한다.
+    - 미디어는 YouTube URL 입력 + 이미지 multipart 업로드/썸네일 생성 파이프라인으로 분리한다.
+    - 기존 테스트 중심 `setup/cleanup` 경로는 운영 API와 권한 경계를 분리해 정리한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-admin-ops-crud-and-media-pipeline-kickoff.md`
+    - Product Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/16`
+    - 구현 반영:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AdminConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
+    - 검증:
+      - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/api/controller/AdminConcertControllerIntegrationTest.java` PASS
+      - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/domain/reservation/service/ReservationLifecyclePricingIntegrationTest.java` PASS
+      - `./gradlew test` PASS
+    - 범위 분리 근거:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/15`는 목록 판매상태 계약 전용 범위

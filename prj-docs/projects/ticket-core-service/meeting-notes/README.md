@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-20 05:08:38`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-20 Admin Operations CRUD and Media Pipeline Kickoff](./2026-02-20-admin-ops-crud-and-media-pipeline-kickoff.md)
 - [2026-02-20 Portfolio Seed and Frontend Origin Defaults](./2026-02-20-portfolio-seed-and-frontend-origin-defaults.md)
 - [2026-02-20 Concert Sale Status Contract and Probe Coverage](./2026-02-20-concert-sale-status-contract-and-probe-coverage.md)
 - [2026-02-19 Frontend Workspace Bootstrap Kickoff](./2026-02-19-frontend-workspace-bootstrap-kickoff.md)
