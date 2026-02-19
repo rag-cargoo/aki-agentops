@@ -227,7 +227,7 @@
       - `https://github.com/rag-cargoo/aki-agentops/pull/115` (merged)
 
 - TCS-SC-015 프론트 구현 사전준비 패키지 고정(오류/시간/실시간/핸드오프 증빙)
-  - Status: TODO
+  - Status: DONE
   - Description:
     - 프론트 오류 파서를 `status/errorCode/message` 고정 스키마로 확정하고 에러코드 매핑 상수 테이블을 고정
     - `LocalDateTime` + `Instant(UTC)` 혼재 응답을 공통 시간 파싱 유틸 1개로 정리
