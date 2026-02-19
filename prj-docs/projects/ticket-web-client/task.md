@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 03:05:00`
+> - **Updated At**: `2026-02-20 04:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -31,6 +31,7 @@
 - [x] TWC-SC-006 Auth/session 흐름 e2e + CI 파이프라인 분리(smoke/nightly)
 - [x] TWC-SC-007 Playwright 실행 이력 누적 거버넌스(글로벌/프로젝트 동기화)
 - [x] TWC-SC-008 메인 화면 서비스 우선 정렬 + Dev Lab 분리
+- [x] TWC-SC-009 티켓 목록 판매상태/카운트다운 계약 + 예매 버튼 노출 연동
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -135,5 +136,23 @@
     - `prj-docs/projects/ticket-web-client/testing/playwright-suite-catalog.md`
     - `prj-docs/projects/ticket-web-client/testing/playwright-runbook.md`
 
+- TWC-SC-009 티켓 목록 판매상태/카운트다운 계약 + 예매 버튼 노출 연동
+  - Status: DONE
+  - Description:
+    - 백엔드 목록 응답에 오픈 임계(1h/5m) 기반 `saleStatus`/카운트다운/버튼 노출 필드 추가
+    - 프론트에서 응답값 기반으로 예매 버튼 노출/활성 시점을 제어할 수 있도록 계약 고정
+    - Queue 섹션을 정적 KPI 카드에서 실 API(`concerts/search`) 기반 목록으로 전환
+  - Evidence:
+    - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-ticket-listing-sale-status-and-media-contract-kickoff.md`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/fetch-concert-search-page.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/vite.config.ts`
+    - `workspace/apps/frontend/ticket-web-client/.env.example`
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ConcertResponse.java`
+    - `prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md`
+    - `AKI AgentOps Issue #128`: `https://github.com/rag-cargoo/aki-agentops/issues/128`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/aki-agentops/issues/128#issuecomment-3929066936`
+
 ## Next Items
-- 현재 고정된 후속 항목 없음 (새 요구 수신 대기)
+- TWC-SC-010 Queue 카드의 `예매하기`를 실제 예약 플로우(v7 hold/confirm)로 연결

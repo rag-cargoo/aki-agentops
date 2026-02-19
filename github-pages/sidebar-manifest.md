@@ -53,6 +53,8 @@
       * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+      * [2026-02-20 Portfolio Seed and Frontend Origin Defaults](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-portfolio-seed-and-frontend-origin-defaults.md)
+      * [2026-02-20 Concert Sale Status Contract and Probe Coverage](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-concert-sale-status-contract-and-probe-coverage.md)
       * [2026-02-19 Frontend Preflight Preparation Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-preflight-preparation-plan.md)
       * [2026-02-19 Playwright OAuth HITL + Callback Preflight Governance Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-playwright-oauth-hitl-preflight-governance-completion.md)
       * [2026-02-19 Frontend Release Handoff Checklist Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-release-handoff-checklist-completion.md)
@@ -72,6 +74,8 @@
       * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-20 Queue Real API Integration and Seed Handoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-queue-real-api-integration-and-seed-handoff.md)
+      * [2026-02-20 Ticket Listing Sale Status and Media Contract Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-ticket-listing-sale-status-and-media-contract-kickoff.md)
       * [2026-02-20 Service-first Main Screen and Dev Lab Split](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-service-first-main-screen-and-dev-lab-split.md)
       * [2026-02-20 Frontend Playwright Execution History Governance](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-frontend-playwright-execution-history-governance.md)
       * [2026-02-20 Auth/Session E2E + CI Split Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-auth-session-e2e-ci-split-kickoff.md)

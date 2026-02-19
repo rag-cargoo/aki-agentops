@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 03:05:00`
+> - **Updated At**: `2026-02-20 04:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -22,7 +22,7 @@
 
 ## Scope
 - 대상 프로젝트: `workspace/apps/frontend/ticket-web-client`
-- 목적: 초기 랜딩/탐색 UI와 API 계약 파서 기반을 고정하고, 이후 기능 확장을 위한 검증 기준을 제공한다.
+- 목적: 메인 랜딩 + Queue 실 API 연동 + 개발 검증 패널을 함께 유지해 프론트 구현/검증 기준을 고정한다.
 
 ## Feature Breakdown
 1. Layout/Navigate
@@ -39,8 +39,11 @@
 - 포토 월 형태의 카드 레이아웃으로 시각 강조 영역을 구성한다.
 
 4. Queue (서비스 섹션)
-- 라이브 티켓 대기열/오픈 일정/회원 전환 지표를 사용자 관점으로 노출한다.
-- 백엔드 API(`티켓 목록`, `대기열 상태`, `세션`) 연동 대상 섹션으로 유지한다.
+- `GET /api/concerts/search` 응답을 카드 목록으로 렌더링한다.
+- KPI(`Catalog`, `Bookable Now`, `Opening Soon`)는 검색 응답에서 파생 계산한다.
+- 오픈 임계 구간(`1시간 전`, `5분 전`)은 초 단위 카운트다운으로 노출한다.
+- 오픈 경계 도달 시 자동 재조회하여 버튼 활성 상태를 최신화한다.
+- API 실패 시 오류 패널과 수동 재시도 버튼을 노출한다.
 
 5. Realtime Mode Lab (개발 전용)
 - 요청 모드(`websocket`/`sse`) 선택 UI와 연결 상태를 표시한다.
@@ -68,6 +71,31 @@
 - DateTime Parser:
   - `Instant(UTC)`와 `LocalDateTime` 혼재 입력 지원
   - 출력: `{ isoUtc, sourceType, valid }`
+- Concert Listing Sale Window:
+  - 입력: `GET /api/concerts`, `GET /api/concerts/search`의 `saleStatus`/`saleOpensInSeconds`/`reservationButtonVisible`/`reservationButtonEnabled`
+  - 상태값:
+    - `UNSCHEDULED`: 판매정책 미설정
+    - `PREOPEN`: 오픈 1시간 이전
+    - `OPEN_SOON_1H`: 오픈 1시간 이내
+    - `OPEN_SOON_5M`: 오픈 5분 이내
+    - `OPEN`: 즉시 예매 가능
+    - `SOLD_OUT`: 잔여 좌석 0
+  - 버튼 규칙:
+    - 노출: `reservationButtonVisible=true`
+    - 활성: `reservationButtonEnabled=true`
+  - 카운트다운:
+    - `saleOpensInSeconds`가 양수면 초 단위 타이머 UI를 렌더링한다.
+  - 새로고침:
+    - 기본 30초 폴링 + 경계(남은 시간 0초) 도달 시 즉시 재조회
+
+## Runtime Env Contract
+- `VITE_API_BASE_URL`:
+  - 기본값 `/api` (Vite dev proxy 경유)
+  - 분리 도메인에서는 절대 URL 사용 가능
+- `VITE_DEV_PROXY_TARGET`:
+  - 로컬 개발 프록시 타깃(`http://127.0.0.1:8080` 기본)
+- `VITE_APP_DEV_LABS`:
+  - `1`일 때 Dev Lab 섹션 노출
 
 ## Realtime Integration Plan
 - 1차: WebSocket 우선 연결 어댑터
