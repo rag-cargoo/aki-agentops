@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 14:50:59`
+> - **Updated At**: `2026-02-19 18:46:48`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -247,3 +247,19 @@
     - Latest Verification:
       - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/api-test/latest.md` (`Result: PASS`, `Push Mode: websocket`, `Skipped: v7-sse`)
       - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/step7/20260219T084701Z/step7-regression.log` (`run-step7-regression.sh` completed, `PASS`)
+
+- TCS-SC-016 프론트 앱 워크스페이스 생성 및 부트스트랩 시작
+  - Status: DOING
+  - Description:
+    - 프론트 앱 서비스명을 `ticket-web-client`로 확정하고 작업 경로를 `workspace/apps/frontend/ticket-web-client`로 고정
+    - 프론트 시작용 최소 골격(에러 파서/시간 유틸/실시간 어댑터) 생성으로 구현 착수 기반 확보
+    - sidecar 문서/트래킹(회의록, task, issue)을 동기화하여 후속 화면 구현 단위를 이어서 진행 가능하도록 정리
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-workspace-bootstrap-kickoff.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/aki-agentops/issues/118` (reopened)
+      - `https://github.com/rag-cargoo/aki-agentops/issues/118#issuecomment-3925996197`
+    - Workspace Path:
+      - `workspace/apps/frontend/ticket-web-client`
+      - `.gitignore`에 `workspace/apps/frontend/ticket-web-client/` 등록
