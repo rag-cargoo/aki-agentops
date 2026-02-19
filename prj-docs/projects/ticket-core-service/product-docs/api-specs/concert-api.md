@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-20 05:13:19`
+> - **Updated At**: `2026-02-20 05:31:20`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -317,6 +317,7 @@
 ### 1.6. [Admin/Test] 테스트 데이터 일괄 셋업
 - **Endpoint**: `POST /api/concerts/setup`
 - **Description**: 공연, 아티스트, 기획사, 좌석을 한 번에 생성하여 테스트 환경을 구축합니다.
+- **Availability**: `app.admin.test-setup-enabled=true`인 프로필(local/dev/test)에서만 사용합니다.
 
 **Parameters**
 
@@ -359,6 +360,7 @@
 ### 1.7. [Admin/Test] 테스트 데이터 삭제 (Cleanup)
 - **Endpoint**: `DELETE /api/concerts/cleanup/{concertId}`
 - **Description**: 특정 공연과 연관된 모든 데이터(옵션, 좌석)를 영구 삭제합니다.
+- **Availability**: `app.admin.test-setup-enabled=true`인 프로필(local/dev/test)에서만 사용합니다.
 
 **Parameters**
 

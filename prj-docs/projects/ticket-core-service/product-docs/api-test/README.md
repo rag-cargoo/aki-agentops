@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-20 05:13:19`
+> - **Updated At**: `2026-02-20 05:31:20`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -80,8 +80,14 @@ make test-suite
   - 유저 생성 -> 목록/단건 조회 -> 수정 -> 지갑 조회/충전/거래 조회 -> 삭제
 - `scripts/http/catalog.http`
   - 기획사 생성/조회/수정 -> 아티스트 생성/조회/수정 -> 정리 삭제
+- `scripts/http/concert-admin.http`
+  - 운영 관리자 API(`/api/admin/concerts/**`) 기준 콘서트/회차/판매정책/썸네일 CRUD
+  - `@adminToken` Bearer 토큰 필요
+- `scripts/http/concert-legacy-setup.http`
+  - dev/test 전용 `setup/cleanup` 경로 검증
+  - `app.admin.test-setup-enabled=true`인 프로필에서만 사용
 - `scripts/http/concert.http`
-  - 공연 셋업 -> 목록/검색 -> 판매정책 전환(PREOPEN/OPEN) -> 옵션/좌석 조회 -> 정리 삭제
+  - 공개 조회 계약(`/api/concerts`, `/search`, `/options`, `/seats`, `/thumbnail`) 점검
 - `scripts/http/reservation.http`
   - 유저/공연 준비 -> v1/v2/v3/v4/v6 흐름 -> SSE/WS 구독 -> 정책 검증 -> 정리
 - `scripts/http/waiting-queue.http`

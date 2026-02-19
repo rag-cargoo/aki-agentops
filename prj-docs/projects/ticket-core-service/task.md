@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-20 05:13:19`
+> - **Updated At**: `2026-02-20 05:31:20`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -306,7 +306,7 @@
     - `prj-docs/projects/ticket-core-service/product-docs/api-test/README.md`
 
 - TCS-SC-019 관리자 운영 CRUD(콘서트/세션/가격/미디어) 구현 착수
-  - Status: DOING
+  - Status: DONE
   - Description:
     - 운영 관리자 기준의 콘서트/세션/가격 정책 CRUD API를 추가해 프론트 서비스 화면 구현 기반을 마련한다.
     - 미디어는 YouTube URL 입력 + 이미지 multipart 업로드/썸네일 생성 파이프라인으로 분리한다.
@@ -316,13 +316,22 @@
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-admin-ops-crud-and-media-pipeline-kickoff.md`
     - Product Issue:
       - `https://github.com/rag-cargoo/ticket-core-service/issues/16`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3929834613`
+      - 상태: `CLOSED`
     - 구현 반영:
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AdminConcertController.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertServiceImpl.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application-local.yml`
+      - `workspace/apps/backend/ticket-core-service/scripts/http/concert-admin.http`
+      - `workspace/apps/backend/ticket-core-service/scripts/http/concert-legacy-setup.http`
+      - `workspace/apps/backend/ticket-core-service/scripts/http/concert.http`
     - 검증:
       - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/api/controller/AdminConcertControllerIntegrationTest.java` PASS
       - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/domain/reservation/service/ReservationLifecyclePricingIntegrationTest.java` PASS
       - `./gradlew test` PASS
+      - `API_SCRIPT_HEALTH_URL=http://127.0.0.1:18081/api/concerts API_HOST=http://127.0.0.1:18081 bash scripts/api/run-api-script-tests.sh` PASS (`15 PASS / 1 SKIP`)
     - 범위 분리 근거:
       - `https://github.com/rag-cargoo/ticket-core-service/issues/15`는 목록 판매상태 계약 전용 범위

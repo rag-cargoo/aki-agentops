@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-20 04:53:36`
-> - **Updated At**: `2026-02-20 05:08:38`
+> - **Updated At**: `2026-02-20 05:31:20`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -56,25 +56,32 @@
 
 ## 안건 3: 권한 경계/기존 setup API 운영 모드 정리
 - Created At: 2026-02-20 04:53:36
-- Updated At: 2026-02-20 05:08:38
-- Status: DOING
+- Updated At: 2026-02-20 05:31:20
+- Status: DONE
 - 결정사항:
   - 관리자 CRUD는 `ROLE_ADMIN` 보호를 기본값으로 고정한다.
   - 기존 `setup/cleanup` 테스트 API는 `dev/test` 프로필 한정 또는 단계적 제거를 적용한다.
-- 후속작업:
+- 처리결과:
   - [x] `SecurityConfig`에 `/api/admin/**` `ROLE_ADMIN` 보호 반영
   - [x] 통합테스트에 관리자 권한 경계 회귀 추가 (`AdminConcertControllerIntegrationTest`)
-  - [ ] 기존 `setup/cleanup` 경로를 dev/test 프로필 한정으로 축소
-  - [ ] API 스크립트 기본 경로를 운영 관리자 API 기준으로 분리
+  - [x] `setup/cleanup` 경로를 `app.admin.test-setup-enabled` 플래그 기반(dev/test 전용)으로 축소
+  - [x] HTTP 스크립트 경로를 운영 관리자 API 기준으로 분리
+    - `scripts/http/concert-admin.http`
+    - `scripts/http/concert-legacy-setup.http`
+    - `scripts/http/concert.http` (public read 전용)
 
 ## 안건 4: 이슈/태스크 동기화
 - Created At: 2026-02-20 04:53:36
-- Updated At: 2026-02-20 05:08:38
+- Updated At: 2026-02-20 05:31:20
 - Status: DONE
 - 처리사항:
   - Product Issue 생성: `rag-cargoo/ticket-core-service#16`
   - URL: `https://github.com/rag-cargoo/ticket-core-service/issues/16`
+  - 완료 코멘트:
+    - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3929834613`
+  - 이슈 상태:
+    - `CLOSED`
   - 분리 근거:
     - 기존 `#15`는 목록 판매상태/카운트다운 계약 범위이며,
       관리자 운영 CRUD/미디어 파이프라인과 범위가 달라 신규 이슈로 분리
-  - sidecar `task.md`에 `TCS-SC-019` TODO 등록
+  - sidecar `task.md` `TCS-SC-019` 완료 상태로 동기화
