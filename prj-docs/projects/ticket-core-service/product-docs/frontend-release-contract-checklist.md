@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 06:08:30`
-> - **Updated At**: `2026-02-19 07:03:29`
+> - **Updated At**: `2026-02-19 14:40:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -36,9 +36,9 @@
 - [x] C2 권한/오류/시간대 계약 확인
   - `api-contract-conventions.md`의 권한 경계(공개/인증/관리자) 기준을 화면 접근 정책에 반영
   - 시간대 규칙(UTC 저장, KST 표시)을 UI 포맷터 기준으로 고정
-  - 비-auth 도메인 예외 plain text 계약을 오류 메시지 파서에서 허용
+  - 비-auth 도메인 예외도 JSON(`status`, `errorCode`, `message`) 파싱을 기본으로 적용
 - [x] C3 실시간 채널 계약 확인
-  - `APP_PUSH_MODE=sse|websocket` 중 배포 모드 선택값을 프론트 환경설정과 맞춤
+  - 기본 모드는 `APP_PUSH_MODE=websocket`으로 고정하고, 필요 시 `sse`로 명시 오버라이드
   - 선택 채널 기준 endpoint/topic/payload 파서 검증 완료
 - [x] C4 예약/결제 연계 확인
   - 예약 상태 전이(`HOLD -> PAYING -> CONFIRMED -> CANCELLED/REFUNDED`) 화면 상태머신과 일치
@@ -48,7 +48,7 @@
   - `make test-auth-social-pipeline` 결과 리포트 확인: `.codex/tmp/ticket-core-service/api-test/auth-social-e2e-latest.md`
   - 필요 시 real provider 선택 검증: `make test-auth-social-real-provider`
   - 현재 상태:
-    - `make test-suite`: FAIL(1) - `APP_PUSH_MODE=websocket` 실행에서 `v7-sse-rank-push.sh` 단일 실패
+    - `make test-suite`: PENDING - `run-step7-regression.sh`에 `STEP7_PUSH_MODE`(기본 `sse`) 강제 반영 후 재실행 필요
     - `make test-auth-social-pipeline`: PASS
     - real provider: PASS (kakao real code 교환 + me/logout/reuse guard 검증 완료)
 

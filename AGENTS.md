@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-19 06:47:46`
+> - **Updated At**: `2026-02-19 15:55:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -25,6 +25,7 @@
 > - 11) Playwright Evidence Policy
 > - 12) Runtime Status Query Contract (Critical)
 > - 13) Development Progress Query Contract (Critical)
+> - 14) MCP Config Bootstrap Policy
 <!-- DOC_TOC_END -->
 
 ## 1) Single Entry Rule
@@ -46,6 +47,8 @@
    - `mcp__github__list_available_toolsets` 재호출로 `currently_enabled=true` 재검증
 6. 필요 시 `.codex/runtime/codex_skills_reload.md`, `.codex/runtime/codex_project_reload.md` 상세 확인
 7. `github-pages/sidebar-manifest.md` 확인
+8. 신규 환경/새 PC에서 MCP 서버 누락 경고가 있으면:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh --mode apply`
 
 멀티 프로젝트에서 Active Project가 비어 있으면 먼저 실행:
 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
@@ -53,7 +56,10 @@
 ## 2) Active Paths
 - Workspace Root: `workspace`
 - Governance Root: `skills/aki-codex-core`
+- Project Skills Root (npx skills): `.agents/skills`
 - Reload Runtime: `skills/aki-codex-session-reload/scripts/codex_skills_reload`
+- MCP Config Sync: `skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh`
+- MCP Config Template: `skills/aki-codex-session-reload/references/templates/mcp-config-template.toml`
 - Skills Snapshot: `.codex/runtime/codex_skills_reload.md`
 - Project Snapshot: `.codex/runtime/codex_project_reload.md`
 - Session Snapshot: `.codex/runtime/codex_session_start.md`
@@ -75,12 +81,16 @@
 5. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
 6. `aki-*` 스킬 문서/메타 스키마는 `skills/aki-codex-core/references/skill-schema-policy.md` 기준 적용
 7. OAuth/SSO/세션만료 재인증처럼 사용자 로그인/동의가 필요한 흐름은 `skills/aki-mcp-playwright`를 우선 로드하고, 브라우저 오픈 전 callback target(예: `localhost:8080`) 헬스체크를 먼저 수행한다.
+8. 세션 스킬 로딩은 `skills/*/SKILL.md`와 `.agents/skills/*/SKILL.md`를 병행한다.
+9. Figma MCP(remote/desktop) 연결 점검/운영은 `skills/aki-mcp-figma`를 우선 로드한다.
+10. `~/.codex/config.toml` 공통 MCP 엔트리 동기화는 `skills/aki-codex-session-reload`의 `sync_mcp_config.sh`를 권위 소스로 사용한다.
 
 ## 5) Skill Management Scope
 1. 전역 관리 대상 스킬은 `skills/aki-*` prefix로 고정한다.
 2. 비-`aki` 스킬(예: `java-spring-boot`)은 프로젝트 선택형으로 취급한다.
 3. 비-`aki` 스킬의 사용/검증/운영 규칙은 Active Project의 `PROJECT_AGENT.md` + `task.md`에서 위임 관리한다.
 4. 세션 시작 보고에서는 `Managed(aki-*)`와 `Delegated(non-aki)`를 구분해 표시한다.
+5. `.agents/skills/*`로 설치된 프로젝트 스킬은 기본적으로 `Delegated(non-aki)`로 집계한다.
 
 ## 6) Reload Trigger (Critical)
 아래 파일이 바뀌면 다음 작업 전에 반드시 다시 실행:
@@ -90,6 +100,8 @@
 대상 파일:
 - `AGENTS.md`
 - `skills/*/SKILL.md`
+- `skills/aki-codex-session-reload/references/templates/mcp-config-template.toml`
+- `.agents/skills/*/SKILL.md`
 - `workspace/**/prj-docs/PROJECT_AGENT.md`
 
 ## 7) First Reply Contract
@@ -188,3 +200,12 @@ GitHub MCP가 등록되어 있으면 세션 시작 보고에서 기본 6개 tool
 1. 기본은 명령 출력 원문 그대로 제시한다(요약 금지).
 2. 진행표는 체크표(`[ ]/[~]/[x]/[!]`)와 Summary를 포함해야 한다.
 3. Active Project의 `task.md`를 우선 소스로 사용한다.
+
+## 14) MCP Config Bootstrap Policy
+1. 공통 MCP config 동기화는 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh`가 담당한다.
+2. `guide` 모드는 점검만 수행하고, `apply` 모드는 누락 MCP 섹션을 idempotent 반영한다.
+3. 서버별 운영 책임은 분리한다:
+   - GitHub: `skills/aki-mcp-github`
+   - Playwright: `skills/aki-mcp-playwright`
+   - Figma: `skills/aki-mcp-figma`
+4. 비밀값은 템플릿/레포에 저장하지 않고 환경변수 참조로만 관리한다.

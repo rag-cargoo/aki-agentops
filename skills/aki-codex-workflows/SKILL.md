@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-10 01:48:58`
-> - **Updated At**: `2026-02-19 00:30:00`
+> - **Updated At**: `2026-02-19 15:50:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -85,6 +85,8 @@ description: |
    - `references/runtime-status-flow.md`
 6. Development Progress Visibility Flow:
    - `references/development-progress-visibility-flow.md`
+7. MCP Config Bootstrap Flow:
+   - `references/mcp-config-bootstrap-flow.md`
 
 ## SoT Drift Rule
 1. 상태 충돌 시 SoT는 GitHub Issue를 우선한다.

@@ -10,6 +10,7 @@ reload_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/sess
 set_active_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh"
 bootstrap_env_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh"
 runtime_flags_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
+mcp_config_sync_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh"
 workflow_mark_entry="./skills/aki-codex-workflows/scripts/workflow_mark.sh"
 workflow_mark_script="$repo_root/skills/aki-codex-workflows/scripts/workflow_mark.sh"
 show_dev_progress_entry="./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh"
@@ -32,13 +33,27 @@ github_toolsets_default="${GITHUB_MCP_DEFAULT_TOOLSETS:-context,repos,issues,pro
 "$script_dir/project_reload.sh" >/dev/null
 mkdir -p "$runtime_dir"
 
-mapfile -t loaded_skills < <(find "$repo_root/skills" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
+collect_skill_files() {
+  local skill_root=""
+  local -a roots=(
+    "$repo_root/skills"
+    "$repo_root/.agents/skills"
+  )
+
+  for skill_root in "${roots[@]}"; do
+    if [[ -d "$skill_root" ]]; then
+      find "$skill_root" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md"
+    fi
+  done | sort -u
+}
+
+mapfile -t loaded_skills < <(collect_skill_files)
 declare -a managed_skills=()
 declare -a delegated_skills=()
 for abs_path in "${loaded_skills[@]}"; do
   rel_path="${abs_path#$repo_root/}"
   skill_name="$(basename "$(dirname "$abs_path")")"
-  if [[ "$skill_name" == aki-* ]]; then
+  if [[ "$rel_path" == skills/aki-*/SKILL.md && "$skill_name" == aki-* ]]; then
     managed_skills+=("$rel_path")
   else
     delegated_skills+=("$rel_path")
@@ -275,11 +290,17 @@ workflow_ready_value="$(extract_flag_value "workflow_ready_count" || true)"
 workflow_last_summary_value="$(extract_flag_value "workflows_last_summary" || true)"
 workflow_marks_count_value="$(extract_flag_value "workflow_marks_count" || true)"
 runtime_alert_count_value="$(extract_flag_value "mcp_alerts_count" || true)"
+mcp_config_sync_value="$(extract_flag_value "mcp_config_sync" || true)"
+mcp_config_sync_state_value="$(extract_flag_value "mcp_config_sync_state" || true)"
+mcp_config_sync_detail_value="$(extract_flag_value "mcp_config_sync_detail" || true)"
 [[ -z "$workflow_total_value" ]] && workflow_total_value="0"
 [[ -z "$workflow_ready_value" ]] && workflow_ready_value="0"
 [[ -z "$workflow_last_summary_value" ]] && workflow_last_summary_value="none"
 [[ -z "$workflow_marks_count_value" ]] && workflow_marks_count_value="0"
 [[ -z "$runtime_alert_count_value" ]] && runtime_alert_count_value="0"
+[[ -z "$mcp_config_sync_value" ]] && mcp_config_sync_value="unknown"
+[[ -z "$mcp_config_sync_state_value" ]] && mcp_config_sync_state_value="UNKNOWN"
+[[ -z "$mcp_config_sync_detail_value" ]] && mcp_config_sync_detail_value="none"
 workflow_pass_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "PASS")"
 workflow_fail_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "FAIL")"
 workflow_not_run_count="$(count_status_in_workflow_summary "$workflow_last_summary_value" "NOT_RUN")"
@@ -374,7 +395,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
       rel_path="${abs_path#$repo_root/}"
       skill_name="$(basename "$(dirname "$abs_path")")"
       scope_tag="delegated"
-      if [[ "$skill_name" == aki-* ]]; then
+      if [[ "$rel_path" == skills/aki-*/SKILL.md && "$skill_name" == aki-* ]]; then
         scope_tag="managed"
       fi
       echo "$idx. [${scope_tag}] \`$rel_path\`"
@@ -442,8 +463,17 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
     echo "- Action Guide: \`~/.codex/config.toml\`에 \`[mcp_servers.github]\` 등록 후 세션 재시작"
   fi
   echo
+  echo "## MCP Config Bootstrap"
+  echo "- Sync Status: \`$mcp_config_sync_value\`"
+  echo "- Sync State: \`$mcp_config_sync_state_value\`"
+  echo "- Detail: \`$mcp_config_sync_detail_value\`"
+  if [[ "$mcp_config_sync_state_value" != "READY" ]]; then
+    echo "- Action Guide: \`$mcp_config_sync_entry --mode apply\`"
+    echo "- Note: 비밀값은 환경변수 참조만 사용하고 레포/스킬 파일에 평문 토큰을 저장하지 않는다."
+  fi
+  echo
   echo "## How It Works"
-  echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\`에서 로드"
+  echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\` + \`.agents/skills/*/SKILL.md\`에서 로드"
   echo "2. 프로젝트 컨텍스트는 Active Project의 \`README.md(optional)\` + Project Snapshot의 \`Task/Project Agent/Meeting Notes\` 경로(Docs Root 기준)에서 로드"
   echo "3. 멀티 프로젝트에서는 Active Project를 명시적으로 전환해서 충돌 방지"
   echo

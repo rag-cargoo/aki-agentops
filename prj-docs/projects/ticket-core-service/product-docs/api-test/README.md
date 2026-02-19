@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 06:08:30`
+> - **Updated At**: `2026-02-19 14:40:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -65,7 +65,7 @@ make test-suite
 - 기본 헬스체크 URL은 `http://127.0.0.1:8080/api/concerts` 입니다.
 - 필요하면 `API_SCRIPT_HEALTH_URL` 환경변수로 변경할 수 있습니다.
 - 기존 환경과의 호환을 위해 `TICKETRUSH_HEALTH_URL`도 별칭으로 지원합니다.
-- WebSocket 채널 검증(`v13`)은 `APP_PUSH_MODE=websocket` 설정에서 실행하는 것을 권장합니다.
+- 기본 모드가 `APP_PUSH_MODE=websocket`이므로 `v13` 검증은 별도 모드 설정 없이 실행 가능합니다.
 
 ---
 
@@ -121,6 +121,7 @@ bash scripts/api/run-step7-regression.sh
 - 기본 안정화 옵션:
   - `STEP7_COMPOSE_BUILD=true` (기본): app 이미지를 다시 빌드하여 로컬 코드 반영 보장
   - `STEP7_FORCE_RECREATE=true` (기본): `down -> up` 재생성으로 docker-compose 재기동 오류 회피
+  - `STEP7_PUSH_MODE=sse|websocket` (기본 `sse`): Step7 회귀 시 app push 모드 강제값
   - `STEP7_KEEP_ENV=true|false` (기본 false): 검증 후 compose 환경 유지 여부
   - `STEP7_LOG_FILE=/custom/path.log`: 로그 파일 경로 강제 지정
 - CI(Jenkins/GitHub Actions) 도입 시에는 위 스크립트를 그대로 호출해 동일 절차를 재사용한다.
@@ -346,7 +347,7 @@ bash scripts/api/v8-reservation-lifecycle.sh
 
 ```bash
 cd workspace/apps/backend/ticket-core-service
-APP_PUSH_MODE=websocket ./gradlew bootRun --args='--spring.profiles.active=local'
+./gradlew bootRun --args='--spring.profiles.active=local'
 
 # 다른 터미널
 bash scripts/api/v13-websocket-switching.sh

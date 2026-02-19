@@ -63,6 +63,7 @@ required_exec_rel=(
   "skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh"
   "skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh"
   "skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh"
+  "skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh"
   "skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
 )
 

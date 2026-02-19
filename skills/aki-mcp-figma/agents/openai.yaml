@@ -1,0 +1,4 @@
+interface:
+  display_name: "Aki MCP Figma"
+  short_description: "Figma MCP remote/desktop connectivity and operations runbook"
+  default_prompt: "Validate Figma MCP readiness and run endpoint probes before design implementation"

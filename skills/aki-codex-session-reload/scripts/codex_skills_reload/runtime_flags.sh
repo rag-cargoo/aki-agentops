@@ -33,8 +33,10 @@ project_snapshot="$runtime_dir/codex_project_reload.md"
 handoff_file="$repo_root/mcp/runtime/SESSION_HANDOFF.md"
 mode_file="$runtime_dir/precommit_mode"
 validate_env_entry="$script_dir/validate_env.sh"
+mcp_config_sync_entry="$script_dir/sync_mcp_config.sh"
 codex_home="${CODEX_HOME:-$HOME/.codex}"
 codex_config_file="$codex_home/config.toml"
+mcp_config_template_file="$repo_root/skills/aki-codex-session-reload/references/templates/mcp-config-template.toml"
 github_toolsets_default="${GITHUB_MCP_DEFAULT_TOOLSETS:-context,repos,issues,projects,pull_requests,labels}"
 declare -a managed_skill_names=()
 declare -a delegated_skill_names=()
@@ -86,7 +88,13 @@ get_toml_section_value() {
 get_mcp_section_value() {
   local server_name="$1"
   local key_name="$2"
-  get_toml_section_value "mcp_servers.${server_name}" "$key_name"
+  local value=""
+  value="$(get_toml_section_value "mcp_servers.${server_name}" "$key_name" || true)"
+  if [[ -n "$value" ]]; then
+    printf '%s\n' "$value"
+    return 0
+  fi
+  get_toml_section_value "mcp_servers.\"${server_name}\"" "$key_name" || true
 }
 
 extract_first_docker_image() {
@@ -213,6 +221,9 @@ build_alerts() {
   fi
   if [[ "$github_token_source_state" == "INLINE_PLAINTEXT" ]]; then
     add_alert "github_token_source" "$github_token_source" "WARN" "github_token_plaintext_in_config"
+  fi
+  if [[ "$mcp_config_sync_state" != "READY" ]]; then
+    add_alert "mcp_config_sync" "$mcp_config_sync" "WARN" "mcp_config_sync_required"
   fi
   if [[ "$env_bootstrap_state" != "OK" ]]; then
     add_alert "env_bootstrap" "$env_bootstrap" "WARN" "env_bootstrap_not_ready"
@@ -375,6 +386,8 @@ print_status_table() {
   printf '%-32s %-36s %s\n' "--------------------------------" "------------------------------------" "--------"
   printf '%-32s %-36s %s\n' "github_mcp" "$github_mcp" "$github_mcp_state"
   printf '%-32s %-36s %s\n' "github_token_source" "$github_token_source" "$github_token_source_state"
+  printf '%-32s %-36s %s\n' "mcp_config_sync" "$mcp_config_sync" "$mcp_config_sync_state"
+  print_row_with_overflow "mcp_config_sync:detail" "$mcp_config_sync_detail" "DETAIL" "detail"
   printf '%-32s %-36s %s\n' "env_bootstrap" "$env_bootstrap" "$env_bootstrap_state"
   printf '%-32s %-36s %s\n' "hooks_path" "$hooks_path" "$hooks_path_state"
   printf '%-32s %-36s %s\n' "session_reload_guard" "$session_reload_guard" "$session_reload_guard_state"
@@ -457,6 +470,9 @@ github_mcp: $github_mcp
 github_mcp_state: $github_mcp_state
 github_token_source: $github_token_source
 github_token_source_state: $github_token_source_state
+mcp_config_sync: $mcp_config_sync
+mcp_config_sync_state: $mcp_config_sync_state
+mcp_config_sync_detail: $mcp_config_sync_detail
 env_bootstrap: $env_bootstrap
 env_bootstrap_state: $env_bootstrap_state
 hooks_path: $hooks_path
@@ -576,6 +592,46 @@ collect_runtime_state() {
     fi
   fi
 
+  mcp_config_sync="unavailable"
+  mcp_config_sync_state="MISSING"
+  mcp_config_sync_detail="sync_script:missing"
+  if [[ -x "$mcp_config_sync_entry" ]]; then
+    mcp_sync_report="$("$mcp_config_sync_entry" --mode guide --quiet || true)"
+    mcp_sync_status="$(extract_kv "MCP_CONFIG_SYNC_STATUS" "$mcp_sync_report" || true)"
+    mcp_sync_missing="$(extract_kv "MCP_CONFIG_MISSING" "$mcp_sync_report" || true)"
+    mcp_sync_action="$(extract_kv "MCP_CONFIG_ACTION" "$mcp_sync_report" || true)"
+    mcp_sync_mode="$(extract_kv "MCP_CONFIG_SYNC_MODE" "$mcp_sync_report" || true)"
+    mcp_sync_template="$(extract_kv "MCP_CONFIG_TEMPLATE" "$mcp_sync_report" || true)"
+    mcp_sync_added="$(extract_kv "MCP_CONFIG_ADDED" "$mcp_sync_report" || true)"
+
+    [[ -z "$mcp_sync_missing" ]] && mcp_sync_missing="none"
+    [[ -z "$mcp_sync_action" ]] && mcp_sync_action="none"
+    [[ -z "$mcp_sync_mode" ]] && mcp_sync_mode="guide"
+    [[ -z "$mcp_sync_template" ]] && mcp_sync_template="$mcp_config_template_file"
+    [[ -z "$mcp_sync_added" ]] && mcp_sync_added="none"
+
+    case "$mcp_sync_status" in
+      OK)
+        mcp_config_sync="ready"
+        mcp_config_sync_state="READY"
+        ;;
+      WARN)
+        mcp_config_sync="needs_sync"
+        mcp_config_sync_state="WARN"
+        ;;
+      ERROR)
+        mcp_config_sync="error"
+        mcp_config_sync_state="ERROR"
+        ;;
+      *)
+        mcp_config_sync="unknown"
+        mcp_config_sync_state="UNKNOWN"
+        ;;
+    esac
+
+    mcp_config_sync_detail="mode:${mcp_sync_mode};missing:${mcp_sync_missing};added:${mcp_sync_added};template:${mcp_sync_template};action:${mcp_sync_action}"
+  fi
+
   env_report=""
   if [[ -x "$validate_env_entry" ]]; then
     env_report="$("$validate_env_entry" --quiet || true)"
@@ -691,10 +747,25 @@ collect_runtime_state() {
 
   managed_skill_names=()
   delegated_skill_names=()
-  mapfile -t skill_files < <(find "$repo_root/skills" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
+  collect_skill_files() {
+    local skill_root=""
+    local -a roots=(
+      "$repo_root/skills"
+      "$repo_root/.agents/skills"
+    )
+
+    for skill_root in "${roots[@]}"; do
+      if [[ -d "$skill_root" ]]; then
+        find "$skill_root" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md"
+      fi
+    done | sort -u
+  }
+
+  mapfile -t skill_files < <(collect_skill_files)
   for skill_file in "${skill_files[@]}"; do
+    rel_path="${skill_file#$repo_root/}"
     skill_name="$(basename "$(dirname "$skill_file")")"
-    if [[ "$skill_name" == aki-* ]]; then
+    if [[ "$rel_path" == skills/aki-*/SKILL.md && "$skill_name" == aki-* ]]; then
       managed_skill_names+=("$skill_name")
     else
       delegated_skill_names+=("$skill_name")
@@ -714,7 +785,12 @@ collect_runtime_state() {
   running_mcp_docker_servers=()
 
   if [[ -f "$codex_config_file" ]]; then
-    mapfile -t mcp_server_names < <(grep -E '^\[mcp_servers\.[^.]+\]$' "$codex_config_file" | sed -E 's/^\[mcp_servers\.([^.]+)\]$/\1/' | sort -u)
+    mapfile -t mcp_server_names < <(
+      grep -E '^\[mcp_servers\.(\"[^\"]+\"|[A-Za-z0-9_-]+)\]$' "$codex_config_file" \
+        | sed -E 's/^\[mcp_servers\.(\"[^\"]+\"|[A-Za-z0-9_-]+)\]$/\1/' \
+        | sed -E 's/^\"(.*)\"$/\1/' \
+        | sort -u
+    )
   fi
 
   docker_ps_images=""
@@ -876,6 +952,7 @@ collect_runtime_state() {
   issue_lifecycle_flow_ref="$workflow_refs_dir/issue-lifecycle-governance-flow.md"
   runtime_status_flow_ref="$workflow_refs_dir/runtime-status-flow.md"
   development_progress_flow_ref="$workflow_refs_dir/development-progress-visibility-flow.md"
+  mcp_config_bootstrap_flow_ref="$workflow_refs_dir/mcp-config-bootstrap-flow.md"
 
   precommit_mode_script="$repo_root/skills/aki-codex-precommit/scripts/precommit_mode.sh"
   precommit_chain_script="$repo_root/skills/aki-codex-precommit/scripts/validate-precommit-chain.sh"
@@ -883,6 +960,7 @@ collect_runtime_state() {
   skills_reload_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/skills_reload.sh"
   project_reload_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/project_reload.sh"
   runtime_flags_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh"
+  mcp_config_sync_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh"
   show_dev_progress_script="$repo_root/skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh"
   issue_upsert_script="$repo_root/skills/aki-mcp-github/scripts/issue-upsert.sh"
   meeting_skill_file="$repo_root/skills/aki-meeting-notes-task-sync/SKILL.md"
@@ -1059,6 +1137,29 @@ collect_runtime_state() {
     development_progress_ready_state="NOT_READY"
   fi
   set_workflow_state "development_progress_visibility" "$development_progress_ready_state" "UNVERIFIED" "$(format_missing_detail "${development_progress_missing[@]}")"
+
+  mcp_config_bootstrap_missing=()
+  [[ -f "$mcp_config_bootstrap_flow_ref" ]] || mcp_config_bootstrap_missing+=("flow_ref")
+  [[ -x "$mcp_config_sync_script" ]] || mcp_config_bootstrap_missing+=("sync_script")
+  [[ -f "$mcp_config_template_file" ]] || mcp_config_bootstrap_missing+=("template")
+  mcp_config_bootstrap_ready_state="READY"
+  if [[ "${#mcp_config_bootstrap_missing[@]}" -gt 0 ]]; then
+    mcp_config_bootstrap_ready_state="NOT_READY"
+  fi
+  mcp_config_bootstrap_last_state="UNVERIFIED"
+  case "$mcp_config_sync_state" in
+    READY) mcp_config_bootstrap_last_state="PASS" ;;
+    WARN) mcp_config_bootstrap_last_state="WARN" ;;
+    ERROR|UNKNOWN|MISSING) mcp_config_bootstrap_last_state="FAIL" ;;
+    *) ;;
+  esac
+  mcp_config_bootstrap_detail="$(format_missing_detail "${mcp_config_bootstrap_missing[@]}")"
+  if [[ "$mcp_config_bootstrap_detail" == "none" ]]; then
+    mcp_config_bootstrap_detail="$mcp_config_sync_detail"
+  else
+    mcp_config_bootstrap_detail="${mcp_config_bootstrap_detail};${mcp_config_sync_detail}"
+  fi
+  set_workflow_state "mcp_config_bootstrap" "$mcp_config_bootstrap_ready_state" "$mcp_config_bootstrap_last_state" "$mcp_config_bootstrap_detail"
 
   runtime_status_missing=()
   [[ -f "$runtime_status_flow_ref" ]] || runtime_status_missing+=("flow_ref")

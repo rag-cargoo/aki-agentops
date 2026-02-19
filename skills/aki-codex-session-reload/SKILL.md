@@ -11,7 +11,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-09 08:22:19`
-> - **Updated At**: `2026-02-19 00:30:00`
+> - **Updated At**: `2026-02-19 15:50:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -52,6 +52,7 @@ description: |
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/validate_env.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`
+  - `skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh`
   - `skills/aki-codex-session-reload/scripts/codex_skills_reload/show_dev_progress.sh`
@@ -86,6 +87,9 @@ description: |
    - `.codex/runtime`은 런타임 스냅샷(재생성 대상)
    - `.codex/state`는 런타임 플래그 상태 저장소
    - `.githooks`는 훅 엔트리포인트(`core.hooksPath`)로 유지
+4. MCP config 템플릿 동기화:
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh --mode guide|apply`
+   - 템플릿 소스: `skills/aki-codex-session-reload/references/templates/mcp-config-template.toml`
 
 ## 런타임 상태표
 1. 상태 동기화:
@@ -128,6 +132,9 @@ description: |
    - `session_start.sh`는 `Runtime Status` 아래 `Workflow Summary` 1줄을 자동 삽입해 핵심 판정을 빠르게 제공한다.
 14. Branch Context:
    - `session_start.sh`는 `Git Branch Context` 섹션에 `Current Branch`/`HEAD`/`Default Branch`/`Branch Guard`를 출력한다.
+15. MCP Config Bootstrap:
+   - `runtime_flags.sh`는 `mcp_config_sync` 상태를 집계해 guide/apply 필요 여부를 표시한다.
+   - 필수 MCP 엔트리(`github/playwright/openaiDeveloperDocs/figma/figma-desktop`) 누락 시 액션을 노출한다.
 
 ## 점검 포인트
 - `Skills Snapshot`: `OK`

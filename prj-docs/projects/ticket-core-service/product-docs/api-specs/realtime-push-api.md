@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 00:15:00`
-> - **Updated At**: `2026-02-19 00:15:05`
+> - **Updated At**: `2026-02-19 14:40:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -39,7 +39,7 @@
 
 설정값:
 - `APP_PUSH_MODE=sse|websocket`
-- 기본값: `sse`
+- 기본값: `websocket`
 
 모드별 사용 경로:
 
