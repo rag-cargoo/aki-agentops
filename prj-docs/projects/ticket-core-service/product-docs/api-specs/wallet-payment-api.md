@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 00:15:00`
-> - **Updated At**: `2026-02-19 00:15:05`
+> - **Updated At**: `2026-02-19 14:40:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -169,12 +169,16 @@ Auth Track A2 동일 규칙:
 ## 5. 오류 응답
 
 대표 오류:
-- `400` + plain text: `amount must be positive`
-- `404/400` + plain text: `User not found: {userId}`
-- `409` + plain text: `Insufficient wallet balance.`
+- `400` + JSON(`BAD_REQUEST`): `amount must be positive`
+- `404/400` + JSON(`BAD_REQUEST`): `User not found: {userId}`
+- `409` + JSON(`CONFLICT`): `Insufficient wallet balance.`
 
 예시:
 
-```text
-Insufficient wallet balance.
+```json
+{
+  "status": 409,
+  "errorCode": "CONFLICT",
+  "message": "Insufficient wallet balance."
+}
 ```
