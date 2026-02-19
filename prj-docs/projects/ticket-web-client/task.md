@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-19 22:15:00`
+> - **Updated At**: `2026-02-20 02:20:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -13,6 +13,7 @@
 ---
 > [!TIP]
 > - Scope
+> - Checklist
 > - Current Items
 > - Next Items
 <!-- DOC_TOC_END -->
@@ -20,6 +21,14 @@
 ## Scope
 - 이 문서는 `ticket-web-client` 운영 sidecar 태스크를 관리한다.
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
+
+## Checklist
+- [x] TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
+- [x] TWC-SC-002 글로벌 프론트 개발 규칙 스킬 생성 및 연결
+- [x] TWC-SC-003 Playwright 파트별 시연/로그 검증 문서화
+- [x] TWC-SC-004 장기 공백 복귀용 Frontend 리마인더 자동화
+- [x] TWC-SC-005 WS/SSE 실시간 시나리오 Playwright 케이스 확장
+- [x] TWC-SC-006 Auth/session 흐름 e2e + CI 파이프라인 분리(smoke/nightly)
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -79,6 +88,21 @@
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-011504-3212976/run.log`
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-011504-3212976/summary.txt`
 
-## Next Items
 - TWC-SC-006 Auth/session 흐름 e2e + CI 파이프라인 분리(smoke/nightly)
-  - Status: TODO
+  - Status: DONE
+  - Description:
+    - Auth Session Lab(로그인/만료/재발급/로그아웃/보호 API 호출) UI 및 상태/로그 패널 추가
+    - Playwright `auth` scope + 스코프 실행 스크립트/카탈로그 반영
+    - GitHub Actions workflow를 `e2e-smoke`/`e2e-nightly`로 분리
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/list-scopes.mjs`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/run-playwright.sh`
+    - `workspace/apps/frontend/ticket-web-client/.github/workflows/e2e-smoke.yml`
+    - `workspace/apps/frontend/ticket-web-client/.github/workflows/e2e-nightly.yml`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-015058-3253606/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-015058-3253606/summary.txt`
+
+## Next Items
+- 현재 고정된 후속 항목 없음 (새 요구 수신 대기)

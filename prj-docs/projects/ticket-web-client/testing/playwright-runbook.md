@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-19 22:15:00`
+> - **Updated At**: `2026-02-20 02:20:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -58,6 +58,10 @@ cd /home/aki/aki-agentops
 
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
   --project-root workspace/apps/frontend/ticket-web-client \
+  --scope auth
+
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
+  --project-root workspace/apps/frontend/ticket-web-client \
   --scope realtime
 ```
 
@@ -87,3 +91,9 @@ cd /home/aki/aki-agentops
 2. 사용자 선택 scope를 실행한다.
 3. `snapshot`/`console` 로그를 텍스트로 우선 보고한다.
 4. 사용자가 요청하면 screenshot을 추가한다.
+
+## CI Split
+- `workspace/apps/frontend/ticket-web-client/.github/workflows/e2e-smoke.yml`
+  - PR/Push(main)에서 `e2e:smoke` 실행
+- `workspace/apps/frontend/ticket-web-client/.github/workflows/e2e-nightly.yml`
+  - schedule/manual에서 nightly(`all` 기본, `auth`/`realtime` 선택 가능) 실행

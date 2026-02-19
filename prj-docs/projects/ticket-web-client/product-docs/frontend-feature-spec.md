@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-19 22:15:00`
+> - **Updated At**: `2026-02-20 02:20:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -26,8 +26,8 @@
 
 ## Feature Breakdown
 1. Layout/Navigate
-- 상단 네비게이션(`Home`, `Highlights`, `Gallery`, `Queue`)과 앵커 이동 구조를 제공한다.
-- Hero/Highlights/Gallery/Contract Panel/Realtime Panel 5개 섹션으로 메인 화면을 구성한다.
+- 상단 네비게이션(`Home`, `Highlights`, `Gallery`, `Queue`, `Auth`, `Realtime`)과 앵커 이동 구조를 제공한다.
+- Hero/Highlights/Gallery/Contract Panel/Auth Session Panel/Realtime Panel 6개 섹션으로 메인 화면을 구성한다.
 
 2. Highlights Grid
 - K-POP 영상 썸네일 카드 그리드로 구성한다.
@@ -45,6 +45,12 @@
 - 요청 모드(`websocket`/`sse`) 선택 UI와 연결 상태를 표시한다.
 - websocket 실패 시 sse fallback 상태를 시뮬레이션해 검증 가능하게 유지한다.
 - 이벤트 로그를 패널 내에 남겨 Playwright와 수동 점검 모두에서 추적 가능하게 유지한다.
+
+6. Auth Session Lab
+- 로그인/만료/재발급/로그아웃/보호 API 호출 시나리오를 단일 패널에서 재현한다.
+- 상태(`authStatus`, `token 존재`, `refreshCount`, `last API result`)를 즉시 표시한다.
+- 마지막 auth 에러 JSON과 토큰 만료 시간 파싱 결과를 노출해 계약 기반 검증을 지원한다.
+- 이벤트 로그를 남겨 Playwright 콘솔/패널 증빙을 동기화한다.
 
 ## API Contract Integration
 - Error Parser:
@@ -69,4 +75,5 @@
 - `@smoke`: 페이지 부팅, 핵심 섹션 노출
 - `@nav`: 앵커 이동/내비게이션 동작
 - `@contract`: Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
+- `@auth`: auth/session 상태 전이 + 보호 API 성공/실패 전환 검증
 - `@realtime`: websocket 실패 -> sse fallback 상태 및 이벤트 로그 검증
