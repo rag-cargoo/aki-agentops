@@ -74,6 +74,9 @@
       * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-20 Queue/Reservation Realtime Merge Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-queue-reservation-realtime-merge-integration.md)
+      * [2026-02-20 My Reservations Cancel/Refund Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-my-reservations-cancel-refund-integration.md)
+      * [2026-02-20 OAuth Session and Auth Me Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-oauth-session-and-auth-me-integration.md)
       * [2026-02-20 Queue Real API Integration and Seed Handoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-queue-real-api-integration-and-seed-handoff.md)
       * [2026-02-20 Ticket Listing Sale Status and Media Contract Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-ticket-listing-sale-status-and-media-contract-kickoff.md)
       * [2026-02-20 Service-first Main Screen and Dev Lab Split](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-service-first-main-screen-and-dev-lab-split.md)

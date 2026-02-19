@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 07:45:00`
+> - **Updated At**: `2026-02-20 08:12:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -55,6 +55,8 @@
 6. `realtime`
 - `pushMode=websocket`에서 연결 시작 시 websocket 실패를 유도하고 sse fallback이 표시되는지 확인
 - 상태 필드(`status`, `active transport`, `fallback used`)가 기대값으로 전환되는지 확인
+- Queue 카드의 실시간 상태(`대기중 -> 입장 가능`)가 병합 반영되는지 확인
+- My Reservations 상태가 `결제 진행 -> 확정`으로 실시간 병합 전환되는지 확인
 - 이벤트 로그와 브라우저 console에 realtime 검증 로그 키가 출력되는지 확인
 
 ## Console Verification Keys
@@ -70,6 +72,8 @@
 - `[ticket-web-client][auth] logout-success`
 - `[ticket-web-client][realtime] transport-error`
 - `[ticket-web-client][realtime] event`
+- `[ticket-web-client][queue] realtime-merge`
+- `[ticket-web-client][reservation] realtime-merge`
 - 증빙 파일:
   - `workspace/apps/frontend/ticket-web-client/test-results/<test-id>/browser-console.log`
 

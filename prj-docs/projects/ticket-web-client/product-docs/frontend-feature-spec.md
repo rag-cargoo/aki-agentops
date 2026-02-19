@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 07:45:00`
+> - **Updated At**: `2026-02-20 08:12:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -47,12 +47,15 @@
 - `예매하기` 클릭 시 `options -> seats -> hold -> paying -> confirm` 체인을 수행한다.
 - 카드 단위 예약 상태(`running/success/error`)와 로그 패널을 통해 실행 결과를 표시한다.
 - `My Reservations` 패널에서 내 예약 목록/상세상태를 확인하고 취소/환불 액션을 수행한다.
+- Queue 섹션에서 실시간 연결 파라미터(`userId`, `concertId`)를 설정하고 connect/disconnect를 제어한다.
+- 실시간 대기열 이벤트(`RANK_UPDATE`, `ACTIVE`)를 Queue 카드 상태와 버튼 활성 규칙에 병합 반영한다.
+- 실시간 예약 이벤트(`RESERVATION_STATUS`)를 My Reservations 상태/액션 메시지에 병합 반영한다.
 - API 실패 시 오류 패널과 수동 재시도 버튼을 노출한다.
 
 5. Realtime Mode Lab (개발 전용)
 - 요청 모드(`websocket`/`sse`) 선택 UI와 연결 상태를 표시한다.
 - websocket 실패 시 sse fallback 상태를 시뮬레이션해 검증 가능하게 유지한다.
-- 이벤트 로그를 패널 내에 남겨 Playwright와 수동 점검 모두에서 추적 가능하게 유지한다.
+- 이벤트 로그를 패널 내에 남기고, Queue/My Reservations 병합 결과를 서비스 섹션과 동기화해 추적한다.
 
 6. Auth Session Lab (개발 전용)
 - OAuth provider/state/code 입력으로 소셜 코드 교환 세션 발급을 검증한다.
@@ -116,6 +119,15 @@
   - 버튼 규칙:
     - `CONFIRMED` 상태에서만 `취소` 활성
     - `CANCELLED` 상태에서만 `환불` 활성
+- Realtime State Merge:
+  - SSE 구독 URL:
+    - `GET /api/v1/waiting-queue/subscribe?userId={userId}&concertId={concertId}`
+  - WebSocket fallback 정책:
+    - websocket 모드에서 transport 오류 시 sse로 fallback
+  - Queue 병합:
+    - `RANK_UPDATE`/`ACTIVE` 이벤트를 `queueRealtimeState`로 저장하고 카드 상태/버튼 활성에 반영
+  - Reservation 병합:
+    - `RESERVATION_STATUS(SUCCESS|FAIL)`를 각각 `CONFIRMED`/`EXPIRED`로 정규화해 카드 상태에 반영
 - Auth Session Integration:
   - 인가 URL:
     - `GET /api/auth/social/{provider}/authorize-url?state=...`
@@ -146,9 +158,12 @@
   - `localStorage(ticket-web-client.auth.session)`에 세션 정보를 저장하고, 진입 시 복구한다.
 
 ## Realtime Integration Plan
-- 1차: WebSocket 우선 연결 어댑터
-- 2차: WS 실패 시 SSE fallback
-- 3차: auth 만료/네트워크 오류 시 재연결(backoff) 및 구독 복구
+- Baseline(완료):
+  - WebSocket 우선 연결 + transport 실패 시 SSE fallback
+  - Queue/My Reservations 상태 병합 실시간 반영
+- Next:
+  - 실백엔드 STOMP 구독 등록/해제 API 연동
+  - auth 만료/네트워크 오류 재연결(backoff) + 구독 복구
 
 ## Error/Recovery Strategy
 - 비정상 API 응답 본문은 공통 에러 파서로 강제 정규화한다.
@@ -161,4 +176,4 @@
 - `@queue`: Queue 카드 예매 클릭 시 v7 hold/paying/confirm 체인 및 상태/로그 검증
 - `@contract`: Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
 - `@auth`: OAuth authorize-url/exchange + refresh/logout + `/api/auth/me` 컨텍스트 검증
-- `@realtime`: websocket 실패 -> sse fallback 상태 및 이벤트 로그 검증
+- `@realtime`: websocket 실패 -> sse fallback + Queue/My Reservations 실시간 상태 병합 검증
