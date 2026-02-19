@@ -32,13 +32,27 @@ github_toolsets_default="${GITHUB_MCP_DEFAULT_TOOLSETS:-context,repos,issues,pro
 "$script_dir/project_reload.sh" >/dev/null
 mkdir -p "$runtime_dir"
 
-mapfile -t loaded_skills < <(find "$repo_root/skills" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
+collect_skill_files() {
+  local skill_root=""
+  local -a roots=(
+    "$repo_root/skills"
+    "$repo_root/.agents/skills"
+  )
+
+  for skill_root in "${roots[@]}"; do
+    if [[ -d "$skill_root" ]]; then
+      find "$skill_root" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md"
+    fi
+  done | sort -u
+}
+
+mapfile -t loaded_skills < <(collect_skill_files)
 declare -a managed_skills=()
 declare -a delegated_skills=()
 for abs_path in "${loaded_skills[@]}"; do
   rel_path="${abs_path#$repo_root/}"
   skill_name="$(basename "$(dirname "$abs_path")")"
-  if [[ "$skill_name" == aki-* ]]; then
+  if [[ "$rel_path" == skills/aki-*/SKILL.md && "$skill_name" == aki-* ]]; then
     managed_skills+=("$rel_path")
   else
     delegated_skills+=("$rel_path")
@@ -374,7 +388,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
       rel_path="${abs_path#$repo_root/}"
       skill_name="$(basename "$(dirname "$abs_path")")"
       scope_tag="delegated"
-      if [[ "$skill_name" == aki-* ]]; then
+      if [[ "$rel_path" == skills/aki-*/SKILL.md && "$skill_name" == aki-* ]]; then
         scope_tag="managed"
       fi
       echo "$idx. [${scope_tag}] \`$rel_path\`"
@@ -443,7 +457,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
   fi
   echo
   echo "## How It Works"
-  echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\`에서 로드"
+  echo "1. 전역 규칙은 \`AGENTS.md\` + \`skills/*/SKILL.md\` + \`.agents/skills/*/SKILL.md\`에서 로드"
   echo "2. 프로젝트 컨텍스트는 Active Project의 \`README.md(optional)\` + Project Snapshot의 \`Task/Project Agent/Meeting Notes\` 경로(Docs Root 기준)에서 로드"
   echo "3. 멀티 프로젝트에서는 Active Project를 명시적으로 전환해서 충돌 방지"
   echo

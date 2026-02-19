@@ -691,10 +691,25 @@ collect_runtime_state() {
 
   managed_skill_names=()
   delegated_skill_names=()
-  mapfile -t skill_files < <(find "$repo_root/skills" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
+  collect_skill_files() {
+    local skill_root=""
+    local -a roots=(
+      "$repo_root/skills"
+      "$repo_root/.agents/skills"
+    )
+
+    for skill_root in "${roots[@]}"; do
+      if [[ -d "$skill_root" ]]; then
+        find "$skill_root" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md"
+      fi
+    done | sort -u
+  }
+
+  mapfile -t skill_files < <(collect_skill_files)
   for skill_file in "${skill_files[@]}"; do
+    rel_path="${skill_file#$repo_root/}"
     skill_name="$(basename "$(dirname "$skill_file")")"
-    if [[ "$skill_name" == aki-* ]]; then
+    if [[ "$rel_path" == skills/aki-*/SKILL.md && "$skill_name" == aki-* ]]; then
       managed_skill_names+=("$skill_name")
     else
       delegated_skill_names+=("$skill_name")

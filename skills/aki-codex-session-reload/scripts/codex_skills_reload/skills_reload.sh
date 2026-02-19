@@ -6,14 +6,27 @@ repo_root="$(git -C "$script_dir" rev-parse --show-toplevel 2>/dev/null || true)
 if [[ -z "$repo_root" ]]; then
   repo_root="$(cd "$script_dir/../../../.." && pwd)"
 fi
-skills_dir="$repo_root/skills"
 runtime_dir="$repo_root/.codex/runtime"
 output_file="$runtime_dir/codex_skills_reload.md"
 
 version="$(date +%Y%m%d-%H%M%S)"
 updated_at="$(date '+%Y-%m-%d %H:%M:%S')"
 
-mapfile -t skill_files < <(find "$skills_dir" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md" | sort)
+collect_skill_files() {
+  local skill_root=""
+  local -a roots=(
+    "$repo_root/skills"
+    "$repo_root/.agents/skills"
+  )
+
+  for skill_root in "${roots[@]}"; do
+    if [[ -d "$skill_root" ]]; then
+      find "$skill_root" -mindepth 2 -maxdepth 2 -type f -name "SKILL.md"
+    fi
+  done | sort -u
+}
+
+mapfile -t skill_files < <(collect_skill_files)
 mkdir -p "$runtime_dir"
 
 {

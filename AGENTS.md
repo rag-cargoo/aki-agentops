@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-19 06:47:46`
+> - **Updated At**: `2026-02-19 15:02:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -53,6 +53,7 @@
 ## 2) Active Paths
 - Workspace Root: `workspace`
 - Governance Root: `skills/aki-codex-core`
+- Project Skills Root (npx skills): `.agents/skills`
 - Reload Runtime: `skills/aki-codex-session-reload/scripts/codex_skills_reload`
 - Skills Snapshot: `.codex/runtime/codex_skills_reload.md`
 - Project Snapshot: `.codex/runtime/codex_project_reload.md`
@@ -75,12 +76,14 @@
 5. 프로젝트 고유 규칙은 Active Project의 `prj-docs/PROJECT_AGENT.md`에만 적용
 6. `aki-*` 스킬 문서/메타 스키마는 `skills/aki-codex-core/references/skill-schema-policy.md` 기준 적용
 7. OAuth/SSO/세션만료 재인증처럼 사용자 로그인/동의가 필요한 흐름은 `skills/aki-mcp-playwright`를 우선 로드하고, 브라우저 오픈 전 callback target(예: `localhost:8080`) 헬스체크를 먼저 수행한다.
+8. 세션 스킬 로딩은 `skills/*/SKILL.md`와 `.agents/skills/*/SKILL.md`를 병행한다.
 
 ## 5) Skill Management Scope
 1. 전역 관리 대상 스킬은 `skills/aki-*` prefix로 고정한다.
 2. 비-`aki` 스킬(예: `java-spring-boot`)은 프로젝트 선택형으로 취급한다.
 3. 비-`aki` 스킬의 사용/검증/운영 규칙은 Active Project의 `PROJECT_AGENT.md` + `task.md`에서 위임 관리한다.
 4. 세션 시작 보고에서는 `Managed(aki-*)`와 `Delegated(non-aki)`를 구분해 표시한다.
+5. `.agents/skills/*`로 설치된 프로젝트 스킬은 기본적으로 `Delegated(non-aki)`로 집계한다.
 
 ## 6) Reload Trigger (Critical)
 아래 파일이 바뀌면 다음 작업 전에 반드시 다시 실행:
@@ -90,6 +93,7 @@
 대상 파일:
 - `AGENTS.md`
 - `skills/*/SKILL.md`
+- `.agents/skills/*/SKILL.md`
 - `workspace/**/prj-docs/PROJECT_AGENT.md`
 
 ## 7) First Reply Contract
