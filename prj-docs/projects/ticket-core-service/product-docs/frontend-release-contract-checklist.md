@@ -43,12 +43,13 @@
 - [x] C4 예약/결제 연계 확인
   - 예약 상태 전이(`HOLD -> PAYING -> CONFIRMED -> CANCELLED/REFUNDED`) 화면 상태머신과 일치
   - 지갑 잔액/거래내역 화면이 `wallet-payment-api.md` 응답 필드와 일치
-- [ ] C5 회귀/운영 검증 실행
+- [x] C5 회귀/운영 검증 실행
   - `make test-suite` 결과 리포트 확인: `.codex/tmp/ticket-core-service/api-test/latest.md`
   - `make test-auth-social-pipeline` 결과 리포트 확인: `.codex/tmp/ticket-core-service/api-test/auth-social-e2e-latest.md`
   - 필요 시 real provider 선택 검증: `make test-auth-social-real-provider`
   - 현재 상태:
-    - `make test-suite`: PENDING - `run-step7-regression.sh`에 `STEP7_PUSH_MODE`(기본 `sse`) 강제 반영 후 재실행 필요
+    - `make test-suite`: PASS (`Result: PASS`, `Push Mode: websocket`, `Passed:14 / Failed:0 / Skipped:1(v7-sse)`)
+    - Step7 SSE 전용 회귀: PASS (`bash scripts/api/run-step7-regression.sh` -> `all passed (1), skipped (0)`)
     - `make test-auth-social-pipeline`: PASS
     - real provider: PASS (kakao real code 교환 + me/logout/reuse guard 검증 완료)
 

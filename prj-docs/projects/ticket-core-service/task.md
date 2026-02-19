@@ -227,7 +227,7 @@
       - `https://github.com/rag-cargoo/aki-agentops/pull/115` (merged)
 
 - TCS-SC-015 프론트 구현 사전준비 패키지 고정(오류/시간/실시간/핸드오프 증빙)
-  - Status: TODO
+  - Status: DONE
   - Description:
     - 프론트 오류 파서를 `status/errorCode/message` 고정 스키마로 확정하고 에러코드 매핑 상수 테이블을 고정
     - `LocalDateTime` + `Instant(UTC)` 혼재 응답을 공통 시간 파싱 유틸 1개로 정리
@@ -236,9 +236,14 @@
   - Evidence:
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-preflight-preparation-plan.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-api-script-mode-aware-followup.md`
     - Tracking Issue:
       - `https://github.com/rag-cargoo/aki-agentops/issues/118`
+      - `https://github.com/rag-cargoo/aki-agentops/issues/118#issuecomment-3925573862`
     - Baseline PR:
-      - `https://github.com/rag-cargoo/aki-agentops/pull/119` (open)
+      - `https://github.com/rag-cargoo/aki-agentops/pull/119` (merged)
     - Baseline Product Commit:
       - `rag-cargoo/ticket-core-service@1988f2c`
+    - Latest Verification:
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/api-test/latest.md` (`Result: PASS`, `Push Mode: websocket`, `Skipped: v7-sse`)
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/step7/20260219T084701Z/step7-regression.log` (`run-step7-regression.sh` completed, `PASS`)
