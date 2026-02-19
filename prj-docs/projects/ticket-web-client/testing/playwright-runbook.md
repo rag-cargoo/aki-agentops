@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 02:55:00`
+> - **Updated At**: `2026-02-20 03:05:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -27,6 +27,13 @@ cd workspace/apps/frontend/ticket-web-client
 npm install
 npx playwright install chromium
 ```
+
+## Service-first UI Rule
+- 기본 사용자 화면은 `Home/Highlights/Gallery/Queue`만 노출한다.
+- Dev Lab(`Contract/Auth/Realtime`)은 숨김이며 아래 조건에서만 노출한다.
+  - `?labs=1`
+  - `VITE_APP_DEV_LABS=1`
+  - e2e probe(`VITE_E2E_CONSOLE_LOG=1`)
 
 ## Test List (List First)
 - 로컬 프로젝트 스크립트:
