@@ -49,6 +49,8 @@
 - 기본 경로:
   - `.codex/tmp/frontend-playwright/<service>/<run-id>/run.log`
   - `.codex/tmp/frontend-playwright/<service>/<run-id>/summary.txt`
+- 이력 문서:
+  - `prj-docs/projects/<service>/testing/playwright-execution-history.md`
 - 필수 보고:
   - 실행 scope
   - pass/fail

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 02:20:00`
+> - **Updated At**: `2026-02-20 02:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -16,6 +16,7 @@
 > - Test List (List First)
 > - Scope Execution
 > - Full Execution
+> - Execution History
 > - Evidence and Logs
 > - MCP Demonstration
 <!-- DOC_TOC_END -->
@@ -71,6 +72,19 @@ cd /home/aki/aki-agentops
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
   --project-root workspace/apps/frontend/ticket-web-client \
   --scope all
+```
+
+## Execution History
+- 전역 래퍼 실행 시 아래 파일에 실행 이력이 자동 누적된다.
+  - `prj-docs/projects/ticket-web-client/testing/playwright-execution-history.md`
+- 실행 단위 기록 필드:
+  - `Executed At`, `Scope`, `Result`, `Run ID`, `Summary`, `Log`
+- 커스텀 경로를 강제하려면:
+```bash
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
+  --project-root workspace/apps/frontend/ticket-web-client \
+  --scope smoke \
+  --history-file prj-docs/projects/ticket-web-client/testing/playwright-execution-history.md
 ```
 
 ## Evidence and Logs

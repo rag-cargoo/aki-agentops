@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 02:20:00`
+> - **Updated At**: `2026-02-20 02:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -29,6 +29,7 @@
 - [x] TWC-SC-004 장기 공백 복귀용 Frontend 리마인더 자동화
 - [x] TWC-SC-005 WS/SSE 실시간 시나리오 Playwright 케이스 확장
 - [x] TWC-SC-006 Auth/session 흐름 e2e + CI 파이프라인 분리(smoke/nightly)
+- [x] TWC-SC-007 Playwright 실행 이력 누적 거버넌스(글로벌/프로젝트 동기화)
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -103,6 +104,21 @@
     - `workspace/apps/frontend/ticket-web-client/.github/workflows/e2e-nightly.yml`
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-015058-3253606/run.log`
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-015058-3253606/summary.txt`
+
+- TWC-SC-007 Playwright 실행 이력 누적 거버넌스(글로벌/프로젝트 동기화)
+  - Status: DONE
+  - Description:
+    - 전역 프론트 규칙에 실행 이력 누적 계약을 추가
+    - 전역 래퍼 실행 시 sidecar 이력 문서를 자동 append하도록 구현
+    - ticket-web-client sidecar에 실행 이력 문서/런북/카탈로그/내비게이션 동기화
+  - Evidence:
+    - `skills/aki-frontend-delivery-governance/SKILL.md`
+    - `skills/aki-frontend-delivery-governance/references/sidecar-frontend-docs-contract.md`
+    - `skills/aki-frontend-delivery-governance/references/playwright-execution-history-template.md`
+    - `skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh`
+    - `prj-docs/projects/ticket-web-client/testing/playwright-execution-history.md`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-020706-3275247/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-020706-3275247/summary.txt`
 
 ## Next Items
 - 현재 고정된 후속 항목 없음 (새 요구 수신 대기)
