@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 02:55:00`
+> - **Updated At**: `2026-02-20 03:05:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,9 +21,9 @@
 ## Scope List
 - `smoke`: 핵심 레이아웃 부팅/렌더링 확인
 - `nav`: 상단 네비게이션 앵커 이동 확인
-- `contract`: 에러/시간 파서 출력 및 콘솔 로그 확인
-- `auth`: auth/session 상태 전이와 보호 API 호출 결과 확인
-- `realtime`: websocket 실패 시 sse fallback 상태/로그 확인
+- `contract`: 에러/시간 파서 출력 및 콘솔 로그 확인(Dev Lab)
+- `auth`: auth/session 상태 전이와 보호 API 호출 결과 확인(Dev Lab)
+- `realtime`: websocket 실패 시 sse fallback 상태/로그 확인(Dev Lab)
 - `all`: 전체 실행
 
 ## Scenario Details

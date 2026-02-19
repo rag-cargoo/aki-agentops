@@ -72,6 +72,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-20 Service-first Main Screen and Dev Lab Split](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-service-first-main-screen-and-dev-lab-split.md)
       * [2026-02-20 Frontend Playwright Execution History Governance](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-frontend-playwright-execution-history-governance.md)
       * [2026-02-20 Auth/Session E2E + CI Split Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-auth-session-e2e-ci-split-kickoff.md)
       * [2026-02-19 WS/SSE Playwright Expansion Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-19-ws-sse-playwright-expansion-kickoff.md)

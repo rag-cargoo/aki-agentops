@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 02:55:00`
+> - **Updated At**: `2026-02-20 03:05:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -30,6 +30,7 @@
 - [x] TWC-SC-005 WS/SSE 실시간 시나리오 Playwright 케이스 확장
 - [x] TWC-SC-006 Auth/session 흐름 e2e + CI 파이프라인 분리(smoke/nightly)
 - [x] TWC-SC-007 Playwright 실행 이력 누적 거버넌스(글로벌/프로젝트 동기화)
+- [x] TWC-SC-008 메인 화면 서비스 우선 정렬 + Dev Lab 분리
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -119,6 +120,20 @@
     - `prj-docs/projects/ticket-web-client/testing/playwright-execution-history.md`
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-020706-3275247/run.log`
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-020706-3275247/summary.txt`
+
+- TWC-SC-008 메인 화면 서비스 우선 정렬 + Dev Lab 분리
+  - Status: DONE
+  - Description:
+    - 기본 랜딩에서 테스트 패널(Contract/Auth/Realtime)을 숨기고 서비스 섹션 우선 구성으로 재정렬
+    - Dev Lab은 `?labs=1` 또는 `VITE_APP_DEV_LABS=1`일 때만 노출되도록 분리
+    - e2e probe 모드에서는 기존 계약/인증/실시간 테스트가 유지되도록 호환
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/src/vite-env.d.ts`
+    - `prj-docs/projects/ticket-web-client/product-docs/frontend-feature-spec.md`
+    - `prj-docs/projects/ticket-web-client/testing/playwright-suite-catalog.md`
+    - `prj-docs/projects/ticket-web-client/testing/playwright-runbook.md`
 
 ## Next Items
 - 현재 고정된 후속 항목 없음 (새 요구 수신 대기)

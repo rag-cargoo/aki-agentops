@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 02:20:00`
+> - **Updated At**: `2026-02-20 03:05:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -26,8 +26,10 @@
 
 ## Feature Breakdown
 1. Layout/Navigate
-- 상단 네비게이션(`Home`, `Highlights`, `Gallery`, `Queue`, `Auth`, `Realtime`)과 앵커 이동 구조를 제공한다.
-- Hero/Highlights/Gallery/Contract Panel/Auth Session Panel/Realtime Panel 6개 섹션으로 메인 화면을 구성한다.
+- 상단 네비게이션 기본 항목(`Home`, `Highlights`, `Gallery`, `Queue`)과 앵커 이동 구조를 제공한다.
+- Dev Lab 노출 시 `Auth`, `Realtime` 항목을 추가로 노출한다.
+- Hero/Highlights/Gallery/Queue 4개를 기본 사용자 화면으로 제공한다.
+- 개발 검증 패널(`Dev Lab`, `Contract/Auth/Realtime`)은 기본 화면에서 숨김 처리한다.
 
 2. Highlights Grid
 - K-POP 영상 썸네일 카드 그리드로 구성한다.
@@ -36,21 +38,27 @@
 3. Gallery Grid
 - 포토 월 형태의 카드 레이아웃으로 시각 강조 영역을 구성한다.
 
-4. Contract Panel
-- `normalizeApiError` 결과(JSON)
-- `parseServerDateTime` 결과(JSON)
-- 위 2개를 동시에 노출해 프론트 계약 베이스를 시각 검증 가능하게 유지한다.
+4. Queue (서비스 섹션)
+- 라이브 티켓 대기열/오픈 일정/회원 전환 지표를 사용자 관점으로 노출한다.
+- 백엔드 API(`티켓 목록`, `대기열 상태`, `세션`) 연동 대상 섹션으로 유지한다.
 
-5. Realtime Mode Lab
+5. Realtime Mode Lab (개발 전용)
 - 요청 모드(`websocket`/`sse`) 선택 UI와 연결 상태를 표시한다.
 - websocket 실패 시 sse fallback 상태를 시뮬레이션해 검증 가능하게 유지한다.
 - 이벤트 로그를 패널 내에 남겨 Playwright와 수동 점검 모두에서 추적 가능하게 유지한다.
 
-6. Auth Session Lab
+6. Auth Session Lab (개발 전용)
 - 로그인/만료/재발급/로그아웃/보호 API 호출 시나리오를 단일 패널에서 재현한다.
 - 상태(`authStatus`, `token 존재`, `refreshCount`, `last API result`)를 즉시 표시한다.
 - 마지막 auth 에러 JSON과 토큰 만료 시간 파싱 결과를 노출해 계약 기반 검증을 지원한다.
 - 이벤트 로그를 남겨 Playwright 콘솔/패널 증빙을 동기화한다.
+
+## Dev Lab Exposure Rule
+- 기본값: 숨김
+- 노출 조건:
+  - `?labs=1` query
+  - 또는 `VITE_APP_DEV_LABS=1`
+  - 또는 e2e probe 모드(`VITE_E2E_CONSOLE_LOG=1`)
 
 ## API Contract Integration
 - Error Parser:
