@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-20 04:30:00`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-20 06:42:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -39,7 +39,8 @@
   - 포트폴리오 시드 데이터는 Queue 화면에서 바로 조회 가능하다.
 
 ## 안건 4: 후속 작업
-- Status: TODO
-- 후속작업:
-  - Queue 카드 `예매하기` 버튼을 Reservation v7 hold/confirm 플로우와 연결한다.
-  - 결제/세션 만료 오류를 Queue 카드 단위 에러 UX로 분기한다.
+- Status: DONE
+- 처리결과:
+  - Queue 카드 `예매하기`가 Reservation v7 hold/paying/confirm 체인으로 연결되었다.
+  - 카드 단위 상태/오류/재시도 UX를 적용했다.
+  - 상세 기록: `./2026-02-20-queue-reservation-v7-flow-implementation.md`

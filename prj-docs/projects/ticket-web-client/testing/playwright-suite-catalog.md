@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 03:05:00`
+> - **Updated At**: `2026-02-20 06:42:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,7 @@
 ## Scope List
 - `smoke`: 핵심 레이아웃 부팅/렌더링 확인
 - `nav`: 상단 네비게이션 앵커 이동 확인
+- `queue`: Queue 카드 `예매하기` v7 hold/paying/confirm 체인 검증
 - `contract`: 에러/시간 파서 출력 및 콘솔 로그 확인(Dev Lab)
 - `auth`: auth/session 상태 전이와 보호 API 호출 결과 확인(Dev Lab)
 - `realtime`: websocket 실패 시 sse fallback 상태/로그 확인(Dev Lab)
@@ -38,12 +39,17 @@
 - Contract Panel의 JSON 출력이 파서 계약을 만족하는지 확인
 - 브라우저 console에 계약 검증 로그 키가 출력되는지 확인
 
-4. `auth`
+4. `queue`
+- Queue 카드 예매 버튼 클릭 시 `options -> seats -> holds -> paying -> confirm` 호출이 순서대로 실행되는지 확인
+- 카드 상태 메시지가 `예매 확정 완료`로 전환되는지 확인
+- Queue 로그 패널에 confirmed 로그가 기록되는지 확인
+
+5. `auth`
 - 비인증/만료/재발급/로그아웃 흐름에서 상태 필드가 기대값으로 전환되는지 확인
 - 보호 API 호출 시 에러 코드(`AUTH_ACCESS_TOKEN_REQUIRED`, `AUTH_TOKEN_EXPIRED`)와 성공 전환을 확인
 - 브라우저 console에 auth 검증 로그 키가 출력되는지 확인
 
-5. `realtime`
+6. `realtime`
 - `pushMode=websocket`에서 연결 시작 시 websocket 실패를 유도하고 sse fallback이 표시되는지 확인
 - 상태 필드(`status`, `active transport`, `fallback used`)가 기대값으로 전환되는지 확인
 - 이벤트 로그와 브라우저 console에 realtime 검증 로그 키가 출력되는지 확인
@@ -51,6 +57,8 @@
 ## Console Verification Keys
 - `[ticket-web-client][contract] normalized-api-error`
 - `[ticket-web-client][contract] parsed-server-date-time`
+- `[ticket-web-client][queue] reservation-confirmed`
+- `[ticket-web-client][queue] reservation-error`
 - `[ticket-web-client][auth] state`
 - `[ticket-web-client][auth] api-error`
 - `[ticket-web-client][auth] api-success`

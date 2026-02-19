@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-20 06:42:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-20 Queue Reservation v7 Flow Implementation](./2026-02-20-queue-reservation-v7-flow-implementation.md)
 - [2026-02-20 Queue Real API Integration and Seed Handoff](./2026-02-20-queue-real-api-integration-and-seed-handoff.md)
 - [2026-02-20 Ticket Listing Sale Status and Media Contract Kickoff](./2026-02-20-ticket-listing-sale-status-and-media-contract-kickoff.md)
 - [2026-02-20 Service-first Main Screen and Dev Lab Split](./2026-02-20-service-first-main-screen-and-dev-lab-split.md)

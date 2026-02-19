@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-20 06:42:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -43,6 +43,9 @@
 - KPI(`Catalog`, `Bookable Now`, `Opening Soon`)는 검색 응답에서 파생 계산한다.
 - 오픈 임계 구간(`1시간 전`, `5분 전`)은 초 단위 카운트다운으로 노출한다.
 - 오픈 경계 도달 시 자동 재조회하여 버튼 활성 상태를 최신화한다.
+- `Access Token`/`Device Fingerprint` 입력값을 사용해 예약 API(v7) 호출 파라미터를 제어한다.
+- `예매하기` 클릭 시 `options -> seats -> hold -> paying -> confirm` 체인을 수행한다.
+- 카드 단위 예약 상태(`running/success/error`)와 로그 패널을 통해 실행 결과를 표시한다.
 - API 실패 시 오류 패널과 수동 재시도 버튼을 노출한다.
 
 5. Realtime Mode Lab (개발 전용)
@@ -87,6 +90,18 @@
     - `saleOpensInSeconds`가 양수면 초 단위 타이머 UI를 렌더링한다.
   - 새로고침:
     - 기본 30초 폴링 + 경계(남은 시간 0초) 도달 시 즉시 재조회
+- Reservation v7 Queue Action:
+  - 선행 조회:
+    - `GET /api/concerts/{concertId}/options` (가장 이른 회차 선택)
+    - `GET /api/concerts/options/{optionId}/seats` (`AVAILABLE` 좌석 중 우선 좌석 선택)
+  - 전이 체인:
+    - `POST /api/reservations/v7/holds`
+    - `POST /api/reservations/v7/{reservationId}/paying`
+    - `POST /api/reservations/v7/{reservationId}/confirm`
+  - 인증:
+    - `Authorization: Bearer {accessToken}` 필수
+  - 에러 처리:
+    - auth/domain 에러는 카드 단위 상태 메시지 + 재시도 라벨로 반영
 
 ## Runtime Env Contract
 - `VITE_API_BASE_URL`:
@@ -96,6 +111,8 @@
   - 로컬 개발 프록시 타깃(`http://127.0.0.1:8080` 기본)
 - `VITE_APP_DEV_LABS`:
   - `1`일 때 Dev Lab 섹션 노출
+- Queue Access Token:
+  - `Access Token` 입력값은 `localStorage(ticket-web-client.queue.access-token)`에 저장하여 새로고침 후 재사용한다.
 
 ## Realtime Integration Plan
 - 1차: WebSocket 우선 연결 어댑터
@@ -110,6 +127,7 @@
 ## Playwright Mapping
 - `@smoke`: 페이지 부팅, 핵심 섹션 노출
 - `@nav`: 앵커 이동/내비게이션 동작
+- `@queue`: Queue 카드 예매 클릭 시 v7 hold/paying/confirm 체인 및 상태/로그 검증
 - `@contract`: Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
 - `@auth`: auth/session 상태 전이 + 보호 API 성공/실패 전환 검증
 - `@realtime`: websocket 실패 -> sse fallback 상태 및 이벤트 로그 검증
