@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-19 20:36:00`
+> - **Updated At**: `2026-02-19 21:26:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -14,6 +14,7 @@
 > [!TIP]
 > - Scope
 > - Current Items
+> - Next Items
 <!-- DOC_TOC_END -->
 
 ## Scope
@@ -31,3 +32,42 @@
     - `prj-docs/projects/ticket-web-client/README.md`
     - `prj-docs/projects/ticket-web-client/PROJECT_AGENT.md`
     - `prj-docs/projects/ticket-web-client/meeting-notes/README.md`
+
+- TWC-SC-002 글로벌 프론트 개발 규칙 스킬 생성 및 연결
+  - Status: DONE
+  - Description:
+    - 서비스 비종속 `aki-frontend` 규칙 스킬을 추가
+    - sidecar `PROJECT_AGENT.md`와 연결
+  - Evidence:
+    - `skills/aki-frontend-delivery-governance/SKILL.md`
+    - `skills/aki-frontend-delivery-governance/references/playwright-partition-runbook.md`
+    - `prj-docs/projects/ticket-web-client/PROJECT_AGENT.md`
+
+- TWC-SC-003 Playwright 파트별 시연/로그 검증 문서화
+  - Status: DONE
+  - Description:
+    - 기능 상세 문서 + Playwright 카탈로그/실행 가이드 작성
+    - list-first, 파트별 실행, 콘솔 로그 검증 기준 고정
+  - Evidence:
+    - `prj-docs/projects/ticket-web-client/product-docs/frontend-feature-spec.md`
+    - `prj-docs/projects/ticket-web-client/testing/playwright-suite-catalog.md`
+    - `prj-docs/projects/ticket-web-client/testing/playwright-runbook.md`
+    - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-19-frontend-governance-and-playwright-baseline.md`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/run-playwright.sh`
+
+- TWC-SC-004 장기 공백 복귀용 Frontend 리마인더 자동화
+  - Status: DONE
+  - Description:
+    - 프론트 Active Project일 때 `session_start.sh` 결과에 Frontend Quick Remind를 자동 노출
+    - 장기 공백 복귀용 리콜 카드 문서를 공개 내비게이션에 연결
+  - Evidence:
+    - `skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`
+    - `prj-docs/references/frontend-long-gap-recall-card.md`
+    - `prj-docs/references/aki-skills-user-prompt-guide.md`
+
+## Next Items
+- TWC-SC-005 WS/SSE 실시간 시나리오 Playwright 케이스 확장
+  - Status: TODO
+- TWC-SC-006 Auth/session 흐름 e2e + CI 파이프라인 분리(smoke/nightly)
+  - Status: TODO

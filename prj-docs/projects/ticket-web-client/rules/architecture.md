@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-19 20:36:00`
+> - **Updated At**: `2026-02-19 21:12:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -23,3 +23,4 @@
 - 제품 코드는 `workspace/apps/frontend/ticket-web-client`에서 관리한다.
 - 운영 문서 SoT는 `prj-docs/projects/ticket-web-client`로 유지한다.
 - sidecar 문서에는 구현 코드 스냅샷을 저장하지 않는다.
+- 전역 프론트 운영 규칙은 `skills/aki-frontend-delivery-governance/SKILL.md`를 기준으로 적용한다.

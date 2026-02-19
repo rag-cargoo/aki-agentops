@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-19 21:26:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -18,6 +18,7 @@
 > - 3. 멀티 프로젝트일 때
 > - 4. 신규 프로젝트 시작할 때
 > - 5. 실패 시 가장 빠른 복구
+> - 6. 프론트 복귀 리마인더
 <!-- DOC_TOC_END -->
 
 > 목적: 처음 보는 사람이 "무엇을 먼저 해야 하는지"만 빠르게 따라할 수 있도록 만든 시작 가이드.
@@ -125,3 +126,20 @@ bash -n skills/aki-codex-session-reload/scripts/codex_skills_reload/*.sh
 git config --get core.hooksPath
 ```
 기대값: `.githooks`
+
+---
+
+## 6. 프론트 복귀 리마인더
+
+Active Project가 `workspace/apps/frontend/*`이면 `session_start.sh` 결과에 아래 섹션이 자동 노출된다.
+- `Frontend Quick Remind (Auto)`
+
+즉시 실행 명령:
+```bash
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
+  --project-root workspace/apps/frontend/<service> \
+  --list
+```
+
+복귀 프롬프트:
+- `프론트 Playwright 테스트 목록 보여주고 scope별로 실행해줘`

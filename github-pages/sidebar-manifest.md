@@ -9,6 +9,7 @@
   * [Meeting Notes Index](/prj-docs/meeting-notes/README.md)
   * [Document Target/Surface Governance](/prj-docs/references/document-target-surface-governance.md)
   * [Target/Surface Inventory (2026-02-17)](/prj-docs/references/document-target-surface-inventory-2026-02-17.md)
+  * [Frontend Long-Gap Recall Card](/prj-docs/references/frontend-long-gap-recall-card.md)
 
 ---
 
@@ -60,6 +61,18 @@
       * [2026-02-19 Auth-Social Real Provider E2E Split Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-social-real-provider-e2e-split-completion.md)
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-core-service)
     * [Main Test URL (U1, Local)](http://localhost:8080/ux/u1/index.html)
+  * **Ticket Web Client**
+    * [Project Sidecar Index](/prj-docs/projects/README.md)
+    * [Sidecar README](/prj-docs/projects/ticket-web-client/README.md)
+    * [Frontend Feature Spec](/prj-docs/projects/ticket-web-client/product-docs/frontend-feature-spec.md)
+    * [Playwright Suite Catalog](/prj-docs/projects/ticket-web-client/testing/playwright-suite-catalog.md)
+    * [Playwright Runbook](/prj-docs/projects/ticket-web-client/testing/playwright-runbook.md)
+    * **Tasks**
+      * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
+    * **Meeting Notes**
+      * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-19 Frontend Governance and Playwright Baseline](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-19-frontend-governance-and-playwright-baseline.md)
+    * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-web-client)
 
 ---
 

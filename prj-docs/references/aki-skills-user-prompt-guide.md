@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:28:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-19 21:12:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -15,6 +15,7 @@
 > - Purpose
 > - Source
 > - Quick Prompts
+> - Long-Gap Recall
 > - Runtime Status
 > - Precommit
 > - Notes
@@ -40,6 +41,14 @@
 - 검증:
   - `프리커밋 quick 실행해줘`
   - `프리커밋 strict 실행해줘`
+  - `프론트 Playwright 테스트 목록 보여주고 scope별로 실행해줘`
+
+## Long-Gap Recall
+- 복귀 시 바로 쓸 문구:
+  - `프론트 작업 복귀용 체크리스트부터 보여줘`
+  - `프론트 테스트 목록 먼저 보여주고 내가 scope 고르면 실행해줘`
+- 빠른 카드:
+  - [Frontend Long-Gap Recall Card](/prj-docs/references/frontend-long-gap-recall-card.md)
 
 ## Runtime Status
 - `상태정보` 요청은 아래 경로로 처리된다.
