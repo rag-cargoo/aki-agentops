@@ -25,6 +25,7 @@ description: |
 > - 실행 대상
 > - 소유권 경계
 > - 표준 실행 순서
+> - 신규 프로젝트 감지 안내 계약
 > - 환경 부트스트랩
 > - 런타임 상태표
 > - 점검 포인트
@@ -76,6 +77,16 @@ description: |
 6. 경고가 있으면 `validate_env.sh` 또는 `bootstrap_env.sh`로 환경을 복구한다.
 7. `Runtime Status` 표(`.codex/runtime/current_status.txt`)를 확인한다.
 8. 프로젝트 경고가 있으면 `set_active_project.sh` 또는 `init_project_docs.sh`로 복구한다.
+
+## 신규 프로젝트 감지 안내 계약
+1. 신규 프로젝트를 감지했지만 `prj-docs`가 없으면, 먼저 사용자에게 아래 문구로 확인한다.
+   - `이 프로젝트용 prj-docs를 생성할까요?`
+2. 사용자가 생성 승인하면 즉시 아래 순서로 실행한다.
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh <project-root>`
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>`
+3. 용어는 `부트스트랩` 대신 `prj-docs 생성`을 기본 사용한다.
+4. 빠른 실행이 필요하면 one-shot 옵션을 허용한다.
+   - `./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root> --init-missing`
 
 ## 환경 부트스트랩
 1. 환경 점검:

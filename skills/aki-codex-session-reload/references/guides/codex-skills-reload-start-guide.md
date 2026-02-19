@@ -89,6 +89,9 @@ cat .codex/runtime/codex_session_start.md
 
 ## 4. 신규 프로젝트 시작할 때
 
+0. 사용자 안내 문구(권장)
+- `이 프로젝트용 prj-docs를 생성할까요?`
+
 1. 문서 골격 자동 생성
 ```bash
 ./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh workspace/<category>/<service>
@@ -96,6 +99,12 @@ cat .codex/runtime/codex_session_start.md
 2. 활성 프로젝트 지정 + 세션 리로드
 ```bash
 ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh workspace/<category>/<service>
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
+```
+
+3. one-shot(생성+활성화)
+```bash
+./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh workspace/<category>/<service> --init-missing
 ./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh
 ```
 

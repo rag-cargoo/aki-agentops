@@ -71,10 +71,12 @@ usage() {
   cat <<'EOF'
 Usage:
   ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root>
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh <project-root> --init-missing
   ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh --list
 
 Examples:
   ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh workspace/<category>/<project>
+  ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh workspace/<category>/<project> --init-missing
   ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh --list
 EOF
 }
@@ -113,21 +115,42 @@ list_projects() {
   done
 }
 
-if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+init_missing="false"
+target_arg=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --help|-h)
+      usage
+      exit 0
+      ;;
+    --list|-l)
+      list_projects
+      exit 0
+      ;;
+    --init-missing)
+      init_missing="true"
+      shift
+      ;;
+    *)
+      if [[ -n "$target_arg" ]]; then
+        echo "error: multiple project roots provided" >&2
+        usage
+        exit 1
+      fi
+      target_arg="$1"
+      shift
+      ;;
+  esac
+done
+
+if [[ -z "$target_arg" ]]; then
+  list_projects
+  echo
   usage
   exit 0
 fi
 
-if [[ "${1:-}" == "--list" || "${1:-}" == "-l" || $# -eq 0 ]]; then
-  list_projects
-  if [[ $# -eq 0 ]]; then
-    echo
-    usage
-  fi
-  exit 0
-fi
-
-input_path="${1%/}"
+input_path="${target_arg%/}"
 if [[ "$input_path" == "$repo_root"* ]]; then
   input_path="${input_path#$repo_root/}"
 fi
@@ -172,12 +195,23 @@ for req_dir in "${required_dirs[@]}"; do
 done
 
 if [[ "${#missing[@]}" -gt 0 ]]; then
+  if [[ "$init_missing" == "true" ]]; then
+    if [[ "$docs_root_rel" == "$input_path/prj-docs" ]]; then
+      echo "info: prj-docs baseline is missing. initializing for $input_path ..."
+      "$script_dir/init_project_docs.sh" "$input_path"
+      exec "$0" "$input_path"
+    fi
+  fi
+
   echo "error: project baseline requirements are missing:" >&2
   for item in "${missing[@]}"; do
     echo "  - $item" >&2
   done
+  echo "guide: 신규 프로젝트가 감지되면 다음처럼 확인 후 진행하세요." >&2
+  echo "  - \"이 프로젝트용 prj-docs를 생성할까요?\"" >&2
   if [[ "$docs_root_rel" == "$input_path/prj-docs" ]]; then
     echo "hint: run ./skills/aki-codex-session-reload/scripts/codex_skills_reload/init_project_docs.sh $input_path" >&2
+    echo "hint: one-shot: ./skills/aki-codex-session-reload/scripts/codex_skills_reload/set_active_project.sh $input_path --init-missing" >&2
   else
     echo "hint: create baseline docs under $docs_root_rel (PROJECT_AGENT.md, task.md, meeting-notes/README.md, rules/)" >&2
   fi
