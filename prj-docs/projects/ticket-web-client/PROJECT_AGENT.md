@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-19 21:12:00`
+> - **Updated At**: `2026-02-19 22:15:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -28,6 +28,6 @@
 - 전역 프론트 규칙은 `skills/aki-frontend-delivery-governance/SKILL.md`를 따른다.
 
 ## Playwright Operation Contract
-- 테스트 실행 전 범위 목록(`smoke/nav/contract/all`)을 먼저 제시한다.
+- 테스트 실행 전 범위 목록(`smoke/nav/contract/realtime/all`)을 먼저 제시한다.
 - 사용자가 선택한 파트만 실행한다.
 - 실행 로그/요약 경로를 결과 보고에 포함한다.

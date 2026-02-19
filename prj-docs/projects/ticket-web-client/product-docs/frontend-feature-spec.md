@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-19 21:12:00`
+> - **Updated At**: `2026-02-19 22:15:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -27,7 +27,7 @@
 ## Feature Breakdown
 1. Layout/Navigate
 - 상단 네비게이션(`Home`, `Highlights`, `Gallery`, `Queue`)과 앵커 이동 구조를 제공한다.
-- Hero/Highlights/Gallery/Contract Panel 4개 섹션으로 메인 화면을 구성한다.
+- Hero/Highlights/Gallery/Contract Panel/Realtime Panel 5개 섹션으로 메인 화면을 구성한다.
 
 2. Highlights Grid
 - K-POP 영상 썸네일 카드 그리드로 구성한다.
@@ -40,6 +40,11 @@
 - `normalizeApiError` 결과(JSON)
 - `parseServerDateTime` 결과(JSON)
 - 위 2개를 동시에 노출해 프론트 계약 베이스를 시각 검증 가능하게 유지한다.
+
+5. Realtime Mode Lab
+- 요청 모드(`websocket`/`sse`) 선택 UI와 연결 상태를 표시한다.
+- websocket 실패 시 sse fallback 상태를 시뮬레이션해 검증 가능하게 유지한다.
+- 이벤트 로그를 패널 내에 남겨 Playwright와 수동 점검 모두에서 추적 가능하게 유지한다.
 
 ## API Contract Integration
 - Error Parser:
@@ -64,3 +69,4 @@
 - `@smoke`: 페이지 부팅, 핵심 섹션 노출
 - `@nav`: 앵커 이동/내비게이션 동작
 - `@contract`: Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
+- `@realtime`: websocket 실패 -> sse fallback 상태 및 이벤트 로그 검증

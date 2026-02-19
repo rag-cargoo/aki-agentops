@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-19 21:12:00`
+> - **Updated At**: `2026-02-19 22:15:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -38,5 +38,5 @@
 
 ## Playwright Verification
 - 실행 전 목록 제시(list-first) 후 사용자 선택 scope를 실행한다.
-- 파트별 실행: `smoke`, `nav`, `contract`
+- 파트별 실행: `smoke`, `nav`, `contract`, `realtime`
 - 전체 실행: `all`

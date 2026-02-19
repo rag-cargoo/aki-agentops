@@ -8,7 +8,7 @@ usage() {
   cat <<'USAGE'
 Usage:
   ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --list
-  ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope <smoke|nav|contract|all|@tag> [-- <extra args>]
+  ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope <smoke|nav|contract|realtime|all|@tag> [-- <extra args>]
 
 Examples:
   ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root workspace/apps/frontend/ticket-web-client --list
@@ -109,6 +109,9 @@ case "$scope" in
   contract|contracts)
     cmd=(npm run e2e:contract --)
     ;;
+  realtime)
+    cmd=(npm run e2e:realtime --)
+    ;;
   all)
     cmd=(npm run e2e:all --)
     ;;
@@ -117,7 +120,7 @@ case "$scope" in
     ;;
   *)
     echo "error: unsupported scope '$scope'" >&2
-    echo "supported: smoke, nav, contract, all, @tag" >&2
+    echo "supported: smoke, nav, contract, realtime, all, @tag" >&2
     exit 1
     ;;
 esac

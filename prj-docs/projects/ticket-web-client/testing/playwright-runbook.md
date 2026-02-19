@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-19 21:12:00`
+> - **Updated At**: `2026-02-19 22:15:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -55,6 +55,10 @@ cd /home/aki/aki-agentops
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
   --project-root workspace/apps/frontend/ticket-web-client \
   --scope contract
+
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
+  --project-root workspace/apps/frontend/ticket-web-client \
+  --scope realtime
 ```
 
 ## Full Execution

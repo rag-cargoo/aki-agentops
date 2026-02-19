@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:26:00`
-> - **Updated At**: `2026-02-19 21:26:00`
+> - **Updated At**: `2026-02-19 22:15:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -37,7 +37,7 @@
 ```bash
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
   --project-root workspace/apps/frontend/<service> \
-  --scope smoke
+  --scope smoke|nav|contract|realtime
 ```
 - 전체 실행:
 ```bash

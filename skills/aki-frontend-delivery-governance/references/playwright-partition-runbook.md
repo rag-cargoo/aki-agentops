@@ -22,6 +22,7 @@
 - `smoke`: 페이지 부팅/핵심 레이아웃
 - `nav`: 메뉴/앵커/탭 전환
 - `contract`: API/시간/에러 파서 노출값
+- `realtime`: WS/SSE fallback 상태/로그 검증
 - `all`: 전체 시나리오
 
 ## List First Contract
@@ -38,6 +39,7 @@
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope smoke
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope nav
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope contract
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope realtime
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope all
 ```
 

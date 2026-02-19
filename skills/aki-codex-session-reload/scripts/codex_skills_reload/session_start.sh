@@ -511,7 +511,7 @@ now_ver="$(date '+%Y%m%d-%H%M%S')"
     echo "- Playwright Catalog: \`$frontend_docs_root/testing/playwright-suite-catalog.md\`"
     echo "- Playwright Runbook: \`$frontend_docs_root/testing/playwright-runbook.md\`"
     echo "- List First: \`$frontend_playwright_entry --project-root $active_project --list\`"
-    echo "- Run by Scope: \`$frontend_playwright_entry --project-root $active_project --scope smoke|nav|contract|all\`"
+    echo "- Run by Scope: \`$frontend_playwright_entry --project-root $active_project --scope smoke|nav|contract|realtime|all\`"
     echo "- Prompt Shortcut: \`프론트 Playwright 테스트 목록 보여주고 scope별로 실행해줘\`"
   fi
   echo
