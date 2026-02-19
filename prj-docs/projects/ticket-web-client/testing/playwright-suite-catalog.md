@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 02:20:00`
+> - **Updated At**: `2026-02-20 02:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -58,6 +58,12 @@
 - `[ticket-web-client][realtime] event`
 - 증빙 파일:
   - `workspace/apps/frontend/ticket-web-client/test-results/<test-id>/browser-console.log`
+
+## Execution Ledger
+- 실행 누적 이력:
+  - `prj-docs/projects/ticket-web-client/testing/playwright-execution-history.md`
+- 누적 필드:
+  - `Executed At`, `Scope`, `Result`, `Run ID`, `Summary`, `Log`
 
 ## Failure Triage
 - selector 실패: UI 구조 변경 여부 확인 후 spec selector 갱신

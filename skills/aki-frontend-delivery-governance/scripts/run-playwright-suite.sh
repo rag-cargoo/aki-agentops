@@ -8,11 +8,12 @@ usage() {
   cat <<'USAGE'
 Usage:
   ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --list
-  ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope <smoke|nav|contract|auth|realtime|all|@tag> [-- <extra args>]
+  ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope <smoke|nav|contract|auth|realtime|all|@tag> [--history-file <path>] [--no-history] [-- <extra args>]
 
 Examples:
   ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root workspace/apps/frontend/ticket-web-client --list
   ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root workspace/apps/frontend/ticket-web-client --scope smoke
+  ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root workspace/apps/frontend/ticket-web-client --scope auth --history-file prj-docs/projects/ticket-web-client/testing/playwright-execution-history.md
   ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root workspace/apps/frontend/ticket-web-client --scope @critical -- --headed
 USAGE
 }
@@ -20,6 +21,8 @@ USAGE
 project_root=""
 scope=""
 list_only="false"
+history_enabled="true"
+history_file=""
 extra_args=()
 
 while [[ $# -gt 0 ]]; do
@@ -35,6 +38,14 @@ while [[ $# -gt 0 ]]; do
     --scope)
       scope="${2:-}"
       shift 2
+      ;;
+    --history-file)
+      history_file="${2:-}"
+      shift 2
+      ;;
+    --no-history)
+      history_enabled="false"
+      shift
       ;;
     --list)
       list_only="true"
@@ -136,12 +147,13 @@ mkdir -p "$out_dir"
 
 summary_file="$out_dir/summary.txt"
 log_file="$out_dir/run.log"
+started_at="$(date '+%Y-%m-%d %H:%M:%S')"
 
 {
   echo "service=$service_name"
   echo "project_root=$project_abs"
   echo "scope=$scope"
-  echo "started_at=$(date '+%Y-%m-%d %H:%M:%S')"
+  echo "started_at=$started_at"
   echo "command=${cmd[*]} ${extra_args[*]}"
   echo "test_results_dir=$project_abs/test-results"
   echo "playwright_report_dir=$project_abs/playwright-report"
@@ -156,9 +168,50 @@ exit_code=${PIPESTATUS[0]}
 set -e
 
 echo "exit_code=$exit_code" >> "$summary_file"
-echo "finished_at=$(date '+%Y-%m-%d %H:%M:%S')" >> "$summary_file"
+finished_at="$(date '+%Y-%m-%d %H:%M:%S')"
+echo "finished_at=$finished_at" >> "$summary_file"
 
 ln -sfn "$out_dir" "$out_root/latest"
+
+if [[ "$history_enabled" == "true" ]]; then
+  if [[ -z "$history_file" ]]; then
+    history_abs="$repo_root/prj-docs/projects/$service_name/testing/playwright-execution-history.md"
+  elif [[ "$history_file" == /* ]]; then
+    history_abs="$history_file"
+  else
+    history_abs="$repo_root/$history_file"
+  fi
+
+  mkdir -p "$(dirname "$history_abs")"
+  if [[ ! -f "$history_abs" ]]; then
+    cat > "$history_abs" <<EOF
+# Playwright Execution History ($service_name)
+
+이 문서는 \`run-playwright-suite.sh\` 실행 결과를 누적 기록한다.
+
+## Run Ledger
+| Executed At | Scope | Result | Run ID | Summary | Log |
+| --- | --- | --- | --- | --- | --- |
+EOF
+  fi
+
+  summary_ref="$summary_file"
+  log_ref="$log_file"
+  if [[ "$summary_ref" == "$repo_root/"* ]]; then
+    summary_ref="${summary_ref#$repo_root/}"
+  fi
+  if [[ "$log_ref" == "$repo_root/"* ]]; then
+    log_ref="${log_ref#$repo_root/}"
+  fi
+
+  run_result="PASS"
+  if [[ "$exit_code" -ne 0 ]]; then
+    run_result="FAIL($exit_code)"
+  fi
+
+  printf '| %s | `%s` | `%s` | `%s` | `%s` | `%s` |\n' \
+    "$finished_at" "$scope" "$run_result" "$run_id" "$summary_ref" "$log_ref" >> "$history_abs"
+fi
 
 echo
 echo "[Playwright Run Result]"
@@ -169,5 +222,8 @@ echo "- log: $log_file"
 echo "- test_results: $project_abs/test-results"
 echo "- report: $project_abs/playwright-report/index.html"
 echo "- latest: $out_root/latest"
+if [[ "$history_enabled" == "true" ]]; then
+  echo "- history: $history_abs"
+fi
 
 exit "$exit_code"

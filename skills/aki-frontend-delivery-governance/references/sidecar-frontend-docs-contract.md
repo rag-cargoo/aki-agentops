@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:05:00`
-> - **Updated At**: `2026-02-19 21:05:00`
+> - **Updated At**: `2026-02-20 02:45:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -28,7 +28,9 @@
 - `prj-docs/projects/<service>/task.md`
 - `prj-docs/projects/<service>/meeting-notes/README.md`
 - `prj-docs/projects/<service>/product-docs/frontend-feature-spec.md`
+- `prj-docs/projects/<service>/testing/playwright-suite-catalog.md`
 - `prj-docs/projects/<service>/testing/playwright-runbook.md`
+- `prj-docs/projects/<service>/testing/playwright-execution-history.md`
 
 ## Feature Spec Format
 1. 범위와 목표
@@ -43,3 +45,8 @@
 3. 파트별 실행 명령
 4. 전체 실행 명령
 5. 로그 경로/검증 판정 기준
+
+## Execution History Format
+1. 표(Table) 기반 실행 이력 누적(append-only)
+2. 최소 컬럼: `Executed At`, `Scope`, `Result`, `Run ID`, `Summary`, `Log`
+3. 각 row는 전역 래퍼 실행 결과와 1:1 대응

@@ -10,7 +10,7 @@ description: |
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:05:00`
-> - **Updated At**: `2026-02-19 21:05:00`
+> - **Updated At**: `2026-02-20 02:45:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -25,6 +25,7 @@ description: |
 > - 프로젝트 분리 원칙
 > - 구현 분해 규칙
 > - Playwright 시연 계약
+> - 검증 이력 누적 계약
 > - 장기 공백 리마인더
 > - 로그 증빙 계약
 > - 산출물 규칙
@@ -79,6 +80,18 @@ description: |
    - `./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --list`
    - `./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope <scope>`
 
+## 검증 이력 누적 계약
+1. 각 실행은 아래 파일에 누적 기록한다.
+   - `prj-docs/projects/<service>/testing/playwright-execution-history.md`
+2. 누적 항목은 최소 아래 필드를 포함한다.
+   - 실행 시각(`YYYY-MM-DD HH:mm:ss`)
+   - scope
+   - 성공/실패
+   - run id
+   - summary/log 경로
+3. 전역 래퍼(`run-playwright-suite.sh`)는 기본값으로 이력 기록을 수행한다.
+4. 사용자가 별도 경로를 원하면 `--history-file <path>`로 지정한다.
+
 ## 장기 공백 리마인더
 1. 프론트 Active Project 상태에서 `session_start.sh` 실행 시 Frontend Quick Remind를 자동 노출한다.
 2. 사용자 복귀 프롬프트는 아래 문구를 기준으로 한다.
@@ -114,3 +127,4 @@ description: |
 ## 참고 문서
 - Playwright 분할 실행 가이드: `references/playwright-partition-runbook.md`
 - Sidecar 문서 작성 계약: `references/sidecar-frontend-docs-contract.md`
+- 실행 이력 템플릿: `references/playwright-execution-history-template.md`
