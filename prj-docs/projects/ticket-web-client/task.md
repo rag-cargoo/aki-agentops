@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 06:42:00`
+> - **Updated At**: `2026-02-20 07:17:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -33,6 +33,7 @@
 - [x] TWC-SC-008 메인 화면 서비스 우선 정렬 + Dev Lab 분리
 - [x] TWC-SC-009 티켓 목록 판매상태/카운트다운 계약 + 예매 버튼 노출 연동
 - [x] TWC-SC-010 Queue 카드 `예매하기` v7 hold/paying/confirm 연동
+- [x] TWC-SC-011 OAuth 세션 발급 + `/api/auth/me` 사용자 컨텍스트 연동
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -176,5 +177,28 @@
     - `ticket-web-client Issue #1`: `https://github.com/rag-cargoo/ticket-web-client/issues/1`
     - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/1#issuecomment-3930278588`
 
+- TWC-SC-011 OAuth 세션 발급 + `/api/auth/me` 사용자 컨텍스트 연동
+  - Status: DONE
+  - Description:
+    - Auth Session Lab을 mock 토큰 흐름에서 실제 Auth API 호출 흐름으로 전환했다.
+    - 연동 API:
+      - `GET /api/auth/social/{provider}/authorize-url`
+      - `POST /api/auth/social/{provider}/exchange`
+      - `POST /api/auth/token/refresh`
+      - `POST /api/auth/logout`
+      - `GET /api/auth/me`
+    - 발급된 Access Token을 Queue 예약 토큰 입력에 자동 반영하고, 세션을 localStorage에 복구 가능 상태로 저장한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/auth-session-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-071428-3668413/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-071428-3668413/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-071450-3669177/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-071450-3669177/summary.txt`
+    - `ticket-web-client Issue #2`: `https://github.com/rag-cargoo/ticket-web-client/issues/2`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/2#issuecomment-3930457139`
+
 ## Next Items
-- TWC-SC-011 실제 OAuth 세션 발급(access/refresh) 연동 + `/api/auth/me` 기반 사용자 컨텍스트 표시
+- TWC-SC-012 Queue 예약 후 `v7/me` 내 예약 조회 + 취소/환불 액션 UX 연동

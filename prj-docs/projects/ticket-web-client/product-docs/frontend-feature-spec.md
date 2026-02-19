@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 06:42:00`
+> - **Updated At**: `2026-02-20 07:17:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -54,9 +54,11 @@
 - 이벤트 로그를 패널 내에 남겨 Playwright와 수동 점검 모두에서 추적 가능하게 유지한다.
 
 6. Auth Session Lab (개발 전용)
-- 로그인/만료/재발급/로그아웃/보호 API 호출 시나리오를 단일 패널에서 재현한다.
-- 상태(`authStatus`, `token 존재`, `refreshCount`, `last API result`)를 즉시 표시한다.
-- 마지막 auth 에러 JSON과 토큰 만료 시간 파싱 결과를 노출해 계약 기반 검증을 지원한다.
+- OAuth provider/state/code 입력으로 소셜 코드 교환 세션 발급을 검증한다.
+- `Authorize URL` 요청과 `Exchange & Sign In` 호출을 분리해 OAuth 단계별 상태를 확인한다.
+- `/api/auth/me` 조회 결과를 패널에 노출해 사용자 컨텍스트를 검증한다.
+- 상태(`authStatus`, `access/refresh token 존재`, `refreshCount`, `last API result`)를 즉시 표시한다.
+- 마지막 auth 에러 JSON과 access/refresh 토큰 만료 시간 파싱 결과를 노출해 계약 기반 검증을 지원한다.
 - 이벤트 로그를 남겨 Playwright 콘솔/패널 증빙을 동기화한다.
 
 ## Dev Lab Exposure Rule
@@ -102,6 +104,21 @@
     - `Authorization: Bearer {accessToken}` 필수
   - 에러 처리:
     - auth/domain 에러는 카드 단위 상태 메시지 + 재시도 라벨로 반영
+- Auth Session Integration:
+  - 인가 URL:
+    - `GET /api/auth/social/{provider}/authorize-url?state=...`
+  - 코드 교환:
+    - `POST /api/auth/social/{provider}/exchange` (`{code, state}`)
+  - 세션 갱신:
+    - `POST /api/auth/token/refresh` (`{refreshToken}`)
+  - 현재 사용자 조회:
+    - `GET /api/auth/me` (`Authorization: Bearer {accessToken}`)
+  - 로그아웃:
+    - `POST /api/auth/logout` (`Authorization + refreshToken`)
+  - 세션 저장:
+    - `localStorage(ticket-web-client.auth.session)`에 access/refresh 및 만료 시각 저장
+  - Queue 연동:
+    - 로그인/갱신 성공 시 Queue Access Token 입력에 자동 반영
 
 ## Runtime Env Contract
 - `VITE_API_BASE_URL`:
@@ -113,6 +130,8 @@
   - `1`일 때 Dev Lab 섹션 노출
 - Queue Access Token:
   - `Access Token` 입력값은 `localStorage(ticket-web-client.queue.access-token)`에 저장하여 새로고침 후 재사용한다.
+- Auth Session:
+  - `localStorage(ticket-web-client.auth.session)`에 세션 정보를 저장하고, 진입 시 복구한다.
 
 ## Realtime Integration Plan
 - 1차: WebSocket 우선 연결 어댑터
@@ -129,5 +148,5 @@
 - `@nav`: 앵커 이동/내비게이션 동작
 - `@queue`: Queue 카드 예매 클릭 시 v7 hold/paying/confirm 체인 및 상태/로그 검증
 - `@contract`: Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
-- `@auth`: auth/session 상태 전이 + 보호 API 성공/실패 전환 검증
+- `@auth`: OAuth authorize-url/exchange + refresh/logout + `/api/auth/me` 컨텍스트 검증
 - `@realtime`: websocket 실패 -> sse fallback 상태 및 이벤트 로그 검증

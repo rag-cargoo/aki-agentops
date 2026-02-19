@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 06:42:00`
+> - **Updated At**: `2026-02-20 07:17:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -23,7 +23,7 @@
 - `nav`: 상단 네비게이션 앵커 이동 확인
 - `queue`: Queue 카드 `예매하기` v7 hold/paying/confirm 체인 검증
 - `contract`: 에러/시간 파서 출력 및 콘솔 로그 확인(Dev Lab)
-- `auth`: auth/session 상태 전이와 보호 API 호출 결과 확인(Dev Lab)
+- `auth`: OAuth authorize-url/exchange + auth/session 상태 전이 + `/api/auth/me` 결과 확인(Dev Lab)
 - `realtime`: websocket 실패 시 sse fallback 상태/로그 확인(Dev Lab)
 - `all`: 전체 실행
 
@@ -45,7 +45,9 @@
 - Queue 로그 패널에 confirmed 로그가 기록되는지 확인
 
 5. `auth`
+- authorize-url 요청/코드 교환으로 access/refresh 토큰이 발급되는지 확인
 - 비인증/만료/재발급/로그아웃 흐름에서 상태 필드가 기대값으로 전환되는지 확인
+- `/api/auth/me` 호출 성공 시 사용자 컨텍스트가 표시되는지 확인
 - 보호 API 호출 시 에러 코드(`AUTH_ACCESS_TOKEN_REQUIRED`, `AUTH_TOKEN_EXPIRED`)와 성공 전환을 확인
 - 브라우저 console에 auth 검증 로그 키가 출력되는지 확인
 
@@ -62,6 +64,9 @@
 - `[ticket-web-client][auth] state`
 - `[ticket-web-client][auth] api-error`
 - `[ticket-web-client][auth] api-success`
+- `[ticket-web-client][auth] sign-in-success`
+- `[ticket-web-client][auth] refresh-success`
+- `[ticket-web-client][auth] logout-success`
 - `[ticket-web-client][realtime] transport-error`
 - `[ticket-web-client][realtime] event`
 - 증빙 파일:

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 06:42:00`
+> - **Updated At**: `2026-02-20 07:17:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -76,6 +76,10 @@ cd /home/aki/aki-agentops
   --project-root workspace/apps/frontend/ticket-web-client \
   --scope realtime
 ```
+
+## Auth Scope Note
+- `auth` scope는 OAuth provider 실제 로그인 없이도 회귀 가능하도록 Playwright route mocking을 사용한다.
+- 실 provider 검증이 필요할 때는 backend `run-auth-social-real-provider-e2e.sh` 체인과 함께 HITL로 분리 실행한다.
 
 ## Full Execution
 ```bash
