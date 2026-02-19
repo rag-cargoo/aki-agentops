@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 17:53:50`
+> - **Updated At**: `2026-02-19 18:46:48`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-19 Frontend Workspace Bootstrap Kickoff](./2026-02-19-frontend-workspace-bootstrap-kickoff.md)
 - [2026-02-19 API Script Mode-Aware Follow-up](./2026-02-19-api-script-mode-aware-followup.md)
 - [2026-02-19 Frontend Preflight Preparation Plan](./2026-02-19-frontend-preflight-preparation-plan.md)
 - [2026-02-19 Playwright OAuth HITL + Callback Preflight Governance Completion](./2026-02-19-playwright-oauth-hitl-preflight-governance-completion.md)
