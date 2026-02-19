@@ -52,6 +52,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+      * [2026-02-19 Frontend Preflight Preparation Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-preflight-preparation-plan.md)
       * [2026-02-19 Playwright OAuth HITL + Callback Preflight Governance Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-playwright-oauth-hitl-preflight-governance-completion.md)
       * [2026-02-19 Frontend Release Handoff Checklist Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-release-handoff-checklist-completion.md)
       * [2026-02-17 Sidecar SoT Dedup Follow-up](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md)
