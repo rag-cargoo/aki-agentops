@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:28:03`
+> - **Updated At**: `2026-02-19 15:55:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -29,6 +29,7 @@
 8. `runtime_flags.sh` - 런타임 플래그 파일/고정폭 상태표 생성(`.codex/state/runtime_flags.yaml`, `.codex/runtime/current_status.txt`)
 9. `show_runtime_status.sh` - 런타임 상태표/경고를 원문 출력(옵션: `--alerts-only`, `--with-progress`)
 10. `show_dev_progress.sh` - Active Project `task.md` 기반 개발 진행 체크리스트 출력
+11. `sync_mcp_config.sh` - `~/.codex/config.toml` MCP 엔트리 템플릿 점검/반영(`guide`/`apply`)
 
 ## Notes
 1. 기본 진입점은 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/session_start.sh`다.
@@ -39,3 +40,4 @@
 6. 새 PC/세션 초기화는 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/bootstrap_env.sh`를 권장한다.
 7. 현재 런타임 상태표 조회는 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/runtime_flags.sh status`를 사용한다.
 8. 개발 진행 체크 포함 조회는 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/show_runtime_status.sh --with-progress`를 사용한다.
+9. MCP config만 선반영하려면 `./skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh --mode apply`를 사용한다.

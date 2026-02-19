@@ -18,10 +18,13 @@
 3. 스냅샷/경고 확인
    - Owner Skill: `aki-codex-session-reload`
    - `.codex/runtime/codex_session_start.md`의 Startup Checks/Active Project 확인
-4. GitHub MCP init(필요 시)
+4. MCP config bootstrap 점검
+   - Owner Skill: `aki-codex-session-reload`
+   - `sync_mcp_config.sh --mode guide`로 MCP 엔트리 누락 여부를 확인한다.
+5. GitHub MCP init(필요 시)
    - Owner Skill: `aki-mcp-github`
    - 서버 구성됨 상태면 init flow로 toolset 준비
-5. 경고 복구
+6. 경고 복구
    - Owner Skill: `aki-codex-session-reload`
    - `set_active_project.sh` 또는 `init_project_docs.sh`로 복구
 
@@ -30,6 +33,8 @@
   - `set_active_project.sh <project-root>` 실행 후 session_start 재실행
 - Runtime Integrity WARN:
   - 실행 권한/누락 스크립트 복구 후 재실행
+- MCP config WARN:
+  - `sync_mcp_config.sh --mode apply` 실행 후 session_start 재실행
 - 실패 정책:
   - 기본 `Stop` 후 원인 보고
 

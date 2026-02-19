@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-08 23:07:03`
-> - **Updated At**: `2026-02-17 17:14:21`
+> - **Updated At**: `2026-02-19 15:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -18,6 +18,7 @@
 > - 3) 세션 재시작 핸드오프
 > - 4) 운영 TODO
 > - 5) 경험 로그
+> - 6) Codex MCP Config Bootstrap
 <!-- DOC_TOC_END -->
 
 이 디렉토리는 MCP 설치/점검과 세션 재시작 핸드오프를 한 곳에서 관리한다.
@@ -98,3 +99,15 @@ bash mcp/scripts/clear_session_handoff.sh
 
 - 실제 장애/복구/제약 사례를 누적 기록한다.
 - 재발 방지를 위해 증상/원인/해결/검증 명령을 함께 남긴다.
+
+## 6) Codex MCP Config Bootstrap
+
+- 공통 MCP 서버 엔트리 동기화는 아래 스크립트를 사용한다.
+- `./skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh --mode guide`
+- `./skills/aki-codex-session-reload/scripts/codex_skills_reload/sync_mcp_config.sh --mode apply`
+- 템플릿 소스:
+  - `skills/aki-codex-session-reload/references/templates/mcp-config-template.toml`
+- 서버별 운영/검증은 전용 스킬에서 수행한다.
+  - GitHub: `skills/aki-mcp-github`
+  - Playwright: `skills/aki-mcp-playwright`
+  - Figma: `skills/aki-mcp-figma`
