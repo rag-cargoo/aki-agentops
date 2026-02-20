@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 04:55:00`
-> - **Updated At**: `2026-02-21 06:03:42`
+> - **Updated At**: `2026-02-21 06:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -91,7 +91,7 @@
 - 완료된 것:
   - 결제/예약 도메인 분리 전환 안건 합의
   - backend 결제 이슈 재오픈 및 후속 범위 코멘트 등록
-  - 회의록 PR 생성: `https://github.com/rag-cargoo/aki-agentops/pull/131`
+  - 회의록 PR 생성/머지: `rag-cargoo/aki-agentops PR 131`
   - 구현용 분리 브랜치(worktree) 준비
     - backend: `feat/payment-gateway-abstraction-20260221`
     - frontend: `feat/payment-checkout-flow-contract-20260221`
@@ -116,14 +116,27 @@
       - `MockPaymentGatewayIntegrationTest`
       - `PgReadyPaymentGatewayIntegrationTest`
       - `PgReadyWebhookServiceTest`
+  - backend Workstream 3/4 2차 반영(실상태 전이):
+    - `PaymentTransaction.status` 확장: `PENDING/SUCCESS/FAILED`
+    - `ReservationPaymentPort`가 결제 결과(`PaymentTransaction`)를 반환하도록 계약 확장
+    - `pg-ready` 결제 요청 시 즉시 `PENDING` 기록 후 webhook 승인/실패로 최종 상태 전이
+    - webhook `APPROVED` 수신 시 `PAYING -> CONFIRMED`, 좌석 `TEMP_RESERVED -> RESERVED`, 캐시 무효화/실시간 상태 푸시 반영
+    - webhook `FAILED` 수신 시 예약은 `PAYING` 유지, 결제원장만 `FAILED`로 기록
+  - backend 관리자 override 감사로그 반영:
+    - 감사 테이블 추가: `admin_refund_audit_logs`
+    - 기록 결과: `SUCCESS / DENIED / FAILED`
+    - 조회 API 추가: `GET /api/reservations/v7/audit/admin-refunds`
+    - 관리자 강제환불 경로에서 성공/거부/실패 로그를 `REQUIRES_NEW`로 보존
+  - frontend 결제 승인 대기 UX 보정:
+    - `confirm` 응답이 `PAYING`이면 "결제 승인 대기중"으로 표시(확정 완료 오인 방지)
+    - 실시간 예약 상태 병합 시 `PAYING/HOLD`는 진행중, `CONFIRMED/REFUNDED`만 성공 상태로 반영
   - admin 콘솔 최소 권한 설정화:
     - 설정 키: `app.admin-console.minimum-role` (`USER`/`ADMIN`)
     - 현재값: `USER` (포트폴리오 모드)
     - 실서비스 전환 시 `ADMIN`으로 값만 변경
 - 남은 것:
-  - backend: admin override 권한 감사로그/운영 가이드 정리
   - frontend: 만료 이벤트 수신 실패 시 polling fallback 주기/UX 튜닝
-  - 문서/API 계약/운영 가이드 최종 동기화
+  - 문서/API 계약 최종 동기화(결제 상태 enum `PENDING/FAILED` 및 webhook 상태전이 설명 추가)
 
 ## 결정 대기 항목
 - Status: DONE

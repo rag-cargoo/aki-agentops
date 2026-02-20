@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 00:15:00`
-> - **Updated At**: `2026-02-19 14:40:00`
+> - **Updated At**: `2026-02-21 06:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -142,7 +142,8 @@
 
 예약 상태머신 연동:
 - `POST /api/reservations/v6/{reservationId}/confirm`
-  - 성공 시 지갑에서 결제 금액 차감
+  - `wallet` provider: 즉시 성공(`SUCCESS`)으로 확정되며 지갑에서 결제 금액 차감
+  - `pg-ready` provider: 초기 `PENDING` 기록 후 webhook 승인 시 `SUCCESS` 전이
   - 거래 타입 `PAYMENT` 원장 기록
 - `POST /api/reservations/v6/{reservationId}/refund`
   - 성공 시 지갑으로 결제 금액 환불
@@ -151,6 +152,11 @@
 Auth Track A2 동일 규칙:
 - `POST /api/reservations/v7/{reservationId}/confirm`
 - `POST /api/reservations/v7/{reservationId}/refund`
+
+PG webhook 연동:
+- `POST /api/payments/webhooks/pg-ready`
+  - `eventType=PAYMENT`, `status=APPROVED`: 결제 원장 `SUCCESS`, 예약 `CONFIRMED` 확정
+  - `eventType=PAYMENT`, `status=FAILED`: 결제 원장 `FAILED`, 예약은 `PAYING` 유지
 
 검증 스크립트:
 - `scripts/api/v14-wallet-payment-flow.sh`
@@ -162,7 +168,7 @@ Auth Track A2 동일 규칙:
 | Field | Values |
 | :--- | :--- |
 | `type` | `CHARGE`, `PAYMENT`, `REFUND` |
-| `status` | `SUCCESS` |
+| `status` | `PENDING`, `SUCCESS`, `FAILED` |
 
 ---
 
