@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 10:18:00`
+> - **Updated At**: `2026-02-20 16:52:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -31,6 +31,11 @@
   - 관리자 페이지: `/admin`
   - 개발 검증랩 페이지: `/labs`
 - 상단 네비게이션은 서비스 섹션 링크(`Home`, `Highlights`, `Gallery`, `Queue`)와 페이지 링크(`Admin`, `Labs`)를 함께 제공한다.
+- 상단 라우트 네비는 `Service`, `Admin`, `Labs`로 페이지 분류를 고정한다.
+- 라우트별 섹션 네비를 별도로 제공한다.
+  - `/`: `Home`, `Highlights`, `Gallery`, `Queue`
+  - `/admin`: `Concerts`, `Seat & Price`, `Media`
+  - `/labs`: `Contract`, `Auth`, `Realtime`
 - Hero/Highlights/Gallery/Queue 4개는 서비스 사용자 페이지(`/`)에만 노출한다.
 - 개발 검증 패널(`Contract/Auth/Realtime`)은 `/labs`에서만 노출한다.
 

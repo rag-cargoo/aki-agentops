@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 10:18:00`
+> - **Updated At**: `2026-02-20 16:52:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -30,6 +30,11 @@ npx playwright install chromium
 
 ## Service-first UI Rule
 - 기본 사용자 화면은 `Home/Highlights/Gallery/Queue`만 노출한다.
+- 상단 라우트 네비는 `Service/Admin/Labs`로 페이지 분류를 제공한다.
+- 각 라우트는 별도 섹션 네비를 제공한다.
+  - `/`: `Home/Highlights/Gallery/Queue`
+  - `/admin`: `Concerts/Seat & Price/Media`
+  - `/labs`: `Contract/Auth/Realtime`
 - Dev Lab(`Contract/Auth/Realtime`)은 `/labs` 라우트에서만 노출한다.
 - `/labs` 진입 시에도 아래 조건이 없으면 비노출된다.
   - `?labs=1`

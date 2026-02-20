@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 10:24:00`
+> - **Updated At**: `2026-02-20 16:52:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -273,6 +273,7 @@
     - `App.tsx`에서 화면 섹션 JSX를 분리해 `ServicePage`, `LabsPage`, `AdminPage`로 이동했다.
     - 공통 타입/유틸을 `app-types.ts`, `app-utils.ts`로 추출해 중복 로직을 정리했다.
     - Playwright 시나리오를 분리 라우트 구조에 맞게 조정해 회귀 테스트를 유지했다.
+    - 2차 리팩토링으로 service/labs 페이지를 섹션 컴포넌트 단위로 추가 분해하고, admin/labs/service 라우트별 섹션 네비게이션을 고정했다.
   - Evidence:
     - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
     - `workspace/apps/frontend/ticket-web-client/src/app/app-types.ts`
@@ -280,11 +281,19 @@
     - `workspace/apps/frontend/ticket-web-client/src/app/pages/ServicePage.tsx`
     - `workspace/apps/frontend/ticket-web-client/src/app/pages/LabsPage.tsx`
     - `workspace/apps/frontend/ticket-web-client/src/app/pages/AdminPage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/QueueToolbar.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/QueueCards.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/ServiceMyReservationsPanel.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/labs/LabsAuthSection.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/labs/LabsRealtimeSection.tsx`
     - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
     - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-100436-3863129/summary.txt`
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-100436-3863129/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-164647-4181881/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-164647-4181881/run.log`
     - `ticket-web-client Issue #6`: `https://github.com/rag-cargoo/ticket-web-client/issues/6`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/6#issuecomment-3932222602`
 
 - TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
   - Status: TODO

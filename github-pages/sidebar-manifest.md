@@ -74,6 +74,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-20 SC015 Phase2 Section Navigation and Component Decomposition](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-sc015-phase2-section-nav-and-component-decomposition.md)
       * [2026-02-20 Service/Admin/Labs Route Separation and Modular Refactor](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-service-admin-labs-route-separation-and-modular-refactor.md)
       * [2026-02-20 STOMP/SSE Registration and Reconnect Backoff Recovery](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-stomp-sse-registration-and-reconnect-backoff-recovery.md)
       * [2026-02-20 Queue/Reservation Realtime Merge Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-queue-reservation-realtime-merge-integration.md)

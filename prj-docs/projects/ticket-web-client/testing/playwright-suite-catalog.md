@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 10:18:00`
+> - **Updated At**: `2026-02-20 16:52:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -33,7 +33,8 @@
 - 주요 타이틀 및 카드 개수가 기준값 이상인지 확인
 
 2. `nav`
-- `Highlights`, `Gallery`, `Queue` 링크 클릭 시 URL hash가 기대값으로 바뀌는지 확인
+- 서비스 섹션 네비(`Highlights`, `Gallery`, `Queue`) 클릭 시 URL hash가 기대값으로 바뀌는지 확인
+- 상단 라우트 네비 `Admin` 이동 후 admin 섹션 네비(`Seat & Price`) 앵커 이동이 가능한지 확인
 
 3. `contract`
 - `/labs` Contract Panel의 JSON 출력이 파서 계약을 만족하는지 확인
