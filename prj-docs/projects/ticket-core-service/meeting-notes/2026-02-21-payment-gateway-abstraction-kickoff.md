@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 04:55:00`
-> - **Updated At**: `2026-02-21 05:08:00`
+> - **Updated At**: `2026-02-21 05:12:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -95,12 +95,17 @@
   - 구현용 분리 브랜치(worktree) 준비
     - backend: `feat/payment-gateway-abstraction-20260221`
     - frontend: `feat/payment-checkout-flow-contract-20260221`
+  - backend Workstream 1 구현/PR:
+    - `PaymentGateway` 추상화 + `ReservationPaymentPort` 분리
+    - PR: `https://github.com/rag-cargoo/ticket-core-service/pull/17`
+  - frontend 카운트다운 표시 구현/PR:
+    - `holdExpiresAt` 기반 예약카드 실시간 결제 제한시간 표시
+    - PR: `https://github.com/rag-cargoo/ticket-web-client/pull/8`
 - 남은 것:
-  - backend: `PaymentGateway` 포트 도입 및 wallet adapter 이관
-  - backend: 결제실패/만료/취소 상태전이 정책 테스트 재정의
+  - backend: 결제실패/만료/취소 상태전이 정책 테스트/계약문서 정리
   - backend: 환불 cutoff 정책(시간 기반) 명세/구현
-  - frontend: 예약카드 `holdExpiresAt` 기반 카운트다운/안내 문구 정렬
-  - 문서/API 계약/운영 가이드 동기화
+  - frontend: 만료 실시간 반영(WS/SSE vs polling) UX 확정 후 반영
+  - 문서/API 계약/운영 가이드 최종 동기화
 
 ## 결정 대기 항목
 - Status: WAITING
