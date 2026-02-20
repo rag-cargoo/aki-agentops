@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 00:15:05`
+> - **Updated At**: `2026-02-21 06:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -371,7 +371,9 @@ data: SUCCESS
 ### 1.10. Step 9: 결제 확정 전이 (PAYING -> CONFIRMED)
 - **Endpoint**: `POST /api/reservations/v6/{reservationId}/confirm`
 - **Description**: 결제 완료를 반영하고 좌석을 최종 점유(`RESERVED`)로 확정합니다.
-- **Payment Side Effect**: 지갑 잔액에서 `app.payment.default-ticket-price-amount`가 차감되고 거래 타입 `PAYMENT`가 기록됩니다.
+- **Payment Side Effect**:
+  - `wallet` provider: 지갑 잔액에서 `app.payment.default-ticket-price-amount` 차감 후 즉시 `CONFIRMED`
+  - `pg-ready` provider: 결제 원장은 우선 `PENDING` 기록, webhook 승인 전까지 예약은 `PAYING` 유지
 
 **Parameters**
 
@@ -384,8 +386,8 @@ data: SUCCESS
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `status` | String | `CONFIRMED` |
-| `confirmedAt` | DateTime | 최종 확정 시각 |
+| `status` | String | `CONFIRMED` 또는 `PAYING` |
+| `confirmedAt` | DateTime | 최종 확정 시각 (`status=CONFIRMED`일 때) |
 
 ---
 
@@ -579,11 +581,16 @@ data: SUCCESS
   - `POST /api/reservations/v7/{reservationId}/confirm`
   - `POST /api/reservations/v7/{reservationId}/cancel`
   - `POST /api/reservations/v7/{reservationId}/refund`
+  - `POST /api/reservations/v7/admin/{reservationId}/refund` (`ADMIN` 전용, cutoff override)
   - `GET /api/reservations/v7/{reservationId}`
   - `GET /api/reservations/v7/me`
   - `GET /api/reservations/v7/audit/abuse` (`ADMIN` 전용)
+  - `GET /api/reservations/v7/audit/admin-refunds` (`ADMIN` 전용)
 - **Auth Contract**: `Authorization: Bearer {accessToken}` 필수
 - **Rule**: v7에서는 `userId`를 body/query로 받지 않고 서버 인증 컨텍스트를 사용합니다.
+- **Admin Refund Audit Contract**:
+  - 강제 환불 감사로그 결과값: `SUCCESS`, `DENIED`, `FAILED`
+  - `DENIED`/`FAILED` 로그는 호출 트랜잭션 롤백 여부와 무관하게 별도 트랜잭션으로 보존됩니다.
 - **참조 문서**: `./auth-session-api.md`
 
 ---
