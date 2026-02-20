@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 04:49:54`
+> - **Updated At**: `2026-02-20 04:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -211,7 +211,7 @@ Location: https://ui.example.com/ux/u1/callback.html?code=abc123&state=u1_naver_
 ### 2.3. U1 Callback Redirect 설정
 - 환경 변수:
   - `U1_CALLBACK_URL` (optional, default: `/ux/u1/callback.html`)
-  - `FRONTEND_ALLOWED_ORIGINS` (optional, default: `http://localhost:8080,http://127.0.0.1:8080`)
+  - `FRONTEND_ALLOWED_ORIGINS` (optional, default: `http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,http://127.0.0.1:4173,http://localhost:8080,http://127.0.0.1:8080`)
   - `APP_AUTH_SOCIAL_REAL_E2E_ENABLED` (optional, default: `false`, real provider E2E 선택 실행 플래그)
 - 권장:
   - 백엔드/프론트 동일 도메인: default 유지

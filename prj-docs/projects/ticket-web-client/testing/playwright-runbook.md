@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 03:05:00`
+> - **Updated At**: `2026-02-20 18:26:40`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -30,7 +30,13 @@ npx playwright install chromium
 
 ## Service-first UI Rule
 - 기본 사용자 화면은 `Home/Highlights/Gallery/Queue`만 노출한다.
-- Dev Lab(`Contract/Auth/Realtime`)은 숨김이며 아래 조건에서만 노출한다.
+- 상단 라우트 네비는 `Service/Admin/Labs`로 페이지 분류를 제공한다.
+- 각 라우트는 별도 섹션 네비를 제공한다.
+  - `/`: `Home/Highlights/Gallery/Queue`
+  - `/admin`: `Concerts/Seat & Price/Media`
+  - `/labs`: `Contract/Auth/Realtime`
+- Dev Lab(`Contract/Auth/Realtime`)은 `/labs` 라우트에서만 노출한다.
+- `/labs` 진입 시에도 아래 조건이 없으면 비노출된다.
   - `?labs=1`
   - `VITE_APP_DEV_LABS=1`
   - e2e probe(`VITE_E2E_CONSOLE_LOG=1`)
@@ -62,6 +68,10 @@ cd /home/aki/aki-agentops
 
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
   --project-root workspace/apps/frontend/ticket-web-client \
+  --scope queue
+
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
+  --project-root workspace/apps/frontend/ticket-web-client \
   --scope contract
 
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
@@ -71,7 +81,20 @@ cd /home/aki/aki-agentops
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
   --project-root workspace/apps/frontend/ticket-web-client \
   --scope realtime
+
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
+  --project-root workspace/apps/frontend/ticket-web-client \
+  --scope admin
 ```
+
+- `queue` scope는 예매 체인 + My Reservations(`v7/me`, cancel/refund)까지 포함해 검증한다.
+- `realtime` scope는 websocket->sse fallback + Queue/My Reservations 상태 병합까지 포함해 검증한다.
+- `realtime` scope에는 transport interruption 이후 reconnect backoff 복구 케이스가 포함된다.
+- `admin` scope는 관리자 CRUD(공연/옵션/정책/썸네일) 어댑터 흐름을 검증한다.
+
+## Auth Scope Note
+- `auth` scope는 OAuth provider 실제 로그인 없이도 회귀 가능하도록 Playwright route mocking을 사용한다.
+- 실 provider 검증이 필요할 때는 backend `run-auth-social-real-provider-e2e.sh` 체인과 함께 HITL로 분리 실행한다.
 
 ## Full Execution
 ```bash
@@ -105,6 +128,17 @@ cd /home/aki/aki-agentops
   - `.codex/tmp/frontend-playwright/ticket-web-client/latest`
 - HTML 리포트(프로젝트 로컬):
   - `workspace/apps/frontend/ticket-web-client/playwright-report/index.html`
+
+## Realtime Runtime Toggle
+- mock 강제:
+  - `VITE_APP_REALTIME_MOCK=1`
+- 실 transport 강제:
+  - `VITE_APP_REALTIME_MOCK=0`
+- reconnect 제어:
+  - `VITE_APP_REALTIME_RECONNECT=1`
+  - `VITE_APP_REALTIME_RECONNECT_MAX_ATTEMPTS=5`
+  - `VITE_APP_REALTIME_RECONNECT_BASE_DELAY_MS=1000`
+  - `VITE_APP_REALTIME_RECONNECT_MAX_DELAY_MS=15000`
 
 ## MCP Demonstration
 - Codex 사용자는 아래 순서로 증빙을 보여준다.

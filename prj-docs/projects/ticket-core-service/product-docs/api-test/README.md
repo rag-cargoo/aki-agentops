@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 14:40:00`
+> - **Updated At**: `2026-02-20 04:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -35,6 +35,8 @@
 > - 18. Auth 예외코드 운영 집계 점검
 > - 19. Auth-Social Real Provider E2E 선택 실행
 > - 20. 프론트 릴리즈 계약 체크리스트
+> - 21. v15 콘서트 판매상태 계약 검증 실행
+> - 22. 포트폴리오 더미 시드 스모크 검증
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -61,7 +63,7 @@ make test-suite
 ```
 
 - 내부적으로 `scripts/api/run-api-script-tests.sh`를 호출합니다.
-- 기본 실행 세트는 `v1`~`v14` + `a*`(Track) 스크립트입니다.
+- 기본 실행 세트는 `v1`~`v15` + `a*`(Track) 스크립트입니다.
 - 기본 헬스체크 URL은 `http://127.0.0.1:8080/api/concerts` 입니다.
 - 필요하면 `API_SCRIPT_HEALTH_URL` 환경변수로 변경할 수 있습니다.
 - 기존 환경과의 호환을 위해 `TICKETRUSH_HEALTH_URL`도 별칭으로 지원합니다.
@@ -78,7 +80,7 @@ make test-suite
 - `scripts/http/catalog.http`
   - 기획사 생성/조회/수정 -> 아티스트 생성/조회/수정 -> 정리 삭제
 - `scripts/http/concert.http`
-  - 공연 셋업 -> 목록/검색 -> 옵션/좌석 조회 -> 정리 삭제
+  - 공연 셋업 -> 목록/검색 -> 판매정책 전환(PREOPEN/OPEN) -> 옵션/좌석 조회 -> 정리 삭제
 - `scripts/http/reservation.http`
   - 유저/공연 준비 -> v1/v2/v3/v4/v6 흐름 -> SSE/WS 구독 -> 정책 검증 -> 정리
 - `scripts/http/waiting-queue.http`
@@ -466,3 +468,35 @@ bash scripts/api/run-auth-social-real-provider-e2e.sh
   - API 계약 확인은 `api-specs/*.md`를 우선 기준으로 확인
   - 실행 검증은 본 문서의 Step + Track 명령(`make test-suite`, `make test-auth-social-pipeline`) 결과 리포트로 확인
   - auth-social 상세 시나리오는 `scripts/http/auth-social.http`를 구현 계약의 실행 예시로 사용
+
+---
+
+## 21. v15 콘서트 판매상태 계약 검증 실행
+
+```bash
+cd workspace/apps/backend/ticket-core-service
+bash scripts/api/v15-concert-sale-status-contract.sh
+```
+
+- 검증 흐름:
+  - `UNSCHEDULED` -> `PREOPEN` -> `OPEN_SOON_1H` -> `OPEN_SOON_5M` -> `OPEN` -> `SOLD_OUT`
+  - `reservationButtonVisible` / `reservationButtonEnabled` 계약 검증
+  - `saleOpensInSeconds`, `availableSeatCount`, `totalSeatCount` 검증
+
+---
+
+## 22. 포트폴리오 더미 시드 스모크 검증
+
+```bash
+cd workspace/apps/backend/ticket-core-service
+APP_PORTFOLIO_SEED_ENABLED=true ./gradlew bootRun --args='--spring.profiles.active=local'
+
+# 다른 터미널
+curl -s "http://127.0.0.1:8080/api/concerts/search?keyword=Portfolio&page=0&size=20&sort=id,desc"
+```
+
+- 기대 결과:
+  - 응답 `items`에 포트폴리오 샘플 공연이 1건 이상 포함된다.
+  - 상태 필드(`saleStatus`, `saleOpensInSeconds`, `reservationButtonVisible`, `reservationButtonEnabled`)가 함께 내려온다.
+- 참고:
+  - 시드는 아이템포턴시 마커 기반이므로 동일 DB에서는 중복 생성되지 않는다.

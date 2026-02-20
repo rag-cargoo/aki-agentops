@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 03:05:00`
+> - **Updated At**: `2026-02-20 18:26:40`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -31,6 +31,14 @@
 - [x] TWC-SC-006 Auth/session 흐름 e2e + CI 파이프라인 분리(smoke/nightly)
 - [x] TWC-SC-007 Playwright 실행 이력 누적 거버넌스(글로벌/프로젝트 동기화)
 - [x] TWC-SC-008 메인 화면 서비스 우선 정렬 + Dev Lab 분리
+- [x] TWC-SC-009 티켓 목록 판매상태/카운트다운 계약 + 예매 버튼 노출 연동
+- [x] TWC-SC-010 Queue 카드 `예매하기` v7 hold/paying/confirm 연동
+- [x] TWC-SC-011 OAuth 세션 발급 + `/api/auth/me` 사용자 컨텍스트 연동
+- [x] TWC-SC-012 Queue 예약 후 `v7/me` 내 예약 조회 + 취소/환불 액션 UX 연동
+- [x] TWC-SC-013 Queue/Reservation 상태를 WS/SSE 이벤트와 병합해 실시간 반영
+- [x] TWC-SC-014 실백엔드 STOMP/SSE 구독 등록 API 연동 및 재연결(backoff) 복구 고도화
+- [x] TWC-SC-015 서비스/어드민/검증랩 라우트 분리 + App.tsx 모듈 리팩토링
+- [x] TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -135,5 +143,183 @@
     - `prj-docs/projects/ticket-web-client/testing/playwright-suite-catalog.md`
     - `prj-docs/projects/ticket-web-client/testing/playwright-runbook.md`
 
+- TWC-SC-009 티켓 목록 판매상태/카운트다운 계약 + 예매 버튼 노출 연동
+  - Status: DONE
+  - Description:
+    - 백엔드 목록 응답에 오픈 임계(1h/5m) 기반 `saleStatus`/카운트다운/버튼 노출 필드 추가
+    - 프론트에서 응답값 기반으로 예매 버튼 노출/활성 시점을 제어할 수 있도록 계약 고정
+    - Queue 섹션을 정적 KPI 카드에서 실 API(`concerts/search`) 기반 목록으로 전환
+  - Evidence:
+    - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-ticket-listing-sale-status-and-media-contract-kickoff.md`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/fetch-concert-search-page.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/vite.config.ts`
+    - `workspace/apps/frontend/ticket-web-client/.env.example`
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ConcertResponse.java`
+    - `prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md`
+    - `AKI AgentOps Issue #128`: `https://github.com/rag-cargoo/aki-agentops/issues/128`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/aki-agentops/issues/128#issuecomment-3929066936`
+
+- TWC-SC-010 Queue 카드 `예매하기` v7 hold/paying/confirm 연동
+  - Status: DONE
+  - Description:
+    - Queue 카드 클릭 시 `concert options -> available seats -> reservations/v7/holds -> /paying -> /confirm` 체인으로 실제 예약 전이를 수행한다.
+    - 카드 단위 진행상태(`running/success/error`)와 메시지, 재시도 UX를 추가했다.
+    - Queue scope Playwright 케이스를 추가하고 글로벌 래퍼/로컬 스크립트 모두 `queue` scope를 지원하도록 동기화했다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/run-reservation-v7-flow.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/list-scopes.mjs`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/run-playwright.sh`
+    - `skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-063756-3625555/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-063756-3625555/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-063816-3626289/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-063816-3626289/summary.txt`
+    - `ticket-web-client Issue #1`: `https://github.com/rag-cargoo/ticket-web-client/issues/1`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/1#issuecomment-3930278588`
+
+- TWC-SC-011 OAuth 세션 발급 + `/api/auth/me` 사용자 컨텍스트 연동
+  - Status: DONE
+  - Description:
+    - Auth Session Lab을 mock 토큰 흐름에서 실제 Auth API 호출 흐름으로 전환했다.
+    - 연동 API:
+      - `GET /api/auth/social/{provider}/authorize-url`
+      - `POST /api/auth/social/{provider}/exchange`
+      - `POST /api/auth/token/refresh`
+      - `POST /api/auth/logout`
+      - `GET /api/auth/me`
+    - 발급된 Access Token을 Queue 예약 토큰 입력에 자동 반영하고, 세션을 localStorage에 복구 가능 상태로 저장한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/auth-session-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-071428-3668413/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-071428-3668413/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-071450-3669177/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-071450-3669177/summary.txt`
+    - `ticket-web-client Issue #2`: `https://github.com/rag-cargoo/ticket-web-client/issues/2`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/2#issuecomment-3930457139`
+
+- TWC-SC-012 Queue 예약 후 `v7/me` 내 예약 조회 + 취소/환불 액션 UX 연동
+  - Status: DONE
+  - Description:
+    - Queue 섹션에 `My Reservations` 패널을 추가해 `GET /api/reservations/v7/me` 목록과 상세 상태(`GET /api/reservations/v7/{reservationId}`)를 노출한다.
+    - 상태별 액션:
+      - `CONFIRMED` -> `취소(POST .../cancel)`
+      - `CANCELLED` -> `환불(POST .../refund)`
+    - 수동 Queue 토큰 입력 모드와 Auth 세션 토큰 모드 모두에서 동일하게 동작하도록 토큰 해석을 통합했다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/reservation-v7-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-073839-3697342/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-073839-3697342/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-073901-3698087/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-073901-3698087/summary.txt`
+    - `ticket-web-client Issue #3`: `https://github.com/rag-cargoo/ticket-web-client/issues/3`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/3#issuecomment-3930562072`
+
+- TWC-SC-013 Queue/Reservation 상태를 WS/SSE 이벤트와 병합해 실시간 반영
+  - Status: DONE
+  - Description:
+    - 실시간 이벤트 파서(`queue`, `reservation`)를 추가해 이벤트 payload를 도메인 상태로 정규화한다.
+    - Queue 섹션에 실시간 연결 컨트롤(`userId`, `concertId`, connect/disconnect)을 추가한다.
+    - Queue 카드의 예약 가능 상태와 My Reservations 상태를 실시간 이벤트로 병합 반영한다.
+    - `@realtime` Playwright 케이스를 확장해 상태 병합 회귀를 자동 검증한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/parse-domain-realtime-event.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/transports/mock/create-mock-transports.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-080810-3734962/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-080810-3734962/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-080834-3735805/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-080834-3735805/run.log`
+    - `ticket-web-client Issue #4`: `https://github.com/rag-cargoo/ticket-web-client/issues/4`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/4#issuecomment-3930665171`
+
+- TWC-SC-014 실백엔드 STOMP/SSE 구독 등록 API 연동 및 재연결(backoff) 복구 고도화
+  - Status: DONE
+  - Description:
+    - websocket 모드에서 대기열/예약 WS 구독 등록 API 호출 후 STOMP destination subscribe로 연결한다.
+    - SSE transport를 명시 이벤트(`INIT/RANK_UPDATE/ACTIVE/KEEPALIVE/RESERVATION_STATUS`) 수신 가능하도록 확장한다.
+    - transport 오류 시 지수 backoff 재연결을 수행하고, disconnect/unmount에서 WS 구독 등록을 해제한다.
+    - `@realtime`에 재연결 회귀 케이스를 추가해 복구 동작을 자동 검증한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/realtime-subscription-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/transports/stomp-ws-transport.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/transports/sse-transport.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/shared/realtime/transports/ws-transport.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083058-3768649/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083058-3768649/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083143-3770214/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083143-3770214/run.log`
+    - `ticket-web-client Issue #5`: `https://github.com/rag-cargoo/ticket-web-client/issues/5`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/5#issuecomment-3930734644`
+
+- TWC-SC-015 서비스/어드민/검증랩 라우트 분리 + App.tsx 모듈 리팩토링
+  - Status: DONE
+  - Description:
+    - `service(/)` / `admin(/admin)` / `labs(/labs)`를 상단 내비게이션 기준으로 분리했다.
+    - `App.tsx`에서 화면 섹션 JSX를 분리해 `ServicePage`, `LabsPage`, `AdminPage`로 이동했다.
+    - 공통 타입/유틸을 `app-types.ts`, `app-utils.ts`로 추출해 중복 로직을 정리했다.
+    - Playwright 시나리오를 분리 라우트 구조에 맞게 조정해 회귀 테스트를 유지했다.
+    - 2차 리팩토링으로 service/labs 페이지를 섹션 컴포넌트 단위로 추가 분해하고, admin/labs/service 라우트별 섹션 네비게이션을 고정했다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/app-types.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/app-utils.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/ServicePage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/LabsPage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/AdminPage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/QueueToolbar.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/QueueCards.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/ServiceMyReservationsPanel.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/labs/LabsAuthSection.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/labs/LabsRealtimeSection.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-100436-3863129/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-100436-3863129/run.log`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-164647-4181881/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-164647-4181881/run.log`
+    - `ticket-web-client Issue #6`: `https://github.com/rag-cargoo/ticket-web-client/issues/6`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/6#issuecomment-3932222602`
+
+- TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
+  - Status: DONE
+  - Description:
+    - `/admin` 페이지를 placeholder에서 실제 운영 CRUD 화면으로 전환했다.
+      - 공연 생성/수정/삭제
+      - 옵션 생성/수정/삭제(일시/좌석수/가격)
+      - 판매 정책 upsert/reload
+      - 썸네일 업로드/삭제(멀티파트) + 유튜브 링크 메타 관리
+    - `admin-concert-client` 어댑터를 추가해 `/api/admin/concerts/**` 계약 호출을 프론트에서 일관 처리한다.
+    - 관리자 전용 Playwright scope(`admin`)를 추가하고 전체 회귀(`all`)까지 통과시켰다.
+    - 글로벌 프론트 Playwright 래퍼에 `admin` scope를 추가해 sidecar 실행 이력 누적 규칙과 동기화했다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/admin-concert-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/AdminPage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/list-scopes.mjs`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/run-playwright.sh`
+    - `workspace/apps/frontend/ticket-web-client/package.json`
+    - `skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-182534-76641/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-182534-76641/run.log`
+    - `ticket-web-client Issue #7`: `https://github.com/rag-cargoo/ticket-web-client/issues/7`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/7#issuecomment-3932659509`
+
 ## Next Items
-- 현재 고정된 후속 항목 없음 (새 요구 수신 대기)
+- (none)

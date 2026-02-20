@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:05:00`
-> - **Updated At**: `2026-02-20 02:20:00`
+> - **Updated At**: `2026-02-20 06:42:00`
 > - **Target**: `AGENT`
 > - **Surface**: `AGENT_NAV`
 <!-- DOC_META_END -->
@@ -21,9 +21,11 @@
 ## Scope Matrix
 - `smoke`: 페이지 부팅/핵심 레이아웃
 - `nav`: 메뉴/앵커/탭 전환
+- `queue`: Queue 예매 버튼 v7 hold/paying/confirm 체인 검증
 - `contract`: API/시간/에러 파서 노출값
 - `auth`: 인증/세션 상태 전이 및 보호 API 결과 검증
 - `realtime`: WS/SSE fallback 상태/로그 검증
+- `admin`: 관리자 CRUD(공연/옵션/정책/썸네일) 어댑터 검증
 - `all`: 전체 시나리오
 
 ## List First Contract
@@ -39,9 +41,11 @@
 ```bash
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope smoke
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope nav
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope queue
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope contract
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope auth
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope realtime
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope admin
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh --project-root <path> --scope all
 ```
 

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-17 22:42:50`
+> - **Updated At**: `2026-02-20 04:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -53,6 +53,13 @@
 | `agencyName` | String | 기획사 이름(옵션) |
 | `agencyCountryCode` | String | 기획사 국가코드(옵션) |
 | `agencyHomepageUrl` | String | 기획사 홈페이지 URL(옵션) |
+| `saleStatus` | String | 판매 상태 (`UNSCHEDULED`/`PREOPEN`/`OPEN_SOON_1H`/`OPEN_SOON_5M`/`OPEN`/`SOLD_OUT`) |
+| `saleOpensAt` | DateTime | 일반 예매 오픈 시각(정책 없으면 `null`) |
+| `saleOpensInSeconds` | Long | 오픈까지 남은 초(오픈 이후는 `0`, 미정은 `null`) |
+| `reservationButtonVisible` | Boolean | 프론트 예매 버튼 노출 여부 |
+| `reservationButtonEnabled` | Boolean | 프론트 예매 버튼 활성 여부 |
+| `availableSeatCount` | Long | 현재 예약 가능 좌석 수 |
+| `totalSeatCount` | Long | 전체 좌석 수 |
 
 **Response Example**
 
@@ -68,7 +75,14 @@
     "artistDebutDate": "2008-09-18",
     "agencyName": "EDAM",
     "agencyCountryCode": "KR",
-    "agencyHomepageUrl": "https://www.edam-ent.com"
+    "agencyHomepageUrl": "https://www.edam-ent.com",
+    "saleStatus": "OPEN_SOON_1H",
+    "saleOpensAt": "2026-02-20T20:00:00",
+    "saleOpensInSeconds": 1800,
+    "reservationButtonVisible": true,
+    "reservationButtonEnabled": false,
+    "availableSeatCount": 120,
+    "totalSeatCount": 120
   }
 ]
 ```
@@ -98,7 +112,7 @@
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `items` | Array | 공연 목록(`id`, `title`, `artistName` + Artist/Agency 확장 필드) |
+| `items` | Array | 공연 목록(`id`, `title`, `artistName` + Artist/Agency 확장 필드 + 판매상태/버튼 제어 필드) |
 | `page` | Integer | 현재 페이지 번호 |
 | `size` | Integer | 페이지 크기 |
 | `totalElements` | Long | 전체 검색 결과 건수 |
@@ -120,7 +134,14 @@
       "artistDebutDate": "2008-09-18",
       "agencyName": "EDAM",
       "agencyCountryCode": "KR",
-      "agencyHomepageUrl": "https://www.edam-ent.com"
+      "agencyHomepageUrl": "https://www.edam-ent.com",
+      "saleStatus": "OPEN_SOON_1H",
+      "saleOpensAt": "2026-02-20T20:00:00",
+      "saleOpensInSeconds": 1800,
+      "reservationButtonVisible": true,
+      "reservationButtonEnabled": false,
+      "availableSeatCount": 120,
+      "totalSeatCount": 120
     }
   ],
   "page": 0,
@@ -130,6 +151,27 @@
   "hasNext": false
 }
 ```
+
+### 1.1-2. 판매 상태 계산 규칙
+- `UNSCHEDULED`: 판매정책(`generalSaleStartAt`)이 없는 경우
+- `PREOPEN`: 오픈까지 1시간 초과
+- `OPEN_SOON_1H`: 오픈까지 1시간 이내
+- `OPEN_SOON_5M`: 오픈까지 5분 이내
+- `OPEN`: 오픈 시각 이후이며 좌석 잔여가 있는 경우
+- `SOLD_OUT`: 좌석 총량이 존재하고 예약 가능 좌석이 0인 경우
+
+버튼 제어 규칙:
+- `reservationButtonVisible=true`이면 프론트에서 CTA를 노출한다.
+- `reservationButtonEnabled=true`이면 즉시 예매 가능 상태로 처리한다.
+
+### 1.1-3. 포트폴리오 더미 시드(선택)
+- 런타임 플래그:
+  - `APP_PORTFOLIO_SEED_ENABLED=true`일 때 서버 기동 시 샘플 공연/정책/좌석 데이터를 자동 생성한다.
+  - 기본값은 `false`이며, 운영/실서비스 환경에서는 비활성 상태를 유지한다.
+- 시드 정책:
+  - 아이템포턴시 마커(`portfolio_seed_marker_v1`) 기반으로 1회만 적용한다.
+  - 샘플 상태를 최소 1세트씩 포함한다:
+    - `PREOPEN`, `OPEN_SOON_1H`, `OPEN_SOON_5M`, `OPEN`, `SOLD_OUT`
 
 ---
 
