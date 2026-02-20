@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 04:55:00`
-> - **Updated At**: `2026-02-21 05:45:13`
+> - **Updated At**: `2026-02-21 05:52:52`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -118,17 +118,15 @@
       - `PgReadyWebhookServiceTest`
 - 남은 것:
   - backend: admin override 권한 감사로그/운영 가이드 정리
-  - frontend: admin override 환불 API 필요 여부 확정 및 UX 반영 여부 결정
   - frontend: 만료 이벤트 수신 실패 시 polling fallback 주기/UX 튜닝
   - 문서/API 계약/운영 가이드 최종 동기화
 
 ## 결정 대기 항목
-- Status: IN_PROGRESS
+- Status: DONE
 - 확정된 결정:
   - 환불 cutoff 기준: `공연 시작 기준`
   - cutoff 기준값: `24시간`
   - cutoff 이후 기본 정책: `환불 차단`, 단 `관리자 override` 허용
   - cutoff 이후 수수료 환불(부분 환불): `미도입`
   - 만료 판정 권한: `백엔드 단일 권한`, 프론트는 표시 전용
-- 추가 결정 필요:
-  - 관리자 override UI를 서비스 콘솔에 노출할지, 백오피스 전용으로 제한할지
+  - 관리자 override UI 노출 범위: `포트폴리오 모드 공개`, 실서비스 전환 시 `백오피스 전용` 전환
