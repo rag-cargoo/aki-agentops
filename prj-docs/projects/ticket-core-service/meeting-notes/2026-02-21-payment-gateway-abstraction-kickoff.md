@@ -65,7 +65,7 @@
 - Status: IN_PROGRESS
 - 이슈:
   - 기존 결제 이슈 재오픈: `rag-cargoo/ticket-core-service#5`
-  - URL: `https://github.com/rag-cargoo/ticket-core-service/issues/5`
+  - 외부 이슈 추적: `rag-cargoo/ticket-core-service issue 5`
 - 운영결정:
   - 구현은 각 서비스 레포의 최신 `main` 동기화 후 신규 브랜치에서 진행한다.
   - 문서 PR(본 회의록) 머지 이후 backend/frontend 구현 브랜치로 분리 착수한다.
@@ -97,10 +97,10 @@
     - frontend: `feat/payment-checkout-flow-contract-20260221`
   - backend Workstream 1 구현/PR:
     - `PaymentGateway` 추상화 + `ReservationPaymentPort` 분리
-    - PR: `https://github.com/rag-cargoo/ticket-core-service/pull/17`
+    - PR: `rag-cargoo/ticket-core-service PR 17`
   - frontend 카운트다운 표시 구현/PR:
     - `holdExpiresAt` 기반 예약카드 실시간 결제 제한시간 표시
-    - PR: `https://github.com/rag-cargoo/ticket-web-client/pull/8`
+    - PR: `rag-cargoo/ticket-web-client PR 8`
   - backend 환불 cutoff 정책 1차 반영:
     - 기준: `공연 시작 24시간 전`
     - 일반 사용자 환불: cutoff 이후 차단
