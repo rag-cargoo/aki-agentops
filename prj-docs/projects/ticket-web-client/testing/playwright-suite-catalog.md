@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 16:52:00`
+> - **Updated At**: `2026-02-20 18:26:40`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -25,6 +25,7 @@
 - `contract`: 에러/시간 파서 출력 및 콘솔 로그 확인(Dev Lab)
 - `auth`: OAuth authorize-url/exchange + auth/session 상태 전이 + `/api/auth/me` 결과 확인(Dev Lab)
 - `realtime`: websocket 실패 시 sse fallback 상태/로그 확인(Dev Lab)
+- `admin`: 관리자 CRUD(공연/옵션/정책/썸네일) 어댑터 흐름 검증
 - `all`: 전체 실행
 
 ## Scenario Details
@@ -36,17 +37,23 @@
 - 서비스 섹션 네비(`Highlights`, `Gallery`, `Queue`) 클릭 시 URL hash가 기대값으로 바뀌는지 확인
 - 상단 라우트 네비 `Admin` 이동 후 admin 섹션 네비(`Seat & Price`) 앵커 이동이 가능한지 확인
 
-3. `contract`
+3. `admin`
+- `/admin`에서 공연 생성/수정/삭제가 정상 반영되는지 확인
+- 옵션 생성/수정(`concertDate`, `ticketPriceAmount`)이 반영되는지 확인
+- 판매 정책 저장(`generalSaleStartAt`, `maxReservationsPerUser`)이 성공하는지 확인
+- 썸네일 업로드/삭제 후 프리뷰 노출 상태가 기대값으로 바뀌는지 확인
+
+4. `contract`
 - `/labs` Contract Panel의 JSON 출력이 파서 계약을 만족하는지 확인
 - 브라우저 console에 계약 검증 로그 키가 출력되는지 확인
 
-4. `queue`
+5. `queue`
 - Queue 카드 예매 버튼 클릭 시 `options -> seats -> holds -> paying -> confirm` 호출이 순서대로 실행되는지 확인
 - 카드 상태 메시지가 `예매 확정 완료`로 전환되는지 확인
 - Queue 로그 패널에 confirmed 로그가 기록되는지 확인
 - My Reservations 패널에서 `확정 -> 취소 -> 환불` 상태 전이가 반영되는지 확인
 
-5. `auth`
+6. `auth`
 - `/labs`에서 Auth Session Lab이 노출되는지 확인
 - authorize-url 요청/코드 교환으로 access/refresh 토큰이 발급되는지 확인
 - 비인증/만료/재발급/로그아웃 흐름에서 상태 필드가 기대값으로 전환되는지 확인
@@ -54,7 +61,7 @@
 - 보호 API 호출 시 에러 코드(`AUTH_ACCESS_TOKEN_REQUIRED`, `AUTH_TOKEN_EXPIRED`)와 성공 전환을 확인
 - 브라우저 console에 auth 검증 로그 키가 출력되는지 확인
 
-6. `realtime`
+7. `realtime`
 - `/labs?pushMode=websocket`에서 연결 시작 시 websocket 실패를 유도하고 sse fallback이 표시되는지 확인
 - 상태 필드(`status`, `active transport`, `fallback used`)가 기대값으로 전환되는지 확인
 - Queue 카드의 실시간 상태(`대기중 -> 입장 가능`)가 병합 반영되는지 확인

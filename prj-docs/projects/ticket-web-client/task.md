@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 16:52:00`
+> - **Updated At**: `2026-02-20 18:26:40`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -38,7 +38,7 @@
 - [x] TWC-SC-013 Queue/Reservation 상태를 WS/SSE 이벤트와 병합해 실시간 반영
 - [x] TWC-SC-014 실백엔드 STOMP/SSE 구독 등록 API 연동 및 재연결(backoff) 복구 고도화
 - [x] TWC-SC-015 서비스/어드민/검증랩 라우트 분리 + App.tsx 모듈 리팩토링
-- [ ] TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
+- [x] TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -296,13 +296,29 @@
     - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/6#issuecomment-3932222602`
 
 - TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
-  - Status: TODO
+  - Status: DONE
   - Description:
-    - `/admin` 페이지에 운영 필수 CRUD 화면(목록/등록/수정/상태전이/삭제) 정보구조를 구현한다.
-    - 썸네일 멀티파트 업로드 + 유튜브 링크 입력 계약을 API 어댑터로 연결한다.
-    - 관리자 화면 전용 Playwright scope(`admin`)를 추가해 회귀 기준을 고정한다.
+    - `/admin` 페이지를 placeholder에서 실제 운영 CRUD 화면으로 전환했다.
+      - 공연 생성/수정/삭제
+      - 옵션 생성/수정/삭제(일시/좌석수/가격)
+      - 판매 정책 upsert/reload
+      - 썸네일 업로드/삭제(멀티파트) + 유튜브 링크 메타 관리
+    - `admin-concert-client` 어댑터를 추가해 `/api/admin/concerts/**` 계약 호출을 프론트에서 일관 처리한다.
+    - 관리자 전용 Playwright scope(`admin`)를 추가하고 전체 회귀(`all`)까지 통과시켰다.
+    - 글로벌 프론트 Playwright 래퍼에 `admin` scope를 추가해 sidecar 실행 이력 누적 규칙과 동기화했다.
   - Evidence:
-    - `ticket-web-client Issue #7` (planned)
+    - `workspace/apps/frontend/ticket-web-client/src/shared/api/admin-concert-client.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/AdminPage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/list-scopes.mjs`
+    - `workspace/apps/frontend/ticket-web-client/scripts/playwright/run-playwright.sh`
+    - `workspace/apps/frontend/ticket-web-client/package.json`
+    - `skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-182534-76641/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-182534-76641/run.log`
+    - `ticket-web-client Issue #7`: `https://github.com/rag-cargoo/ticket-web-client/issues/7`
 
 ## Next Items
-- TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
+- (none)

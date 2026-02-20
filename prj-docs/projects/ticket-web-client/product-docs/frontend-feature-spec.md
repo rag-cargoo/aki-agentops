@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 16:52:00`
+> - **Updated At**: `2026-02-20 18:26:40`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -62,12 +62,25 @@
 - transport 오류 시 지수 backoff 재연결 상태를 UI 메타(`attempt`, `next delay`, `reason`)로 노출한다.
 - API 실패 시 오류 패널과 수동 재시도 버튼을 노출한다.
 
-5. Realtime Mode Lab (개발 전용)
+5. Admin Console (운영 화면)
+- `/admin`에서 운영자용 CRUD를 수행한다.
+- Concert Catalog:
+  - 공연 생성/수정/삭제
+  - 아티스트/기획사 메타 + 유튜브 링크 입력
+- Seat & Price Policy:
+  - 공연 옵션 생성/수정/삭제(`concertDate`, `seatCount`, `ticketPriceAmount`)
+  - 판매정책 저장/재로드(`generalSaleStartAt`, `maxReservationsPerUser`, presale 필드)
+- Media Assets:
+  - 썸네일 이미지 multipart 업로드/삭제
+  - 현재 썸네일 URL/프리뷰 확인
+- 관리자 인증 토큰(`ROLE_ADMIN`) 입력값으로 `/api/admin/**` 호출을 실행한다.
+
+6. Realtime Mode Lab (개발 전용)
 - 요청 모드(`websocket`/`sse`) 선택 UI와 연결 상태를 표시한다.
 - websocket 실패 시 sse fallback 상태를 시뮬레이션해 검증 가능하게 유지한다.
 - 이벤트 로그를 패널 내에 남기고, Queue/My Reservations 병합 결과를 서비스 섹션과 동기화해 추적한다.
 
-6. Auth Session Lab (개발 전용)
+7. Auth Session Lab (개발 전용)
 - OAuth provider/state/code 입력으로 소셜 코드 교환 세션 발급을 검증한다.
 - `Authorize URL` 요청과 `Exchange & Sign In` 호출을 분리해 OAuth 단계별 상태를 확인한다.
 - `/api/auth/me` 조회 결과를 패널에 노출해 사용자 컨텍스트를 검증한다.
@@ -160,6 +173,23 @@
     - `localStorage(ticket-web-client.auth.session)`에 access/refresh 및 만료 시각 저장
   - Queue 연동:
     - 로그인/갱신 성공 시 Queue Access Token 입력에 자동 반영
+- Admin CRUD Integration:
+  - 공연:
+    - `POST /api/admin/concerts`
+    - `GET /api/admin/concerts/{concertId}`
+    - `PUT /api/admin/concerts/{concertId}`
+    - `DELETE /api/admin/concerts/{concertId}`
+  - 옵션:
+    - `GET /api/concerts/{concertId}/options`
+    - `POST /api/admin/concerts/{concertId}/options`
+    - `PUT /api/admin/concerts/options/{optionId}`
+    - `DELETE /api/admin/concerts/options/{optionId}`
+  - 판매정책:
+    - `GET /api/concerts/{concertId}/sales-policy`
+    - `PUT /api/admin/concerts/{concertId}/sales-policy`
+  - 썸네일:
+    - `POST /api/admin/concerts/{concertId}/thumbnail` (multipart `image`)
+    - `DELETE /api/admin/concerts/{concertId}/thumbnail`
 
 ## Runtime Env Contract
 - `VITE_API_BASE_URL`:
@@ -204,6 +234,7 @@
 - `@smoke`: 페이지 부팅, 핵심 섹션 노출
 - `@nav`: 앵커 이동/내비게이션 동작
 - `@queue`: Queue 카드 예매 클릭 시 v7 hold/paying/confirm 체인 및 상태/로그 검증
+- `@admin`: `/admin` CRUD(공연/옵션/정책/썸네일) 어댑터 흐름 검증
 - `@contract`: `/labs`의 Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
 - `@auth`: `/labs`의 OAuth authorize-url/exchange + refresh/logout + `/api/auth/me` 컨텍스트 검증
 - `@realtime`: websocket 실패 -> sse fallback + Queue/My Reservations 실시간 상태 병합 검증

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 16:52:00`
+> - **Updated At**: `2026-02-20 18:26:40`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -81,11 +81,16 @@ cd /home/aki/aki-agentops
 ./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
   --project-root workspace/apps/frontend/ticket-web-client \
   --scope realtime
+
+./skills/aki-frontend-delivery-governance/scripts/run-playwright-suite.sh \
+  --project-root workspace/apps/frontend/ticket-web-client \
+  --scope admin
 ```
 
 - `queue` scope는 예매 체인 + My Reservations(`v7/me`, cancel/refund)까지 포함해 검증한다.
 - `realtime` scope는 websocket->sse fallback + Queue/My Reservations 상태 병합까지 포함해 검증한다.
 - `realtime` scope에는 transport interruption 이후 reconnect backoff 복구 케이스가 포함된다.
+- `admin` scope는 관리자 CRUD(공연/옵션/정책/썸네일) 어댑터 흐름을 검증한다.
 
 ## Auth Scope Note
 - `auth` scope는 OAuth provider 실제 로그인 없이도 회귀 가능하도록 Playwright route mocking을 사용한다.
