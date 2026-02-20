@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 04:55:00`
-> - **Updated At**: `2026-02-21 05:52:52`
+> - **Updated At**: `2026-02-21 06:03:42`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -116,6 +116,10 @@
       - `MockPaymentGatewayIntegrationTest`
       - `PgReadyPaymentGatewayIntegrationTest`
       - `PgReadyWebhookServiceTest`
+  - admin 콘솔 최소 권한 설정화:
+    - 설정 키: `app.admin-console.minimum-role` (`USER`/`ADMIN`)
+    - 현재값: `USER` (포트폴리오 모드)
+    - 실서비스 전환 시 `ADMIN`으로 값만 변경
 - 남은 것:
   - backend: admin override 권한 감사로그/운영 가이드 정리
   - frontend: 만료 이벤트 수신 실패 시 polling fallback 주기/UX 튜닝
@@ -130,3 +134,4 @@
   - cutoff 이후 수수료 환불(부분 환불): `미도입`
   - 만료 판정 권한: `백엔드 단일 권한`, 프론트는 표시 전용
   - 관리자 override UI 노출 범위: `포트폴리오 모드 공개`, 실서비스 전환 시 `백오피스 전용` 전환
+  - admin 콘솔 최소 권한 제어 방식: `application.yml`의 `app.admin-console.minimum-role`로 운영 전환
