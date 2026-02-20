@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 08:35:00`
+> - **Updated At**: `2026-02-20 10:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -22,14 +22,17 @@
 
 ## Scope
 - 대상 프로젝트: `workspace/apps/frontend/ticket-web-client`
-- 목적: 메인 랜딩 + Queue 실 API 연동 + 개발 검증 패널을 함께 유지해 프론트 구현/검증 기준을 고정한다.
+- 목적: 서비스 화면/관리자 화면/검증랩 화면을 라우트 단위로 분리해 운영 화면과 검증 화면을 분리한다.
 
 ## Feature Breakdown
 1. Layout/Navigate
-- 상단 네비게이션 기본 항목(`Home`, `Highlights`, `Gallery`, `Queue`)과 앵커 이동 구조를 제공한다.
-- Dev Lab 노출 시 `Auth`, `Realtime` 항목을 추가로 노출한다.
-- Hero/Highlights/Gallery/Queue 4개를 기본 사용자 화면으로 제공한다.
-- 개발 검증 패널(`Dev Lab`, `Contract/Auth/Realtime`)은 기본 화면에서 숨김 처리한다.
+- 라우트 구조:
+  - 서비스 사용자 페이지: `/`
+  - 관리자 페이지: `/admin`
+  - 개발 검증랩 페이지: `/labs`
+- 상단 네비게이션은 서비스 섹션 링크(`Home`, `Highlights`, `Gallery`, `Queue`)와 페이지 링크(`Admin`, `Labs`)를 함께 제공한다.
+- Hero/Highlights/Gallery/Queue 4개는 서비스 사용자 페이지(`/`)에만 노출한다.
+- 개발 검증 패널(`Contract/Auth/Realtime`)은 `/labs`에서만 노출한다.
 
 2. Highlights Grid
 - K-POP 영상 썸네일 카드 그리드로 구성한다.
@@ -68,8 +71,9 @@
 - 이벤트 로그를 남겨 Playwright 콘솔/패널 증빙을 동기화한다.
 
 ## Dev Lab Exposure Rule
-- 기본값: 숨김
+- 기본값: 숨김(`/labs` 진입 시에도 비노출)
 - 노출 조건:
+  - `/labs` 라우트 진입
   - `?labs=1` query
   - 또는 `VITE_APP_DEV_LABS=1`
   - 또는 e2e probe 모드(`VITE_E2E_CONSOLE_LOG=1`)
@@ -195,7 +199,7 @@
 - `@smoke`: 페이지 부팅, 핵심 섹션 노출
 - `@nav`: 앵커 이동/내비게이션 동작
 - `@queue`: Queue 카드 예매 클릭 시 v7 hold/paying/confirm 체인 및 상태/로그 검증
-- `@contract`: Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
-- `@auth`: OAuth authorize-url/exchange + refresh/logout + `/api/auth/me` 컨텍스트 검증
+- `@contract`: `/labs`의 Contract Panel JSON 구조/값 검증 + 콘솔 로그 검증
+- `@auth`: `/labs`의 OAuth authorize-url/exchange + refresh/logout + `/api/auth/me` 컨텍스트 검증
 - `@realtime`: websocket 실패 -> sse fallback + Queue/My Reservations 실시간 상태 병합 검증
 - `@realtime`: transport interruption 발생 시 reconnect backoff 복구 검증

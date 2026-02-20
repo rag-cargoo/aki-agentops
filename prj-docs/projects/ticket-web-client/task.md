@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 08:35:00`
+> - **Updated At**: `2026-02-20 10:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -37,6 +37,7 @@
 - [x] TWC-SC-012 Queue 예약 후 `v7/me` 내 예약 조회 + 취소/환불 액션 UX 연동
 - [x] TWC-SC-013 Queue/Reservation 상태를 WS/SSE 이벤트와 병합해 실시간 반영
 - [x] TWC-SC-014 실백엔드 STOMP/SSE 구독 등록 API 연동 및 재연결(backoff) 복구 고도화
+- [x] TWC-SC-015 서비스/어드민/검증랩 라우트 분리 + App.tsx 모듈 리팩토링
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -264,5 +265,25 @@
     - `ticket-web-client Issue #5`: `https://github.com/rag-cargoo/ticket-web-client/issues/5`
     - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/5#issuecomment-3930734644`
 
+- TWC-SC-015 서비스/어드민/검증랩 라우트 분리 + App.tsx 모듈 리팩토링
+  - Status: DONE
+  - Description:
+    - `service(/)` / `admin(/admin)` / `labs(/labs)`를 상단 내비게이션 기준으로 분리했다.
+    - `App.tsx`에서 화면 섹션 JSX를 분리해 `ServicePage`, `LabsPage`, `AdminPage`로 이동했다.
+    - 공통 타입/유틸을 `app-types.ts`, `app-utils.ts`로 추출해 중복 로직을 정리했다.
+    - Playwright 시나리오를 분리 라우트 구조에 맞게 조정해 회귀 테스트를 유지했다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/app-types.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/app-utils.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/ServicePage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/LabsPage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/AdminPage.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.css`
+    - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-100436-3863129/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-100436-3863129/run.log`
+    - `ticket-web-client Issue #6`: `https://github.com/rag-cargoo/ticket-web-client/issues/6`
+
 ## Next Items
-- TWC-SC-015 실백엔드 OAuth+Queue+Realtime 통합 스모크 런북/자동화 시나리오 정리
+- TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현

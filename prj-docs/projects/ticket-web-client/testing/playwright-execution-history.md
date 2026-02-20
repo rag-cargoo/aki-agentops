@@ -16,3 +16,4 @@
 | 2026-02-20 08:09:15 | `all` | `PASS` | `20260220-080834-3735805` | `.codex/tmp/frontend-playwright/ticket-web-client/20260220-080834-3735805/summary.txt` | `.codex/tmp/frontend-playwright/ticket-web-client/20260220-080834-3735805/run.log` |
 | 2026-02-20 08:31:37 | `realtime` | `PASS` | `20260220-083058-3768649` | `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083058-3768649/summary.txt` | `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083058-3768649/run.log` |
 | 2026-02-20 08:33:01 | `all` | `PASS` | `20260220-083143-3770214` | `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083143-3770214/summary.txt` | `.codex/tmp/frontend-playwright/ticket-web-client/20260220-083143-3770214/run.log` |
+| 2026-02-20 10:05:49 | `all` | `PASS` | `20260220-100436-3863129` | `.codex/tmp/frontend-playwright/ticket-web-client/20260220-100436-3863129/summary.txt` | `.codex/tmp/frontend-playwright/ticket-web-client/20260220-100436-3863129/run.log` |

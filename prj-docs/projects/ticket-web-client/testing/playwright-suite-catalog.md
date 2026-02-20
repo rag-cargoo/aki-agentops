@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 21:12:00`
-> - **Updated At**: `2026-02-20 08:35:00`
+> - **Updated At**: `2026-02-20 10:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -29,14 +29,14 @@
 
 ## Scenario Details
 1. `smoke`
-- URL 진입 후 메인 섹션(`home/highlights/gallery/queue`)이 모두 렌더링되는지 확인
+- URL(`/`) 진입 후 메인 섹션(`home/highlights/gallery/queue`)이 모두 렌더링되는지 확인
 - 주요 타이틀 및 카드 개수가 기준값 이상인지 확인
 
 2. `nav`
 - `Highlights`, `Gallery`, `Queue` 링크 클릭 시 URL hash가 기대값으로 바뀌는지 확인
 
 3. `contract`
-- Contract Panel의 JSON 출력이 파서 계약을 만족하는지 확인
+- `/labs` Contract Panel의 JSON 출력이 파서 계약을 만족하는지 확인
 - 브라우저 console에 계약 검증 로그 키가 출력되는지 확인
 
 4. `queue`
@@ -46,6 +46,7 @@
 - My Reservations 패널에서 `확정 -> 취소 -> 환불` 상태 전이가 반영되는지 확인
 
 5. `auth`
+- `/labs`에서 Auth Session Lab이 노출되는지 확인
 - authorize-url 요청/코드 교환으로 access/refresh 토큰이 발급되는지 확인
 - 비인증/만료/재발급/로그아웃 흐름에서 상태 필드가 기대값으로 전환되는지 확인
 - `/api/auth/me` 호출 성공 시 사용자 컨텍스트가 표시되는지 확인
@@ -53,7 +54,7 @@
 - 브라우저 console에 auth 검증 로그 키가 출력되는지 확인
 
 6. `realtime`
-- `pushMode=websocket`에서 연결 시작 시 websocket 실패를 유도하고 sse fallback이 표시되는지 확인
+- `/labs?pushMode=websocket`에서 연결 시작 시 websocket 실패를 유도하고 sse fallback이 표시되는지 확인
 - 상태 필드(`status`, `active transport`, `fallback used`)가 기대값으로 전환되는지 확인
 - Queue 카드의 실시간 상태(`대기중 -> 입장 가능`)가 병합 반영되는지 확인
 - My Reservations 상태가 `결제 진행 -> 확정`으로 실시간 병합 전환되는지 확인
