@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 04:55:00`
-> - **Updated At**: `2026-02-21 04:55:00`
+> - **Updated At**: `2026-02-21 05:08:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -17,6 +17,8 @@
 > - 안건 3: 상태전이 표준안
 > - 안건 4: 단계별 이행 계획
 > - 안건 5: 이슈/브랜치 운영 규칙
+> - 진행현황: 완료/남은 항목
+> - 결정 대기 항목
 <!-- DOC_TOC_END -->
 
 ## 안건 1: 전환 배경
@@ -67,3 +69,26 @@
   - 구현은 각 서비스 레포의 최신 `main` 동기화 후 신규 브랜치에서 진행한다.
   - 문서 PR(본 회의록) 머지 이후 backend/frontend 구현 브랜치로 분리 착수한다.
   - Redis/Kafka/락/대기열 성능개선 축은 유지하며 결제 도메인만 점진 교체한다.
+
+## 진행현황: 완료/남은 항목
+- Status: IN_PROGRESS
+- 완료된 것:
+  - 결제/예약 도메인 분리 전환 안건 합의
+  - backend 결제 이슈 재오픈 및 후속 범위 코멘트 등록
+  - 회의록 PR 생성: `https://github.com/rag-cargoo/aki-agentops/pull/131`
+  - 구현용 분리 브랜치(worktree) 준비
+    - backend: `feat/payment-gateway-abstraction-20260221`
+    - frontend: `feat/payment-checkout-flow-contract-20260221`
+- 남은 것:
+  - backend: `PaymentGateway` 포트 도입 및 wallet adapter 이관
+  - backend: 결제실패/만료/취소 상태전이 정책 테스트 재정의
+  - backend: 환불 cutoff 정책(시간 기반) 명세/구현
+  - frontend: 예약카드 `holdExpiresAt` 기반 카운트다운/안내 문구 정렬
+  - 문서/API 계약/운영 가이드 동기화
+
+## 결정 대기 항목
+- Status: WAITING
+- 사용자 결정 필요:
+  - 환불 cutoff 기준 시점: `공연 시작 기준` vs `결제 완료 기준`
+  - cutoff 기준값: `N시간/일` 구체 숫자
+  - cutoff 이후 정책: `환불 완전 차단` vs `수수료 차감 환불`
