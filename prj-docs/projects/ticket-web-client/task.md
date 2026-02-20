@@ -319,6 +319,7 @@
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-182534-76641/summary.txt`
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-182534-76641/run.log`
     - `ticket-web-client Issue #7`: `https://github.com/rag-cargoo/ticket-web-client/issues/7`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/7#issuecomment-3932659509`
 
 ## Next Items
 - (none)

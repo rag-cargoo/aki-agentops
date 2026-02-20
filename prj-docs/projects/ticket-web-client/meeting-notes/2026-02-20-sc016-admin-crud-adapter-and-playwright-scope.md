@@ -60,6 +60,7 @@
 - 이슈:
   - 신규 이슈 생성: `ticket-web-client#7`
   - 링크: `https://github.com/rag-cargoo/ticket-web-client/issues/7`
+  - 진행 코멘트: `https://github.com/rag-cargoo/ticket-web-client/issues/7#issuecomment-3932659509`
   - 생성 근거:
     - SC015(#6) 리팩토링 범위와 SC016 운영 CRUD 범위가 달라 재오픈 대신 신규 생성
 - 검증:
