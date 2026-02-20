@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 04:55:00`
-> - **Updated At**: `2026-02-21 06:30:00`
+> - **Updated At**: `2026-02-21 07:15:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -87,7 +87,7 @@
   - 백엔드: 만료 판정, 상태 전이, 좌석 해제, 환불 정책 강제
 
 ## 진행현황: 완료/남은 항목
-- Status: IN_PROGRESS
+- Status: DONE
 - 완료된 것:
   - 결제/예약 도메인 분리 전환 안건 합의
   - backend 결제 이슈 재오픈 및 후속 범위 코멘트 등록
@@ -130,13 +130,17 @@
   - frontend 결제 승인 대기 UX 보정:
     - `confirm` 응답이 `PAYING`이면 "결제 승인 대기중"으로 표시(확정 완료 오인 방지)
     - 실시간 예약 상태 병합 시 `PAYING/HOLD`는 진행중, `CONFIRMED/REFUNDED`만 성공 상태로 반영
+  - frontend 만료 이벤트 미수신 fallback 보강:
+    - `HOLD/PAYING` 예약 존재 시 5초 주기 polling fallback 자동 동기화 추가
+    - fallback 동기화 메타(주기/마지막 fallback 동기화 시각) My Reservations 패널 노출
+    - fallback fetch 오류는 hard error로 승격하지 않고 다음 주기에 자동 재시도
+    - PR: `rag-cargoo/ticket-web-client PR 10`
   - admin 콘솔 최소 권한 설정화:
     - 설정 키: `app.admin-console.minimum-role` (`USER`/`ADMIN`)
     - 현재값: `USER` (포트폴리오 모드)
     - 실서비스 전환 시 `ADMIN`으로 값만 변경
 - 남은 것:
-  - frontend: 만료 이벤트 수신 실패 시 polling fallback 주기/UX 튜닝
-  - 문서/API 계약 최종 동기화(결제 상태 enum `PENDING/FAILED` 및 webhook 상태전이 설명 추가)
+  - 없음
 
 ## 결정 대기 항목
 - Status: DONE
