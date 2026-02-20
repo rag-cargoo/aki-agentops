@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 04:55:00`
-> - **Updated At**: `2026-02-21 05:22:18`
+> - **Updated At**: `2026-02-21 05:45:13`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -108,20 +108,27 @@
     - 관련 테스트 추가/통과: `ReservationLifecycleServiceIntegrationTest`
   - backend 만료 실시간 반영 1차 반영:
     - HOLD/PAYING 만료 시 `RESERVATION_STATUS=EXPIRED` push 전송(WS/SSE)
+  - backend Workstream 3/4 1차 반영:
+    - `app.payment.provider` 기반 게이트웨이 선택(`wallet`/`mock`/`pg-ready`)
+    - `MockPaymentGateway`, `PgReadyPaymentGateway` 구현 추가
+    - PG webhook 계약 스켈레톤 API 추가: `POST /api/payments/webhooks/pg-ready`
+    - 관련 테스트 추가/통과:
+      - `MockPaymentGatewayIntegrationTest`
+      - `PgReadyPaymentGatewayIntegrationTest`
+      - `PgReadyWebhookServiceTest`
 - 남은 것:
-  - backend: `PaymentGateway` 다중 구현체(Mock/PG-ready)와 webhook 골격 확장
   - backend: admin override 권한 감사로그/운영 가이드 정리
   - frontend: admin override 환불 API 필요 여부 확정 및 UX 반영 여부 결정
   - frontend: 만료 이벤트 수신 실패 시 polling fallback 주기/UX 튜닝
   - 문서/API 계약/운영 가이드 최종 동기화
 
 ## 결정 대기 항목
-- Status: PARTIAL_DONE
+- Status: IN_PROGRESS
 - 확정된 결정:
   - 환불 cutoff 기준: `공연 시작 기준`
   - cutoff 기준값: `24시간`
   - cutoff 이후 기본 정책: `환불 차단`, 단 `관리자 override` 허용
+  - cutoff 이후 수수료 환불(부분 환불): `미도입`
   - 만료 판정 권한: `백엔드 단일 권한`, 프론트는 표시 전용
 - 추가 결정 필요:
-  - cutoff 이후 수수료 환불(부분 환불) 정책 도입 여부
   - 관리자 override UI를 서비스 콘솔에 노출할지, 백오피스 전용으로 제한할지
