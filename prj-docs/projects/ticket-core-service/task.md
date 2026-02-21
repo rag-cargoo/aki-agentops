@@ -395,8 +395,6 @@
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
     - Tracking Issue:
       - `https://github.com/rag-cargoo/ticket-core-service/issues/21`
-    - Scope Split Reference:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3939522960`
     - Precondition:
       - `https://github.com/rag-cargoo/ticket-core-service/issues/22` 완료 후 착수
   - Next:
