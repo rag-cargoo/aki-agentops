@@ -375,9 +375,9 @@
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
     - Tracking Issue:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/22`
+      - `rag-cargoo/ticket-core-service#22` (open, cross-repo shorthand)
     - Dependency Link:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3939683402`
+      - `rag-cargoo/ticket-core-service#21 comment 3939683402` (cross-repo shorthand)
   - Next:
     - WebSocket 구독 등록/해제 API 인증 컨텍스트 정렬(userId 신뢰 제거)
     - waiting queue 활성화 경로 Lua 원자 처리로 치환
@@ -394,9 +394,9 @@
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
     - Tracking Issue:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/21`
+      - `rag-cargoo/ticket-core-service#21` (open, cross-repo shorthand)
     - Precondition:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/22` 완료 후 착수
+      - `rag-cargoo/ticket-core-service#22` 완료 후 착수 (cross-repo shorthand)
   - Next:
     - soft lock key/TTL/owner 검증 계약(API 에러코드 포함) 고정
     - 좌석 확정 시 DB HOLD 트랜잭션 경계 및 실패 복구 계약 고정
