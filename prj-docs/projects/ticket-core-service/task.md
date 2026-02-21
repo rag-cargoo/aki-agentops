@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-22 06:24:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -274,7 +274,7 @@
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-concert-sale-status-contract-and-probe-coverage.md`
     - Product Issue:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/15`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/15` (closed)
       - `https://github.com/rag-cargoo/ticket-core-service/issues/15#issuecomment-3929234804`
     - Backend Contract:
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ConcertResponse.java`
@@ -304,3 +304,81 @@
       - `prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md`
       - `prj-docs/projects/ticket-core-service/product-docs/api-specs/social-auth-api.md`
       - `prj-docs/projects/ticket-core-service/product-docs/api-test/README.md`
+
+- TCS-SC-019 예약 한도 정책 옵션화 + 결제확인 단계 계약 정렬
+  - Status: DONE
+  - Description:
+    - Sales Policy를 콘서트별 CRUD 정책으로 확장한다.
+      - `maxTicketsPerOrder`
+      - `maxTicketsPerUserPerConcert`
+      - `maxConcurrentHoldsPerUser`
+    - 기본값은 `application.yml` fallback, 콘서트별 값은 override로 동작하도록 설계
+    - 프론트 결제확인 단계 선행 후 hold/paying/confirm 체인 실행 계약에 맞춰 API/검증 로직 정렬
+    - 단, 본 항목은 `seatId` 단건 계약 기준 1차 정렬이며 다중 좌석 주문(`seatIds[]`)은 후속 범위로 분리
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-reservation-limit-policy-optionization-and-checkout-contract.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3937779070`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3937787703`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3937894030`
+    - Implementation:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/entity/SalesPolicy.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/SalesPolicyServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/SalesPolicyUpsertRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/SalesPolicyResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/SalesPolicyLimitProperties.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application-local.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application-docker.yml`
+    - Verification:
+      - `./gradlew test --tests '*ReservationLifecycleServiceIntegrationTest' --tests '*ConcertExplorerIntegrationTest'` PASS
+
+- TCS-SC-020 다중 좌석 주문 API 계약(`seatIds[]`) + 주문 단위 상태전이 확장
+  - Status: DONE
+  - Description:
+    - 예약 API를 단건 `seatId`에서 다중 `seatIds[]` 주문 계약으로 확장한다.
+    - 주문당 최대 매수(`maxTicketsPerOrder`)를 실요청 단위로 검증한다.
+    - hold/paying/confirm/cancel/refund를 주문 단위 상태전이로 재정렬한다.
+    - 주문 단위 `confirm` 정책은 부분 성공 허용(실패 건 `PAYING` 유지)으로 고정한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-reservation-limit-policy-optionization-and-checkout-contract.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20` (closed)
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3939522960`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3939533794`
+    - Implementation (1차):
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ReservationController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/AuthenticatedBatchHoldRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/ReservationBatchStateRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/ReservationBatchLifecycleResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/repository/ReservationRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/SalesPolicyServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceIntegrationTest.java`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/reservation-api.md`
+    - Verification:
+      - `./gradlew test --tests '*ReservationLifecycleServiceIntegrationTest'` PASS
+    - Policy:
+      - 기본 한도 운영값: `default-max-tickets-per-order=1`, `default-max-tickets-per-user-per-concert=4`, `default-max-concurrent-holds-per-user=2`
+      - 절대 상한값은 본 항목 범위에서 별도 도입하지 않음(운영 설정값 + 도메인 제약으로 관리)
+
+- TCS-SC-021 대규모 매진 트래픽 대응 좌석 실시간 선점(soft lock) + 좌석확정(HOLD) 상태머신 정렬
+  - Status: IN_PROGRESS
+  - Description:
+    - 대형 공연(`10만+` 좌석) + 짧은 시간대 대량 동시접속 + 오토스케일링 분산 배포를 전제로 좌석 상태머신 운영 기준을 고정한다.
+    - 클릭 단계는 Redis soft lock(`SET NX EX`) + WebSocket fan-out으로 처리하고, DB는 좌석 확정(HOLD) 및 결제 확정(CONFIRMED) 원장으로 유지한다.
+    - 장애/폴백 시나리오(SSE fallback, 재동기화, idempotency)까지 포함한 운영 계약을 문서/이슈/task 기준으로 동기화한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/21`
+    - Scope Split Reference:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3939522960`
+  - Next:
+    - soft lock key/TTL/owner 검증 계약(API 에러코드 포함) 고정
+    - 좌석 확정 시 DB HOLD 트랜잭션 경계 및 실패 복구 계약 고정
+    - 멀티노드 브로커/구독자 추적 전략(simple broker -> relay) 적용 우선순위 확정
