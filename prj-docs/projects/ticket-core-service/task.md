@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 06:31:07`
+> - **Updated At**: `2026-02-23 06:49:48`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -508,7 +508,7 @@
     - 최소 회귀 검증(`compose config`, 관련 테스트) 후 제품 PR 생성
 
 - TCS-SC-025 Admin CRUD/카탈로그 조회/초기시드 정합 복구(#16 재오픈)
-  - Status: DOING
+  - Status: DONE
   - Description:
     - `main` 기준 `/api/admin/concerts/**` 운영 CRUD 경로 부재를 복구한다(콘서트/회차/가격/판매정책/썸네일 포함).
     - `Entertainment/Artist` 도메인에 Admin 보드용 `find/search/paging` 조회 경로를 추가한다.
@@ -520,11 +520,13 @@
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md`
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-domain-association-and-querydsl-admin-crud-plan.md`
     - Product Tracking:
-      - `rag-cargoo/ticket-core-service#16` (reopened)
+      - `rag-cargoo/ticket-core-service#16` (closed)
       - `rag-cargoo/ticket-core-service#16 comment 3941319649`
       - `rag-cargoo/ticket-core-service#16 comment 3941623654`
       - `rag-cargoo/ticket-core-service#16 comment 3941631467`
       - `rag-cargoo/ticket-core-service#16 comment 3941655066`
+      - `rag-cargoo/ticket-core-service PR #31` (merged)
+      - `rag-cargoo/ticket-core-service PR #32` (merged)
     - Code Baseline:
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/EntertainmentCatalogController.java`
@@ -568,15 +570,21 @@
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertService.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertServiceImpl.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
+    - Phase B 4차 구현(초기시드 전략: dev/demo + idempotent marker):
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/seed/SeedMarker.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/seed/SeedMarkerRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/DataInitializerDataJpaTest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/README.md`
     - Verification:
-      - `./gradlew compileJava` PASS
-      - `./gradlew test --tests '*Entertainment*' --tests '*Artist*'` FAIL (`RedisConnectionException`, 환경 의존)
+      - `./gradlew clean compileJava` PASS
+      - `./gradlew test --tests '*DataInitializerDataJpaTest'` PASS
       - `./gradlew test --tests '*ReservationStateMachineTest' --tests '*SeatSoftLockServiceImplTest'` PASS
       - `./gradlew test --tests '*ReservationStateMachineTest' --tests '*SeatSoftLockServiceImplTest' --tests '*ReservationLifecycleServiceIntegrationTest'` PASS
     - Candidate Previous Work:
       - branch: `feat/admin-ops-crud-media-20260220`
       - commits: `eec88b0`, `732c6be`
   - Next:
-    - 1) 초기 시드 전략(dev/demo) 확정 + 런타임 플래그/문서화 + 최소 smoke 검증
-    - 2) 프론트 Admin 게시판 셀렉트 플로우(Entertainment -> Artist, Promoter, Venue) 연동
-    - 3) Product PR 생성 후 `#16` 체크리스트 항목별 완료 코멘트 누적 및 close 판정
+    - 1) 프론트 Admin 게시판 셀렉트 플로우(Entertainment -> Artist, Promoter, Venue) 연동
+    - 2) 프론트 E2E 계약 검증(관리자 CRUD + 공개 조회 계약) 확장

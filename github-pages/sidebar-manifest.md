@@ -53,6 +53,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+      * [2026-02-23 Backend Seed Strategy Completion and Issue #16 Closeout](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-backend-seed-strategy-and-issue16-closeout.md)
       * [2026-02-22 Domain Association + QueryDSL Admin CRUD Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-domain-association-and-querydsl-admin-crud-plan.md)
       * [2026-02-22 Backend Admin CRUD + Seed Gap Reopen Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md)
       * [2026-02-22 Kafka-Only Realtime Broker Migration Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-kafka-only-realtime-broker-migration-kickoff.md)

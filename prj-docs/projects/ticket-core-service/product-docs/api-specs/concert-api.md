@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-23 06:31:07`
+> - **Updated At**: `2026-02-23 06:49:48`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -169,7 +169,8 @@
   - `APP_PORTFOLIO_SEED_ENABLED=true`일 때 서버 기동 시 샘플 공연/정책/좌석 데이터를 자동 생성한다.
   - 기본값은 `false`이며, 운영/실서비스 환경에서는 비활성 상태를 유지한다.
 - 시드 정책:
-  - 아이템포턴시 마커(`portfolio_seed_marker_v1`) 기반으로 1회만 적용한다.
+  - 허용 프로필(`APP_PORTFOLIO_SEED_PROFILES`, 기본 `local,demo`)에서만 시드가 동작한다.
+  - 아이템포턴시 마커(`APP_PORTFOLIO_SEED_MARKER_KEY`, 기본 `portfolio_seed_marker_v1`) 기반으로 1회만 적용한다.
   - 샘플 상태를 최소 1세트씩 포함한다:
     - `PREOPEN`, `OPEN_SOON_1H`, `OPEN_SOON_5M`, `OPEN`, `SOLD_OUT`
 
