@@ -39,7 +39,7 @@
   - `Stage 0(#22)` 완료 후 `#21` 본 구현 착수
 - Tracking:
   - Stage 0 Issue: `https://github.com/rag-cargoo/ticket-core-service/issues/22` (closed)
-  - Stage 0 PR: `https://github.com/rag-cargoo/ticket-core-service/pull/23` (merged)
+  - Stage 0 PR: `rag-cargoo/ticket-core-service PR #23` (merged, cross-repo shorthand)
   - #21 선행의존 코멘트: `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3939683402`
   - #21 완료보고 코멘트: `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3939821886`
 
