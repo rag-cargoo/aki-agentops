@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-22 22:57:35`
-> - **Updated At**: `2026-02-22 22:59:20`
+> - **Updated At**: `2026-02-22 23:00:52`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -32,9 +32,9 @@
   - 신규 이슈 생성 없이 기존 이슈에 SC018 후속 범위를 코멘트로 누적했다.
   - 제품 PR `#13` 머지 완료 후 이슈 `#5`는 `CLOSED`로 종료됐다.
 - 링크:
-  - 이슈: `https://github.com/rag-cargoo/ticket-web-client/issues/5`
-  - 코멘트: `https://github.com/rag-cargoo/ticket-web-client/issues/5#issuecomment-3940970608`
-  - PR: `https://github.com/rag-cargoo/ticket-web-client/pull/13`
+  - 이슈: `ticket-web-client Issue #5`
+  - 코멘트: `ticket-web-client Issue #5 comment 3940970608`
+  - PR: `rag-cargoo/ticket-web-client PR #13`
 
 ## 안건 3: task 동기화
 - Status: DONE
@@ -54,4 +54,4 @@
   - `workspace/apps/frontend/ticket-web-client/vite.config.ts`
   - `workspace/apps/frontend/ticket-web-client/.env.example`
   - `workspace/apps/frontend/ticket-web-client/README.md`
-  - `https://github.com/rag-cargoo/ticket-web-client/pull/13`
+  - `rag-cargoo/ticket-web-client PR #13`

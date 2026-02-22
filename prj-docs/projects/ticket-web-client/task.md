@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-22 22:59:20`
+> - **Updated At**: `2026-02-22 23:00:52`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -353,10 +353,10 @@
     - 회의록:
       - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc018-backend-compose-lb-default-alignment.md`
     - Tracking Issue:
-      - `https://github.com/rag-cargoo/ticket-web-client/issues/5` (reopened -> closed)
-      - `https://github.com/rag-cargoo/ticket-web-client/issues/5#issuecomment-3940970608`
+      - `ticket-web-client Issue #5` (reopened -> closed)
+      - `ticket-web-client Issue #5 comment 3940970608`
     - Product PR:
-      - `https://github.com/rag-cargoo/ticket-web-client/pull/13` (merged)
+      - `rag-cargoo/ticket-web-client PR #13` (merged)
       - merge commit: `b65932961ee052652dfcf2c1027953475149be4f`
     - Runtime/Docs:
       - `workspace/apps/frontend/ticket-web-client/vite.config.ts`
