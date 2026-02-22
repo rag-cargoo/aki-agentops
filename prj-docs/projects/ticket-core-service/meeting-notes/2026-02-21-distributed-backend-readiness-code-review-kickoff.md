@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 18:27:00`
-> - **Updated At**: `2026-02-22 11:03:10`
+> - **Updated At**: `2026-02-22 11:16:40`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -171,9 +171,13 @@
   - #21 2차 트랙 재개:
     - Product issue `#21` reopen 처리 후 후속 범위(브로커 relay/멀티노드 구독자 추적/장애 폴백/부하검증) 고정
     - Reopen Comment: `rag-cargoo/ticket-core-service#21 comment 3939919828` (cross-repo shorthand)
+  - #21 phase2-a 구현 완료/머지:
+    - WebSocket broker `simple|relay` 모드 전환 설정 추가
+    - WebSocket waiting-queue 구독자 추적을 인메모리 -> Redis(ZSET + concert index)로 전환
+    - 스케줄러 fan-out 경로는 유지하면서 멀티노드 구독자 조회를 Redis 기준으로 정렬
+    - Product PR: `rag-cargoo/ticket-core-service PR #25` (merged, cross-repo shorthand)
+    - Progress Comment: `rag-cargoo/ticket-core-service#21 comment 3939932628` (cross-repo shorthand)
 - 남은 것:
   - #21 2차 구현:
-    - WebSocket broker relay 전환(simple broker -> relay) 적용안 확정/반영
-    - 멀티노드 구독자 추적 전략(인메모리 의존 제거) 정렬
     - 장애/폴백 운영 계약(SSE fallback + DB 기준 재동기화 runbook) 확정
     - 대규모 트래픽 검증(k6 시나리오) 증빙 추가
