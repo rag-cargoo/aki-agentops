@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 10:52:30`
+> - **Updated At**: `2026-02-22 11:03:10`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -395,12 +395,14 @@
     - Tracking Issue:
       - `rag-cargoo/ticket-core-service#21` (open, cross-repo shorthand)
     - Product PR:
-      - `rag-cargoo/ticket-core-service PR #24` (open, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service PR #24` (merged, cross-repo shorthand)
     - Progress Link:
       - `rag-cargoo/ticket-core-service#21 comment 3939905567` (cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#21 comment 3939919828` (cross-repo shorthand, 2차 트랙 재개)
     - Precondition:
       - `rag-cargoo/ticket-core-service#22` 완료 (cross-repo shorthand)
   - Next:
-    - soft lock key/TTL/owner 검증 계약(API 에러코드 포함) 고정
-    - 좌석 확정 시 DB HOLD 트랜잭션 경계 및 실패 복구 계약 고정
-    - 멀티노드 브로커/구독자 추적 전략(simple broker -> relay) 적용 우선순위 확정
+    - WebSocket broker relay 전환(simple broker -> relay) 적용안 확정/반영
+    - 멀티노드 구독자 추적 전략(인메모리 의존 제거) 정렬
+    - 장애/폴백 운영 계약(SSE fallback + DB 기준 재동기화 runbook) 확정
+    - 대규모 트래픽 검증(k6 시나리오) 증빙 추가
