@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 05:48:00`
+> - **Updated At**: `2026-02-23 06:31:07`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -511,7 +511,7 @@
   - Status: DOING
   - Description:
     - `main` 기준 `/api/admin/concerts/**` 운영 CRUD 경로 부재를 복구한다(콘서트/회차/가격/판매정책/썸네일 포함).
-    - `Agency/Artist` 도메인에 Admin 보드용 `find/search/paging` 조회 경로를 추가한다.
+    - `Entertainment/Artist` 도메인에 Admin 보드용 `find/search/paging` 조회 경로를 추가한다.
     - 도메인 의미를 `Entertainment(소속사)`/`Promoter(기획사)`로 분리하고 `Venue` 도메인 도입 경계를 설계한다.
     - `DataInitializer`/seed 전략을 dev/demo profile 분리 + idempotent 시드 방식으로 정렬한다.
     - 프론트 관리자 계약(`admin-concert-client.ts`)과 실백엔드 런타임 계약을 일치시킨다.
@@ -527,17 +527,17 @@
       - `rag-cargoo/ticket-core-service#16 comment 3941655066`
     - Code Baseline:
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
-      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AgencyController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/EntertainmentCatalogController.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ArtistController.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
       - `workspace/apps/frontend/ticket-web-client/src/shared/api/admin-concert-client.ts`
       - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
     - Phase B 1차 구현:
-      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/agency/AgencySearchRepository.java`
-      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/agency/AgencySearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/entertainment/EntertainmentSearchRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/entertainment/EntertainmentSearchRepositoryImpl.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/artist/ArtistSearchRepository.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/artist/ArtistSearchRepositoryImpl.java`
-      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/AgencySearchPageResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/EntertainmentSearchPageResponse.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ArtistSearchPageResponse.java`
       - `prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md`
     - Phase B 2차 구현(도메인 분리 + Admin CRUD 골격):
@@ -570,7 +570,7 @@
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
     - Verification:
       - `./gradlew compileJava` PASS
-      - `./gradlew test --tests '*Agency*' --tests '*Artist*'` FAIL (`RedisConnectionException`, 환경 의존)
+      - `./gradlew test --tests '*Entertainment*' --tests '*Artist*'` FAIL (`RedisConnectionException`, 환경 의존)
       - `./gradlew test --tests '*ReservationStateMachineTest' --tests '*SeatSoftLockServiceImplTest'` PASS
       - `./gradlew test --tests '*ReservationStateMachineTest' --tests '*SeatSoftLockServiceImplTest' --tests '*ReservationLifecycleServiceIntegrationTest'` PASS
     - Candidate Previous Work:

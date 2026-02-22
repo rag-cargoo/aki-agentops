@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 06:08:30`
+> - **Updated At**: `2026-02-23 06:31:07`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -22,7 +22,7 @@
 - [Auth Error Monitoring Guide](./auth-error-monitoring-guide.md)
 - [User API](./user-api.md)
 - [Wallet/Payment API](./wallet-payment-api.md)
-- [Catalog API (Agency/Artist)](./catalog-api.md)
+- [Catalog API (Entertainment/Artist)](./catalog-api.md)
 - [Concert API](./concert-api.md)
 - [Reservation API](./reservation-api.md)
 - [Waiting Queue API](./waiting-queue-api.md)

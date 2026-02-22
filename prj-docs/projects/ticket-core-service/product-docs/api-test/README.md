@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-23 06:31:07`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -78,7 +78,7 @@ make test-suite
 - `scripts/http/user.http`
   - 유저 생성 -> 목록/단건 조회 -> 수정 -> 지갑 조회/충전/거래 조회 -> 삭제
 - `scripts/http/catalog.http`
-  - 기획사 생성/조회/수정 -> 아티스트 생성/조회/수정 -> 정리 삭제
+  - 엔터테인먼트 생성/조회/수정 -> 아티스트 생성/조회/수정 -> 정리 삭제
 - `scripts/http/concert.http`
   - 공연 셋업 -> 목록/검색 -> 판매정책 전환(PREOPEN/OPEN) -> 옵션/좌석 조회 -> 정리 삭제
 - `scripts/http/reservation.http`
@@ -335,8 +335,8 @@ bash scripts/api/v8-reservation-lifecycle.sh
 ```
 
 - 확장 smoke 체크:
-  - `POST /api/concerts/setup` (artist/agency 확장 필드 포함)
-  - `GET /api/concerts/search` (`keyword`, `agencyName`, `sort=agencyName,asc`)
+  - `POST /api/concerts/setup` (artist/entertainment 확장 필드 포함)
+  - `GET /api/concerts/search` (`keyword`, `entertainmentName`, `sort=entertainmentName,asc`)
   - `GET /api/v1/waiting-queue/subscribe` (SSE `INIT/RANK_UPDATE/KEEPALIVE`)
 - 최신 통합 검증 리포트:
   - `.codex/tmp/ticket-core-service/api-test/ux-track-u1-integration-latest.md`

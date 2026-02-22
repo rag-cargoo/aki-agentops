@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-22 23:59:30`
-> - **Updated At**: `2026-02-22 23:59:30`
+> - **Updated At**: `2026-02-23 06:31:07`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,7 +24,7 @@
 - 범위:
   - 백엔드 `main` 기준 Admin 운영 CRUD(콘서트/회차/가격/미디어) 제공 상태 점검
   - 프론트 관리자 API 계약(`ticket-web-client`)과 런타임 매핑 정합성 대조
-  - 카탈로그(Agency/Artist) 조회 확장성과 초기 시드 전략 점검
+  - 카탈로그(Entertainment/Artist) 조회 확장성과 초기 시드 전략 점검
 
 ## 안건 2: 코드/계약 핵심 발견사항
 - Status: DONE
@@ -32,7 +32,7 @@
   - `Critical`: `main` 기준 `/api/admin/concerts/**` 운영 CRUD 컨트롤러가 없음
     - 현재 `ConcertController`는 `/api/concerts/**` 공개 조회 + 테스트용 `setup/cleanup` 중심
   - `High`: 프론트 관리자 API 클라이언트/테스트는 `/api/admin/concerts/**`를 전제로 구현되어 계약 불일치 위험이 큼
-  - `Medium`: `Agency/Artist`는 기본 CRUD(`create/getAll/getById/update/delete`)만 존재하며 Admin 보드용 `find/search/paging` 경로가 없음
+  - `Medium`: `Entertainment/Artist`는 기본 CRUD(`create/getAll/getById/update/delete`)만 존재하며 Admin 보드용 `find/search/paging` 경로가 없음
   - `Medium`: `DataInitializer`는 admin 유저 1건만 생성하고 운영/데모 초기 데이터 시드 전략이 비어 있음
   - `Medium`: 과거 관리자 CRUD 구현 커밋(`eec88b0`, `732c6be`)은 `feat/admin-ops-crud-media-20260220` 브랜치에 있으나 `main`에 미반영
 
@@ -55,13 +55,13 @@
 - Status: DONE
 - 우선순위:
   - 1) Admin Concert CRUD 복구: `/api/admin/concerts/**` + 회차 가격 + 판매정책 + 썸네일 경로를 `main` 기준으로 정렬
-  - 2) Catalog 조회 확장: Agency/Artist Admin 보드에서 쓰는 `find/search/paging` 경로 추가
-  - 3) Seed 전략 확정: dev/demo profile 분리 + idempotent 초기 데이터(공연/기획사/아티스트/회차) + 문서/스크립트 동기화
+  - 2) Catalog 조회 확장: Entertainment/Artist Admin 보드에서 쓰는 `find/search/paging` 경로 추가
+  - 3) Seed 전략 확정: dev/demo profile 분리 + idempotent 초기 데이터(공연/엔터테인먼트/아티스트/주최사/회차) + 문서/스크립트 동기화
 
 ## 증빙
 - 백엔드 코드:
   - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
-  - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AgencyController.java`
+  - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/EntertainmentCatalogController.java`
   - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ArtistController.java`
   - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
 - 프론트 계약:

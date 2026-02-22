@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-23 05:48:00`
+> - **Updated At**: `2026-02-23 06:31:07`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -50,9 +50,9 @@
 | `artistDisplayName` | String | 아티스트 표시명(옵션) |
 | `artistGenre` | String | 아티스트 장르(옵션) |
 | `artistDebutDate` | Date | 아티스트 데뷔일(옵션) |
-| `agencyName` | String | 기획사 이름(옵션) |
-| `agencyCountryCode` | String | 기획사 국가코드(옵션) |
-| `agencyHomepageUrl` | String | 기획사 홈페이지 URL(옵션) |
+| `entertainmentName` | String | 엔터테인먼트(소속사) 이름(옵션) |
+| `entertainmentCountryCode` | String | 엔터테인먼트 국가코드(옵션) |
+| `entertainmentHomepageUrl` | String | 엔터테인먼트 홈페이지 URL(옵션) |
 | `saleStatus` | String | 판매 상태 (`UNSCHEDULED`/`PREOPEN`/`OPEN_SOON_1H`/`OPEN_SOON_5M`/`OPEN`/`SOLD_OUT`) |
 | `saleOpensAt` | DateTime | 일반 예매 오픈 시각(정책 없으면 `null`) |
 | `saleOpensInSeconds` | Long | 오픈까지 남은 초(오픈 이후는 `0`, 미정은 `null`) |
@@ -73,9 +73,9 @@
     "artistDisplayName": "IU",
     "artistGenre": "K-POP",
     "artistDebutDate": "2008-09-18",
-    "agencyName": "EDAM",
-    "agencyCountryCode": "KR",
-    "agencyHomepageUrl": "https://www.edam-ent.com",
+    "entertainmentName": "EDAM",
+    "entertainmentCountryCode": "KR",
+    "entertainmentHomepageUrl": "https://www.edam-ent.com",
     "saleStatus": "OPEN_SOON_1H",
     "saleOpensAt": "2026-02-20T20:00:00",
     "saleOpensInSeconds": 1800,
@@ -91,7 +91,7 @@
 
 ### 1.1-1. 공연 검색/필터/정렬 + 페이징 조회
 - **Endpoint**: `GET /api/concerts/search`
-- **Description**: 키워드(제목/아티스트/기획사/공연ID) 검색, 아티스트/기획사 필터, 정렬, 페이징을 서버에서 수행합니다.
+- **Description**: 키워드(제목/아티스트/엔터테인먼트/공연ID) 검색, 아티스트/엔터테인먼트 필터, 정렬, 페이징을 서버에서 수행합니다.
 
 **Parameters**
 
@@ -99,20 +99,20 @@
 | :--- | :--- | :--- | :--- | :--- |
 | Query | `keyword` | String | No | 제목/아티스트/공연 ID 검색 키워드 |
 | Query | `artistName` | String | No | 아티스트명 정확 일치 필터(대소문자 무시) |
-| Query | `agencyName` | String | No | 기획사명 정확 일치 필터(대소문자 무시) |
+| Query | `entertainmentName` | String | No | 엔터테인먼트명 정확 일치 필터(대소문자 무시) |
 | Query | `page` | Integer | No | 페이지 번호(기본값 `0`) |
 | Query | `size` | Integer | No | 페이지 크기(기본값 `20`) |
-| Query | `sort` | String | No | 정렬 규칙(`id|title|artistName|agencyName`,`asc|desc`) 예: `title,asc` |
+| Query | `sort` | String | No | 정렬 규칙(`id|title|artistName|entertainmentName`,`asc|desc`) 예: `title,asc` |
 
 **Request Example**
 
-`GET /api/concerts/search?keyword=iu&artistName=IU&agencyName=EDAM&page=0&size=10&sort=title,asc`
+`GET /api/concerts/search?keyword=iu&artistName=IU&entertainmentName=EDAM&page=0&size=10&sort=title,asc`
 
 **Response Summary (200 OK)**
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `items` | Array | 공연 목록(`id`, `title`, `artistName` + Artist/Agency 확장 필드 + 판매상태/버튼 제어 필드) |
+| `items` | Array | 공연 목록(`id`, `title`, `artistName` + Artist/Entertainment 확장 필드 + 판매상태/버튼 제어 필드) |
 | `page` | Integer | 현재 페이지 번호 |
 | `size` | Integer | 페이지 크기 |
 | `totalElements` | Long | 전체 검색 결과 건수 |
@@ -132,9 +132,9 @@
       "artistDisplayName": "IU",
       "artistGenre": "K-POP",
       "artistDebutDate": "2008-09-18",
-      "agencyName": "EDAM",
-      "agencyCountryCode": "KR",
-      "agencyHomepageUrl": "https://www.edam-ent.com",
+      "entertainmentName": "EDAM",
+      "entertainmentCountryCode": "KR",
+      "entertainmentHomepageUrl": "https://www.edam-ent.com",
       "saleStatus": "OPEN_SOON_1H",
       "saleOpensAt": "2026-02-20T20:00:00",
       "saleOpensInSeconds": 1800,
@@ -239,7 +239,7 @@
 
 ### 1.4. [Admin] 테스트 데이터 일괄 셋업
 - **Endpoint**: `POST /api/concerts/setup`
-- **Description**: 공연, 아티스트, 기획사, 좌석을 한 번에 생성하여 테스트 환경을 구축합니다.
+- **Description**: 공연, 아티스트, 엔터테인먼트(소속사), 주최사(Promoter), 좌석을 한 번에 생성하여 테스트 환경을 구축합니다.
 
 **Parameters**
 
@@ -250,9 +250,12 @@
 | Body | `artistDisplayName` | String | No | 아티스트 표시명 |
 | Body | `artistGenre` | String | No | 아티스트 장르 |
 | Body | `artistDebutDate` | Date | No | 아티스트 데뷔일 (`yyyy-mm-dd`) |
-| Body | `agencyName` | String | Yes | 기획사 이름 |
-| Body | `agencyCountryCode` | String | No | 기획사 국가코드 (`KR`, `JP`, ...) |
-| Body | `agencyHomepageUrl` | String | No | 기획사 홈페이지 URL |
+| Body | `entertainmentName` | String | Yes | 엔터테인먼트 이름 |
+| Body | `entertainmentCountryCode` | String | No | 엔터테인먼트 국가코드 (`KR`, `JP`, ...) |
+| Body | `entertainmentHomepageUrl` | String | No | 엔터테인먼트 홈페이지 URL |
+| Body | `promoterName` | String | No | 주최사(Promoter) 이름 |
+| Body | `promoterCountryCode` | String | No | 주최사 국가코드 (`KR`, `JP`, ...) |
+| Body | `promoterHomepageUrl` | String | No | 주최사 홈페이지 URL |
 | Body | `concertDate` | DateTime | Yes | 공연 시작 일시 |
 | Body | `seatCount` | Integer | Yes | 생성할 좌석 수 |
 
@@ -265,9 +268,12 @@
   "artistDisplayName": "NewJeans",
   "artistGenre": "K-POP",
   "artistDebutDate": "2022-07-22",
-  "agencyName": "ADOR",
-  "agencyCountryCode": "KR",
-  "agencyHomepageUrl": "https://ador.world",
+  "entertainmentName": "ADOR",
+  "entertainmentCountryCode": "KR",
+  "entertainmentHomepageUrl": "https://ador.world",
+  "promoterName": "HYBE T&D",
+  "promoterCountryCode": "KR",
+  "promoterHomepageUrl": "https://hybecorp.com",
   "concertDate": "2026-03-01T18:00:00",
   "seatCount": 50
 }
@@ -362,7 +368,7 @@
 
 | Method | Path | Description |
 | :--- | :--- | :--- |
-| POST | `/api/admin/concerts` | 콘서트 생성 (`artistId/promoterId` 또는 `artistName+agencyName` fallback) |
+| POST | `/api/admin/concerts` | 콘서트 생성 (`artistId/promoterId` 또는 `artistName+entertainmentName` fallback) |
 | GET | `/api/admin/concerts/{concertId}` | 콘서트 단건 조회 |
 | PUT | `/api/admin/concerts/{concertId}` | 콘서트 수정 |
 | DELETE | `/api/admin/concerts/{concertId}` | 콘서트 삭제 |
@@ -404,7 +410,7 @@ Concert read-path 캐시는 `concert:list`, `concert:search`, `concert:options`,
 
 | UI 단계 | Endpoint | 클라이언트 처리 기준 |
 | :--- | :--- | :--- |
-| 콘서트 목록/검색/필터/정렬/페이징 | `GET /api/concerts/search` | `keyword`, `artistName`, `agencyName`, `sort`, `page`, `size`를 항상 서버에 전달해 탐색 처리(입력 디바운스 `250ms`) |
+| 콘서트 목록/검색/필터/정렬/페이징 | `GET /api/concerts/search` | `keyword`, `artistName`, `entertainmentName`, `sort`, `page`, `size`를 항상 서버에 전달해 탐색 처리(입력 디바운스 `250ms`) |
 | 콘서트 선택 | `GET /api/concerts/{id}/options` | `concertDate` 오름차순으로 정렬 후 첫 옵션 자동 선택(최초 진입 시) |
 | 옵션 선택 | `GET /api/concerts/options/{optionId}/seats` | `seatNumber` 오름차순 렌더링, `AVAILABLE`만 표시하는 필터 토글 지원 |
 | 좌석 선택 | (추가 API 없음) | `AVAILABLE` 좌석만 선택 가능, 선택 즉시 Reservation v7 `seatId` 입력값 자동 채움 |
