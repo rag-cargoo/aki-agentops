@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 22:23:50`
+> - **Updated At**: `2026-02-22 23:19:47`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-22 Kafka-Only Realtime Broker Migration Kickoff](./2026-02-22-kafka-only-realtime-broker-migration-kickoff.md)
 - [2026-02-22 Compose Single-File + Scale Unification Kickoff](./2026-02-22-compose-single-file-scale-unification-kickoff.md)
 - [2026-02-22 Distributed Runtime Defaults and Compose Root Alignment](./2026-02-22-distributed-runtime-defaults-and-compose-root-alignment.md)
 - [2026-02-21 Payment Gateway Abstraction Kickoff](./2026-02-21-payment-gateway-abstraction-kickoff.md)
