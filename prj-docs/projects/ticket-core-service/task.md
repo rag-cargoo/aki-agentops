@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 11:55:00`
+> - **Updated At**: `2026-02-22 22:33:18`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -433,3 +433,32 @@
       - `rag-cargoo/ticket-core-service#22` 완료 (cross-repo shorthand)
   - Next:
     - 없음 (완료)
+
+- TCS-SC-023 compose 단일화(distributed-first) + `--scale app=N` 운영 통합
+  - Status: DONE
+  - Description:
+    - `docker-compose.yml` 단일 파일에 분산 런타임 구성(`ws-relay`, `nginx-lb`, `app`)을 통합한다.
+    - 기존 `app-node-1/2/3` 고정 서비스 모델을 제거하고, `app` 단일 서비스 스케일(`--scale app=N`)로 전환한다.
+    - `docker-compose.distributed.yml` 분기 참조를 제거하고 스크립트/README를 단일 compose 기준으로 정렬한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-compose-single-file-scale-unification-kickoff.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/21` (reopened -> closed)
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3940924556`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3940943019`
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #28` (merged)
+      - merge commit: `fa194740f97cebb0a0a8b03872b425bbb6caf4f1`
+    - Runtime/Script:
+      - `workspace/apps/backend/ticket-core-service/docker-compose.yml`
+      - `workspace/apps/backend/ticket-core-service/scripts/perf/run-k6-waiting-queue-distributed.sh`
+      - `workspace/apps/backend/ticket-core-service/scripts/perf/nginx/k6-distributed-lb.conf`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/WebSocketBrokerProperties.java`
+      - `workspace/apps/backend/ticket-core-service/README.md`
+      - `workspace/apps/backend/ticket-core-service/Makefile`
+    - Verification:
+      - `docker-compose -f docker-compose.yml config` PASS
+      - `bash -n scripts/perf/run-k6-waiting-queue-distributed.sh` PASS
+      - `./gradlew test --tests '*WebSocketConfigTest'` PASS
