@@ -40,7 +40,7 @@
       * [Auth Error Monitoring Guide](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-error-monitoring-guide.md)
       * [User API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/user-api.md)
       * [Wallet/Payment API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/wallet-payment-api.md)
-      * [Catalog API (Agency/Artist)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md)
+      * [Catalog API (Entertainment/Artist)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md)
       * [Concert API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md)
       * [Reservation API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/reservation-api.md)
       * [Waiting Queue API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/waiting-queue-api.md)

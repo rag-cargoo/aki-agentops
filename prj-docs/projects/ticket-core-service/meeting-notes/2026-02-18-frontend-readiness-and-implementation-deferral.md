@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-18 09:30:00`
-> - **Updated At**: `2026-02-18 09:30:00`
+> - **Updated At**: `2026-02-23 06:31:07`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -23,7 +23,7 @@
 - Status: DONE
 - 결정사항:
   - 현재 API 명세로 프론트 1차 구현(MVP)은 진행 가능하다.
-  - `User/Agency/Artist/Concert` CRUD 및 기본 예약 흐름 연동은 가능하다.
+  - `User/Entertainment/Artist/Concert` CRUD 및 기본 예약 흐름 연동은 가능하다.
   - 단, 운영/출시 수준 기준으로는 추가 계약 정의가 필요하다.
 
 ## 안건 2: 출시 기준 필수 항목 정리
