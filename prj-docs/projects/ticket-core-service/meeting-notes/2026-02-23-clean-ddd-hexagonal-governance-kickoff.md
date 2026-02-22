@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-23 07:30:00`
-> - **Updated At**: `2026-02-23 07:35:00`
+> - **Updated At**: `2026-02-23 07:45:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -44,15 +44,21 @@
   - `domain` 엔티티의 `api` 의존 제거
   - `api.controller`의 `*Repository` 직접 참조 제거
   - 아키텍처 테스트(ArchUnit) 도입으로 경계 규칙 CI 강제
+- 1차 결과:
+  - `ticket-core-service PR #34`로 엔티티/컨트롤러 경계 규칙 1차 반영 및 테스트 통과
+  - `Entity -> api` 의존 0건, `Controller -> Repository` 직접 의존 0건을 확인
+- 잔여(Phase 2 대상):
+  - `domain service` 레벨 `domain -> api` import 잔여 `17`건/`9`파일
 - 비범위(Phase 2):
   - `domain service` 전반의 API DTO 의존 제거
   - application/use-case 계층 전면 도입
 
 ## 안건 5: 트래킹
-- Status: DOING
+- Status: DONE
 - Product Tracking:
-  - `rag-cargoo/ticket-core-service#33` (open, cross-repo shorthand)
-  - `rag-cargoo/ticket-core-service PR #34` (open, cross-repo shorthand)
+  - `rag-cargoo/ticket-core-service#33` (closed, cross-repo shorthand)
+  - `rag-cargoo/ticket-core-service PR #34` (merged, cross-repo shorthand)
+  - merge commit: `bcc109f2ff117cb16bea7f5aaafdef0d6bb50457`
 - Sidecar Tracking:
   - `prj-docs/projects/ticket-core-service/task.md`의 `TCS-SC-026`를 기준으로 진행 상태를 관리한다.
 
