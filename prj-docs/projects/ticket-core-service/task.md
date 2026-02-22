@@ -520,11 +520,11 @@
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md`
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-domain-association-and-querydsl-admin-crud-plan.md`
     - Product Tracking:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/16` (reopened)
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941319649`
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941623654`
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941631467`
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941655066`
+      - `rag-cargoo/ticket-core-service#16` (reopened)
+      - `rag-cargoo/ticket-core-service#16 comment 3941319649`
+      - `rag-cargoo/ticket-core-service#16 comment 3941623654`
+      - `rag-cargoo/ticket-core-service#16 comment 3941631467`
+      - `rag-cargoo/ticket-core-service#16 comment 3941655066`
     - Code Baseline:
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AgencyController.java`

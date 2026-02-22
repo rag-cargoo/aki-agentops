@@ -377,8 +377,8 @@
     - 회의록:
       - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc019-frontend-service-contract-alignment-review.md`
     - Backend Dependency:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/16` (reopened)
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941319649`
+      - `rag-cargoo/ticket-core-service#16` (reopened)
+      - `rag-cargoo/ticket-core-service#16 comment 3941319649`
     - 수정 대상(예정):
       - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/QueueToolbar.tsx`
       - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/SeatReservationModal.tsx`
