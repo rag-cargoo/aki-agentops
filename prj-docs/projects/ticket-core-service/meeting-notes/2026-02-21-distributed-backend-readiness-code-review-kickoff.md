@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 18:27:00`
-> - **Updated At**: `2026-02-22 10:02:24`
+> - **Updated At**: `2026-02-22 10:52:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -162,8 +162,14 @@
     - WebSocket 구독 인증 경계 강화
     - 대기열 활성화 Lua 원자 처리
     - waiting-queue/hold-expire 스케줄러 분산락 적용
+  - #21 1차 구현 PR 생성:
+    - Redis soft lock 서비스 + v7 lock API 추가
+    - v7 hold 경계에 foreign soft lock 차단/hold 승격 반영
+    - 좌석맵 WebSocket 구독/상태 fan-out(`SELECTING/HOLD/CONFIRMED/AVAILABLE/RELEASED`) 반영
+    - Product PR: `rag-cargoo/ticket-core-service PR #24` (open, cross-repo shorthand)
+    - Progress Comment: `rag-cargoo/ticket-core-service#21 comment 3939905567` (cross-repo shorthand)
 - 남은 것:
   - #21 본 구현:
-    - 클릭 기반 Redis soft lock과 좌석 확정(DB HOLD) 경계 API/상태머신 상세 계약서 확정
+    - 클릭 기반 Redis soft lock과 좌석 확정(DB HOLD) 경계 API/상태머신 상세 계약서 최종 고정(1차 PR 리뷰 반영)
     - WebSocket broker relay 및 멀티노드 구독자 추적 전략 확정
     - 적용 우선순위(즉시/차기) 확정
