@@ -53,6 +53,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+      * [2026-02-22 Kafka-Only Realtime Broker Migration Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-kafka-only-realtime-broker-migration-kickoff.md)
       * [2026-02-22 Compose Single-File + Scale Unification Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-compose-single-file-scale-unification-kickoff.md)
       * [2026-02-20 Portfolio Seed and Frontend Origin Defaults](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-portfolio-seed-and-frontend-origin-defaults.md)
       * [2026-02-20 Concert Sale Status Contract and Probe Coverage](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-concert-sale-status-contract-and-probe-coverage.md)

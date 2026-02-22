@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 22:33:18`
+> - **Updated At**: `2026-02-22 23:25:48`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -462,3 +462,36 @@
       - `docker-compose -f docker-compose.yml config` PASS
       - `bash -n scripts/perf/run-k6-waiting-queue-distributed.sh` PASS
       - `./gradlew test --tests '*WebSocketConfigTest'` PASS
+
+- TCS-SC-024 Kafka-only 실시간 브로커 전환(WS relay 제거 + 전달 경로 재정렬)
+  - Status: DOING
+  - Description:
+    - runtime broker dependency를 Kafka-only로 정렬하기 위해 `ws-relay`(RabbitMQ STOMP relay) 의존을 제거한다.
+    - WebSocket 전달 경로를 relay 중심이 아닌 Kafka-only 아키텍처 기준으로 재정렬한다.
+    - compose/설정/문서를 통합 갱신해 운영 기본값과 실제 런타임 구성을 일치시킨다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-kafka-only-realtime-broker-migration-kickoff.md`
+    - Product Tracking:
+      - `ticket-core-service Issue #3` (reopened)
+      - `ticket-core-service Issue #3 comment 3941035224`
+      - `ticket-core-service Issue #3 comment 3941042057`
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #29` (merged)
+      - merge commit: `20e84d94cd7ddb22f7c157b4c1040ae127386f57`
+    - Sidecar Tracking:
+      - `https://github.com/rag-cargoo/aki-agentops/issues/136` (reopened, in progress)
+      - `https://github.com/rag-cargoo/aki-agentops/issues/136#issuecomment-3941036228`
+      - `https://github.com/rag-cargoo/aki-agentops/issues/136#issuecomment-3941045490`
+    - Phase-1 Runtime Alignment:
+      - `workspace/apps/backend/ticket-core-service/docker-compose.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/WebSocketBrokerProperties.java`
+      - `workspace/apps/backend/ticket-core-service/README.md`
+    - Phase-1 Verification:
+      - `docker-compose -f docker-compose.yml config` PASS
+      - `./gradlew test --tests '*WebSocketConfigTest'` PASS
+  - Next:
+    - `docker-compose.yml`에서 `ws-relay` 및 relay env 제거
+    - WS broker 기본값/설정 재정렬(`application.yml`, `WebSocketBrokerProperties`, `README`)
+    - 최소 회귀 검증(`compose config`, 관련 테스트) 후 제품 PR 생성
