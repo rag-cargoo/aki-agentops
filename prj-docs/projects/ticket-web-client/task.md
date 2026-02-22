@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-22 21:21:29`
+> - **Updated At**: `2026-02-22 23:00:52`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -40,6 +40,7 @@
 - [x] TWC-SC-015 서비스/어드민/검증랩 라우트 분리 + App.tsx 모듈 리팩토링
 - [x] TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
 - [x] TWC-SC-017 실시간 WS endpoint 오버라이드(`VITE_WS_URL`) + 운영 기본값 정렬
+- [x] TWC-SC-018 backend compose LB 기본 진입점(`:18080`) 기준 프론트 dev proxy/runtime 정렬
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -341,6 +342,28 @@
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260222-211839-251775/run.log`
     - `ticket-web-client Issue #5`: `https://github.com/rag-cargoo/ticket-web-client/issues/5`
     - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/5#issuecomment-3940840813`
+
+- TWC-SC-018 backend compose LB 기본 진입점(`:18080`) 기준 프론트 dev proxy/runtime 정렬
+  - Status: DONE
+  - Description:
+    - backend compose 기준 런타임 진입점이 LB(`:18080`)로 통합됨에 따라 프론트 Vite dev proxy 기본 타깃을 동일하게 정렬한다.
+    - `VITE_API_BASE_URL=/api` 계약은 유지하고, 기본 dev target만 LB 기준으로 상향한다.
+    - split-domain/WS endpoint override 가이드와 `bootRun` 직결 override 가이드를 문서에 명시한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc018-backend-compose-lb-default-alignment.md`
+    - Tracking Issue:
+      - `ticket-web-client Issue #5` (reopened -> closed)
+      - `ticket-web-client Issue #5 comment 3940970608`
+    - Product PR:
+      - `rag-cargoo/ticket-web-client PR #13` (merged)
+      - merge commit: `b65932961ee052652dfcf2c1027953475149be4f`
+    - Runtime/Docs:
+      - `workspace/apps/frontend/ticket-web-client/vite.config.ts`
+      - `workspace/apps/frontend/ticket-web-client/.env.example`
+      - `workspace/apps/frontend/ticket-web-client/README.md`
+    - Verification:
+      - `npm run typecheck` PASS
 
 ## Next Items
 - (none)
