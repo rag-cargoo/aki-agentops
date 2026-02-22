@@ -405,6 +405,11 @@
       - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-latest.md` (PASS)
       - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-summary.json`
       - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/20260222T023602Z/k6-latest.log`
+      - Strict Distributed Recheck:
+        - Run Stamp: `20260222T050404Z` (UTC)
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-distributed-latest.md` (PASS)
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-distributed-summary.json`
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/distributed/20260222T050404Z/k6-distributed.log`
     - Progress Link:
       - `rag-cargoo/ticket-core-service#21 comment 3939905567` (cross-repo shorthand)
       - `rag-cargoo/ticket-core-service#21 comment 3939919828` (cross-repo shorthand, 2차 트랙 재개)
