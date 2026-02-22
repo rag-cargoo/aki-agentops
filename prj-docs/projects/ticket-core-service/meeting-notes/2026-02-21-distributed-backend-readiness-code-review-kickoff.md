@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 18:27:00`
-> - **Updated At**: `2026-02-22 11:16:40`
+> - **Updated At**: `2026-02-22 11:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -152,7 +152,7 @@
   - Product Issue: `https://github.com/rag-cargoo/ticket-core-service/issues/21`
 
 ## 진행현황: 완료/남은 항목
-- Status: IN_PROGRESS
+- Status: DONE
 - 완료된 것:
   - 분산 백엔드 코드리뷰 착수 안건 생성
   - 점검 범위/체크리스트/진행 원칙 합의용 문서화
@@ -177,7 +177,18 @@
     - 스케줄러 fan-out 경로는 유지하면서 멀티노드 구독자 조회를 Redis 기준으로 정렬
     - Product PR: `rag-cargoo/ticket-core-service PR #25` (merged, cross-repo shorthand)
     - Progress Comment: `rag-cargoo/ticket-core-service#21 comment 3939932628` (cross-repo shorthand)
+  - #21 phase2-b 운영/검증 완료:
+    - 장애/폴백 운영 계약 반영:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/realtime-push-api.md`
+      - 섹션 `6. 장애/폴백 운영 Runbook (WS->SSE + DB 재동기화)` 추가
+    - 대규모 트래픽 검증(k6) 증빙 확보:
+      - Run Stamp: `20260222T023602Z` (UTC)
+      - Result: PASS (`http_req_failed=0%`, `p95=3.35ms`, `p99=3.97ms`, `checks=100%`)
+      - Artifacts:
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-latest.md`
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-summary.json`
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/20260222T023602Z/k6-latest.log`
+    - Progress Comment: `rag-cargoo/ticket-core-service#21 comment 3939981513` (cross-repo shorthand, phase2-b 완료)
+    - Issue Close: `rag-cargoo/ticket-core-service#21` (closed)
 - 남은 것:
-  - #21 2차 구현:
-    - 장애/폴백 운영 계약(SSE fallback + DB 기준 재동기화 runbook) 확정
-    - 대규모 트래픽 검증(k6 시나리오) 증빙 추가
+  - 없음 (#21 완료 기준 충족)
