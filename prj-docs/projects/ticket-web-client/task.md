@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-20 18:26:40`
+> - **Updated At**: `2026-02-22 21:21:29`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -39,6 +39,7 @@
 - [x] TWC-SC-014 실백엔드 STOMP/SSE 구독 등록 API 연동 및 재연결(backoff) 복구 고도화
 - [x] TWC-SC-015 서비스/어드민/검증랩 라우트 분리 + App.tsx 모듈 리팩토링
 - [x] TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
+- [x] TWC-SC-017 실시간 WS endpoint 오버라이드(`VITE_WS_URL`) + 운영 기본값 정렬
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -320,6 +321,26 @@
     - `.codex/tmp/frontend-playwright/ticket-web-client/20260220-182534-76641/run.log`
     - `ticket-web-client Issue #7`: `https://github.com/rag-cargoo/ticket-web-client/issues/7`
     - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/7#issuecomment-3932659509`
+
+- TWC-SC-017 실시간 WS endpoint 오버라이드(`VITE_WS_URL`) + 운영 기본값 정렬
+  - Status: DONE
+  - Description:
+    - 분산/분리 배포 환경에서 WS endpoint를 명시 지정할 수 있도록 `VITE_WS_URL`을 실제 런타임 해석 로직에 연결한다.
+    - WS URL 결정 우선순위를 `VITE_WS_URL` -> `VITE_API_BASE_URL` 기반 자동 유도 -> `/ws` fallback 순으로 고정한다.
+    - route 분리 이후 realtime 회귀 안정화를 위해 e2e probe 모드에서 홈에서도 `My Reservations` 패널을 노출한다.
+    - sidecar 문서(회의록/task/index/sidebar)와 구현/검증 결과를 동기화한다.
+  - Evidence:
+    - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc017-realtime-ws-url-override-and-runtime-default-alignment.md`
+    - `workspace/apps/frontend/ticket-web-client/src/app/app-utils.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+    - `workspace/apps/frontend/ticket-web-client/src/vite-env.d.ts`
+    - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/ServiceQueueSection.tsx`
+    - `workspace/apps/frontend/ticket-web-client/.env.example`
+    - `workspace/apps/frontend/ticket-web-client/README.md`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260222-211839-251775/summary.txt`
+    - `.codex/tmp/frontend-playwright/ticket-web-client/20260222-211839-251775/run.log`
+    - `ticket-web-client Issue #5`: `https://github.com/rag-cargoo/ticket-web-client/issues/5`
+    - `Issue Progress Comment`: `https://github.com/rag-cargoo/ticket-web-client/issues/5#issuecomment-3940840813`
 
 ## Next Items
 - (none)
