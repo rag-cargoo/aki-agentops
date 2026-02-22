@@ -415,6 +415,20 @@
       - `rag-cargoo/ticket-core-service#21 comment 3939919828` (cross-repo shorthand, 2차 트랙 재개)
       - `rag-cargoo/ticket-core-service#21 comment 3939932628` (cross-repo shorthand, phase2-a 진행)
       - `rag-cargoo/ticket-core-service#21 comment 3939981513` (cross-repo shorthand, phase2-b 완료)
+      - `rag-cargoo/ticket-core-service#21 comment 3940744518` (cross-repo shorthand, 분산 런타임 기본값/compose root 정렬 follow-up)
+    - Follow-up (2026-02-22):
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-distributed-runtime-defaults-and-compose-root-alignment.md`
+      - Runtime Alignment:
+        - `workspace/apps/backend/ticket-core-service/docker-compose.distributed.yml` (루트 배치 + relay 기본 주입)
+        - `workspace/apps/backend/ticket-core-service/scripts/perf/run-k6-waiting-queue-distributed.sh` (기본 compose 경로 보정)
+        - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml` (`APP_RESERVATION_SOFT_LOCK_TTL_SECONDS`, `APP_PAYMENT_PROVIDER` override 반영)
+        - `workspace/apps/backend/ticket-core-service/src/main/resources/application-local.yml` (동일 override 반영)
+        - `workspace/apps/backend/ticket-core-service/src/main/resources/application-docker.yml` (동일 override 반영)
+        - `workspace/apps/backend/ticket-core-service/README.md` (분산 운영 기본값/override 문서화)
+      - Verification:
+        - `bash -n workspace/apps/backend/ticket-core-service/scripts/perf/run-k6-waiting-queue-distributed.sh` PASS
+        - `docker-compose -f workspace/apps/backend/ticket-core-service/docker-compose.distributed.yml config` PASS
     - Precondition:
       - `rag-cargoo/ticket-core-service#22` 완료 (cross-repo shorthand)
   - Next:
