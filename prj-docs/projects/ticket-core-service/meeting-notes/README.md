@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 06:49:48`
+> - **Updated At**: `2026-02-23 07:35:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-23 Clean DDD/Hexagonal Governance Kickoff](./2026-02-23-clean-ddd-hexagonal-governance-kickoff.md)
 - [2026-02-23 Backend Seed Strategy Completion and Issue #16 Closeout](./2026-02-23-backend-seed-strategy-and-issue16-closeout.md)
 - [2026-02-22 Domain Association + QueryDSL Admin CRUD Plan](./2026-02-22-domain-association-and-querydsl-admin-crud-plan.md)
 - [2026-02-22 Backend Admin CRUD + Seed Gap Reopen Plan](./2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md)
