@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 11:16:40`
+> - **Updated At**: `2026-02-22 11:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -384,7 +384,7 @@
       - `rag-cargoo/ticket-core-service#21 comment 3939821886` (cross-repo shorthand)
 
 - TCS-SC-021 대규모 매진 트래픽 대응 좌석 실시간 선점(soft lock) + 좌석확정(HOLD) 상태머신 정렬
-  - Status: IN_PROGRESS
+  - Status: DONE
   - Description:
     - 대형 공연(`10만+` 좌석) + 짧은 시간대 대량 동시접속 + 오토스케일링 분산 배포를 전제로 좌석 상태머신 운영 기준을 고정한다.
     - 클릭 단계는 Redis soft lock(`SET NX EX`) + WebSocket fan-out으로 처리하고, DB는 좌석 확정(HOLD) 및 결제 확정(CONFIRMED) 원장으로 유지한다.
@@ -393,16 +393,24 @@
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
     - Tracking Issue:
-      - `rag-cargoo/ticket-core-service#21` (open, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#21` (closed, cross-repo shorthand)
     - Product PR:
       - `rag-cargoo/ticket-core-service PR #24` (merged, cross-repo shorthand)
       - `rag-cargoo/ticket-core-service PR #25` (merged, cross-repo shorthand)
+    - Runbook Sync:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/realtime-push-api.md`
+      - 섹션 `6. 장애/폴백 운영 Runbook (WS->SSE + DB 재동기화)` 반영
+    - k6 Evidence:
+      - Run Stamp: `20260222T023602Z` (UTC)
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-latest.md` (PASS)
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-summary.json`
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/20260222T023602Z/k6-latest.log`
     - Progress Link:
       - `rag-cargoo/ticket-core-service#21 comment 3939905567` (cross-repo shorthand)
       - `rag-cargoo/ticket-core-service#21 comment 3939919828` (cross-repo shorthand, 2차 트랙 재개)
       - `rag-cargoo/ticket-core-service#21 comment 3939932628` (cross-repo shorthand, phase2-a 진행)
+      - `rag-cargoo/ticket-core-service#21 comment 3939981513` (cross-repo shorthand, phase2-b 완료)
     - Precondition:
       - `rag-cargoo/ticket-core-service#22` 완료 (cross-repo shorthand)
   - Next:
-    - 장애/폴백 운영 계약(SSE fallback + DB 기준 재동기화 runbook) 확정
-    - 대규모 트래픽 검증(k6 시나리오) 증빙 추가
+    - 없음 (완료)
