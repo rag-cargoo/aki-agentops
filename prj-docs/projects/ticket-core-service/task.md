@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 07:55:00`
+> - **Updated At**: `2026-02-23 08:40:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -613,21 +613,43 @@
         - `ReservationService*`, `ReservationLifecycleService*`, `SalesPolicyService*`
       - Out-of-scope:
         - `WaitingQueueService*`, `PgReadyWebhookService` (Phase2-B)
+    - Phase2-A Progress (2026-02-23):
+      - `reservation` 서비스 클래스 6개를 `application.reservation.service`로 이동
+      - 참조 업데이트:
+        - `api/controller/*`
+        - `global/lock/RedissonLockFacade`
+        - `global/messaging/KafkaReservationConsumer`
+        - `global/scheduler/ReservationLifecycleScheduler`
+        - reservation/concert/scheduler 관련 테스트
+    - Phase2-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase2b-waitingqueue-webhook-application-boundary-kickoff.md`
+      - Scope:
+        - `WaitingQueueService*`
+        - `PgReadyWebhookService`
+      - Goal:
+        - `domain -> api` import 잔여(`5건/3파일`)를 제거해 0건을 목표로 정리
+    - Phase2-B Progress (2026-02-23):
+      - 이동:
+        - `domain.waitingqueue.service.WaitingQueueService*` -> `application.waitingqueue.service.WaitingQueueService*`
+        - `domain.payment.webhook.PgReadyWebhookService` -> `application.payment.webhook.PgReadyWebhookService`
+      - 참조 업데이트:
+        - `api/waitingqueue/WaitingQueueController`
+        - `global/scheduler/WaitingQueueScheduler`
+        - `domain/reservation/adapter/outbound/ReservationWaitingQueuePortAdapter`
+        - `api/controller/PaymentWebhookController`
+      - 테스트 정렬:
+        - `PgReadyWebhookServiceTest` 패키지/경로를 `application.payment.webhook`으로 정렬
+        - `WaitingQueueServiceImplTest` 패키지/경로를 `application.waitingqueue.service`로 정렬
     - Verification:
-      - `./gradlew clean compileJava` PASS
-      - `./gradlew test --tests '*LayerDependencyArchTest' --tests '*ReservationLifecycleServiceIntegrationTest' --tests '*AuthSecurityIntegrationTest'` PASS
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+      - 참고:
+        - `ConcertExplorerIntegrationTest` 포함 실행은 로컬 Redis 미기동으로 실패(`RedisConnectionException`)
     - Residual Backlog (as-is, 2026-02-23):
-      - `domain -> api` import 잔여: `17`건 / `9`파일
-      - 잔여 파일:
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationService.java`
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationServiceImpl.java`
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleService.java`
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/SalesPolicyService.java`
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/SalesPolicyServiceImpl.java`
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/waitingqueue/service/WaitingQueueService.java`
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/waitingqueue/service/WaitingQueueServiceImpl.java`
-        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/payment/webhook/PgReadyWebhookService.java`
+      - `domain -> api` import 잔여: `0`건 / `0`파일
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-23 07:55:00`
-> - **Updated At**: `2026-02-23 07:55:00`
+> - **Updated At**: `2026-02-23 08:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -26,7 +26,7 @@
   - 현재 잔여는 `domain service -> api dto` 의존이며, DDD 경계상 Phase2에서 제거가 필요하다.
 
 ## 안건 2: 이번 범위(Phase2-A)
-- Status: DOING
+- Status: DONE
 - 범위:
   - `reservation` 도메인 서비스 계층에서 `api.dto` 의존을 제거한다.
   - 적용 대상:
@@ -34,8 +34,10 @@
     - `ReservationLifecycleService*`
     - `SalesPolicyService*`
   - 방향:
-    - 서비스 입력/출력 계약을 도메인 전용 모델(명령/결과)로 치환
-    - 컨트롤러에서 API DTO 변환 책임을 가진다
+    - `reservation` 서비스 6개 클래스를 `domain.reservation.service`에서 `application.reservation.service`로 이동
+    - 컨트롤러/락/메시징/스케줄러/테스트의 참조 경로를 `application` 패키지로 정렬
+  - 결과:
+    - `domain -> api` import 잔여에서 `reservation service` 6개 파일이 제외됨
 
 ## 안건 3: 제외 범위
 - Status: DONE
@@ -45,11 +47,13 @@
   - application/use-case 계층 전면 도입은 별도 후속 단계로 유지한다.
 
 ## 안건 4: 검증 계획
-- Status: DOING
+- Status: DONE
 - 검증:
-  - `./gradlew clean compileJava`
-  - `./gradlew test --tests '*LayerDependencyArchTest' --tests '*ReservationLifecycleServiceIntegrationTest' --tests '*AuthSecurityIntegrationTest'`
-  - 필요 시 reservation 관련 단위/통합 테스트 추가 보강
+  - `./gradlew compileJava compileTestJava --no-daemon` PASS
+  - `./gradlew test --no-daemon --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+  - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+  - 참고:
+    - `ConcertExplorerIntegrationTest` 포함 실행은 로컬 Redis 미기동으로 실패(`RedisConnectionException`)
 
 ## 안건 5: 트래킹
 - Status: DOING
@@ -63,4 +67,8 @@
 - Context:
   - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-clean-ddd-hexagonal-governance-kickoff.md`
 - Residual Snapshot:
-  - `domain -> api` import 잔여: `17`건 / `9`파일 (as-is 기준)
+  - `domain -> api` import 잔여: `5`건 / `3`파일
+  - 잔여 파일:
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/waitingqueue/service/WaitingQueueService.java`
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/waitingqueue/service/WaitingQueueServiceImpl.java`
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/payment/webhook/PgReadyWebhookService.java`
