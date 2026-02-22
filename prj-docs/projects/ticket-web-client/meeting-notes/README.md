@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-22 21:21:29`
+> - **Updated At**: `2026-02-22 22:59:20`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-22 SC018 Backend Compose LB Default Alignment](./2026-02-22-sc018-backend-compose-lb-default-alignment.md)
 - [2026-02-22 SC017 Realtime WS URL Override and Runtime Default Alignment](./2026-02-22-sc017-realtime-ws-url-override-and-runtime-default-alignment.md)
 - [2026-02-20 SC016 Admin CRUD Adapter and Playwright Scope](./2026-02-20-sc016-admin-crud-adapter-and-playwright-scope.md)
 - [2026-02-20 SC015 Phase2 Section Navigation and Component Decomposition](./2026-02-20-sc015-phase2-section-nav-and-component-decomposition.md)

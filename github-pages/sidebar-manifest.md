@@ -75,6 +75,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-22 SC018 Backend Compose LB Default Alignment](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc018-backend-compose-lb-default-alignment.md)
       * [2026-02-22 SC017 Realtime WS URL Override and Runtime Default Alignment](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc017-realtime-ws-url-override-and-runtime-default-alignment.md)
       * [2026-02-20 SC016 Admin CRUD Adapter and Playwright Scope](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-sc016-admin-crud-adapter-and-playwright-scope.md)
       * [2026-02-20 SC015 Phase2 Section Navigation and Component Decomposition](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-sc015-phase2-section-nav-and-component-decomposition.md)
