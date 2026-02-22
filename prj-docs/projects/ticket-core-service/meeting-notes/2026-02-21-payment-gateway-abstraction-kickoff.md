@@ -95,6 +95,7 @@
   - 구현용 분리 브랜치(worktree) 준비
     - backend: `feat/payment-gateway-abstraction-20260221`
     - frontend: `feat/payment-checkout-flow-contract-20260221`
+    - 후속 정리(2026-02-22): 임시 worktree(`worktrees/ticket-core-service-payment-gateway`, `worktrees/ticket-web-client-payment-checkout`) 제거 완료
   - backend Workstream 1 구현/PR:
     - `PaymentGateway` 추상화 + `ReservationPaymentPort` 분리
     - PR: `rag-cargoo/ticket-core-service PR 17`
