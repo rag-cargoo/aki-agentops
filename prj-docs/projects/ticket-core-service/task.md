@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 07:35:00`
+> - **Updated At**: `2026-02-23 07:45:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -599,14 +599,26 @@
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-clean-ddd-hexagonal-governance-kickoff.md`
     - Tracking Issue:
-      - `rag-cargoo/ticket-core-service#33` (open, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#33` (closed, cross-repo shorthand)
     - Product PR:
-      - `rag-cargoo/ticket-core-service PR #34` (open, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service PR #34` (merged, cross-repo shorthand)
       - branch: `feat/ddd-hexagonal-phase1-boundary-hardening`
-      - commit: `12aa6b4`
+      - merge commit: `bcc109f2ff117cb16bea7f5aaafdef0d6bb50457`
     - Verification:
       - `./gradlew clean compileJava` PASS
       - `./gradlew test --tests '*LayerDependencyArchTest' --tests '*ReservationLifecycleServiceIntegrationTest' --tests '*AuthSecurityIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23):
+      - `domain -> api` import 잔여: `17`건 / `9`파일
+      - 잔여 파일:
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationService.java`
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationServiceImpl.java`
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleService.java`
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/SalesPolicyService.java`
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/SalesPolicyServiceImpl.java`
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/waitingqueue/service/WaitingQueueService.java`
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/waitingqueue/service/WaitingQueueServiceImpl.java`
+        - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/payment/webhook/PgReadyWebhookService.java`
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
