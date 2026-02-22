@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-21 18:27:00`
-> - **Updated At**: `2026-02-22 08:22:51`
+> - **Updated At**: `2026-02-22 10:02:24`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -22,7 +22,7 @@
 <!-- DOC_TOC_END -->
 
 ## 안건 0: Stage 0 사전작업 게이트(선행조건)
-- Status: AGREED
+- Status: DONE
 - 분리 이유:
   - #21의 본 구현(soft lock + HOLD 상태머신)을 바로 시작하면, 분산환경에서 보안/원자성/스케줄러 중복 실행 리스크가 남는다.
   - 구현 착수 전 필수 안전장치를 선행 단계로 고정해 리스크를 줄인다.
@@ -38,8 +38,10 @@
 - 진행 순서:
   - `Stage 0(#22)` 완료 후 `#21` 본 구현 착수
 - Tracking:
-  - Stage 0 Issue: `https://github.com/rag-cargoo/ticket-core-service/issues/22`
+  - Stage 0 Issue: `https://github.com/rag-cargoo/ticket-core-service/issues/22` (closed)
+  - Stage 0 PR: `rag-cargoo/ticket-core-service PR #23` (merged, cross-repo shorthand)
   - #21 선행의존 코멘트: `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3939683402`
+  - #21 완료보고 코멘트: `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3939821886`
 
 ## 안건 1: 목적/범위
 - Status: AGREED
@@ -156,13 +158,12 @@
   - 점검 범위/체크리스트/진행 원칙 합의용 문서화
   - 대규모 매진/오토스케일링 전제를 반영한 Redis/DB 책임 분리 기준선 합의
   - #21 선행 단계 `Stage 0(#22)` 분리 및 의존 관계 고정
-- 남은 것:
-  - Stage 0 구현:
+  - Stage 0 구현 완료/머지:
     - WebSocket 구독 인증 경계 강화
-    - 대기열 활성화 원자화(Lua)
-    - 스케줄러 분산락 적용
-    - 공식 API/실시간 문서 갱신
-  - Stage 0 완료 후 #21 본 구현:
+    - 대기열 활성화 Lua 원자 처리
+    - waiting-queue/hold-expire 스케줄러 분산락 적용
+- 남은 것:
+  - #21 본 구현:
     - 클릭 기반 Redis soft lock과 좌석 확정(DB HOLD) 경계 API/상태머신 상세 계약서 확정
     - WebSocket broker relay 및 멀티노드 구독자 추적 전략 확정
     - 적용 우선순위(즉시/차기) 확정
