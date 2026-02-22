@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 08:22:51`
+> - **Updated At**: `2026-02-22 10:02:24`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -366,7 +366,7 @@
       - 절대 상한값은 본 항목 범위에서 별도 도입하지 않음(운영 설정값 + 도메인 제약으로 관리)
 
 - TCS-SC-022 #21 선행 Stage 0 사전작업 게이트(WS 인증/원자화/스케줄러 분산락)
-  - Status: IN_PROGRESS
+  - Status: DONE
   - Description:
     - #21 본 구현 착수 전에 분산환경 필수 안전장치(보안/원자성/중복실행 방지)를 선행 적용한다.
     - WebSocket 구독 인증 경계 강화, 대기열 활성화 원자화(Lua), 스케줄러 분산락 적용을 Stage 0으로 고정한다.
@@ -375,17 +375,16 @@
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
     - Tracking Issue:
-      - `rag-cargoo/ticket-core-service#22` (open, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#22` (closed, cross-repo shorthand)
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #23` (merged, cross-repo shorthand)
     - Dependency Link:
       - `rag-cargoo/ticket-core-service#21 comment 3939683402` (cross-repo shorthand)
-  - Next:
-    - WebSocket 구독 등록/해제 API 인증 컨텍스트 정렬(userId 신뢰 제거)
-    - waiting queue 활성화 경로 Lua 원자 처리로 치환
-    - waiting queue/hold-expire 스케줄러 분산락 적용
-    - API spec/realtime spec Stage 0 반영
+    - Completion Link:
+      - `rag-cargoo/ticket-core-service#21 comment 3939821886` (cross-repo shorthand)
 
 - TCS-SC-021 대규모 매진 트래픽 대응 좌석 실시간 선점(soft lock) + 좌석확정(HOLD) 상태머신 정렬
-  - Status: TODO
+  - Status: IN_PROGRESS
   - Description:
     - 대형 공연(`10만+` 좌석) + 짧은 시간대 대량 동시접속 + 오토스케일링 분산 배포를 전제로 좌석 상태머신 운영 기준을 고정한다.
     - 클릭 단계는 Redis soft lock(`SET NX EX`) + WebSocket fan-out으로 처리하고, DB는 좌석 확정(HOLD) 및 결제 확정(CONFIRMED) 원장으로 유지한다.
@@ -396,7 +395,7 @@
     - Tracking Issue:
       - `rag-cargoo/ticket-core-service#21` (open, cross-repo shorthand)
     - Precondition:
-      - `rag-cargoo/ticket-core-service#22` 완료 후 착수 (cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#22` 완료 (cross-repo shorthand)
   - Next:
     - soft lock key/TTL/owner 검증 계약(API 에러코드 포함) 고정
     - 좌석 확정 시 DB HOLD 트랜잭션 경계 및 실패 복구 계약 고정
