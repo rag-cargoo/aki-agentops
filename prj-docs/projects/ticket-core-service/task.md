@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 06:49:48`
+> - **Updated At**: `2026-02-23 07:35:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -588,3 +588,25 @@
   - Next:
     - 1) 프론트 Admin 게시판 셀렉트 플로우(Entertainment -> Artist, Promoter, Venue) 연동
     - 2) 프론트 E2E 계약 검증(관리자 CRUD + 공개 조회 계약) 확장
+
+- TCS-SC-026 Clean DDD/Hexagonal 1차 경계 정리(스킬 적용)
+  - Status: DOING
+  - Description:
+    - `clean-ddd-hexagonal` 스킬을 적용해 DDD 경계 위반을 단계적으로 제거한다.
+    - 대공사 진행 순서를 `회의록 -> task -> 제품 이슈 -> 코드 변경`으로 고정한다.
+    - 1차 범위는 `domain 엔티티 -> api 의존 제거`, `controller -> repository 직접 참조 제거`, `아키텍처 테스트(ArchUnit) 도입`으로 제한한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-clean-ddd-hexagonal-governance-kickoff.md`
+    - Tracking Issue:
+      - `rag-cargoo/ticket-core-service#33` (open, cross-repo shorthand)
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #34` (open, cross-repo shorthand)
+      - branch: `feat/ddd-hexagonal-phase1-boundary-hardening`
+      - commit: `12aa6b4`
+    - Verification:
+      - `./gradlew clean compileJava` PASS
+      - `./gradlew test --tests '*LayerDependencyArchTest' --tests '*ReservationLifecycleServiceIntegrationTest' --tests '*AuthSecurityIntegrationTest'` PASS
+    - Skill Install:
+      - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
+      - `skills-lock.json`
