@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 07:45:00`
+> - **Updated At**: `2026-02-23 07:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -595,15 +595,24 @@
     - `clean-ddd-hexagonal` 스킬을 적용해 DDD 경계 위반을 단계적으로 제거한다.
     - 대공사 진행 순서를 `회의록 -> task -> 제품 이슈 -> 코드 변경`으로 고정한다.
     - 1차 범위는 `domain 엔티티 -> api 의존 제거`, `controller -> repository 직접 참조 제거`, `아키텍처 테스트(ArchUnit) 도입`으로 제한한다.
+    - 2차(Phase2-A) 범위는 `reservation` 서비스 계층의 `domain -> api dto` 의존 제거를 우선 수행한다.
   - Evidence:
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-clean-ddd-hexagonal-governance-kickoff.md`
     - Tracking Issue:
-      - `rag-cargoo/ticket-core-service#33` (closed, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#33` (reopened, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#33 comment 3941854946` (phase2-a kickoff)
     - Product PR:
       - `rag-cargoo/ticket-core-service PR #34` (merged, cross-repo shorthand)
       - branch: `feat/ddd-hexagonal-phase1-boundary-hardening`
       - merge commit: `bcc109f2ff117cb16bea7f5aaafdef0d6bb50457`
+    - Phase2-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase2a-reservation-application-layer-kickoff.md`
+      - Scope:
+        - `ReservationService*`, `ReservationLifecycleService*`, `SalesPolicyService*`
+      - Out-of-scope:
+        - `WaitingQueueService*`, `PgReadyWebhookService` (Phase2-B)
     - Verification:
       - `./gradlew clean compileJava` PASS
       - `./gradlew test --tests '*LayerDependencyArchTest' --tests '*ReservationLifecycleServiceIntegrationTest' --tests '*AuthSecurityIntegrationTest'` PASS
