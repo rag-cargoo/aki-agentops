@@ -525,8 +525,8 @@
       - `rag-cargoo/ticket-core-service#16 comment 3941623654`
       - `rag-cargoo/ticket-core-service#16 comment 3941631467`
       - `rag-cargoo/ticket-core-service#16 comment 3941655066`
-      - `rag-cargoo/ticket-core-service PR #31` (merged)
-      - `rag-cargoo/ticket-core-service PR #32` (merged)
+      - `rag-cargoo/ticket-core-service PR #31` (merged, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service PR #32` (merged, cross-repo shorthand)
     - Code Baseline:
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
       - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/EntertainmentCatalogController.java`

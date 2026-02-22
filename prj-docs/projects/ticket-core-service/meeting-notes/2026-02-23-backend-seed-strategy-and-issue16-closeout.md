@@ -54,13 +54,13 @@
 ## 안건 4: 이슈/PR 정리
 - Status: DONE
 - Product:
-  - Issue: `https://github.com/rag-cargoo/ticket-core-service/issues/16` (closed)
+  - Issue: `rag-cargoo/ticket-core-service#16` (closed, cross-repo shorthand)
   - PR:
-    - `https://github.com/rag-cargoo/ticket-core-service/pull/31` (merged)
-    - `https://github.com/rag-cargoo/ticket-core-service/pull/32` (merged)
+    - `rag-cargoo/ticket-core-service PR #31` (merged, cross-repo shorthand)
+    - `rag-cargoo/ticket-core-service PR #32` (merged, cross-repo shorthand)
   - Merge Commit:
-    - `41aaefbc62099bf3ec760dae54b7a6d01160e991` (PR #31)
-    - `bfe1692f0a72ef64fdd5502724ab9070411c081c` (PR #32)
+    - `41aaefbc62099bf3ec760dae54b7a6d01160e991` (ticket-core-service pull/31)
+    - `bfe1692f0a72ef64fdd5502724ab9070411c081c` (ticket-core-service pull/32)
 
 ## 안건 5: 후속 작업
 - Status: TODO
