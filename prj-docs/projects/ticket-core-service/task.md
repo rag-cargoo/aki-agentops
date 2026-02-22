@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 10:02:24`
+> - **Updated At**: `2026-02-22 10:52:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -394,6 +394,10 @@
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
     - Tracking Issue:
       - `rag-cargoo/ticket-core-service#21` (open, cross-repo shorthand)
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #24` (open, cross-repo shorthand)
+    - Progress Link:
+      - `rag-cargoo/ticket-core-service#21 comment 3939905567` (cross-repo shorthand)
     - Precondition:
       - `rag-cargoo/ticket-core-service#22` 완료 (cross-repo shorthand)
   - Next:
