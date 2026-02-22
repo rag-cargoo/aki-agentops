@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-22 22:17:08`
-> - **Updated At**: `2026-02-22 22:29:51`
+> - **Updated At**: `2026-02-22 22:33:18`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -34,7 +34,7 @@
 - 링크:
   - 이슈: `https://github.com/rag-cargoo/ticket-core-service/issues/21`
   - 후속 코멘트: `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3940924556`
-  - PR: `https://github.com/rag-cargoo/ticket-core-service/pull/28`
+  - PR: `rag-cargoo/ticket-core-service PR #28`
 
 ## 안건 3: task 동기화
 - Status: DONE
@@ -57,7 +57,7 @@
   - `./gradlew test --tests '*WebSocketConfigTest'` PASS
 - 증빙:
   - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3940943019`
-  - `https://github.com/rag-cargoo/ticket-core-service/pull/28`
+  - `rag-cargoo/ticket-core-service PR #28`
   - `workspace/apps/backend/ticket-core-service/docker-compose.yml`
   - `workspace/apps/backend/ticket-core-service/scripts/perf/run-k6-waiting-queue-distributed.sh`
   - `workspace/apps/backend/ticket-core-service/scripts/perf/nginx/k6-distributed-lb.conf`

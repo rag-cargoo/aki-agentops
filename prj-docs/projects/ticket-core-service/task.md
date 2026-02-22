@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 22:29:51`
+> - **Updated At**: `2026-02-22 22:33:18`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -448,7 +448,7 @@
       - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3940924556`
       - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3940943019`
     - Product PR:
-      - `https://github.com/rag-cargoo/ticket-core-service/pull/28` (merged)
+      - `rag-cargoo/ticket-core-service PR #28` (merged)
       - merge commit: `fa194740f97cebb0a0a8b03872b425bbb6caf4f1`
     - Runtime/Script:
       - `workspace/apps/backend/ticket-core-service/docker-compose.yml`
