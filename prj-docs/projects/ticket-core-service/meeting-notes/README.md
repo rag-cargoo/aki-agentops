@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 23:56:19`
+> - **Updated At**: `2026-02-23 05:48:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,8 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-22 Domain Association + QueryDSL Admin CRUD Plan](./2026-02-22-domain-association-and-querydsl-admin-crud-plan.md)
+- [2026-02-22 Backend Admin CRUD + Seed Gap Reopen Plan](./2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md)
 - [2026-02-22 Kafka-Only Realtime Broker Migration Kickoff](./2026-02-22-kafka-only-realtime-broker-migration-kickoff.md)
 - [2026-02-22 Compose Single-File + Scale Unification Kickoff](./2026-02-22-compose-single-file-scale-unification-kickoff.md)
 - [2026-02-22 Distributed Runtime Defaults and Compose Root Alignment](./2026-02-22-distributed-runtime-defaults-and-compose-root-alignment.md)

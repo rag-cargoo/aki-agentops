@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-22 23:00:52`
+> - **Updated At**: `2026-02-22 23:59:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -41,6 +41,7 @@
 - [x] TWC-SC-016 Admin CRUD(공연/좌석/가격/상태/썸네일 업로드/유튜브 링크) 정보구조 및 API 어댑터 1차 구현
 - [x] TWC-SC-017 실시간 WS endpoint 오버라이드(`VITE_WS_URL`) + 운영 기본값 정렬
 - [x] TWC-SC-018 backend compose LB 기본 진입점(`:18080`) 기준 프론트 dev proxy/runtime 정렬
+- [ ] TWC-SC-019 서비스 계약 정렬(토큰 정책 단일화 + 예약 API 경로 정합 + non-mock smoke)
 
 ## Current Items
 - TWC-SC-001 프론트 프로젝트 sidecar 등록 및 기본 문서 생성
@@ -365,5 +366,25 @@
     - Verification:
       - `npm run typecheck` PASS
 
+- TWC-SC-019 서비스 계약 정렬(토큰 정책 단일화 + 예약 API 경로 정합 + non-mock smoke)
+  - Status: TODO
+  - Description:
+    - 서비스 화면에서 수동 Access Token 입력을 제거하고 OAuth 세션 기반 인증으로 단일화한다.
+    - 예약/취소/환불 API 호출을 백엔드 현재 계약(단건 v7)과 정합되게 수정한다.
+    - E2E(route mocking)와 별도로 non-mock 실백엔드 smoke 검증을 추가한다.
+    - 예약 실시간 구독 등록 seat snapshot 갱신 전략(신규 예약 반영)을 보강한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc019-frontend-service-contract-alignment-review.md`
+    - Backend Dependency:
+      - `rag-cargoo/ticket-core-service#16` (reopened)
+      - `rag-cargoo/ticket-core-service#16 comment 3941319649`
+    - 수정 대상(예정):
+      - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/QueueToolbar.tsx`
+      - `workspace/apps/frontend/ticket-web-client/src/app/pages/service/SeatReservationModal.tsx`
+      - `workspace/apps/frontend/ticket-web-client/src/shared/api/reservation-v7-client.ts`
+      - `workspace/apps/frontend/ticket-web-client/src/app/App.tsx`
+      - `workspace/apps/frontend/ticket-web-client/tests/e2e/*`
+
 ## Next Items
-- (none)
+- `TWC-SC-019` 우선 착수(서비스 계약 정렬 1차)

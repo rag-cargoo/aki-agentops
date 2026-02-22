@@ -53,6 +53,8 @@
       * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+      * [2026-02-22 Domain Association + QueryDSL Admin CRUD Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-domain-association-and-querydsl-admin-crud-plan.md)
+      * [2026-02-22 Backend Admin CRUD + Seed Gap Reopen Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md)
       * [2026-02-22 Kafka-Only Realtime Broker Migration Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-kafka-only-realtime-broker-migration-kickoff.md)
       * [2026-02-22 Compose Single-File + Scale Unification Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-compose-single-file-scale-unification-kickoff.md)
       * [2026-02-20 Portfolio Seed and Frontend Origin Defaults](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-portfolio-seed-and-frontend-origin-defaults.md)
@@ -76,6 +78,7 @@
       * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-22 SC019 Frontend Service Contract Alignment Review](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc019-frontend-service-contract-alignment-review.md)
       * [2026-02-22 SC018 Backend Compose LB Default Alignment](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc018-backend-compose-lb-default-alignment.md)
       * [2026-02-22 SC017 Realtime WS URL Override and Runtime Default Alignment](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc017-realtime-ws-url-override-and-runtime-default-alignment.md)
       * [2026-02-20 SC016 Admin CRUD Adapter and Playwright Scope](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-sc016-admin-crud-adapter-and-playwright-scope.md)

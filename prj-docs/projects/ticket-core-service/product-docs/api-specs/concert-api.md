@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-20 04:30:00`
+> - **Updated At**: `2026-02-23 05:48:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -351,6 +351,32 @@
 **Response Summary (200 OK)**
 
 - `PUT /api/concerts/{concertId}/sales-policy` 응답과 동일한 필드 구조를 반환합니다.
+
+---
+
+### 1.8. [Admin] 운영 콘서트 CRUD 경로
+- **Base Endpoint**: `/api/admin/concerts`
+- **Description**: 운영 관리자 경로에서 콘서트/회차 관리 및 판매정책 갱신을 수행합니다.
+
+**Endpoints**
+
+| Method | Path | Description |
+| :--- | :--- | :--- |
+| POST | `/api/admin/concerts` | 콘서트 생성 (`artistId/promoterId` 또는 `artistName+agencyName` fallback) |
+| GET | `/api/admin/concerts/{concertId}` | 콘서트 단건 조회 |
+| PUT | `/api/admin/concerts/{concertId}` | 콘서트 수정 |
+| DELETE | `/api/admin/concerts/{concertId}` | 콘서트 삭제 |
+| POST | `/api/admin/concerts/{concertId}/options` | 회차 생성 (`concertDate`, `seatCount`, `venueId`, `ticketPriceAmount`) |
+| PUT | `/api/admin/concerts/options/{optionId}` | 회차 수정 (`concertDate`, `venueId`, `ticketPriceAmount`) |
+| DELETE | `/api/admin/concerts/options/{optionId}` | 회차 삭제 |
+| POST | `/api/admin/concerts/{concertId}/thumbnail` | 썸네일 업로드 (multipart `image`) |
+| DELETE | `/api/admin/concerts/{concertId}/thumbnail` | 썸네일 삭제 |
+| PUT | `/api/admin/concerts/{concertId}/sales-policy` | 판매정책 생성/수정 |
+| GET | `/api/concerts/{concertId}/thumbnail` | 공개 썸네일 이미지 조회 (`image/*`) |
+
+**Response 확장 필드**
+- `ConcertResponse`: `promoterId`, `promoterName`, `promoterCountryCode`, `promoterHomepageUrl`, `youtubeVideoUrl`, `thumbnailUrl`
+- `ConcertOptionResponse`: `ticketPriceAmount`, `venueId`, `venueName`, `venueCity`, `venueCountryCode`, `venueAddress`
 
 ## 2. 캐싱 정책/무효화 규칙
 
