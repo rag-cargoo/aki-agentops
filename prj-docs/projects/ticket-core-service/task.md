@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-22 23:56:19`
+> - **Updated At**: `2026-02-23 05:48:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -506,3 +506,77 @@
     - `docker-compose.yml`에서 `ws-relay` 및 relay env 제거
     - WS broker 기본값/설정 재정렬(`application.yml`, `WebSocketBrokerProperties`, `README`)
     - 최소 회귀 검증(`compose config`, 관련 테스트) 후 제품 PR 생성
+
+- TCS-SC-025 Admin CRUD/카탈로그 조회/초기시드 정합 복구(#16 재오픈)
+  - Status: DOING
+  - Description:
+    - `main` 기준 `/api/admin/concerts/**` 운영 CRUD 경로 부재를 복구한다(콘서트/회차/가격/판매정책/썸네일 포함).
+    - `Agency/Artist` 도메인에 Admin 보드용 `find/search/paging` 조회 경로를 추가한다.
+    - 도메인 의미를 `Entertainment(소속사)`/`Promoter(기획사)`로 분리하고 `Venue` 도메인 도입 경계를 설계한다.
+    - `DataInitializer`/seed 전략을 dev/demo profile 분리 + idempotent 시드 방식으로 정렬한다.
+    - 프론트 관리자 계약(`admin-concert-client.ts`)과 실백엔드 런타임 계약을 일치시킨다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-domain-association-and-querydsl-admin-crud-plan.md`
+    - Product Tracking:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/16` (reopened)
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941319649`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941623654`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941631467`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/16#issuecomment-3941655066`
+    - Code Baseline:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AgencyController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ArtistController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
+      - `workspace/apps/frontend/ticket-web-client/src/shared/api/admin-concert-client.ts`
+      - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - Phase B 1차 구현:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/agency/AgencySearchRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/agency/AgencySearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/artist/ArtistSearchRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/artist/ArtistSearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/AgencySearchPageResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ArtistSearchPageResponse.java`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md`
+    - Phase B 2차 구현(도메인 분리 + Admin CRUD 골격):
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/promoter/Promoter.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/promoter/PromoterRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/promoter/PromoterSearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/venue/Venue.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/venue/VenueRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/venue/VenueSearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/EntertainmentController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/PromoterController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/VenueController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AdminConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/entity/Concert.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/entity/ConcertOption.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ConcertResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ConcertOptionResponse.java`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md`
+    - Phase B 3차 구현(프론트 계약 정합: 썸네일/가격/미디어):
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AdminConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/admin/AdminConcertUpsertRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/admin/AdminConcertOptionCreateRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/admin/AdminConcertOptionUpdateRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/entity/Concert.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/entity/ConcertOption.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertService.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
+    - Verification:
+      - `./gradlew compileJava` PASS
+      - `./gradlew test --tests '*Agency*' --tests '*Artist*'` FAIL (`RedisConnectionException`, 환경 의존)
+      - `./gradlew test --tests '*ReservationStateMachineTest' --tests '*SeatSoftLockServiceImplTest'` PASS
+      - `./gradlew test --tests '*ReservationStateMachineTest' --tests '*SeatSoftLockServiceImplTest' --tests '*ReservationLifecycleServiceIntegrationTest'` PASS
+    - Candidate Previous Work:
+      - branch: `feat/admin-ops-crud-media-20260220`
+      - commits: `eec88b0`, `732c6be`
+  - Next:
+    - 1) 초기 시드 전략(dev/demo) 확정 + 런타임 플래그/문서화 + 최소 smoke 검증
+    - 2) 프론트 Admin 게시판 셀렉트 플로우(Entertainment -> Artist, Promoter, Venue) 연동
+    - 3) Product PR 생성 후 `#16` 체크리스트 항목별 완료 코멘트 누적 및 close 판정
