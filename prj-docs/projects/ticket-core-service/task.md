@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 08:40:00`
+> - **Updated At**: `2026-02-23 09:00:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -648,8 +648,29 @@
       - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
       - 참고:
         - `ConcertExplorerIntegrationTest` 포함 실행은 로컬 Redis 미기동으로 실패(`RedisConnectionException`)
-    - Residual Backlog (as-is, 2026-02-23):
+    - Phase3-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase3a-application-command-result-decoupling-kickoff.md`
+      - Scope:
+        - `application.waitingqueue.service`
+        - `application.payment.webhook.PgReadyWebhookService`
+      - Goal:
+        - application 계층의 API DTO 직접 의존을 command/result 모델로 치환(컨트롤러 매핑 책임화)
+    - Phase3-A Progress (2026-02-23):
+      - waitingqueue:
+        - `WaitingQueueJoinCommand`/`WaitingQueueStatusQuery`/`WaitingQueueStatusResult`/`WaitingQueueStatusType` 도입
+        - `WaitingQueueController`, `WaitingQueueScheduler` 매핑/상태 비교를 application 모델 기준으로 전환
+      - payment webhook:
+        - `PgReadyWebhookCommand`/`PgReadyWebhookResult` 도입
+        - `PaymentWebhookController`에서 API DTO <-> application 모델 매핑 책임화
+      - 테스트 정렬:
+        - `WaitingQueueSchedulerTest`, `PgReadyWebhookServiceTest`를 application 모델 기준으로 갱신
+    - Verification (Phase3-A):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase3-A):
       - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `12`건 / `6`파일 (`reservation` 서비스 범위)
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`

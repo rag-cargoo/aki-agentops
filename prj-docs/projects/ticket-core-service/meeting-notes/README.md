@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 08:35:00`
+> - **Updated At**: `2026-02-23 08:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-23 DDD Phase3-A Application Command/Result Decoupling Kickoff](./2026-02-23-ddd-phase3a-application-command-result-decoupling-kickoff.md)
 - [2026-02-23 DDD Phase2-B WaitingQueue/Webhook Application Boundary Kickoff](./2026-02-23-ddd-phase2b-waitingqueue-webhook-application-boundary-kickoff.md)
 - [2026-02-23 DDD Phase2-A Reservation Application Boundary Kickoff](./2026-02-23-ddd-phase2a-reservation-application-layer-kickoff.md)
 - [2026-02-23 Clean DDD/Hexagonal Governance Kickoff](./2026-02-23-clean-ddd-hexagonal-governance-kickoff.md)
