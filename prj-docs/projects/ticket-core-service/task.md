@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 03:13:00`
+> - **Updated At**: `2026-02-24 03:24:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1911,12 +1911,49 @@
         - `ConcertResponse`, `ConcertOptionResponse`, `SeatResponse`
         - `ReservationResponse`, `ReservationLifecycleResponse`, `SalesPolicyResponse`, `SalesPolicyUpsertRequest`, `AdminRefundAuditResponse`
         - `PaymentTransactionResponse`
+    - Phase8-G Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-phase8g-catalog-api-domain-model-decoupling.md`
+      - Scope:
+        - catalog API 응답 DTO(`EntertainmentResponse`, `ArtistResponse`, `PromoterResponse`, `VenueResponse`)의 domain 모델 직접 의존 제거
+        - catalog inbound 포트 반환 계약을 application result 모델로 정렬
+        - catalog API 전용 ArchUnit 규칙으로 domain catalog 모델 재유입 차단
+      - Goal:
+        - catalog adapter 경계를 `api -> application result` 계약으로 고정
+    - Phase8-G Progress (2026-02-24):
+      - application 모델 추가:
+        - `application.catalog.model.EntertainmentResult`
+        - `application.catalog.model.ArtistResult`
+        - `application.catalog.model.PromoterResult`
+        - `application.catalog.model.VenueResult`
+      - inbound 포트 시그니처 정렬:
+        - `EntertainmentUseCase`, `ArtistUseCase`, `PromoterUseCase`, `VenueUseCase`
+        - `create/search/getAll/getById/update` 반환 계약을 result 모델로 전환
+      - 서비스 구현 정렬:
+        - `EntertainmentServiceImpl`, `ArtistServiceImpl`, `PromoterServiceImpl`, `VenueServiceImpl`
+        - domain 엔티티는 내부에서만 사용하고 외부에는 result 모델 반환
+      - API/DTO 정렬:
+        - `EntertainmentResponse`, `ArtistResponse`, `PromoterResponse`, `VenueResponse`를 result 기반 변환으로 전환
+      - 테스트/규칙 정렬:
+        - `EntertainmentArtistCrudDataJpaTest` result 계약 반영
+        - ArchUnit 규칙 추가:
+          - `catalog_api_should_not_depend_on_domain_catalog_models`
+    - Verification (Phase8-G):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest` PASS
+      - `rg -n "^import com\\.ticketrush\\.domain\\." src/main/java/com/ticketrush/api/dto src/main/java/com/ticketrush/api/controller src/main/java/com/ticketrush/api/waitingqueue` 결과:
+        - API DTO/controller 기준 domain import 잔여 `16 -> 12`
+    - Residual Backlog (as-is, 2026-02-24 after Phase8-G):
+      - API DTO domain import 잔여 `12`건:
+        - `ConcertResponse`, `ConcertOptionResponse`, `SeatResponse`
+        - `ReservationResponse`, `ReservationLifecycleResponse`, `SalesPolicyResponse`, `SalesPolicyUpsertRequest`, `AdminRefundAuditResponse`
+        - `PaymentTransactionResponse`
     - Completion Checkpoint (2026-02-24):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
         - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest` PASS
       - completion assertion:
-        - 1차/확장 대상 경계(Phase8-A~F) import 잔여는 `0`으로 정리했으며, API DTO domain import 잔여 `16`건은 후속 분리 대상으로 유지
+        - 1차/확장 대상 경계(Phase8-A~G) import 잔여는 `0`으로 정리했으며, API DTO domain import 잔여 `12`건은 후속 분리 대상으로 유지
         - push runtime broad 계약(`PushNotifier`, `RealtimePushPort`) 제거 후 capability 포트 기준으로 단일화
         - queue payload 계약을 `QueuePushPayload` typed model로 고정(`Object` 의존 제거)
         - queue dispatch 경계(`PushEvent/KafkaPushEvent/WebSocketEventDispatchPort`)도 typed model로 고정
