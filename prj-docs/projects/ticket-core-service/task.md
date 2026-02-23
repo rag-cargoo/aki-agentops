@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 09:00:00`
+> - **Updated At**: `2026-02-23 09:24:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -671,6 +671,46 @@
     - Residual Backlog (as-is, 2026-02-23 after Phase3-A):
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `12`건 / `6`파일 (`reservation` 서비스 범위)
+    - Phase3-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase3b-reservation-command-result-decoupling-kickoff.md`
+      - Scope:
+        - `application.reservation.service/ReservationService*`
+        - `application.reservation.service/ReservationLifecycleService*`
+        - `application.reservation.service/SalesPolicyService*`
+      - Goal:
+        - reservation application 서비스의 API DTO 직접 의존(`12건/6파일`) 제거
+        - controller/facade/consumer 매핑 책임화
+    - Phase3-B Progress (2026-02-23):
+      - application model 추가:
+        - `ReservationCreateCommand`
+        - `ReservationResult`
+        - `ReservationLifecycleResult`
+        - `SalesPolicyUpsertCommand`
+        - `SalesPolicyResult`
+      - service 시그니처 전환:
+        - `ReservationService*`
+        - `ReservationLifecycleService*`
+        - `SalesPolicyService*`
+      - 매핑 책임 전환:
+        - `api/controller/ReservationController`
+        - `api/controller/ConcertController`
+        - `api/controller/AdminConcertController`
+        - `global/lock/RedissonLockFacade`
+        - `global/messaging/KafkaReservationConsumer`
+      - 테스트 정렬:
+        - `domain/reservation/service/ReservationLifecycleServiceIntegrationTest`
+        - `domain/concert/service/ConcertExplorerIntegrationTest`
+        - `domain/reservation/service/동시성_테스트_1_낙관적_락`
+        - `domain/reservation/service/동시성_테스트_2_비관적_락`
+    - Verification (Phase3-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.domain.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` FAIL
+        - 원인: 로컬 Redis 미기동(`RedisConnectionException`, `ConcertExplorerIntegrationTest`)
+    - Residual Backlog (as-is, 2026-02-23 after Phase3-B):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
