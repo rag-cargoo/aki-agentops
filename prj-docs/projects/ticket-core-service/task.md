@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 12:39:00`
+> - **Updated At**: `2026-02-23 13:11:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -947,6 +947,39 @@
       - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
     - Residual Backlog (as-is, 2026-02-23 after Phase4-H):
       - concert controller의 `domain.concert.service` 직접 의존 잔여: `0`건 / `0`파일
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-I Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4i-payment-service-gateway-relocation-kickoff.md`
+      - Scope:
+        - `PaymentService*`를 application 계층으로 이동
+        - payment gateway 구현체(`Wallet/Mock/PgReady`)를 infrastructure 계층으로 이동
+        - `WalletController` 의존 경계 정렬
+        - ArchUnit 규칙 강화:
+          - wallet controller의 `domain.payment.service..` 직접 의존 금지
+      - Goal:
+        - payment API는 application service 경유, gateway 구현체는 infrastructure로 정렬
+    - Phase4-I Progress (2026-02-23):
+      - 서비스 relocation:
+        - `domain.payment.service.PaymentService*` -> `application.payment.service.PaymentService*`
+      - gateway 구현체 relocation:
+        - `domain.payment.gateway.WalletPaymentGateway` -> `infrastructure.payment.gateway.WalletPaymentGateway`
+        - `domain.payment.gateway.MockPaymentGateway` -> `infrastructure.payment.gateway.MockPaymentGateway`
+        - `domain.payment.gateway.PgReadyPaymentGateway` -> `infrastructure.payment.gateway.PgReadyPaymentGateway`
+      - controller 참조 정렬:
+        - `WalletController`
+      - 테스트 정렬:
+        - `ReservationLifecycleServiceIntegrationTest` import/`@Import` 갱신
+        - payment integration test 3종 package 정렬
+      - ArchUnit 강화:
+        - `wallet_controller_should_not_depend_on_domain_payment_services` 규칙 추가
+    - Verification (Phase4-I):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.payment.service.PaymentServiceIntegrationTest' --tests 'com.ticketrush.infrastructure.payment.gateway.MockPaymentGatewayIntegrationTest' --tests 'com.ticketrush.infrastructure.payment.gateway.PgReadyPaymentGatewayIntegrationTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-I):
+      - wallet controller의 `domain.payment.service` 직접 의존 잔여: `0`건 / `0`파일
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `domain -> application` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
