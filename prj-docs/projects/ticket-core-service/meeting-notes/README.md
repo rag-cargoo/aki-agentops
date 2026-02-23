@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 23:58:00`
+> - **Updated At**: `2026-02-23 23:59:50`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-23 DDD Phase8-A Inbound Port Application-Service Decoupling](./2026-02-23-ddd-phase8a-inbound-port-application-service-decoupling.md)
 - [2026-02-23 DDD Phase7-C API Outbound Port Decoupling](./2026-02-23-ddd-phase7c-api-outbound-port-decoupling.md)
 - [2026-02-23 DDD Phase7-B Realtime Queue Observability Hardening](./2026-02-23-ddd-phase7b-realtime-queue-observability-hardening.md)
 - [2026-02-23 DDD Phase7-A Realtime Port Removal and Selector Split](./2026-02-23-ddd-phase7a-realtime-port-removal-and-selector-split.md)

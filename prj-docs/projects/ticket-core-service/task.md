@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 23:58:00`
+> - **Updated At**: `2026-02-23 23:59:50`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1666,6 +1666,49 @@
     - Residual Backlog (as-is, 2026-02-23 after Phase7-C):
       - `src/main/java/com/ticketrush/api/**` 기준 `application.port.outbound` 직접 의존 잔여: `0`건 / `0`파일
       - `ReservationController -> ReservationQueueEventPublisher` 직접 의존 잔여: `0`건 / `0`파일
+    - Phase8-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase8a-inbound-port-application-service-decoupling.md`
+      - Scope:
+        - API controller의 `application.service` 직접 의존을 `application.port.inbound` 의존으로 축소
+          - realtime 구독 경계
+          - waiting queue 조회/가입 경계
+          - reservation queue orchestration 경계
+        - 기존 service 인터페이스는 inbound port를 상속하는 어댑터 역할로 정렬
+        - ArchUnit 규칙으로 controller의 service 직접 의존 재유입 차단
+      - Goal:
+        - controller가 application implementation 계약(service) 대신 inbound contract(port)에만 의존하도록 고정
+    - Phase8-A Progress (2026-02-23):
+      - inbound 포트 추가:
+        - `application.realtime.port.inbound.RealtimeSubscriptionUseCase`
+        - `application.waitingqueue.port.inbound.WaitingQueueUseCase`
+        - `application.reservation.port.inbound.ReservationQueueOrchestrationUseCase`
+      - service 인터페이스 정렬:
+        - `RealtimeSubscriptionService extends RealtimeSubscriptionUseCase`
+        - `WaitingQueueService extends WaitingQueueUseCase`
+        - `ReservationQueueService extends ReservationQueueOrchestrationUseCase`
+      - controller 의존 전환:
+        - `ReservationController`:
+          - `RealtimeSubscriptionUseCase`
+          - `ReservationQueueOrchestrationUseCase`
+        - `WaitingQueueController`:
+          - `WaitingQueueUseCase`
+          - `RealtimeSubscriptionUseCase`
+        - `WebSocketPushController`:
+          - `RealtimeSubscriptionUseCase`
+      - 테스트/규칙 정렬:
+        - `WebSocketPushControllerTest` mock 타입을 `RealtimeSubscriptionUseCase`로 전환
+        - ArchUnit 규칙 추가:
+          - `reservation_controller_should_not_depend_on_reservation_queue_service_directly`
+          - `waiting_queue_controller_should_not_depend_on_waiting_queue_service_directly`
+          - `realtime_controllers_should_not_depend_on_realtime_subscription_service_directly`
+    - Verification (Phase8-A):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase8-A):
+      - `ReservationController -> application.reservation.service.ReservationQueueService` 직접 의존 잔여: `0`건 / `0`파일
+      - `WaitingQueueController -> application.waitingqueue.service.WaitingQueueService` 직접 의존 잔여: `0`건 / `0`파일
+      - realtime 관련 controller(`ReservationController`, `WaitingQueueController`, `WebSocketPushController`)의 `application.realtime.service.RealtimeSubscriptionService` 직접 의존 잔여: `0`건 / `0`파일
     - Completion Checkpoint (2026-02-23):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
@@ -1683,6 +1726,7 @@
         - queue/push 운영 추적은 표준 로그 키(`QUEUE_MONITOR`, `PUSH_MONITOR`, `PUSH_MONITOR_SNAPSHOT`)와 스냅샷 계측으로 고정
         - API controller의 outbound 포트 직접 의존(`application.port.outbound`)을 제거하고, 실시간 구독 경계를 application 서비스(`RealtimeSubscriptionService`)로 통합
         - 예약 큐 enqueue 오케스트레이션(`PENDING` 저장 + event publish)은 `ReservationQueueService.enqueue(...)`로 application 경계에 고정
+        - API controller의 application service 직접 의존 일부를 inbound port(`RealtimeSubscriptionUseCase`, `WaitingQueueUseCase`, `ReservationQueueOrchestrationUseCase`)로 치환해 adapter->usecase 경계를 강화
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
