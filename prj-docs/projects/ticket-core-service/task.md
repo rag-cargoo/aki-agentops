@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 13:11:00`
+> - **Updated At**: `2026-02-23 13:47:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -983,6 +983,46 @@
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `domain -> application` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-J Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4j-auth-infra-boundary-relocation-kickoff.md`
+      - Scope:
+        - auth infra/security 구현체를 domain 밖으로 이동
+          - `KakaoOAuthClient`, `NaverOAuthClient`
+          - `JwtAuthenticationFilter`
+          - `InMemoryAccessTokenDenylistService`, `RedisAccessTokenDenylistService`
+          - `AccessTokenDenylistConfig`
+        - auth principal/token 경계 정렬
+          - `AuthUserPrincipal` -> `application.auth.model`
+          - `JwtTokenProvider` -> `application.auth.service`
+        - controller/test import 정렬
+        - ArchUnit 규칙 보강:
+          - domain 계층의 infrastructure 직접 의존 금지
+      - Goal:
+        - domain.auth에는 entity/model/repository/port(interface) 중심으로 경계 정렬
+    - Phase4-J Progress (2026-02-23):
+      - auth package relocation:
+        - `domain.auth.security.AuthUserPrincipal` -> `application.auth.model.AuthUserPrincipal`
+        - `domain.auth.service.JwtTokenProvider` -> `application.auth.service.JwtTokenProvider`
+        - `domain.auth.security.JwtAuthenticationFilter` -> `infrastructure.auth.security.JwtAuthenticationFilter`
+        - `domain.auth.oauth.(KakaoOAuthClient, NaverOAuthClient)` -> `infrastructure.auth.oauth`
+        - `domain.auth.service.(InMemoryAccessTokenDenylistService, RedisAccessTokenDenylistService)` -> `infrastructure.auth.denylist`
+        - `domain.auth.config.AccessTokenDenylistConfig` -> `infrastructure.auth.config.AccessTokenDenylistConfig`
+      - main/test 참조 정렬:
+        - auth principal 참조를 `application.auth.model`로 정렬
+        - security filter 참조를 `infrastructure.auth.security`로 정렬
+        - denylist/token provider 참조를 신규 경계로 정렬
+      - ArchUnit 강화:
+        - `domain_should_not_depend_on_infrastructure_layer` 규칙 추가
+    - Verification (Phase4-J):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest' --tests 'com.ticketrush.application.auth.service.SocialAuthServiceTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.api.controller.SocialAuthControllerIntegrationTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.api.controller.SocialAuthCallbackRedirectControllerTest' --tests 'com.ticketrush.api.controller.SocialAuthCallbackRedirectControllerExternalUrlTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-J):
+      - domain.auth에 남은 infra/security 구현체: `0`건 / `0`파일
+      - `domain -> infrastructure` import 잔여: `0`건 / `0`파일
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
