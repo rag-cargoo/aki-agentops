@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 14:04:00`
+> - **Updated At**: `2026-02-23 14:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1062,6 +1062,40 @@
       - Redis 직접 의존 잔여(비-application):
         - `global.push.WebSocketPushNotifier`
         - `global.interceptor.WaitingQueueInterceptor`
+    - Phase5-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase5b-global-redis-port-adapter-kickoff.md`
+      - Scope:
+        - `global.push.WebSocketPushNotifier`의 Redis 직접 의존 제거
+        - `global.interceptor.WaitingQueueInterceptor`의 Redis 직접 의존 제거
+        - global Redis store interface + infrastructure adapter 도입
+        - ArchUnit 규칙 보강:
+          - `global..`의 `org.springframework.data.redis..` 직접 의존 금지
+      - Goal:
+        - global 계층은 store interface만 의존하고 Redis 구현은 infrastructure adapter로 분리
+    - Phase5-B Progress (2026-02-23):
+      - global store interface 추가:
+        - `global.push.WebSocketQueueSubscriptionStore`
+      - infrastructure adapter 구현:
+        - `infrastructure.push.adapter.outbound.RedisWebSocketQueueSubscriptionStoreAdapter`
+      - global 의존 전환:
+        - `WebSocketPushNotifier` -> `WebSocketQueueSubscriptionStore`
+        - `WaitingQueueInterceptor` -> `application.waitingqueue.port.outbound.WaitingQueueStore`
+      - 테스트 정렬:
+        - `WebSocketPushNotifierTest` mock 대상을 store interface 기준으로 전환
+      - ArchUnit 강화:
+        - `global_should_not_depend_on_spring_redis_directly` 규칙 추가
+    - Verification (Phase5-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase5-B):
+      - global 계층의 `org.springframework.data.redis..` 직접 의존 잔여: `0`건 / `0`파일
+      - Redis 직접 의존 잔여(허용 범위: infrastructure):
+        - `infrastructure.auth..`
+        - `infrastructure.reservation..`
+        - `infrastructure.waitingqueue..`
+        - `infrastructure.push..`
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
