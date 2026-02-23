@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-22 23:59:30`
+> - **Updated At**: `2026-02-24 06:59:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-24 SC019 Superseded by New Frontend Project](./2026-02-24-sc019-superseded-by-new-frontend-project.md)
 - [2026-02-22 SC019 Frontend Service Contract Alignment Review](./2026-02-22-sc019-frontend-service-contract-alignment-review.md)
 - [2026-02-22 SC018 Backend Compose LB Default Alignment](./2026-02-22-sc018-backend-compose-lb-default-alignment.md)
 - [2026-02-22 SC017 Realtime WS URL Override and Runtime Default Alignment](./2026-02-22-sc017-realtime-ws-url-override-and-runtime-default-alignment.md)
