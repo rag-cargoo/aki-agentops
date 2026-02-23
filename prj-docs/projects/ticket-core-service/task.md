@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 03:02:00`
+> - **Updated At**: `2026-02-24 03:13:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1869,12 +1869,54 @@
         - auth API(`SocialAuthController`, `api/dto/auth/*`) 기준 domain auth model/social provider 직접 의존 `0`건
     - Residual Backlog (as-is, 2026-02-24 after Phase8-E):
       - `/api/auth/me` 경계(`AuthController`/`AuthMeResponse`)의 `domain.user.User` 의존은 user 경계 후속 단계로 이관
+    - Phase8-F Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-phase8f-user-api-domain-model-decoupling.md`
+      - Scope:
+        - user/auth-me API(`UserController`, `AuthController#me`, `UserRequest`, `UserUpdateRequest`, `UserResponse`, `AuthMeResponse`)의 `domain.user` 직접 의존 제거
+        - user inbound 포트/결과 계약을 application 모델(`UserResult`)로 정렬
+        - user API 전용 ArchUnit 규칙으로 domain user 재유입 차단
+      - Goal:
+        - user/auth-me adapter 경계를 `api -> application result` 계약으로 고정
+    - Phase8-F Progress (2026-02-24):
+      - application 모델 추가:
+        - `application.user.model.UserResult`
+      - inbound 포트 시그니처 정렬:
+        - `UserUseCase.createUser(String username, String tier) -> UserResult`
+        - `UserUseCase.getUsers() -> List<UserResult>`
+        - `UserUseCase.getUser(Long id) -> UserResult`
+        - `UserUseCase.updateUser(..., String tier, ...) -> UserResult`
+      - 서비스 구현 정렬:
+        - `UserServiceImpl`는 domain `User`를 `UserResult`로 매핑해 반환
+        - tier 문자열 파싱/검증(`Invalid user tier`) 로직 추가
+      - API/DTO 정렬:
+        - `AuthController#me`는 `UserResult` 기반 응답 매핑
+        - `AuthMeResponse`, `UserResponse`를 `UserResult` 기반으로 전환
+        - `UserRequest`, `UserUpdateRequest`의 `tier`를 문자열 계약으로 전환
+      - 테스트 정렬:
+        - `AuthSecurityIntegrationTest`
+        - `UserServiceImplDataJpaTest`(invalid tier 케이스 추가)
+      - ArchUnit 규칙 추가:
+        - `user_api_should_not_depend_on_domain_user_models`
+    - Verification (Phase8-F):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest` PASS
+      - `rg -n "^import com\\.ticketrush\\.domain\\." src/main/java/com/ticketrush/api/dto src/main/java/com/ticketrush/api/controller src/main/java/com/ticketrush/api/waitingqueue` 결과:
+        - user/auth-me 대상(`AuthController`, `UserController`, `UserRequest`, `UserUpdateRequest`, `UserResponse`, `AuthMeResponse`) 기준 `domain.user` 직접 의존 `0`건
+        - API DTO 전체 기준 domain import 잔여 `16`건
+    - Residual Backlog (as-is, 2026-02-24 after Phase8-F):
+      - API DTO domain import 잔여 `16`건:
+        - `EntertainmentResponse`, `ArtistResponse`, `PromoterResponse`, `VenueResponse`
+        - `ConcertResponse`, `ConcertOptionResponse`, `SeatResponse`
+        - `ReservationResponse`, `ReservationLifecycleResponse`, `SalesPolicyResponse`, `SalesPolicyUpsertRequest`, `AdminRefundAuditResponse`
+        - `PaymentTransactionResponse`
     - Completion Checkpoint (2026-02-24):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
         - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest` PASS
       - completion assertion:
-        - 1차/확장 범위 경계 import 잔여(`domain->api`, `application->api dto`, `api/application/infrastructure->global`, `global->api/infrastructure`) 모두 `0`으로 정리
+        - 1차/확장 대상 경계(Phase8-A~F) import 잔여는 `0`으로 정리했으며, API DTO domain import 잔여 `16`건은 후속 분리 대상으로 유지
         - push runtime broad 계약(`PushNotifier`, `RealtimePushPort`) 제거 후 capability 포트 기준으로 단일화
         - queue payload 계약을 `QueuePushPayload` typed model로 고정(`Object` 의존 제거)
         - queue dispatch 경계(`PushEvent/KafkaPushEvent/WebSocketEventDispatchPort`)도 typed model로 고정
