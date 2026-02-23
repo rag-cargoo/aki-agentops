@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 06:08:30`
+> - **Updated At**: `2026-02-23 20:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -31,6 +31,9 @@
 ## External Product Docs
 - Service README (Pages Docs):
   - [product-docs/README.md](./product-docs/README.md)
+- Architecture Knowledge (Pages Docs):
+  - [Knowledge Index](./product-docs/knowledge/README.md)
+  - [DDD + Hexagonal Guide (Glossary)](./product-docs/knowledge/ddd-hexagonal-guide.md)
 - API Specs (Pages Docs):
   - [API Specs Index](./product-docs/api-specs/README.md)
   - [API Contract Conventions](./product-docs/api-specs/api-contract-conventions.md)
