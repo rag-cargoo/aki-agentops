@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 09:38:00`
+> - **Updated At**: `2026-02-23 09:51:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -734,6 +734,37 @@
       - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
       - `./gradlew compileJava compileTestJava --no-daemon` PASS
     - Residual Backlog (as-is, 2026-02-23 after Phase4-A):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4b-reservation-orchestration-service-relocation-kickoff.md`
+      - Scope:
+        - `ReservationQueueService*`, `SeatSoftLockService*`, `AbuseAuditService*`, `AbuseAuditWriter`, `AdminRefundAuditService`
+          를 `domain.reservation.service` -> `application.reservation.service`로 이동
+        - `ReservationController`, `ReservationLifecycleServiceImpl`, `KafkaReservationConsumer`,
+          soft-lock response DTO, 연관 테스트 참조 정렬
+        - ArchUnit: `ReservationController -> domain.reservation.service` 직접 의존 금지 규칙 추가
+      - Goal:
+        - reservation 오케스트레이션 책임의 application 계층 정렬
+    - Phase4-B Progress (2026-02-23):
+      - service relocation:
+        - `AbuseAuditService*`, `AbuseAuditWriter`, `AdminRefundAuditService`,
+          `ReservationQueueService*`, `SeatSoftLockService*`
+        - `domain.reservation.service` -> `application.reservation.service`
+      - 참조 정렬:
+        - `api/controller/ReservationController`
+        - `application/reservation/service/ReservationLifecycleServiceImpl`
+        - `global/messaging/KafkaReservationConsumer`
+        - `api/dto/reservation/SeatSoftLockAcquireResponse`
+        - `api/dto/reservation/SeatSoftLockReleaseResponse`
+        - reservation 연관 테스트 import/package 정렬
+      - ArchUnit 강화:
+        - `ReservationController -> domain.reservation.service` 직접 의존 금지 규칙 추가
+    - Verification (Phase4-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-B):
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
     - Skill Install:

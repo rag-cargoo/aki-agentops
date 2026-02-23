@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 09:38:00`
+> - **Updated At**: `2026-02-23 09:51:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-23 DDD Phase4-B Reservation Orchestration Service Relocation Kickoff](./2026-02-23-ddd-phase4b-reservation-orchestration-service-relocation-kickoff.md)
 - [2026-02-23 DDD Phase4-A ArchUnit Guardrail + CI Verify Kickoff](./2026-02-23-ddd-phase4a-archunit-guardrail-ci-kickoff.md)
 - [2026-02-23 DDD Phase3-B Reservation Command/Result Decoupling Kickoff](./2026-02-23-ddd-phase3b-reservation-command-result-decoupling-kickoff.md)
 - [2026-02-23 DDD Phase3-A Application Command/Result Decoupling Kickoff](./2026-02-23-ddd-phase3a-application-command-result-decoupling-kickoff.md)
