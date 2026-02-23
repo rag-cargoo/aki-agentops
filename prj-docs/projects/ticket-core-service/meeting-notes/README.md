@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 04:16:00`
+> - **Updated At**: `2026-02-24 06:33:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-24 DDD Post Ops-Hardening Completion and Frontend Gate](./2026-02-24-ddd-post-ops-hardening-completion-and-frontend-gate.md)
 - [2026-02-24 DDD Post Ops-Hardening and Frontend Kickoff](./2026-02-24-ddd-post-ops-hardening-and-frontend-kickoff.md)
 - [2026-02-24 DDD Phase8-I Inbound Port Domain-Leak Hardening](./2026-02-24-ddd-phase8i-inbound-port-domain-leak-hardening.md)
 - [2026-02-24 DDD Phase8-H Remaining API DTO Domain-Model Decoupling Completion](./2026-02-24-ddd-phase8h-remaining-api-dto-domain-model-decoupling-completion.md)

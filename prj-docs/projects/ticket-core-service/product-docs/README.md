@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-23 22:40:00`
+> - **Updated At**: `2026-02-24 06:34:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -98,9 +98,15 @@ make test-auth-social-real-provider
 - Architecture Knowledge Index (Pages Docs): [Knowledge Index](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/knowledge/README.md)
 - DDD + Hexagonal Guide (Pages Docs): [Guide](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/knowledge/ddd-hexagonal-guide.md)
 - DDD + Hexagonal Phase2 Completion (Pages Docs): [Phase2 Completion](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/knowledge/ddd-hexagonal-phase2-completion-human.md)
+- Ops Hardening + Frontend Gate Guide (Pages Docs): [Ops Gate Guide](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/knowledge/ops-hardening-frontend-gate-human.md)
 - API Specs Index (Pages Docs): [API Specs](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
 - Realtime Queue/Push Monitoring Guide (Pages Docs): [Realtime Ops Monitoring](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-specs/realtime-ops-monitoring-guide.md)
+- Ops Observability and Alerting Guide (Pages Docs): [Ops Observability](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-specs/ops-observability-and-alerting-guide.md)
+- Incident Response Runbook (Pages Docs): [Incident Runbook](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-specs/incident-response-runbook.md)
 - API Test Guide (Pages Docs): [API Test Guide](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-test/README.md)
+- Runtime Integration Test Guide (Pages Docs): [Runtime Integration](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-test/runtime-integration-test-guide.md)
+- Performance Baseline Guide (Pages Docs): [Performance Baseline](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-test/performance-baseline-guide.md)
+- Release Gate Governance Guide (Pages Docs): [Release Gate](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-test/release-gate-governance-guide.md)
 - Frontend Release Contract Checklist (Pages Docs): [Checklist](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/frontend-release-contract-checklist.md)
 - Sidecar Task (운영 추적): [Task Dashboard](https://github.com/rag-cargoo/aki-agentops/blob/main/prj-docs/projects/ticket-core-service/task.md)
 - Sidecar Meeting Notes (운영 기록): [Meeting Notes](https://github.com/rag-cargoo/aki-agentops/blob/main/prj-docs/projects/ticket-core-service/meeting-notes/README.md)

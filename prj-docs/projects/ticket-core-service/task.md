@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 04:16:00`
+> - **Updated At**: `2026-02-24 06:35:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -590,27 +590,53 @@
     - 2) 프론트 E2E 계약 검증(관리자 CRUD + 공개 조회 계약) 확장
 
 - TCS-SC-027 운영 고도화 7종 일괄 처리 + 프론트 착수 게이트
-  - Status: DOING
+  - Status: DONE
   - Description:
     - DDD 리팩토링 완료 이후 운영/고도화 항목 7개를 선행 완료하고, 완료 시점에 프론트 구현 페이즈로 전환한다.
     - 진행 순서는 `회의록 -> task -> 제품 이슈 동기화 -> 코드/CI/스크립트/문서 반영`으로 고정한다.
   - Kickoff Governance:
     - 회의록:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-post-ops-hardening-and-frontend-kickoff.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-post-ops-hardening-completion-and-frontend-gate.md`
     - Tracking Issue:
       - `rag-cargoo/ticket-core-service#33` (open, 후속 운영/고도화 트래킹 포함)
   - Checklist (7):
-    - [ ] Redis/Kafka 의존 통합테스트 환경 정리
-    - [ ] CI verify 확장(ArchUnit-only -> 핵심 회귀 포함)
-    - [ ] 성능 기준선 수립(k6 smoke + distributed 기준치)
-    - [ ] 관측성 강화(모니터 로그/메트릭/가이드 보강)
-    - [ ] 장애 대응 강화(재시도/백오프/운영 런북 정합)
-    - [ ] 릴리즈 거버넌스 정리(main 보호/검증 체인/증빙)
-    - [ ] 최종 문서 정리(완료 회의록 + 지식문서 + 프론트 전환 조건 명시)
+    - [x] Redis/Kafka 의존 통합테스트 환경 정리
+    - [x] CI verify 확장(ArchUnit-only -> 핵심 회귀 포함)
+    - [x] 성능 기준선 수립(k6 smoke + distributed 기준치)
+    - [x] 관측성 강화(모니터 로그/메트릭/가이드 보강)
+    - [x] 장애 대응 강화(재시도/백오프/운영 런북 정합)
+    - [x] 릴리즈 거버넌스 정리(main 보호/검증 체인/증빙)
+    - [x] 최종 문서 정리(완료 회의록 + 지식문서 + 프론트 전환 조건 명시)
+  - Evidence:
+    - 1) 통합테스트 환경:
+      - `workspace/apps/backend/ticket-core-service/scripts/ops/run-runtime-integration-tests.sh`
+      - `.codex/tmp/ticket-core-service/integration/latest/runtime-integration-latest.md` (`Result: PASS`)
+      - `workspace/apps/backend/ticket-core-service/.github/workflows/runtime-integration-smoke.yml`
+    - 2) CI verify 확장:
+      - `workspace/apps/backend/ticket-core-service/.github/workflows/verify.yml`
+      - `.codex/tmp/ticket-core-service/release-gate/latest/release-gate-latest.md` (`Result: PASS`)
+    - 3) 성능 기준선:
+      - `workspace/apps/backend/ticket-core-service/scripts/perf/run-k6-baseline.sh`
+      - `.codex/tmp/ticket-core-service/k6/latest/k6-baseline-latest.md` (`Result: PASS`)
+      - `.codex/tmp/ticket-core-service/k6/latest/k6-distributed-latest.md` (`Result: PASS`)
+    - 4) 관측성 강화:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/ops-observability-and-alerting-guide.md`
+      - `.codex/tmp/ticket-core-service/ops/latest/runtime-monitor-snapshot-latest.md`
+    - 5) 장애 대응:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/incident-response-runbook.md`
+      - `.codex/tmp/ticket-core-service/ops/latest/runtime-health-check-latest.md` (`Result: PASS`)
+    - 6) 릴리즈 거버넌스:
+      - `workspace/apps/backend/ticket-core-service/scripts/ops/run-release-gate.sh`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-test/release-gate-governance-guide.md`
+    - 7) 최종 문서:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-post-ops-hardening-completion-and-frontend-gate.md`
+      - `prj-docs/projects/ticket-core-service/product-docs/knowledge/ops-hardening-frontend-gate-human.md`
   - Exit Criteria:
     - 체크리스트 7개 모두 `[x]` + 각 항목별 검증 로그/증빙 문서 링크 확보
-    - `task.md` 상태를 `DONE`으로 전환하고 제품 이슈 `#33`에 최종 완료 코멘트 등록
-    - 프론트 작업 전환 회의록을 작성하고 Active Work Focus를 frontend로 전환
+    - `task.md` 상태 `DONE` 전환 완료
+    - 제품 이슈 `#33`에 최종 완료 코멘트 등록
+    - 프론트 작업 전환 회의록 작성 후 Active Work Focus를 frontend로 전환
 
 - TCS-SC-026 Clean DDD/Hexagonal 1차 경계 정리(스킬 적용)
   - Status: DONE
