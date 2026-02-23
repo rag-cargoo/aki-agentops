@@ -1,5 +1,5 @@
 version: 1
-updated_at: "2026-02-19 20:36:00"
+updated_at: "2026-02-24 08:27:00"
 
 projects:
   - project_id: ticket-core-service
@@ -17,6 +17,16 @@ projects:
     code_root: workspace/apps/frontend/ticket-web-client
     docs_root: prj-docs/projects/ticket-web-client
     repo_remote: https://github.com/rag-cargoo/ticket-web-client.git
+    default_branch: main
+    runtime:
+      type: external_repo_clone
+      track_in_2602_git: false
+    status: active
+  - project_id: ticket-web-app
+    display_name: Ticket Web App
+    code_root: workspace/apps/frontend/ticket-web-app
+    docs_root: prj-docs/projects/ticket-web-app
+    repo_remote: https://github.com/rag-cargoo/ticket-web-app.git
     default_branch: main
     runtime:
       type: external_repo_clone

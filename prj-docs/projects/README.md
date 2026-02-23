@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-19 20:36:00`
+> - **Updated At**: `2026-02-24 08:27:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -35,6 +35,7 @@
 ## Projects
 - [ticket-core-service](./ticket-core-service/README.md)
 - [ticket-web-client](./ticket-web-client/README.md)
+- [ticket-web-app](./ticket-web-app/README.md)
 
 ## Operations Reference
 - [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)
