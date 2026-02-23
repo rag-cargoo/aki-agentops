@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 03:54:00`
+> - **Updated At**: `2026-02-24 04:09:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1992,12 +1992,51 @@
       - API DTO/controller 기준 domain import 잔여: `0`건 / `0`파일
       - 환경 의존 테스트 잔여:
         - `ConcertExplorerIntegrationTest`는 Redis 런타임 필요(미기동 시 실패)
+    - Phase8-I Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-phase8i-inbound-port-domain-leak-hardening.md`
+      - Scope:
+        - `application..port.inbound` 경계의 domain 타입 노출 제거
+          - `ConcertUseCase`
+          - `PaymentUseCase`
+          - `AdminRefundAuditUseCase`
+        - 결제 런타임 연동은 bridge 포트(`application.payment.port.bridge.PaymentGatewayUseCase`)로 분리
+        - ArchUnit 규칙으로 inbound 포트의 domain 의존 재유입 차단
+      - Goal:
+        - inbound port(`application..port.inbound`) 기준 domain import 잔여를 `0`으로 수렴
+    - Phase8-I Progress (2026-02-24):
+      - concert 경계:
+        - `ConcertUseCase`를 result 계약 중심으로 재구성(`ConcertResult`, `ConcertOptionResult`, `SeatResult`)
+        - domain 연산 계약은 `ConcertService`로 분리 유지(테스트/내부 호환)
+        - `ConcertServiceImpl`에 result 메서드 명시 구현
+      - payment 경계:
+        - `PaymentUseCase`에서 domain `PaymentTransaction` 노출 제거
+        - `application.payment.port.bridge.PaymentGatewayUseCase` 추가
+        - `WalletPaymentGateway` 의존 대상을 bridge 포트로 전환
+      - admin refund audit 경계:
+        - `AdminRefundAuditUseCase` actorRole을 `String` 계약으로 전환
+        - `AdminRefundAuditService`에서 role 문자열 파싱/검증 추가
+        - `ReservationLifecycleServiceImpl` 호출부를 string role 계약으로 정렬
+      - ArchUnit 규칙 추가:
+        - `inbound_ports_should_not_depend_on_domain_models`
+    - Verification (Phase8-I):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.infrastructure.payment.gateway.MockPaymentGatewayIntegrationTest --tests com.ticketrush.infrastructure.payment.gateway.PgReadyPaymentGatewayIntegrationTest` PASS
+      - `rg -n "^import com\\.ticketrush\\.domain\\." src/main/java/com/ticketrush/application --glob "**/port/inbound/*.java" | wc -l` 결과:
+        - `0`
+      - `rg -n "^import com\\.ticketrush\\.domain\\." src/main/java/com/ticketrush/api/dto src/main/java/com/ticketrush/api/controller src/main/java/com/ticketrush/api/waitingqueue | wc -l` 결과:
+        - `0`
+    - Residual Backlog (as-is, 2026-02-24 after Phase8-I):
+      - inbound port(`application..port.inbound`) 기준 domain import 잔여: `0`건 / `0`파일
+      - API DTO/controller 기준 domain import 잔여: `0`건 / `0`파일
+      - 환경 의존 테스트 잔여:
+        - `ConcertExplorerIntegrationTest`는 Redis 런타임 필요(미기동 시 실패)
     - Completion Checkpoint (2026-02-24):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
         - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest` PASS
       - completion assertion:
-        - 1차/확장 대상 경계(Phase8-A~H) import 잔여는 `0`으로 정리했으며, API DTO/controller domain import 잔여도 `0`으로 수렴
+        - 1차/확장 대상 경계(Phase8-A~I) import 잔여는 `0`으로 정리했으며, API DTO/controller + inbound port domain import 잔여도 `0`으로 수렴
         - push runtime broad 계약(`PushNotifier`, `RealtimePushPort`) 제거 후 capability 포트 기준으로 단일화
         - queue payload 계약을 `QueuePushPayload` typed model로 고정(`Object` 의존 제거)
         - queue dispatch 경계(`PushEvent/KafkaPushEvent/WebSocketEventDispatchPort`)도 typed model로 고정
@@ -2015,6 +2054,7 @@
         - runtime adapter(global/infrastructure)의 application service 직접 의존 범위를 scheduler/lock/consumer/gateway/outbound-adapter/auth-filter까지 inbound port 계약으로 확장해 `runtime-adapter -> usecase` 경계를 강화
         - auth API 경계에서 domain auth model(`AuthTokenPair`, `SocialAuthorizeInfo`, `SocialLoginResult`) 및 `SocialProvider` 직접 의존을 제거하고 application 결과 모델(`AuthTokenResult`, `SocialAuthorizeResult`, `SocialLoginUserResult`) 기반으로 정렬
         - concert/payment/reservation/sales-policy/admin-audit API DTO를 application 결과 모델/문자열 계약으로 정렬해 adapter의 domain 직접 의존을 제거
+        - payment 런타임 연동 경계는 bridge 포트(`PaymentGatewayUseCase`)로 분리하고, inbound 포트는 result 계약 중심으로 정렬
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
