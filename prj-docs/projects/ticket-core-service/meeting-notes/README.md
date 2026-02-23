@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 00:49:00`
+> - **Updated At**: `2026-02-24 00:56:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-24 DDD Phase8-D Auth Filter UseCase Decoupling](./2026-02-24-ddd-phase8d-auth-filter-usecase-decoupling.md)
 - [2026-02-24 DDD Phase8-C Runtime Adapter Inbound-Port Decoupling](./2026-02-24-ddd-phase8c-runtime-adapter-inbound-port-decoupling.md)
 - [2026-02-24 DDD Phase8-B API Controller Inbound Port Expansion](./2026-02-24-ddd-phase8b-api-controller-inbound-port-expansion.md)
 - [2026-02-23 DDD Phase8-A Inbound Port Application-Service Decoupling](./2026-02-23-ddd-phase8a-inbound-port-application-service-decoupling.md)

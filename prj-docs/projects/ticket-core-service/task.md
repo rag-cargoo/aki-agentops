@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 00:49:00`
+> - **Updated At**: `2026-02-24 00:56:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1803,6 +1803,34 @@
     - Residual Backlog (as-is, 2026-02-24 after Phase8-C):
       - runtime adapter(global/infrastructure)의 `application..service` 직접 의존 잔여: `1`건 / `1`파일 (`JwtAuthenticationFilter`)
       - JWT 검증 경계 외 runtime adapter의 service 직접 의존 잔여: `0`건 / `0`파일
+    - Phase8-D Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-phase8d-auth-filter-usecase-decoupling.md`
+      - Scope:
+        - 인증 필터(`JwtAuthenticationFilter`)의 `JwtTokenProvider` 직접 의존 제거
+        - JWT 파싱/검증/denylist 확인을 inbound usecase로 이동
+        - WebMvc 인증 테스트를 usecase mock 기반으로 정렬
+      - Goal:
+        - global/infrastructure 영역의 `application..service` 직접 의존 잔여를 0으로 수렴
+    - Phase8-D Progress (2026-02-24):
+      - inbound 포트 추가:
+        - `application.auth.port.inbound.AuthTokenAuthenticationUseCase`
+      - application 구현 추가:
+        - `application.auth.service.AuthTokenAuthenticationServiceImpl`
+      - infrastructure 의존 전환:
+        - `JwtAuthenticationFilter`:
+          - `JwtTokenProvider` + `AccessTokenDenylistService` 직접 의존 제거
+          - `AuthTokenAuthenticationUseCase` 단일 의존으로 전환
+      - 테스트 정렬:
+        - `AuthSecurityIntegrationTest`, `SocialAuthControllerIntegrationTest`에 `AuthTokenAuthenticationUseCase` mock 주입
+      - ArchUnit 규칙 추가:
+        - `jwt_authentication_filter_should_not_depend_on_jwt_token_provider_service_directly`
+    - Verification (Phase8-D):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest --tests com.ticketrush.global.scheduler.WaitingQueueSchedulerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest` PASS
+      - `rg -n "com\\.ticketrush\\.application\\..*\\.service" src/main/java/com/ticketrush/global src/main/java/com/ticketrush/infrastructure` 결과 `0`건
+    - Residual Backlog (as-is, 2026-02-24 after Phase8-D):
+      - global/infrastructure의 `application..service` 직접 의존 잔여: `0`건 / `0`파일
     - Completion Checkpoint (2026-02-24):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
@@ -1823,7 +1851,7 @@
         - 예약 큐 enqueue 오케스트레이션(`PENDING` 저장 + event publish)은 `ReservationQueueService.enqueue(...)`로 application 경계에 고정
         - API controller의 application service 직접 의존 일부를 inbound port(`RealtimeSubscriptionUseCase`, `WaitingQueueUseCase`, `ReservationQueueOrchestrationUseCase`)로 치환해 adapter->usecase 경계를 강화
         - API controller의 application service 직접 의존 범위를 auth/user/catalog/concert/reservation/payment-webhook까지 inbound port 계약으로 확장해 `controller -> usecase` 경계를 일관화
-        - runtime adapter(global/infrastructure)의 application service 직접 의존 범위를 scheduler/lock/consumer/gateway/outbound-adapter까지 inbound port 계약으로 확장해 `runtime-adapter -> usecase` 경계를 강화(`JwtAuthenticationFilter -> JwtTokenProvider` 기술 인증 경계 1건 제외)
+        - runtime adapter(global/infrastructure)의 application service 직접 의존 범위를 scheduler/lock/consumer/gateway/outbound-adapter/auth-filter까지 inbound port 계약으로 확장해 `runtime-adapter -> usecase` 경계를 강화
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
