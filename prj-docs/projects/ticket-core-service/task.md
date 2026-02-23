@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 09:24:00`
+> - **Updated At**: `2026-02-23 09:38:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -709,6 +709,31 @@
       - `./gradlew test --no-daemon --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.domain.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` FAIL
         - 원인: 로컬 Redis 미기동(`RedisConnectionException`, `ConcertExplorerIntegrationTest`)
     - Residual Backlog (as-is, 2026-02-23 after Phase3-B):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4a-archunit-guardrail-ci-kickoff.md`
+      - Scope:
+        - `architecture/LayerDependencyArchTest` 규칙 강화
+        - CI `verify` 워크플로 추가(ArchUnit 테스트 상시 실행)
+        - 가능 시 main required check에 `verify` 등록
+      - Goal:
+        - 경계 위반 회귀를 PR 단계에서 차단
+    - Phase4-A Progress (2026-02-23):
+      - ArchUnit 규칙 강화:
+        - `src/test/java/com/ticketrush/architecture/LayerDependencyArchTest.java`
+        - `domain -> api` 금지
+        - `application -> api` 금지
+        - `RestController -> *Repository` 직접 의존 금지
+      - CI verify 워크플로 추가:
+        - `workspace/apps/backend/ticket-core-service/.github/workflows/verify.yml`
+      - GitHub main 보호 규칙 반영:
+        - required status check: `verify` (`strict=true`)
+    - Verification (Phase4-A):
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-A):
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
     - Skill Install:
