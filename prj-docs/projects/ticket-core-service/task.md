@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 10:43:00`
+> - **Updated At**: `2026-02-23 11:29:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -825,6 +825,35 @@
       - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
     - Residual Backlog (as-is, 2026-02-23 after Phase4-D):
       - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-E Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4e-reservation-outbound-adapter-relocation-kickoff.md`
+      - Scope:
+        - `domain/reservation/adapter/outbound/*`를 `infrastructure` 계층으로 이동
+        - `ReservationWaitingQueuePortAdapter`의 `domain -> application` 직접 의존 제거
+        - ArchUnit 규칙 강화:
+          - `domain.. -> application..` 직접 의존 금지
+      - Goal:
+        - domain은 포트 정의만 유지하고, adapter 구현체는 infrastructure로 정렬
+    - Phase4-E Progress (2026-02-23):
+      - adapter relocation:
+        - `domain.reservation.adapter.outbound` -> `infrastructure.reservation.adapter.outbound`
+        - 이동 클래스:
+          - `ReservationSeatPortAdapter`
+          - `ReservationUserPortAdapter`
+          - `ReservationPaymentPortAdapter`
+          - `ReservationWaitingQueuePortAdapter`
+      - 테스트 정렬:
+        - `ReservationLifecycleServiceIntegrationTest`의 adapter import를 infrastructure 경로로 갱신
+      - ArchUnit 강화:
+        - `domain.. -> application..` 직접 의존 금지 규칙 추가
+    - Verification (Phase4-E):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-E):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
