@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 11:41:00`
+> - **Updated At**: `2026-02-23 12:21:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -884,6 +884,40 @@
       - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest'` PASS
     - Residual Backlog (as-is, 2026-02-23 after Phase4-F):
       - catalog controller의 `domain.*.service` 직접 의존 잔여: `0`건 / `0`파일
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-G Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4g-auth-user-service-application-relocation-kickoff.md`
+      - Scope:
+        - `AuthSessionService*`, `SocialAuthService*`, `UserService*`를 application 계층으로 이동
+        - `AuthController`, `SocialAuthController`, `UserController` 의존 경계 정렬
+        - ArchUnit 규칙 강화:
+          - auth/user controller의 `domain.auth.service..`/`domain.user.service..` 직접 의존 금지
+      - Goal:
+        - auth/user API 계층에서 domain service 직접 의존 제거
+    - Phase4-G Progress (2026-02-23):
+      - 서비스 relocation:
+        - `domain.auth.service.AuthSessionService*` -> `application.auth.service.AuthSessionService*`
+        - `domain.auth.service.SocialAuthService*` -> `application.auth.service.SocialAuthService*`
+        - `domain.user.service.UserService*` -> `application.user.service.UserService*`
+      - controller 참조 정렬:
+        - `AuthController`
+        - `SocialAuthController`
+        - `UserController`
+      - 테스트 정렬:
+        - `AuthSessionServiceTest` -> `application.auth.service`
+        - `SocialAuthServiceTest` -> `application.auth.service`
+        - `UserServiceImplDataJpaTest` -> `application.user.service`
+        - `AuthSecurityIntegrationTest`, `SocialAuthControllerIntegrationTest` import 경로 갱신
+      - ArchUnit 강화:
+        - `auth_and_user_controllers_should_not_depend_on_domain_auth_user_services` 규칙 추가
+    - Verification (Phase4-G):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest' --tests 'com.ticketrush.application.auth.service.SocialAuthServiceTest' --tests 'com.ticketrush.application.user.service.UserServiceImplDataJpaTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.api.controller.SocialAuthControllerIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-G):
+      - auth/user controller의 `domain.*.service` 직접 의존 잔여: `0`건 / `0`파일
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `domain -> application` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
