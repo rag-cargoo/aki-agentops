@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 03:24:00`
+> - **Updated At**: `2026-02-24 03:54:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-24 DDD Phase8-H Remaining API DTO Domain-Model Decoupling Completion](./2026-02-24-ddd-phase8h-remaining-api-dto-domain-model-decoupling-completion.md)
 - [2026-02-24 DDD Phase8-G Catalog API Domain-Model Decoupling](./2026-02-24-ddd-phase8g-catalog-api-domain-model-decoupling.md)
 - [2026-02-24 DDD Phase8-F User API Domain-Model Decoupling](./2026-02-24-ddd-phase8f-user-api-domain-model-decoupling.md)
 - [2026-02-24 DDD Phase8-E Auth API Domain-Model Decoupling](./2026-02-24-ddd-phase8e-auth-api-domain-model-decoupling.md)

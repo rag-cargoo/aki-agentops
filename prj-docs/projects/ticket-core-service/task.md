@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 03:24:00`
+> - **Updated At**: `2026-02-24 03:54:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1948,12 +1948,56 @@
         - `ConcertResponse`, `ConcertOptionResponse`, `SeatResponse`
         - `ReservationResponse`, `ReservationLifecycleResponse`, `SalesPolicyResponse`, `SalesPolicyUpsertRequest`, `AdminRefundAuditResponse`
         - `PaymentTransactionResponse`
+    - Phase8-H Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-phase8h-remaining-api-dto-domain-model-decoupling-completion.md`
+      - Scope:
+        - 잔여 API DTO domain import `12`건 제거
+          - concert 응답 DTO(`ConcertResponse`, `ConcertOptionResponse`, `SeatResponse`)
+          - reservation/sales-policy/admin-audit 경계 DTO
+          - payment transaction 응답 DTO
+        - application 결과 모델 계약으로 정렬:
+          - `application.payment.model.PaymentTransactionResult`
+          - `application.concert.model.{ConcertResult, ConcertOptionResult, SeatResult}`
+        - ArchUnit 규칙으로 reservation/payment DTO 재유입 차단
+      - Goal:
+        - API DTO/controller 기준 domain import 잔여를 `0`으로 수렴
+    - Phase8-H Progress (2026-02-24):
+      - reservation/sales-policy/admin-audit 경계 정렬:
+        - `ReservationResponse`, `ReservationLifecycleResponse`의 domain 오버로드 제거
+        - `SalesPolicyUpsertRequest`, `SalesPolicyUpsertCommand` tier를 `String` 계약으로 전환
+        - `SalesPolicyServiceImpl`에서 tier 문자열 파싱/검증 수행
+        - `SalesPolicyResult`, `SalesPolicyResponse` tier를 문자열 계약으로 전환
+        - `AdminRefundAuditRecord`, `AdminRefundAuditResponse` actorRole을 `String` 계약으로 전환
+      - payment 경계 정렬:
+        - `application.payment.model.PaymentTransactionResult` 추가
+        - `PaymentUseCase`에 wallet-facing result 메서드 추가:
+          - `chargeWalletResult(...)`
+          - `getTransactionResults(...)`
+        - `WalletController`, `PaymentTransactionResponse`를 result 모델 기반으로 전환
+      - concert 경계 정렬:
+        - `application.concert.model.{ConcertResult, ConcertOptionResult, SeatResult}` 추가
+        - `ConcertUseCase`에 result wrapper 메서드(`...Result`) 추가
+        - `ConcertController`, `AdminConcertController`를 result wrapper 메서드 기반으로 전환
+        - `ConcertResponse`, `ConcertOptionResponse`, `SeatResponse`를 result 모델 기반으로 전환
+      - 테스트/규칙 정렬:
+        - ArchUnit 규칙 추가:
+          - `reservation_and_payment_api_dto_should_not_depend_on_domain_models`
+    - Verification (Phase8-H):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest` PASS
+      - `rg -n "^import com\\.ticketrush\\.domain\\." src/main/java/com/ticketrush/api/dto src/main/java/com/ticketrush/api/controller src/main/java/com/ticketrush/api/waitingqueue` 결과:
+        - API DTO/controller 기준 domain import 잔여 `12 -> 0`
+    - Residual Backlog (as-is, 2026-02-24 after Phase8-H):
+      - API DTO/controller 기준 domain import 잔여: `0`건 / `0`파일
+      - 환경 의존 테스트 잔여:
+        - `ConcertExplorerIntegrationTest`는 Redis 런타임 필요(미기동 시 실패)
     - Completion Checkpoint (2026-02-24):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
         - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest` PASS
       - completion assertion:
-        - 1차/확장 대상 경계(Phase8-A~G) import 잔여는 `0`으로 정리했으며, API DTO domain import 잔여 `12`건은 후속 분리 대상으로 유지
+        - 1차/확장 대상 경계(Phase8-A~H) import 잔여는 `0`으로 정리했으며, API DTO/controller domain import 잔여도 `0`으로 수렴
         - push runtime broad 계약(`PushNotifier`, `RealtimePushPort`) 제거 후 capability 포트 기준으로 단일화
         - queue payload 계약을 `QueuePushPayload` typed model로 고정(`Object` 의존 제거)
         - queue dispatch 경계(`PushEvent/KafkaPushEvent/WebSocketEventDispatchPort`)도 typed model로 고정
@@ -1970,6 +2014,7 @@
         - API controller의 application service 직접 의존 범위를 auth/user/catalog/concert/reservation/payment-webhook까지 inbound port 계약으로 확장해 `controller -> usecase` 경계를 일관화
         - runtime adapter(global/infrastructure)의 application service 직접 의존 범위를 scheduler/lock/consumer/gateway/outbound-adapter/auth-filter까지 inbound port 계약으로 확장해 `runtime-adapter -> usecase` 경계를 강화
         - auth API 경계에서 domain auth model(`AuthTokenPair`, `SocialAuthorizeInfo`, `SocialLoginResult`) 및 `SocialProvider` 직접 의존을 제거하고 application 결과 모델(`AuthTokenResult`, `SocialAuthorizeResult`, `SocialLoginUserResult`) 기반으로 정렬
+        - concert/payment/reservation/sales-policy/admin-audit API DTO를 application 결과 모델/문자열 계약으로 정렬해 adapter의 domain 직접 의존을 제거
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
