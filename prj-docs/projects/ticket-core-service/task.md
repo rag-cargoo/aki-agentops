@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 00:59:00`
+> - **Updated At**: `2026-02-24 03:02:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1832,6 +1832,43 @@
       - `rg -n "com\\.ticketrush\\.application\\..*\\.service" src/main/java/com/ticketrush/global src/main/java/com/ticketrush/infrastructure` 결과 `0`건
     - Residual Backlog (as-is, 2026-02-24 after Phase8-D):
       - global/infrastructure의 `application..service` 직접 의존 잔여: `0`건 / `0`파일
+    - Phase8-E Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-phase8e-auth-api-domain-model-decoupling.md`
+      - Scope:
+        - auth API(`AuthController`, `SocialAuthController`, `api/dto/auth/*`)의 domain auth model 직접 의존 제거
+        - auth inbound 포트 결과 계약을 application 모델로 정렬
+        - auth API 전용 ArchUnit 규칙으로 domain auth model 재유입 차단
+      - Goal:
+        - auth adapter 경계를 `api -> application result` 계약으로 고정
+    - Phase8-E Progress (2026-02-24):
+      - application 모델 추가:
+        - `application.auth.model.AuthTokenResult`
+        - `application.auth.model.SocialAuthorizeResult`
+        - `application.auth.model.SocialLoginUserResult`
+      - inbound 포트 시그니처 정렬:
+        - `AuthSessionUseCase.issueForUserId(Long userId)`
+        - `AuthSessionUseCase.refresh(...) -> AuthTokenResult`
+        - `SocialAuthUseCase.getAuthorizeInfo(String provider, String state)`
+        - `SocialAuthUseCase.login(String provider, String code, String state)`
+      - 서비스 구현 정렬:
+        - `AuthSessionServiceImpl`는 userId 기준 발급 + `AuthTokenResult` 반환
+        - `SocialAuthServiceImpl`는 provider 문자열 -> enum 변환 후 `SocialLoginUserResult` 반환
+      - API/DTO 정렬:
+        - `AuthController`, `SocialAuthController`
+        - `AuthTokenResponse`, `SocialAuthorizeUrlResponse`, `SocialLoginResponse`
+      - 테스트 정렬:
+        - `AuthSessionServiceTest`, `SocialAuthServiceTest`, `SocialAuthControllerIntegrationTest`
+      - ArchUnit 규칙 추가:
+        - `auth_api_should_not_depend_on_domain_auth_models`
+        - `social_auth_api_should_not_depend_on_social_provider_enum_directly`
+    - Verification (Phase8-E):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest --tests com.ticketrush.global.scheduler.WaitingQueueSchedulerTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest` PASS
+      - `rg -n "com\\.ticketrush\\.domain\\.auth\\.model|com\\.ticketrush\\.domain\\.user\\.SocialProvider" src/main/java/com/ticketrush/api/controller src/main/java/com/ticketrush/api/dto/auth` 결과:
+        - auth API(`SocialAuthController`, `api/dto/auth/*`) 기준 domain auth model/social provider 직접 의존 `0`건
+    - Residual Backlog (as-is, 2026-02-24 after Phase8-E):
+      - `/api/auth/me` 경계(`AuthController`/`AuthMeResponse`)의 `domain.user.User` 의존은 user 경계 후속 단계로 이관
     - Completion Checkpoint (2026-02-24):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
@@ -1853,6 +1890,7 @@
         - API controller의 application service 직접 의존 일부를 inbound port(`RealtimeSubscriptionUseCase`, `WaitingQueueUseCase`, `ReservationQueueOrchestrationUseCase`)로 치환해 adapter->usecase 경계를 강화
         - API controller의 application service 직접 의존 범위를 auth/user/catalog/concert/reservation/payment-webhook까지 inbound port 계약으로 확장해 `controller -> usecase` 경계를 일관화
         - runtime adapter(global/infrastructure)의 application service 직접 의존 범위를 scheduler/lock/consumer/gateway/outbound-adapter/auth-filter까지 inbound port 계약으로 확장해 `runtime-adapter -> usecase` 경계를 강화
+        - auth API 경계에서 domain auth model(`AuthTokenPair`, `SocialAuthorizeInfo`, `SocialLoginResult`) 및 `SocialProvider` 직접 의존을 제거하고 application 결과 모델(`AuthTokenResult`, `SocialAuthorizeResult`, `SocialLoginUserResult`) 기반으로 정렬
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
