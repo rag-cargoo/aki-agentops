@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 00:56:00`
-> - **Updated At**: `2026-02-24 00:56:00`
+> - **Updated At**: `2026-02-24 00:59:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -42,6 +42,7 @@
     - `AuthSecurityIntegrationTest`, `SocialAuthControllerIntegrationTest`에서 filter 의존을 usecase mock 기반으로 조정
   - ArchUnit 규칙 강화:
     - `jwt_authentication_filter_should_not_depend_on_jwt_token_provider_service_directly`
+    - `runtime_adapters_should_not_depend_on_application_service_package_directly`
 - 목표:
   - 인증 adapter까지 `adapter -> inbound usecase`로 완전 정렬하여 runtime layer의 service 직접 의존을 0으로 수렴
 

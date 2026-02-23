@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 00:56:00`
+> - **Updated At**: `2026-02-24 00:59:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1825,6 +1825,7 @@
         - `AuthSecurityIntegrationTest`, `SocialAuthControllerIntegrationTest`에 `AuthTokenAuthenticationUseCase` mock 주입
       - ArchUnit 규칙 추가:
         - `jwt_authentication_filter_should_not_depend_on_jwt_token_provider_service_directly`
+        - `runtime_adapters_should_not_depend_on_application_service_package_directly`
     - Verification (Phase8-D):
       - `./gradlew compileJava compileTestJava --no-daemon` PASS
       - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest --tests com.ticketrush.global.scheduler.WaitingQueueSchedulerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest` PASS
