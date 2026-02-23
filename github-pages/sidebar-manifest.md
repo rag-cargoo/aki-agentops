@@ -37,10 +37,12 @@
     * [API Specs Index (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
     * **Architecture Knowledge (Pages Docs)**
       * [DDD + Hexagonal Guide (Glossary)](/prj-docs/projects/ticket-core-service/product-docs/knowledge/ddd-hexagonal-guide.md)
+      * [DDD + Hexagonal Phase2 Completion (Human)](/prj-docs/projects/ticket-core-service/product-docs/knowledge/ddd-hexagonal-phase2-completion-human.md)
     * **API Specs (Pages Docs)**
       * [API Contract Conventions](/prj-docs/projects/ticket-core-service/product-docs/api-specs/api-contract-conventions.md)
       * [Auth Session API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-session-api.md)
       * [Auth Error Monitoring Guide](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-error-monitoring-guide.md)
+      * [Realtime Queue/Push Monitoring Guide](/prj-docs/projects/ticket-core-service/product-docs/api-specs/realtime-ops-monitoring-guide.md)
       * [User API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/user-api.md)
       * [Wallet/Payment API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/wallet-payment-api.md)
       * [Catalog API (Entertainment/Artist)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md)

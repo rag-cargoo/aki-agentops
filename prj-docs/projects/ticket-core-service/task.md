@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 19:01:20`
+> - **Updated At**: `2026-02-23 23:58:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -590,7 +590,7 @@
     - 2) 프론트 E2E 계약 검증(관리자 CRUD + 공개 조회 계약) 확장
 
 - TCS-SC-026 Clean DDD/Hexagonal 1차 경계 정리(스킬 적용)
-  - Status: DOING
+  - Status: DONE
   - Description:
     - `clean-ddd-hexagonal` 스킬을 적용해 DDD 경계 위반을 단계적으로 제거한다.
     - 대공사 진행 순서를 `회의록 -> task -> 제품 이슈 -> 코드 변경`으로 고정한다.
@@ -1133,6 +1133,556 @@
       - global 계층의 `org.springframework.kafka..` 직접 의존 잔여: `0`건 / `0`파일
       - Kafka 직접 의존 잔여(허용 범위: infrastructure):
         - `infrastructure.messaging..`
+    - Phase6-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6b-messaging-port-decoupling-kickoff.md`
+      - Scope:
+        - `ReservationController`의 `infrastructure.messaging.KafkaReservationProducer` 직접 의존 제거
+        - `KafkaWebSocketPushNotifier`의 `infrastructure.messaging` 직접 의존 제거
+        - reservation/push 메시징 포트 모델 도입(`ReservationQueueEventPublisher`, `PushEventPublisher`, `PushEvent`)
+        - ArchUnit 규칙 강화:
+          - `api.. -> infrastructure.messaging..` 직접 의존 금지
+          - `global.push.. -> infrastructure.messaging..` 직접 의존 금지
+      - Goal:
+        - `api/global` 계층은 포트/모델만 의존하고 Kafka 구현체는 infrastructure에 고정
+    - Phase6-B Progress (2026-02-23):
+      - reservation enqueue 경계 정리:
+        - `ReservationQueueEventPublisher` 추가
+        - `ReservationController`를 outbound port 의존으로 전환
+        - `KafkaReservationProducer`를 port 구현체로 정렬
+      - push fanout 경계 정리:
+        - `PushEvent`, `PushEventPublisher` 추가
+        - `KafkaWebSocketPushNotifier`의 infra 모델/producer 직접 참조 제거
+        - `KafkaPushEventProducer`를 `PushEventPublisher` 구현체로 정렬
+      - 테스트/규칙 정렬:
+        - `KafkaWebSocketPushNotifierTest`를 push 포트/모델 기준으로 갱신
+        - `LayerDependencyArchTest`에 메시징 직접 의존 금지 규칙 2건 추가
+    - Verification (Phase6-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-B):
+      - `api/global -> infrastructure.messaging` 직접 의존 잔여: `0`건 / `0`파일
+      - Kafka 구현체/브로커 직접 의존(허용 범위: infrastructure):
+        - `infrastructure.messaging..`
+    - Phase6-C Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6c-global-boundary-decoupling-kickoff.md`
+      - Scope:
+        - `global.lock.RedissonLockFacade`의 `api.dto` 직접 의존 제거
+        - `global.scheduler.WaitingQueueScheduler`의 `api.dto` 직접 의존 제거
+        - `global.config.SecurityConfig`의 `infrastructure` 직접 타입 의존 제거
+        - ArchUnit 규칙 강화:
+          - `global_should_not_depend_on_api_layer`
+          - `global_should_not_depend_on_infrastructure_layer`
+      - Goal:
+        - global 계층의 API/Infrastructure 직접 타입 참조를 제거하고 경계 회귀를 테스트로 차단
+    - Phase6-C Progress (2026-02-23):
+      - distributed lock 경계 정리:
+        - `RedissonLockFacade` 시그니처를 application command/result 기반으로 전환
+        - `ReservationController`에서 v3 distributed-lock 매핑 책임화
+        - `동시성_테스트_3_분산_락` 시그니처 정렬
+      - waiting queue scheduler 경계 정리:
+        - `WaitingQueueScheduler`의 `WaitingQueueSsePayload` 의존 제거
+        - scheduler payload를 `Map<String, Object>`로 전환
+      - security config 경계 정리:
+        - `SecurityConfig`에서 `JwtAuthenticationFilter` 직접 타입 의존 제거
+        - `@Qualifier(\"jwtAuthenticationFilter\") OncePerRequestFilter` 기반으로 정렬
+      - 테스트/규칙 정렬:
+        - `LayerDependencyArchTest`에 global 계층 규칙 2건 추가
+    - Verification (Phase6-C):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-C):
+      - global 계층의 `import com.ticketrush.api..` 직접 의존 잔여: `0`건 / `0`파일
+      - global 계층의 `import com.ticketrush.infrastructure..` 직접 의존 잔여: `0`건 / `0`파일
+    - Phase6-D Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6d-application-global-port-decoupling-kickoff.md`
+      - Scope:
+        - application 계층의 `global` 직접 타입 의존 제거
+          - `global.config.*Properties`
+          - `global.cache.ConcertReadCacheEvictor`
+          - `global.push.PushNotifier`
+          - `global.cache.ConcertCacheNames`
+        - application 포트 인터페이스 도입 + global 구현체 매핑
+        - ArchUnit 규칙 강화:
+          - `application_should_not_depend_on_global_layer`
+      - Goal:
+        - application 계층은 포트/모델 기준으로만 의존하고 global 구현/설정 타입 직접 참조를 제거
+    - Phase6-D Progress (2026-02-23):
+      - application 포트 추가:
+        - `application.port.outbound.RealtimePushPort`
+        - `application.concert.port.outbound.ConcertReadCacheEvictPort`
+        - `application.auth.port.outbound.AuthJwtConfigPort`
+        - `application.reservation.port.outbound.ReservationConfigPort`
+        - `application.reservation.port.outbound.PaymentConfigPort`
+        - `application.reservation.port.outbound.AbuseGuardConfigPort`
+        - `application.waitingqueue.port.outbound.WaitingQueueConfigPort`
+      - global 구현체/설정 정렬:
+        - `PushNotifier` -> `RealtimePushPort` 상속
+        - `ConcertReadCacheEvictor` -> `ConcertReadCacheEvictPort` 구현
+        - `AuthJwtProperties`, `ReservationProperties`, `PaymentProperties`,
+          `AbuseGuardProperties`, `WaitingQueueProperties` -> 각 config port 구현
+      - application 서비스 의존 전환:
+        - `ReservationServiceImpl`
+        - `ReservationLifecycleServiceImpl`
+        - `SeatSoftLockServiceImpl`
+        - `PgReadyWebhookService`
+        - `WaitingQueueServiceImpl`
+        - `JwtTokenProvider`
+        - `AbuseAuditServiceImpl`
+      - 잔여 상수 의존 제거:
+        - `ConcertServiceImpl`의 `ConcertCacheNames(global)` 직접 의존 제거(로컬 상수화)
+      - ArchUnit 강화:
+        - `application_should_not_depend_on_global_layer` 규칙 추가
+    - Verification (Phase6-D):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-D):
+      - application 계층의 `import com.ticketrush.global..` 직접 의존 잔여: `0`건 / `0`파일
+      - global 계층의 `import com.ticketrush.api..` 직접 의존 잔여: `0`건 / `0`파일
+      - global 계층의 `import com.ticketrush.infrastructure..` 직접 의존 잔여: `0`건 / `0`파일
+      - `api/global -> infrastructure.messaging` 직접 의존 잔여: `0`건 / `0`파일
+    - Phase6-E Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6e-api-global-port-decoupling-kickoff.md`
+      - Scope:
+        - API 컨트롤러의 global 구현체 직접 의존 제거
+          - `ReservationController -> RedissonLockFacade`, `SsePushNotifier`
+          - `WaitingQueueController -> SsePushNotifier`
+          - `WebSocketPushController -> WebSocketPushNotifier`
+        - API 포트 도입:
+          - `DistributedReservationUseCase`
+          - `SsePushPort`
+          - `WebSocketSubscriptionPort`
+        - ArchUnit 규칙 강화:
+          - `api_layer_should_not_depend_on_global_layer`
+      - Goal:
+        - API 계층의 global 구현체 직접 참조를 제거하고 포트 기반 경계로 정렬
+    - Phase6-E Progress (2026-02-23):
+      - 포트/구현 정렬:
+        - `RedissonLockFacade` -> `DistributedReservationUseCase` 구현
+        - `SsePushNotifier` -> `SsePushPort` 구현
+        - `WebSocketPushNotifier` -> `WebSocketSubscriptionPort` 구현
+      - 컨트롤러 의존 전환:
+        - `ReservationController`
+        - `WaitingQueueController`
+        - `WebSocketPushController`
+      - 테스트 정렬:
+        - `WebSocketPushControllerTest` mock 타입을 `WebSocketSubscriptionPort` 기준으로 정렬
+      - ArchUnit 강화:
+        - `api_layer_should_not_depend_on_global_layer` 규칙 추가
+    - Verification (Phase6-E):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-E):
+      - api/application/domain 계층의 `import com.ticketrush.global..` 직접 의존 잔여: `0`건 / `0`파일
+      - global 계층의 `import com.ticketrush.api..` 직접 의존 잔여: `0`건 / `0`파일
+      - global 계층의 `import com.ticketrush.infrastructure..` 직접 의존 잔여: `0`건 / `0`파일
+      - `api/global -> infrastructure.messaging` 직접 의존 잔여: `0`건 / `0`파일
+    - Phase6-F Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6f-infrastructure-global-decoupling-kickoff.md`
+      - Scope:
+        - infrastructure 계층의 global 구현/설정 타입 직접 의존 제거
+          - `infrastructure.auth.. -> global.config..`
+          - `infrastructure.messaging.. -> global.push..`
+          - `infrastructure.push.. -> global.push.. / global.config..`
+        - 포트 확장:
+          - `WebSocketEventDispatchPort`
+          - `WebSocketQueueSubscriptionStorePort`
+        - 기존 중복 타입 정리:
+          - `global.push.PushEvent`
+          - `global.push.PushEventPublisher`
+          - `global.push.WebSocketQueueSubscriptionStore`
+        - ArchUnit 규칙 강화:
+          - `infrastructure_should_not_depend_on_global_layer`
+      - Goal:
+        - infrastructure 계층의 global 직접 타입 참조를 제거하고 포트 기반 경계로 정렬
+    - Phase6-F Progress (2026-02-23):
+      - auth 경계 전환:
+        - `SocialLoginProperties`를 `SocialLoginConfigPort` 구현체로 정렬
+        - `KakaoOAuthClient`, `NaverOAuthClient`를 social config port 의존으로 전환
+        - `AccessTokenDenylistConfig`, `RedisAccessTokenDenylistService`를 `AuthJwtConfigPort` 의존으로 전환
+      - messaging 경계 전환:
+        - `KafkaReservationConsumer`를 `RealtimePushPort` 의존으로 전환
+        - `KafkaPushEventConsumer`를 `WebSocketEventDispatchPort` 의존으로 전환
+        - `KafkaPushEventProducer`를 `PushEventPublisherPort` 구현체로 정렬
+      - websocket subscription store 경계 전환:
+        - `RedisWebSocketQueueSubscriptionStoreAdapter`를 `WebSocketQueueSubscriptionStorePort` 구현체로 전환
+        - `WebSocketPushNotifier`를 store/config port 기반으로 정렬
+        - `WaitingQueueConfigPort`에 WS 관련 getter(default) 확장
+      - 중복 타입 정리:
+        - `global.push.PushEvent` 삭제
+        - `global.push.PushEventPublisher` 삭제
+        - `global.push.WebSocketQueueSubscriptionStore` 삭제
+      - 테스트/규칙 정렬:
+        - `KafkaPushEventConsumerTest`, `KafkaWebSocketPushNotifierTest`, `WebSocketPushNotifierTest`를 포트 기준으로 갱신
+        - `LayerDependencyArchTest`에 `infrastructure_should_not_depend_on_global_layer` 규칙 추가
+    - Verification (Phase6-F):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest --tests com.ticketrush.global.push.KafkaWebSocketPushNotifierTest --tests com.ticketrush.global.push.WebSocketPushNotifierTest --no-daemon` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-F):
+      - infrastructure 계층의 `import com.ticketrush.global..` 직접 의존 잔여: `0`건 / `0`파일
+      - api 계층의 `import com.ticketrush.global..` 직접 의존 잔여: `0`건 / `0`파일
+      - application 계층의 `import com.ticketrush.global..` 직접 의존 잔여: `0`건 / `0`파일
+      - global 계층의 `import com.ticketrush.api..` 직접 의존 잔여: `0`건 / `0`파일
+      - global 계층의 `import com.ticketrush.infrastructure..` 직접 의존 잔여: `0`건 / `0`파일
+    - Phase6-G Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6g-waitingqueue-config-port-hardening.md`
+      - Scope:
+        - `global` 런타임 컴포넌트의 `WaitingQueueProperties` 구체 의존 제거
+        - `WaitingQueueConfigPort` 확장(`activation/sse timeout` getter)
+        - ArchUnit 규칙 강화:
+          - `waiting_queue_runtime_should_not_depend_on_waiting_queue_properties_concrete`
+      - Goal:
+        - 런타임 컴포넌트는 설정 구체 타입 대신 포트에 의존하도록 경계 고정
+    - Phase6-G Progress (2026-02-23):
+      - 포트 확장:
+        - `WaitingQueueConfigPort#getActivationBatchSize`
+        - `WaitingQueueConfigPort#getActivationConcertId`
+        - `WaitingQueueConfigPort#getSseTimeoutMillis`
+      - 의존 전환:
+        - `WaitingQueueScheduler` -> `WaitingQueueConfigPort`
+        - `SsePushNotifier` -> `WaitingQueueConfigPort`
+        - `WaitingQueueInterceptor` -> `WaitingQueueConfigPort`
+      - 테스트/규칙 정렬:
+        - `WaitingQueueSchedulerTest` mock 타입을 config port 기준으로 전환
+        - `LayerDependencyArchTest`에 waiting-queue config concrete 금지 규칙 추가
+    - Verification (Phase6-G):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest'` PASS
+    - Phase6-H Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6h-realtime-push-port-unification.md`
+      - Scope:
+        - `global.push.PushNotifier` 제거 및 `RealtimePushPort` 계약 단일화
+        - scheduler/config/runtime 구현체의 push 의존 타입 정렬
+      - Goal:
+        - push runtime 계약 중복 제거 및 application outbound port 기준 단일화
+    - Phase6-H Progress (2026-02-23):
+      - 인터페이스 단일화:
+        - `PushNotifier` 삭제
+        - `RealtimePushPort`에 queue heartbeat/subscriber 조회 기본 계약 통합
+      - 의존 타입 전환:
+        - `PushNotifierConfig` 반환/입력 타입 -> `RealtimePushPort`
+        - `WaitingQueueScheduler` 의존 타입 -> `RealtimePushPort`
+        - `SsePushNotifier`, `KafkaWebSocketPushNotifier`, `WebSocketPushNotifier` 구현 타입 정렬
+      - 테스트 정렬:
+        - `PushNotifierConfigTest`
+        - `WaitingQueueSchedulerTest`
+        - `PgReadyWebhookServiceTest`
+        - `SeatSoftLockServiceImplTest`
+        - `ReservationLifecycleServiceIntegrationTest`
+    - Verification (Phase6-H):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Phase6-I Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6i-queue-payload-typed-port-hardening.md`
+      - Scope:
+        - `RealtimePushPort`의 queue payload 시그니처를 `Object`에서 typed model로 전환
+        - `WaitingQueueScheduler`/`WaitingQueueController`/`ReservationLifecycleServiceImpl`의 payload 생성 로직 통합
+        - 불필요 API DTO(`WaitingQueueSsePayload`) 제거
+      - Goal:
+        - queue 실시간 이벤트 계약을 포트 시그니처에서 타입 고정해 경계 명시성 강화
+    - Phase6-I Progress (2026-02-23):
+      - typed model 도입:
+        - `application.port.outbound.QueuePushPayload` 추가
+      - port 시그니처 전환:
+        - `RealtimePushPort#sendQueueRankUpdate(Long, Long, QueuePushPayload)`
+        - `RealtimePushPort#sendQueueActivated(Long, Long, QueuePushPayload)`
+      - 호출부/구현체 정렬:
+        - `WaitingQueueScheduler`
+        - `WaitingQueueController`
+        - `ReservationLifecycleServiceImpl`
+        - `SsePushNotifier`
+        - `WebSocketPushNotifier`
+        - `KafkaWebSocketPushNotifier`
+      - DTO 정리:
+        - `api.dto.waitingqueue.WaitingQueueSsePayload` 삭제
+      - 테스트 정렬:
+        - `WebSocketPushNotifierTest`
+        - `KafkaWebSocketPushNotifierTest`
+    - Verification (Phase6-I):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-I):
+      - queue push 시그니처의 `Object` payload 잔여: `0`건 / `0`파일
+      - `WaitingQueueSsePayload` 참조 잔여: `0`건 / `0`파일
+    - Phase6-J Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6j-queue-event-dispatch-typed-hardening.md`
+      - Scope:
+        - queue dispatch 포트/이벤트 모델의 `Object` payload 제거
+          - `WebSocketEventDispatchPort#publishQueueEvent`
+          - `PushEvent.data`
+          - `KafkaPushEvent.data`
+        - queue heartbeat 이벤트 payload를 typed model(`QueuePushPayload`)로 정렬
+      - Goal:
+        - publish -> Kafka -> consume -> dispatch 경계를 typed payload로 고정
+    - Phase6-J Progress (2026-02-23):
+      - 포트/모델 타입 강화:
+        - `WebSocketEventDispatchPort#publishQueueEvent(..., QueuePushPayload)`
+        - `PushEvent.data: QueuePushPayload`
+        - `KafkaPushEvent.data: QueuePushPayload`
+      - 구현체 정렬:
+        - `WebSocketPushNotifier#publishQueueEvent` 시그니처 전환
+        - `KafkaWebSocketPushNotifier#publishQueueEvent` 시그니처 전환
+        - KEEPALIVE payload를 `QueuePushPayload` 기반으로 전환
+      - 테스트 정렬:
+        - `KafkaPushEventConsumerTest` payload 검증을 typed model 기준으로 갱신
+    - Verification (Phase6-J):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-J):
+      - queue dispatch 경계의 `Object data` 잔여: `0`건 / `0`파일
+    - Phase6-K Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6k-kafka-notifier-concrete-decoupling.md`
+      - Scope:
+        - `KafkaWebSocketPushNotifier -> WebSocketPushNotifier` 구체 타입 의존 제거
+        - queue 구독 조회 포트(`QueueSubscriberQueryPort`) 도입
+        - ArchUnit 규칙 추가로 구체 의존 회귀 차단
+      - Goal:
+        - notifier 구현체 간 결합을 포트 의존으로 전환해 교체 가능성/테스트 격리 강화
+    - Phase6-K Progress (2026-02-23):
+      - 포트 도입:
+        - `application.port.outbound.QueueSubscriberQueryPort`
+      - 구현체 정렬:
+        - `WebSocketPushNotifier`가 `QueueSubscriberQueryPort` 구현
+      - Kafka notifier 의존 전환:
+        - `KafkaWebSocketPushNotifier` 생성자 의존을 `QueueSubscriberQueryPort`로 전환
+      - 테스트/규칙 정렬:
+        - `KafkaWebSocketPushNotifierTest` mock 타입 전환
+        - `LayerDependencyArchTest`에 `kafka_websocket_push_notifier_should_not_depend_on_websocket_push_notifier_concrete` 규칙 추가
+    - Verification (Phase6-K):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-K):
+      - `KafkaWebSocketPushNotifier -> WebSocketPushNotifier` 구체 의존 잔여: `0`건 / `0`파일
+    - Phase6-L Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6l-queue-eventname-enum-hardening.md`
+      - Scope:
+        - queue event name을 문자열(`String`)에서 enum(`QueueEventName`)으로 전환
+        - queue dispatch 포트/이벤트 모델(`WebSocketEventDispatchPort`, `PushEvent`, `KafkaPushEvent`)의 eventName 타입 강화
+      - Goal:
+        - queue 이벤트 식별자 오타/회귀를 컴파일 단계에서 차단
+    - Phase6-L Progress (2026-02-23):
+      - enum 도입:
+        - `application.port.outbound.QueueEventName`
+      - 포트/모델 타입 전환:
+        - `WebSocketEventDispatchPort#publishQueueEvent(..., QueueEventName, QueuePushPayload)`
+        - `PushEvent.eventName: QueueEventName`
+        - `KafkaPushEvent.eventName: QueueEventName`
+      - 구현체/테스트 정렬:
+        - `WebSocketPushNotifier`
+        - `KafkaWebSocketPushNotifier`
+        - `KafkaPushEventConsumerTest`
+        - `KafkaWebSocketPushNotifierTest`
+    - Verification (Phase6-L):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-L):
+      - queue event name string 의존 잔여: `0`건 / `0`파일
+    - Phase6-M Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6m-queue-runtime-port-segregation.md`
+      - Scope:
+        - queue scheduler 의존 포트를 broad(`RealtimePushPort`)에서 queue runtime 전용 포트로 세분화
+        - `QueueRuntimePushPort` 도입 및 `RealtimePushPort` 상속 구조 정렬
+      - Goal:
+        - `WaitingQueueScheduler`의 push 의존 경계를 queue runtime 책임으로 한정
+    - Phase6-M Progress (2026-02-23):
+      - 포트 도입/정렬:
+        - `application.port.outbound.QueueRuntimePushPort` 추가
+        - `RealtimePushPort extends QueueRuntimePushPort`로 정렬
+      - 의존 전환:
+        - `WaitingQueueScheduler` 의존 타입:
+          - `RealtimePushPort` -> `QueueRuntimePushPort`
+        - `WaitingQueueSchedulerTest` mock 타입 동일 전환
+      - ArchUnit 강화:
+        - `waiting_queue_scheduler_should_not_depend_on_realtime_push_port_broad_contract` 규칙 추가
+    - Verification (Phase6-M):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-M):
+      - `WaitingQueueScheduler -> RealtimePushPort` 직접 의존 잔여: `0`건 / `0`파일
+    - Phase6-N Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6n-push-capability-port-segregation.md`
+      - Scope:
+        - push capability 포트 분리(`ReservationStatusPushPort`, `SeatMapPushPort`)
+        - broad push contract(`RealtimePushPort`) 의존을 capability 의존으로 축소
+          - `KafkaReservationConsumer`
+          - `PgReadyWebhookService`
+          - `SeatSoftLockServiceImpl`
+      - Goal:
+        - 컴포넌트 책임과 push 의존 범위를 기능 단위로 정렬
+    - Phase6-N Progress (2026-02-23):
+      - 포트 분리/계층 정렬:
+        - `ReservationStatusPushPort` 추가
+        - `SeatMapPushPort` 추가
+        - `RealtimePushPort extends QueueRuntimePushPort, ReservationStatusPushPort, SeatMapPushPort`
+      - 의존 축소:
+        - `KafkaReservationConsumer`: `ReservationStatusPushPort` 의존으로 전환
+        - `PgReadyWebhookService`: `ReservationStatusPushPort` 의존으로 전환
+        - `SeatSoftLockServiceImpl`: `SeatMapPushPort` 의존으로 전환
+      - 테스트/규칙 정렬:
+        - `PgReadyWebhookServiceTest`, `SeatSoftLockServiceImplTest` 타입 전환
+        - ArchUnit 규칙 3건 추가(위 3개 컴포넌트의 `RealtimePushPort` 직접 의존 금지)
+    - Verification (Phase6-N):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-N):
+      - `KafkaReservationConsumer/PgReadyWebhookService/SeatSoftLockServiceImpl -> RealtimePushPort` 직접 의존 잔여: `0`건 / `0`파일
+    - Phase6-O Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6o-push-broad-port-final-segregation.md`
+      - Scope:
+        - `ReservationLifecycleServiceImpl`의 broad push 의존(`RealtimePushPort`)을 capability 포트 의존으로 세분화
+        - `SsePushPort`, `WebSocketEventDispatchPort`의 `RealtimePushPort` 상속 제거
+        - ArchUnit 규칙 추가로 broad contract 재유입 회귀 차단
+      - Goal:
+        - direct/indirect broad push contract 의존을 모두 차단해 capability 중심 경계를 고정
+    - Phase6-O Progress (2026-02-23):
+      - 의존 세분화:
+        - `ReservationLifecycleServiceImpl`
+          - `RealtimePushPort` -> `QueueRuntimePushPort`
+          - `RealtimePushPort` -> `ReservationStatusPushPort`
+          - `RealtimePushPort` -> `SeatMapPushPort`
+      - 인터페이스 경계 정렬:
+        - `SsePushPort`에서 `RealtimePushPort` 상속 제거
+        - `WebSocketEventDispatchPort`에서 `RealtimePushPort` 상속 제거
+        - `WebSocketEventDispatchPort extends ReservationStatusPushPort, SeatMapPushPort`로 축소
+      - ArchUnit 강화:
+        - `reservation_lifecycle_service_should_not_depend_on_realtime_push_port_broad_contract`
+        - `kafka_push_event_consumer_should_not_depend_on_realtime_push_port_broad_contract`
+    - Verification (Phase6-O):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-O):
+      - `ReservationLifecycleServiceImpl -> RealtimePushPort` 직접 의존 잔여: `0`건 / `0`파일
+      - `SsePushPort/WebSocketEventDispatchPort -> RealtimePushPort` 상속 의존 잔여: `0`건 / `0`파일
+    - Phase7-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase7a-realtime-port-removal-and-selector-split.md`
+      - Scope:
+        - `RealtimePushPort` 제거
+        - push mode selector를 capability 포트별(`QueueRuntimePushPort`, `ReservationStatusPushPort`, `SeatMapPushPort`) primary bean으로 분리
+        - notifier 구현체/테스트/ArchUnit 규칙을 broad 계약 제거 기준으로 정렬
+      - Goal:
+        - push 경계에서 broad 통합 포트 없이 capability 포트만 유지
+    - Phase7-A Progress (2026-02-23):
+      - 인터페이스/구현 정렬:
+        - `application.port.outbound.RealtimePushPort` 삭제
+        - `SsePushNotifier`, `KafkaWebSocketPushNotifier`, `WebSocketPushNotifier` 구현 인터페이스를 capability 포트 기준으로 재정렬
+      - 설정 분리:
+        - `PushNotifierConfig`를 capability selector 3개로 분리
+          - `queueRuntimePushNotifier`
+          - `reservationStatusPushNotifier`
+          - `seatMapPushNotifier`
+      - 테스트/규칙 정렬:
+        - `PushNotifierConfigTest`를 selector 분리 구조에 맞게 갱신
+        - `ReservationLifecycleServiceIntegrationTest` push mock 주입을 capability 포트 3개로 분리
+        - `LayerDependencyArchTest`의 broad 계약 금지 규칙을 transport-specific 포트 의존 금지 규칙으로 정렬
+    - Verification (Phase7-A):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase7-A):
+      - `src/**` 기준 `RealtimePushPort` 참조 잔여: `0`건 / `0`파일
+    - Phase7-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase7b-realtime-queue-observability-hardening.md`
+      - Scope:
+        - queue/push 운영 관측성 강화를 위해 표준 로그 키/주기 스냅샷 계측 추가
+        - `PUSH_MONITOR`, `QUEUE_MONITOR`, `PUSH_MONITOR_SNAPSHOT` 규약 도입
+        - 운영 가이드 문서(`realtime-ops-monitoring-guide.md`) 및 Pages 링크 반영
+      - Goal:
+        - 실시간 운영 이상 징후를 로그만으로 빠르게 분류 가능하게 고정
+    - Phase7-B Progress (2026-02-23):
+      - 계측 유틸/스냅샷 추가:
+        - `global.monitoring.PushMonitoringMetrics`
+        - `global.monitoring.PushMonitoringSnapshotScheduler`
+      - 런타임 계측/로그 반영:
+        - `SsePushNotifier`, `WebSocketPushNotifier`, `KafkaWebSocketPushNotifier`에 push 이벤트 카운트/팬아웃 로그(`PUSH_MONITOR`)
+        - `WaitingQueueScheduler`에 활성화/락미스/랭크리프레시 로그(`QUEUE_MONITOR`)
+      - 설정 추가:
+        - `app.push.monitor.snapshot-delay-millis`
+        - env: `APP_PUSH_MONITOR_SNAPSHOT_DELAY_MILLIS`
+      - 문서 반영:
+        - `product-docs/api-specs/realtime-ops-monitoring-guide.md`
+        - `product-docs/api-specs/README.md`
+        - `product-docs/README.md`
+        - `github-pages/sidebar-manifest.md`
+    - Verification (Phase7-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.monitoring.PushMonitoringMetricsTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase7-B):
+      - queue/push 운영 로그 키(`QUEUE_MONITOR`, `PUSH_MONITOR`, `PUSH_MONITOR_SNAPSHOT`) 적용 잔여: `0`건 / `0`트랙
+    - Phase7-C Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase7c-api-outbound-port-decoupling.md`
+      - Scope:
+        - API controller의 outbound 포트 직접 의존 제거
+          - `SsePushPort`
+          - `WebSocketSubscriptionPort`
+          - `ReservationQueueEventPublisher`
+        - 실시간 구독 경계의 application 서비스 도입(`RealtimeSubscriptionService`)
+        - 예약 큐 enqueue 오케스트레이션을 application 서비스(`ReservationQueueService`)로 이동
+        - ArchUnit 규칙 추가(`api -> application.port.outbound` 금지)
+      - Goal:
+        - API adapter는 outbound 포트 대신 application inbound/service 경계를 통해서만 실시간/큐 기능을 사용
+    - Phase7-C Progress (2026-02-23):
+      - application 서비스 추가:
+        - `application.realtime.service.RealtimeSubscriptionService`
+        - `application.realtime.service.RealtimeSubscriptionServiceImpl`
+      - controller 의존 정렬:
+        - `ReservationController`:
+          - `SsePushPort`/`ReservationQueueEventPublisher` 직접 의존 제거
+          - `RealtimeSubscriptionService.subscribeReservationSse(...)` 사용
+          - queue 요청은 `ReservationQueueService.enqueue(...)`로 위임
+        - `WaitingQueueController`:
+          - subscribe bootstrap 로직을 `RealtimeSubscriptionService.subscribeWaitingQueueSse(...)`로 위임
+        - `WebSocketPushController`:
+          - `WebSocketSubscriptionPort` 직접 의존 제거
+          - 구독/해제 전부 `RealtimeSubscriptionService`로 위임
+      - queue application 서비스 확장:
+        - `ReservationQueueService.enqueue(userId, seatId, lockType)` 추가
+        - `ReservationQueueServiceImpl`에서 `PENDING` 상태 저장 + `ReservationQueueEventPublisher.send(...)` 통합 처리
+      - 테스트/규칙 보강:
+        - 신규 테스트: `RealtimeSubscriptionServiceImplTest`
+        - `WebSocketPushControllerTest` mock target을 `RealtimeSubscriptionService`로 정렬
+        - ArchUnit 규칙 추가:
+          - `api_layer_should_not_depend_on_application_outbound_ports`
+    - Verification (Phase7-C):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase7-C):
+      - `src/main/java/com/ticketrush/api/**` 기준 `application.port.outbound` 직접 의존 잔여: `0`건 / `0`파일
+      - `ReservationController -> ReservationQueueEventPublisher` 직접 의존 잔여: `0`건 / `0`파일
+    - Completion Checkpoint (2026-02-23):
+      - expanded verification:
+        - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
+      - completion assertion:
+        - 1차/확장 범위 경계 import 잔여(`domain->api`, `application->api dto`, `api/application/infrastructure->global`, `global->api/infrastructure`) 모두 `0`으로 정리
+        - push runtime broad 계약(`PushNotifier`, `RealtimePushPort`) 제거 후 capability 포트 기준으로 단일화
+        - queue payload 계약을 `QueuePushPayload` typed model로 고정(`Object` 의존 제거)
+        - queue dispatch 경계(`PushEvent/KafkaPushEvent/WebSocketEventDispatchPort`)도 typed model로 고정
+        - Kafka notifier의 queue subscription 조회는 구체 구현체 대신 포트(`QueueSubscriberQueryPort`) 의존으로 고정
+        - queue event 식별자 계약을 enum(`QueueEventName`)으로 고정
+        - waiting queue scheduler는 queue runtime 전용 포트(`QueueRuntimePushPort`)에만 의존
+        - reservation/webhook/seat-softlock 컴포넌트는 capability 포트(`ReservationStatusPushPort`, `SeatMapPushPort`)에만 의존
+        - reservation lifecycle 서비스는 복합 push 의존을 capability 포트(`QueueRuntimePushPort`, `ReservationStatusPushPort`, `SeatMapPushPort`)로 세분화
+        - `SsePushPort`/`WebSocketEventDispatchPort`는 `RealtimePushPort` 상속 없이 필요 capability만 노출
+        - queue/push 운영 추적은 표준 로그 키(`QUEUE_MONITOR`, `PUSH_MONITOR`, `PUSH_MONITOR_SNAPSHOT`)와 스냅샷 계측으로 고정
+        - API controller의 outbound 포트 직접 의존(`application.port.outbound`)을 제거하고, 실시간 구독 경계를 application 서비스(`RealtimeSubscriptionService`)로 통합
+        - 예약 큐 enqueue 오케스트레이션(`PENDING` 저장 + event publish)은 `ReservationQueueService.enqueue(...)`로 application 경계에 고정
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`

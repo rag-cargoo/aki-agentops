@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 19:01:20`
+> - **Updated At**: `2026-02-23 23:58:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,23 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-23 DDD Phase7-C API Outbound Port Decoupling](./2026-02-23-ddd-phase7c-api-outbound-port-decoupling.md)
+- [2026-02-23 DDD Phase7-B Realtime Queue Observability Hardening](./2026-02-23-ddd-phase7b-realtime-queue-observability-hardening.md)
+- [2026-02-23 DDD Phase7-A Realtime Port Removal and Selector Split](./2026-02-23-ddd-phase7a-realtime-port-removal-and-selector-split.md)
+- [2026-02-23 DDD Phase6-O Push Broad Port Final Segregation](./2026-02-23-ddd-phase6o-push-broad-port-final-segregation.md)
+- [2026-02-23 DDD Phase6-N Push Capability Port Segregation](./2026-02-23-ddd-phase6n-push-capability-port-segregation.md)
+- [2026-02-23 DDD Phase6-M Queue Runtime Port Segregation](./2026-02-23-ddd-phase6m-queue-runtime-port-segregation.md)
+- [2026-02-23 DDD Phase6-L Queue EventName Enum Hardening](./2026-02-23-ddd-phase6l-queue-eventname-enum-hardening.md)
+- [2026-02-23 DDD Phase6-K Kafka Notifier Concrete Decoupling](./2026-02-23-ddd-phase6k-kafka-notifier-concrete-decoupling.md)
+- [2026-02-23 DDD Phase6-J Queue Event Dispatch Typed Hardening](./2026-02-23-ddd-phase6j-queue-event-dispatch-typed-hardening.md)
+- [2026-02-23 DDD Phase6-I Queue Payload Typed Port Hardening](./2026-02-23-ddd-phase6i-queue-payload-typed-port-hardening.md)
+- [2026-02-23 DDD Phase6-H Realtime Push Port Unification](./2026-02-23-ddd-phase6h-realtime-push-port-unification.md)
+- [2026-02-23 DDD Phase6-G WaitingQueue Config Port Hardening](./2026-02-23-ddd-phase6g-waitingqueue-config-port-hardening.md)
+- [2026-02-23 DDD Phase6-F Infrastructure-Global Decoupling Kickoff](./2026-02-23-ddd-phase6f-infrastructure-global-decoupling-kickoff.md)
+- [2026-02-23 DDD Phase6-E API-Global Port Decoupling Kickoff](./2026-02-23-ddd-phase6e-api-global-port-decoupling-kickoff.md)
+- [2026-02-23 DDD Phase6-D Application-Global Port Decoupling Kickoff](./2026-02-23-ddd-phase6d-application-global-port-decoupling-kickoff.md)
+- [2026-02-23 DDD Phase6-C Global Boundary Decoupling Kickoff](./2026-02-23-ddd-phase6c-global-boundary-decoupling-kickoff.md)
+- [2026-02-23 DDD Phase6-B Messaging Port Decoupling Kickoff](./2026-02-23-ddd-phase6b-messaging-port-decoupling-kickoff.md)
 - [2026-02-23 DDD Phase6-A Messaging Infrastructure Relocation Kickoff](./2026-02-23-ddd-phase6a-messaging-infrastructure-relocation-kickoff.md)
 - [2026-02-23 DDD Phase5-B Global Redis Port/Adapter Kickoff](./2026-02-23-ddd-phase5b-global-redis-port-adapter-kickoff.md)
 - [2026-02-23 DDD Phase5-A Application Redis Port/Adapter Kickoff](./2026-02-23-ddd-phase5a-application-redis-port-adapter-kickoff.md)
