@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 19:01:20`
+> - **Updated At**: `2026-02-24 06:59:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -590,7 +590,7 @@
     - 2) 프론트 E2E 계약 검증(관리자 CRUD + 공개 조회 계약) 확장
 
 - TCS-SC-026 Clean DDD/Hexagonal 1차 경계 정리(스킬 적용)
-  - Status: DOING
+  - Status: DONE
   - Description:
     - `clean-ddd-hexagonal` 스킬을 적용해 DDD 경계 위반을 단계적으로 제거한다.
     - 대공사 진행 순서를 `회의록 -> task -> 제품 이슈 -> 코드 변경`으로 고정한다.
@@ -1133,6 +1133,16 @@
       - global 계층의 `org.springframework.kafka..` 직접 의존 잔여: `0`건 / `0`파일
       - Kafka 직접 의존 잔여(허용 범위: infrastructure):
         - `infrastructure.messaging..`
+    - Closeout (2026-02-24):
+      - 경계 정리 완료:
+        - `domain -> api` 직접 의존 잔여: `0`건 / `0`파일
+        - `domain -> application` 직접 의존 잔여: `0`건 / `0`파일
+        - `application -> api dto` 직접 의존 잔여: `0`건 / `0`파일
+      - 운영/고도화 성격 항목은 별도 패키지로 분리해 완료 처리하고, 본 `TCS-SC-026`은 경계 정리 스코프 기준으로 종료한다.
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-sc026-closeout-and-frontend-reset-gate.md`
+      - Tracking Issue:
+        - `rag-cargoo/ticket-core-service#33` (closed)
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
