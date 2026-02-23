@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 11:29:00`
+> - **Updated At**: `2026-02-23 11:41:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-23 DDD Phase4-F Catalog Service Application Relocation Kickoff](./2026-02-23-ddd-phase4f-catalog-service-application-relocation-kickoff.md)
 - [2026-02-23 DDD Phase4-E Reservation Outbound Adapter Relocation Kickoff](./2026-02-23-ddd-phase4e-reservation-outbound-adapter-relocation-kickoff.md)
 - [2026-02-23 DDD Phase4-D Reservation Event Boundary Kickoff](./2026-02-23-ddd-phase4d-reservation-event-boundary-kickoff.md)
 - [2026-02-23 DDD Phase4-C Reservation Controller Domain Decoupling Kickoff](./2026-02-23-ddd-phase4c-reservation-controller-domain-decoupling-kickoff.md)

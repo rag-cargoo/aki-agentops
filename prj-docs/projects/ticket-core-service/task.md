@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 11:29:00`
+> - **Updated At**: `2026-02-23 11:41:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -852,6 +852,38 @@
       - `./gradlew compileJava compileTestJava --no-daemon` PASS
       - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
     - Residual Backlog (as-is, 2026-02-23 after Phase4-E):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-F Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4f-catalog-service-application-relocation-kickoff.md`
+      - Scope:
+        - catalog CRUD 서비스 4종(`Entertainment/Artist/Promoter/Venue`)을 application 계층으로 이동
+        - catalog controller의 service 참조를 application 경유로 정렬
+        - ArchUnit 규칙 강화:
+          - catalog controller 5종의 `domain.*.service` 직접 의존 금지
+      - Goal:
+        - catalog API 계층에서 domain service 직접 의존 제거
+    - Phase4-F Progress (2026-02-23):
+      - catalog 서비스 relocation:
+        - `EntertainmentService*`, `ArtistService*`, `PromoterService*`, `VenueService*`
+        - `domain.*.service` -> `application.catalog.service`
+      - controller 참조 정렬:
+        - `EntertainmentController`
+        - `EntertainmentCatalogController`
+        - `ArtistController`
+        - `PromoterController`
+        - `VenueController`
+      - 테스트 정렬:
+        - `EntertainmentArtistCrudDataJpaTest` package/import를 `application.catalog.service` 기준으로 정렬
+      - ArchUnit 강화:
+        - `catalog_controllers_should_not_depend_on_domain_catalog_services` 규칙 추가
+    - Verification (Phase4-F):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-F):
+      - catalog controller의 `domain.*.service` 직접 의존 잔여: `0`건 / `0`파일
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `domain -> application` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
