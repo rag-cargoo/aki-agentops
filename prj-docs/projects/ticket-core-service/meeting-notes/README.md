@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 14:18:00`
+> - **Updated At**: `2026-02-23 19:01:20`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-23 DDD Phase6-A Messaging Infrastructure Relocation Kickoff](./2026-02-23-ddd-phase6a-messaging-infrastructure-relocation-kickoff.md)
 - [2026-02-23 DDD Phase5-B Global Redis Port/Adapter Kickoff](./2026-02-23-ddd-phase5b-global-redis-port-adapter-kickoff.md)
 - [2026-02-23 DDD Phase5-A Application Redis Port/Adapter Kickoff](./2026-02-23-ddd-phase5a-application-redis-port-adapter-kickoff.md)
 - [2026-02-23 DDD Phase4-J Auth Infra Boundary Relocation Kickoff](./2026-02-23-ddd-phase4j-auth-infra-boundary-relocation-kickoff.md)

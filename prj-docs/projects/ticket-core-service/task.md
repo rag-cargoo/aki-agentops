@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 14:18:00`
+> - **Updated At**: `2026-02-23 19:01:20`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1096,6 +1096,43 @@
         - `infrastructure.reservation..`
         - `infrastructure.waitingqueue..`
         - `infrastructure.push..`
+    - Phase6-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6a-messaging-infrastructure-relocation-kickoff.md`
+      - Scope:
+        - `global.messaging`의 Kafka 구현체/모델을 `infrastructure.messaging`으로 이동
+        - `ReservationController`, `KafkaWebSocketPushNotifier`, 관련 테스트 참조 정렬
+        - ArchUnit 규칙 보강:
+          - `global..`의 `org.springframework.kafka..` 직접 의존 금지
+      - Goal:
+        - Kafka 구현체를 infrastructure 계층으로 집약해 경계 명확화
+    - Phase6-A Progress (2026-02-23):
+      - messaging relocation:
+        - `global.messaging` -> `infrastructure.messaging`
+        - 이동 클래스:
+          - `KafkaPushEvent`
+          - `KafkaPushEventProducer`
+          - `KafkaPushEventConsumer`
+          - `KafkaReservationProducer`
+          - `KafkaReservationConsumer`
+      - 참조 정렬:
+        - `ReservationController`
+        - `KafkaWebSocketPushNotifier`
+        - `KafkaWebSocketPushNotifierTest`
+        - `KafkaPushEventConsumerTest` package/import 경로 정렬
+      - ArchUnit 강화:
+        - `global_should_not_depend_on_spring_kafka_directly` 규칙 추가
+        - `infrastructure_messaging_should_not_depend_on_domain_reservation_events` 규칙으로 대상 경로 정렬
+      - Product PR:
+        - `rag-cargoo/ticket-core-service PR #49` (merged, cross-repo shorthand)
+        - merge commit: `3637879eb55fb574107c6d0aadb98695ca37b994`
+    - Verification (Phase6-A):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-A):
+      - global 계층의 `org.springframework.kafka..` 직접 의존 잔여: `0`건 / `0`파일
+      - Kafka 직접 의존 잔여(허용 범위: infrastructure):
+        - `infrastructure.messaging..`
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
