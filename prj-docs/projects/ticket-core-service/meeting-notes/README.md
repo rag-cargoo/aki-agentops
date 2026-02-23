@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 13:11:00`
+> - **Updated At**: `2026-02-23 13:47:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-23 DDD Phase4-J Auth Infra Boundary Relocation Kickoff](./2026-02-23-ddd-phase4j-auth-infra-boundary-relocation-kickoff.md)
 - [2026-02-23 DDD Phase4-I Payment Service/Gateway Relocation Kickoff](./2026-02-23-ddd-phase4i-payment-service-gateway-relocation-kickoff.md)
 - [2026-02-23 DDD Phase4-H Concert Service Application Relocation Kickoff](./2026-02-23-ddd-phase4h-concert-service-application-relocation-kickoff.md)
 - [2026-02-23 DDD Phase4-G Auth/User Service Application Relocation Kickoff](./2026-02-23-ddd-phase4g-auth-user-service-application-relocation-kickoff.md)
