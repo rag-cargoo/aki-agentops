@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 13:47:00`
+> - **Updated At**: `2026-02-23 14:04:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1023,6 +1023,45 @@
       - `domain -> infrastructure` import 잔여: `0`건 / `0`파일
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `domain -> application` import 잔여: `0`건 / `0`파일
+    - Phase5-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase5a-application-redis-port-adapter-kickoff.md`
+      - Scope:
+        - application 서비스의 Redis 직접 의존 제거
+          - `application.waitingqueue.service.WaitingQueueServiceImpl`
+          - `application.reservation.service.ReservationQueueServiceImpl`
+          - `application.reservation.service.SeatSoftLockServiceImpl`
+        - application outbound port + infrastructure adapter로 분리
+        - 테스트 mock 대상을 RedisTemplate -> port 기준으로 전환
+        - ArchUnit 규칙 보강:
+          - `application..`의 `org.springframework.data.redis..` 직접 의존 금지
+      - Goal:
+        - application 서비스는 port(interface)만 의존하고 Redis 연동은 infrastructure adapter가 담당
+    - Phase5-A Progress (2026-02-23):
+      - application outbound port 추가:
+        - `application.waitingqueue.port.outbound.WaitingQueueStore`
+        - `application.reservation.port.outbound.ReservationQueueStatusStore`
+        - `application.reservation.port.outbound.SeatSoftLockStore`
+      - infrastructure adapter 구현:
+        - `infrastructure.waitingqueue.adapter.outbound.RedisWaitingQueueStoreAdapter`
+        - `infrastructure.reservation.adapter.outbound.RedisReservationQueueStatusStoreAdapter`
+        - `infrastructure.reservation.adapter.outbound.RedisSeatSoftLockStoreAdapter`
+      - 서비스 의존 전환:
+        - `WaitingQueueServiceImpl`, `ReservationQueueServiceImpl`, `SeatSoftLockServiceImpl`
+          의 Redis 직접 의존 제거 및 port 의존으로 전환
+      - 테스트 정렬:
+        - `WaitingQueueServiceImplTest`, `SeatSoftLockServiceImplTest` mock 대상을 port 기준으로 전환
+      - ArchUnit 강화:
+        - `application_should_not_depend_on_spring_redis_directly` 규칙 추가
+    - Verification (Phase5-A):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase5-A):
+      - application 계층의 `org.springframework.data.redis..` 직접 의존 잔여: `0`건 / `0`파일
+      - Redis 직접 의존 잔여(비-application):
+        - `global.push.WebSocketPushNotifier`
+        - `global.interceptor.WaitingQueueInterceptor`
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
