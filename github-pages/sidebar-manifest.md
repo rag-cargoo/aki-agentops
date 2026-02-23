@@ -33,7 +33,10 @@
   * **Ticket Core Service**
     * [Project Sidecar Index](/prj-docs/projects/README.md)
     * [Service README (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/README.md)
+    * [Architecture Knowledge Index (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/knowledge/README.md)
     * [API Specs Index (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
+    * **Architecture Knowledge (Pages Docs)**
+      * [DDD + Hexagonal Guide (Glossary)](/prj-docs/projects/ticket-core-service/product-docs/knowledge/ddd-hexagonal-guide.md)
     * **API Specs (Pages Docs)**
       * [API Contract Conventions](/prj-docs/projects/ticket-core-service/product-docs/api-specs/api-contract-conventions.md)
       * [Auth Session API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-session-api.md)

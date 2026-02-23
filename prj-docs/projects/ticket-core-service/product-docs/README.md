@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-19 06:08:30`
+> - **Updated At**: `2026-02-23 20:30:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -95,6 +95,8 @@ make test-auth-social-real-provider
 ## 대표 문서 링크
 
 - Service README (Pages Docs): [AKI AgentOps Pages](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/README.md)
+- Architecture Knowledge Index (Pages Docs): [Knowledge Index](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/knowledge/README.md)
+- DDD + Hexagonal Guide (Pages Docs): [Guide](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/knowledge/ddd-hexagonal-guide.md)
 - API Specs Index (Pages Docs): [API Specs](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
 - API Test Guide (Pages Docs): [API Test Guide](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/api-test/README.md)
 - Frontend Release Contract Checklist (Pages Docs): [Checklist](https://rag-cargoo.github.io/aki-agentops/#/prj-docs/projects/ticket-core-service/product-docs/frontend-release-contract-checklist.md)
