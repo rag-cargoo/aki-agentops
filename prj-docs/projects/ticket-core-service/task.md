@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 09:51:00`
+> - **Updated At**: `2026-02-23 10:28:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -765,6 +765,38 @@
       - `./gradlew compileJava compileTestJava --no-daemon` PASS
       - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
     - Residual Backlog (as-is, 2026-02-23 after Phase4-B):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-C Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4c-reservation-controller-domain-decoupling-kickoff.md`
+      - Scope:
+        - `ReservationController`의 `domain.reservation` 직접 타입 의존 제거
+          - queue lock type
+          - abuse/admin-audit query/result 타입
+        - application model 매핑 책임화
+        - ArchUnit 규칙 강화:
+          - `ReservationController -> domain.reservation..` 직접 의존 금지
+      - Goal:
+        - reservation API 계층의 domain 타입 노출 제거
+    - Phase4-C Progress (2026-02-23):
+      - application model 추가:
+        - `ReservationQueueLockType`
+        - `AbuseAuditActionType`, `AbuseAuditResultType`, `AbuseAuditReasonType`
+        - `AbuseAuditRecord`
+        - `AdminRefundAuditResultType`, `AdminRefundAuditRecord`
+      - reservation controller/domain decoupling:
+        - `ReservationController`의 `domain.reservation` 직접 import 제거
+        - `KafkaReservationProducer`에 application lock type 기반 `send(userId, seatId, lockType)` 추가
+      - audit service 시그니처 전환:
+        - `AbuseAuditService*`, `AdminRefundAuditService` query/result를 application model 기준으로 정렬
+        - `AbuseAuditResponse`, `AdminRefundAuditResponse` 매핑 기준을 application record로 전환
+      - ArchUnit 강화:
+        - reservation controller 규칙 범위를 `domain.reservation.service..` -> `domain.reservation..`로 확장
+    - Verification (Phase4-C):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-C):
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
     - Skill Install:
