@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 23:59:50`
+> - **Updated At**: `2026-02-24 00:37:30`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1709,9 +1709,57 @@
       - `ReservationController -> application.reservation.service.ReservationQueueService` 직접 의존 잔여: `0`건 / `0`파일
       - `WaitingQueueController -> application.waitingqueue.service.WaitingQueueService` 직접 의존 잔여: `0`건 / `0`파일
       - realtime 관련 controller(`ReservationController`, `WaitingQueueController`, `WebSocketPushController`)의 `application.realtime.service.RealtimeSubscriptionService` 직접 의존 잔여: `0`건 / `0`파일
-    - Completion Checkpoint (2026-02-23):
+    - Phase8-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-phase8b-api-controller-inbound-port-expansion.md`
+      - Scope:
+        - API controller의 `application..service` 직접 의존을 inbound port(`application..port.inbound`) 의존으로 확장 전환
+          - auth/social/user/wallet
+          - catalog(artist/entertainment/promoter/venue)
+          - concert/admin-concert
+          - reservation/payment-webhook
+        - 서비스 인터페이스는 inbound port 상속 어댑터 계약으로 축소
+        - ArchUnit 규칙으로 controller -> service package 직접 의존 재유입 차단
+      - Goal:
+        - controller adapter가 service package가 아닌 usecase contract를 경유하도록 경계 고정
+    - Phase8-B Progress (2026-02-24):
+      - inbound 포트 추가:
+        - `application.auth.port.inbound.{AuthSessionUseCase,SocialAuthUseCase}`
+        - `application.user.port.inbound.UserUseCase`
+        - `application.payment.port.inbound.PaymentUseCase`
+        - `application.catalog.port.inbound.{EntertainmentUseCase,ArtistUseCase,PromoterUseCase,VenueUseCase}`
+        - `application.concert.port.inbound.ConcertUseCase`
+        - `application.reservation.port.inbound.{ReservationUseCase,ReservationLifecycleUseCase,SalesPolicyUseCase,SeatSoftLockUseCase,AbuseAuditUseCase,AdminRefundAuditUseCase}`
+        - `application.payment.webhook.port.inbound.PgReadyWebhookUseCase`
+      - service 계약 정렬:
+        - `AuthSessionService`, `SocialAuthService`, `UserService`, `PaymentService`
+        - `EntertainmentService`, `ArtistService`, `PromoterService`, `VenueService`
+        - `ConcertService`, `ReservationService`, `ReservationLifecycleService`, `SalesPolicyService`, `SeatSoftLockService`, `AbuseAuditService`
+        - `AdminRefundAuditService`, `PgReadyWebhookService`는 inbound port 구현체로 정렬
+      - controller 의존 전환:
+        - `AuthController`, `SocialAuthController`, `UserController`, `WalletController`
+        - `EntertainmentController`, `EntertainmentCatalogController`, `ArtistController`, `PromoterController`, `VenueController`
+        - `ConcertController`, `AdminConcertController`
+        - `ReservationController`, `PaymentWebhookController`
+      - DTO 경계 정렬:
+        - `SeatSoftLockAcquireResponse`, `SeatSoftLockReleaseResponse`가 `SeatSoftLockUseCase` 결과 타입 기반으로 전환
+      - ArchUnit 규칙 추가:
+        - `rest_controllers_should_not_depend_on_application_service_package_directly`
+        - `payment_webhook_controller_should_not_depend_on_pg_ready_webhook_service_directly`
+    - Verification (Phase8-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest --tests com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest` FAIL (Redis 미기동으로 `ConcertExplorerIntegrationTest` 실패)
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest` PASS
+      - `rg -n "com\\.ticketrush\\.application\\..*\\.service" src/main/java/com/ticketrush/api` 결과 `0`건
+    - Residual Backlog (as-is, 2026-02-24 after Phase8-B):
+      - API controller(`src/main/java/com/ticketrush/api/**`)의 `application..service` 직접 의존 잔여: `0`건 / `0`파일
+      - `PaymentWebhookController -> PgReadyWebhookService` 직접 의존 잔여: `0`건 / `0`파일
+      - 환경 의존 테스트 잔여:
+        - `ConcertExplorerIntegrationTest`는 Redis 런타임 필요(미기동 시 실패)
+    - Completion Checkpoint (2026-02-24):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
+        - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.user.service.UserServiceImplDataJpaTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest --tests com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest` PASS
       - completion assertion:
         - 1차/확장 범위 경계 import 잔여(`domain->api`, `application->api dto`, `api/application/infrastructure->global`, `global->api/infrastructure`) 모두 `0`으로 정리
         - push runtime broad 계약(`PushNotifier`, `RealtimePushPort`) 제거 후 capability 포트 기준으로 단일화
@@ -1727,6 +1775,7 @@
         - API controller의 outbound 포트 직접 의존(`application.port.outbound`)을 제거하고, 실시간 구독 경계를 application 서비스(`RealtimeSubscriptionService`)로 통합
         - 예약 큐 enqueue 오케스트레이션(`PENDING` 저장 + event publish)은 `ReservationQueueService.enqueue(...)`로 application 경계에 고정
         - API controller의 application service 직접 의존 일부를 inbound port(`RealtimeSubscriptionUseCase`, `WaitingQueueUseCase`, `ReservationQueueOrchestrationUseCase`)로 치환해 adapter->usecase 경계를 강화
+        - API controller의 application service 직접 의존 범위를 auth/user/catalog/concert/reservation/payment-webhook까지 inbound port 계약으로 확장해 `controller -> usecase` 경계를 일관화
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
