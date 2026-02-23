@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-23 10:28:00`
+> - **Updated At**: `2026-02-23 10:43:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -797,6 +797,33 @@
       - `./gradlew compileJava compileTestJava --no-daemon` PASS
       - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
     - Residual Backlog (as-is, 2026-02-23 after Phase4-C):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-D Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4d-reservation-event-boundary-kickoff.md`
+      - Scope:
+        - Kafka reservation 메시징 payload를 `domain.reservation.event.ReservationEvent`에서 application 모델로 분리
+        - `KafkaReservationProducer`, `KafkaReservationConsumer`의 domain event 직접 의존 제거
+        - ArchUnit 규칙 강화:
+          - `global.messaging.. -> domain.reservation.event..` 직접 의존 금지
+      - Goal:
+        - 외부 메시징 스키마와 도메인 이벤트 경계 분리
+    - Phase4-D Progress (2026-02-23):
+      - application 메시징 모델 추가:
+        - `ReservationQueueEvent`
+      - Kafka 경계 정렬:
+        - `KafkaReservationProducer` payload를 `ReservationQueueEvent`로 전환
+        - `KafkaReservationConsumer` listener payload를 `ReservationQueueEvent`로 전환
+        - lock 전략 분기를 `ReservationQueueLockType` 기준으로 정렬
+      - domain event 정리:
+        - `domain.reservation.event.ReservationEvent` 제거
+      - ArchUnit 강화:
+        - `global.messaging.. -> domain.reservation.event..` 직접 의존 금지 규칙 추가
+    - Verification (Phase4-D):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-D):
       - `domain -> api` import 잔여: `0`건 / `0`파일
       - `application -> api dto` import 잔여: `0`건 / `0`파일
     - Skill Install:
