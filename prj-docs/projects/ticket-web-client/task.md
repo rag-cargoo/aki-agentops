@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-19 20:36:00`
-> - **Updated At**: `2026-02-24 06:59:00`
+> - **Updated At**: `2026-02-24 08:27:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -375,6 +375,10 @@
   - Evidence:
     - 종료 결정 회의록:
       - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-24-sc019-superseded-by-new-frontend-project.md`
+    - 신규 프론트 프로젝트 생성:
+      - `workspace/apps/frontend/ticket-web-app`
+      - `prj-docs/projects/ticket-web-app/README.md`
+      - `prj-docs/projects/ticket-web-app/task.md`
     - 회의록:
       - `prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc019-frontend-service-contract-alignment-review.md`
     - Backend Dependency:
@@ -387,4 +391,4 @@
       - `workspace/apps/frontend/ticket-web-client/tests/e2e/*`
 
 ## Next Items
-- 신규 프론트 프로젝트 sidecar 생성(`project-map` 등록 + `PROJECT_AGENT.md`/`task.md`/`meeting-notes`) 후 서비스 계약 정렬 Sprint-1 착수
+- 신규 프론트 프로젝트(`ticket-web-app`)의 `TWA-SC-002` 착수(앱 부트스트랩 + CI 기본 게이트)

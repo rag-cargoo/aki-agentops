@@ -1,0 +1,27 @@
+# Meeting Notes Index (ticket-web-app sidecar)
+
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-24 08:27:00`
+> - **Updated At**: `2026-02-24 08:27:00`
+> - **Target**: `BOTH`
+> - **Surface**: `PUBLIC_NAV`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Purpose
+> - Naming Convention
+> - Current Notes
+<!-- DOC_TOC_END -->
+
+## Purpose
+- `ticket-web-app` 관련 운영/이관 회의록을 sidecar 문서로 관리한다.
+
+## Naming Convention
+- 파일명 규칙: `YYYY-MM-DD-topic.md`
+
+## Current Notes
+- [2026-02-24 Ticket Web App Kickoff and Sprint-1 Transfer Plan](./2026-02-24-ticket-web-app-kickoff-and-sprint1-transfer-plan.md)
