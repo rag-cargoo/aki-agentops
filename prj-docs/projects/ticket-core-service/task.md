@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 00:37:30`
+> - **Updated At**: `2026-02-24 00:49:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -1756,6 +1756,53 @@
       - `PaymentWebhookController -> PgReadyWebhookService` 직접 의존 잔여: `0`건 / `0`파일
       - 환경 의존 테스트 잔여:
         - `ConcertExplorerIntegrationTest`는 Redis 런타임 필요(미기동 시 실패)
+    - Phase8-C Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-phase8c-runtime-adapter-inbound-port-decoupling.md`
+      - Scope:
+        - global/infrastructure runtime adapter의 `application..service` 직접 의존 제거
+          - scheduler
+          - lock facade
+          - kafka consumer
+          - payment gateway
+          - reservation outbound adapter
+        - runtime 목적 inbound port 추가:
+          - `WaitingQueueRuntimeUseCase`
+          - `ReservationQueueRuntimeUseCase`
+        - ArchUnit 규칙으로 runtime adapter의 service 직접 의존 재유입 차단
+      - Goal:
+        - API adapter 뿐 아니라 runtime adapter도 `adapter -> inbound usecase` 경계로 일관 정렬
+    - Phase8-C Progress (2026-02-24):
+      - inbound 포트 추가:
+        - `application.waitingqueue.port.inbound.WaitingQueueRuntimeUseCase`
+        - `application.reservation.port.inbound.ReservationQueueRuntimeUseCase`
+      - service 계약 정렬:
+        - `WaitingQueueService extends WaitingQueueRuntimeUseCase`
+        - `ReservationQueueService extends ReservationQueueRuntimeUseCase`
+      - runtime adapter 의존 전환:
+        - `global.scheduler.WaitingQueueScheduler` -> `WaitingQueueRuntimeUseCase`
+        - `global.scheduler.ReservationLifecycleScheduler` -> `ReservationLifecycleUseCase`
+        - `global.lock.RedissonLockFacade` -> `ReservationUseCase`
+        - `infrastructure.messaging.KafkaReservationConsumer` -> `ReservationUseCase`, `ReservationQueueRuntimeUseCase`
+        - `infrastructure.payment.gateway.WalletPaymentGateway` -> `PaymentUseCase`
+        - `infrastructure.reservation.adapter.outbound.ReservationWaitingQueuePortAdapter` -> `WaitingQueueRuntimeUseCase`
+      - 테스트/규칙 정렬:
+        - `ReservationLifecycleSchedulerTest`, `WaitingQueueSchedulerTest` mock 타입을 inbound 포트 기준으로 전환
+        - ArchUnit 규칙 추가:
+          - `waiting_queue_scheduler_should_not_depend_on_waiting_queue_service_directly`
+          - `reservation_lifecycle_scheduler_should_not_depend_on_reservation_lifecycle_service_directly`
+          - `redisson_lock_facade_should_not_depend_on_reservation_service_directly`
+          - `wallet_payment_gateway_should_not_depend_on_payment_service_directly`
+          - `reservation_waiting_queue_adapter_should_not_depend_on_waiting_queue_service_directly`
+          - `kafka_reservation_consumer_should_not_depend_on_reservation_services_directly`
+    - Verification (Phase8-C):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests com.ticketrush.architecture.LayerDependencyArchTest --tests com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest --tests com.ticketrush.global.scheduler.WaitingQueueSchedulerTest --tests com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest --tests com.ticketrush.api.controller.WebSocketPushControllerTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest --tests com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest --tests com.ticketrush.application.auth.service.AuthSessionServiceTest --tests com.ticketrush.application.auth.service.SocialAuthServiceTest --tests com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest --tests com.ticketrush.application.payment.service.PaymentServiceIntegrationTest` PASS
+      - `rg -n "com\\.ticketrush\\.application\\..*\\.service" src/main/java/com/ticketrush/global src/main/java/com/ticketrush/infrastructure` 결과:
+        - `JwtAuthenticationFilter -> JwtTokenProvider` 1건(기술 인증 경계, 유지)
+    - Residual Backlog (as-is, 2026-02-24 after Phase8-C):
+      - runtime adapter(global/infrastructure)의 `application..service` 직접 의존 잔여: `1`건 / `1`파일 (`JwtAuthenticationFilter`)
+      - JWT 검증 경계 외 runtime adapter의 service 직접 의존 잔여: `0`건 / `0`파일
     - Completion Checkpoint (2026-02-24):
       - expanded verification:
         - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.application.realtime.service.RealtimeSubscriptionServiceImplTest' --tests 'com.ticketrush.global.sse.SsePushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest'` PASS
@@ -1776,6 +1823,7 @@
         - 예약 큐 enqueue 오케스트레이션(`PENDING` 저장 + event publish)은 `ReservationQueueService.enqueue(...)`로 application 경계에 고정
         - API controller의 application service 직접 의존 일부를 inbound port(`RealtimeSubscriptionUseCase`, `WaitingQueueUseCase`, `ReservationQueueOrchestrationUseCase`)로 치환해 adapter->usecase 경계를 강화
         - API controller의 application service 직접 의존 범위를 auth/user/catalog/concert/reservation/payment-webhook까지 inbound port 계약으로 확장해 `controller -> usecase` 경계를 일관화
+        - runtime adapter(global/infrastructure)의 application service 직접 의존 범위를 scheduler/lock/consumer/gateway/outbound-adapter까지 inbound port 계약으로 확장해 `runtime-adapter -> usecase` 경계를 강화(`JwtAuthenticationFilter -> JwtTokenProvider` 기술 인증 경계 1건 제외)
     - Skill Install:
       - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
       - `skills-lock.json`
