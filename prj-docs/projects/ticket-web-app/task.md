@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-24 10:43:00`
+> - **Updated At**: `2026-02-25 03:05:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -25,7 +25,10 @@
 ## Checklist
 - [x] TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
 - [x] TWA-SC-002 앱 부트스트랩(Vite/React/TS + lint/typecheck/build + CI)
-- [ ] TWA-SC-003 SC019 이관 Sprint-1(토큰 정책/예약 API 경로/non-mock smoke)
+- [~] TWA-SC-003 SC019 이관 Sprint-1(토큰 정책/예약 API 경로/non-mock smoke)
+- [x] TWA-SC-004 백엔드 계약 인벤토리/프론트 설계 블루프린트 고정
+- [~] TWA-SC-005 사용자 결제복구 UX(지갑/잔액부족 복구) + Admin 정책폼 단순화
+- [x] TWA-SC-006 백엔드 기능 채택 매트릭스 문서화(채택/보류/제외 기준)
 
 ## Current Items
 - TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
@@ -63,11 +66,52 @@
     - `http://127.0.0.1:5173/service` (dev route check)
 
 - TWA-SC-003 SC019 이관 Sprint-1(토큰 정책/예약 API 경로/non-mock smoke)
-  - Status: TODO
+  - Status: DOING
   - Description:
     - 기존 `ticket-web-client`의 SC019 이관 범위를 신규 프로젝트 코드베이스에 적용한다.
     - 서비스 화면 인증 정책을 OAuth 세션 단일화로 고정한다.
     - 예약/취소/환불 API를 백엔드 단건 v7 계약으로 정렬하고 non-mock smoke 검증을 추가한다.
 
+- TWA-SC-004 백엔드 계약 인벤토리/프론트 설계 블루프린트 고정
+  - Status: DONE
+  - Description:
+    - 백엔드 도메인/엔드포인트/상태전이/프로파일 계약을 코드 기준으로 다시 인벤토리화한다.
+    - 실응답 드리프트(`agency*` vs `entertainment*`)를 별도 노트로 기록한다.
+    - 프론트 구현 순서를 문서로 강제한다(문서 고정 -> 계약 정렬 -> 검증).
+  - Evidence:
+    - `prj-docs/projects/ticket-web-app/product-docs/backend-contract-inventory.md`
+    - `prj-docs/projects/ticket-web-app/product-docs/frontend-implementation-blueprint.md`
+
+- TWA-SC-005 사용자 결제복구 UX(지갑/잔액부족 복구) + Admin 정책폼 단순화
+  - Status: DOING
+  - Description:
+    - 서비스 화면에 지갑 잔액/충전/최근거래를 추가해 `409 Insufficient wallet balance` 복구 동선을 제공한다.
+    - Admin 판매정책 폼을 백엔드 실필드(`maxReservationsPerUser`) 기준으로 단순화한다.
+    - 콘서트 목록 파서에 필드 드리프트 대응(`agency*`, `entertainment*`)을 반영한다.
+    - `confirm` 응답의 `paymentAction/paymentRedirectUrl`를 파싱해 `확정완료/승인대기/외부결제` 분기 UX를 제공한다.
+    - `paymentAction=REDIRECT`일 때 결제창 자동 오픈을 시도하고, 팝업 차단 시 수동 `결제창 열기` 링크로 복구한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/reservation-v7-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/wallet-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/admin-concert-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/AdminPage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/styles.css`
+    - `npm run lint` (pass)
+    - `npm run typecheck` (pass)
+    - `npm run build` (pass)
+
+- TWA-SC-006 백엔드 기능 채택 매트릭스 문서화(채택/보류/제외 기준)
+  - Status: DONE
+  - Description:
+    - 백엔드 구현 항목을 프론트 대상에 그대로 반영하지 않고 `ADOPT_NOW/ADOPT_LATER/BACKEND_ONLY/LEGACY_SKIP`로 분류하는 운영 문서를 고정한다.
+    - 프론트 구현/검증 시 항목별 상태와 근거 파일을 남기고, 후속 백엔드 변경 시 문서 갱신을 강제한다.
+  - Evidence:
+    - `prj-docs/projects/ticket-web-app/product-docs/backend-capability-adoption-checklist.md`
+    - `prj-docs/projects/ticket-web-app/product-docs/backend-contract-inventory.md`
+    - `prj-docs/projects/ticket-web-app/product-docs/frontend-implementation-blueprint.md`
+
 ## Next Items
-- `TWA-SC-003` SC019 Sprint-1 이관 항목 착수(토큰 정책/예약 API 경로/non-mock smoke)
+- `TWA-SC-005` 실사용자 플로우 검증(로그인 -> 예매 실패(잔액부족) -> 충전 -> 재예매 성공)
+- `TWA-SC-003` non-mock smoke 검증 및 실시간 채널 보강

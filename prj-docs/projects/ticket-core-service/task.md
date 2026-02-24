@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 06:59:00`
+> - **Updated At**: `2026-02-25 03:02:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,44 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
+- TCS-SC-027 결제수단 선택 + 결제결과 응답 계약 고도화(백엔드 우선)
+  - Status: DOING
+  - Description:
+    - `confirm(v6/v7)`에서 결제수단(`paymentMethod`) 선택을 수신하고 provider별 지원 가능 여부를 검증한다.
+    - 프론트가 실결제/가결제 진행 상태를 분기할 수 있도록 `confirm` 응답에 결제결과 필드를 포함한다.
+    - 향후 카드/간편결제 확장을 고려해 Payment 경계는 유지하고, 수단 검증/실행은 gateway 쪽에서 관리한다.
+  - Progress (2026-02-24):
+    - 백엔드 코드 반영:
+      - `PaymentMethod` enum 추가
+      - `PaymentGateway`/`ReservationPaymentPort` 계약에 결제수단 인자 반영
+      - `ReservationLifecycleServiceImpl.confirm`에서 `paymentMethod` 파싱/검증 및 응답 메타(`paymentMethod/paymentProvider/paymentStatus/paymentTransactionId`) 반영
+      - `ReservationController` v6/v7 `confirm`에서 결제수단 body 수신(v7은 optional)
+      - gateway별 결제수단 지원 제약 반영(`wallet`은 `WALLET`만 허용)
+      - `GET /api/payments/methods` 결제수단 상태 API 추가(provider/default/method/status/message)
+      - `ReservationLifecycleServiceImpl.confirm`에서 `paymentMethodCatalogUseCase.assertMethodAvailable` 선검증 추가
+      - `app.payment.method-status-overrides`, `app.payment.method-message-overrides` 운영 override 도입
+      - `PaymentMethodCatalogServiceTest` 추가(기본/override/차단 케이스)
+      - `PaymentTransaction` 영속 보강(`payment_method`, `payment_provider`, `provider_transaction_id`)
+      - gateway별 결제/환불 원장에 결제수단/provider 저장 반영
+      - `PgReadyWebhookService`에서 `providerEventId -> provider_transaction_id` 매핑 및 provider 정합성 검증 추가
+      - 결제수단 상태 API 응답에 `providerMode`, `externalLiveEnabled` 추가
+      - `confirm(v6/v7)` 응답에 `paymentAction`, `paymentRedirectUrl` 추가 (`pg-ready + externalLiveEnabled=true`면 REDIRECT URL 제공)
+      - `ReservationLifecycleServicePgReadyIntegrationTest` 추가 (`externalLiveEnabled=true/false`에서 `REDIRECT`/`WAIT_WEBHOOK` 분기 검증)
+      - `paymentRedirectUrl` URL 인코딩 안정화(`UriComponentsBuilder.build().encode()`)
+    - 문서 반영:
+      - `reservation-api.md`, `wallet-payment-api.md` 결제수단/응답 필드 계약 갱신
+  - TODO:
+    - [x] 프론트 연동용 결제수단 가용성 조회 API(`GET /api/payments/methods`) 추가 및 계약 고정
+    - [x] `PaymentTransaction`에 결제수단/provider 저장 컬럼 도입 및 refund 경로 추적 고도화
+    - [ ] `pg-ready`를 실제 외부 PG 리다이렉트/승인콜백 계약으로 승격(현재는 webhook ready 단계)
+  - Evidence:
+    - Product Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/50`
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-payment-method-selection-and-payment-outcome-contract-kickoff.md`
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.payment.service.PaymentMethodCatalogServiceTest' --tests 'com.ticketrush.application.payment.service.PaymentServiceIntegrationTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServicePgReadyIntegrationTest' --tests 'com.ticketrush.infrastructure.payment.gateway.MockPaymentGatewayIntegrationTest' --tests 'com.ticketrush.infrastructure.payment.gateway.PgReadyPaymentGatewayIntegrationTest'` PASS
+
 - TCS-SC-001 외부 레포 분리 전환 운영 확인
   - Status: DONE
   - Description: code_root, docs_root, repo_remote가 `project-map.yaml`과 일치하는지 점검
