@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-21 06:30:00`
+> - **Updated At**: `2026-02-25 02:49:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -381,6 +381,7 @@ data: SUCCESS
 | :--- | :--- | :--- | :--- | :--- |
 | Path | `reservationId` | Long | Yes | 대상 예약 ID |
 | Body | `userId` | Long | Yes | 예약 소유자 유저 ID |
+| Body | `paymentMethod` | String | No | 기본값 `WALLET`. 허용값: `WALLET`, `CARD`, `KAKAOPAY`, `NAVERPAY`, `BANK_TRANSFER` |
 
 **Response Summary (200 OK)**
 
@@ -388,6 +389,12 @@ data: SUCCESS
 | :--- | :--- | :--- |
 | `status` | String | `CONFIRMED` 또는 `PAYING` |
 | `confirmedAt` | DateTime | 최종 확정 시각 (`status=CONFIRMED`일 때) |
+| `paymentMethod` | String | 실제 요청 결제수단 (`WALLET` 기본) |
+| `paymentProvider` | String | 처리 provider (`wallet`, `mock`, `pg-ready`) |
+| `paymentStatus` | String | 결제 트랜잭션 상태 (`SUCCESS`, `PENDING`, `FAILED`) |
+| `paymentTransactionId` | Long | 생성/조회된 결제 원장 트랜잭션 ID |
+| `paymentAction` | String | 프론트 후속 액션 (`NONE`, `REDIRECT`, `WAIT_WEBHOOK`, `RETRY_CONFIRM`) |
+| `paymentRedirectUrl` | String | `paymentAction=REDIRECT`일 때 외부 결제창 URL (그 외 `null`) |
 
 ---
 
@@ -588,6 +595,9 @@ data: SUCCESS
   - `GET /api/reservations/v7/audit/admin-refunds` (`ADMIN` 전용)
 - **Auth Contract**: `Authorization: Bearer {accessToken}` 필수
 - **Rule**: v7에서는 `userId`를 body/query로 받지 않고 서버 인증 컨텍스트를 사용합니다.
+- **Confirm Request Body (Optional)**:
+  - `POST /api/reservations/v7/{reservationId}/confirm` 는 선택적으로 `{ "paymentMethod": "WALLET|CARD|KAKAOPAY|NAVERPAY|BANK_TRANSFER" }` body를 받을 수 있습니다.
+  - body가 없으면 기본 결제수단은 `WALLET`입니다.
 - **Admin Refund Audit Contract**:
   - 강제 환불 감사로그 결과값: `SUCCESS`, `DENIED`, `FAILED`
   - `DENIED`/`FAILED` 로그는 호출 트랜잭션 롤백 여부와 무관하게 별도 트랜잭션으로 보존됩니다.

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-24 08:27:00`
+> - **Updated At**: `2026-02-25 03:05:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -26,6 +26,9 @@
 - [Meeting Notes Index](./meeting-notes/README.md)
 - [Project Agent](./PROJECT_AGENT.md)
 - [Architecture Rule](./rules/architecture.md)
+- [Backend Contract Inventory](./product-docs/backend-contract-inventory.md)
+- [Frontend Implementation Blueprint](./product-docs/frontend-implementation-blueprint.md)
+- [Backend Capability Adoption Checklist](./product-docs/backend-capability-adoption-checklist.md)
 
 ## Operation Rule
 - 제품 코드/테스트 변경은 `ticket-web-app` 레포에서 커밋/PR 처리한다.
