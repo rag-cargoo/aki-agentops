@@ -110,6 +110,7 @@
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-app/meeting-notes/README.md)
       * [2026-02-24 Ticket Web App Kickoff and Sprint-1 Transfer Plan](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-24-ticket-web-app-kickoff-and-sprint1-transfer-plan.md)
+      * [2026-02-24 TWA-SC-002 Bootstrap and Service-First Dark Neon IA](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-24-twa-sc002-bootstrap-service-first-dark-neon.md)
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-web-app)
 
 ---
