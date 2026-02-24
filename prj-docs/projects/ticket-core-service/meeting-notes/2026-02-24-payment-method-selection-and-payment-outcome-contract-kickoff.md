@@ -61,7 +61,7 @@
   - `pg-ready`를 실제 외부 PG redirect + callback 승인 계약으로 확장
 - Issue Tracking:
   - sidecar task 추적: `TCS-SC-027`
-  - 제품 레포 이슈: `https://github.com/rag-cargoo/ticket-core-service/issues/50`
+  - 제품 레포 이슈: `rag-cargoo/ticket-core-service#50` (cross-repo shorthand)
 
 ## 안건 5: 결제수단 상태 API 추가(프론트 하드코딩 제거)
 - Status: DONE

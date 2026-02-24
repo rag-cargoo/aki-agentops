@@ -53,7 +53,7 @@
     - [ ] `pg-ready`를 실제 외부 PG 리다이렉트/승인콜백 계약으로 승격(현재는 webhook ready 단계)
   - Evidence:
     - Product Issue:
-      - `https://github.com/rag-cargoo/ticket-core-service/issues/50`
+      - `rag-cargoo/ticket-core-service#50` (cross-repo shorthand)
     - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-payment-method-selection-and-payment-outcome-contract-kickoff.md`
     - Verification:
       - `./gradlew compileJava compileTestJava --no-daemon` PASS
