@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-24 08:27:00`
+> - **Updated At**: `2026-02-24 10:43:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,7 +24,7 @@
 
 ## Checklist
 - [x] TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
-- [ ] TWA-SC-002 앱 부트스트랩(Vite/React/TS + lint/typecheck/build + CI)
+- [x] TWA-SC-002 앱 부트스트랩(Vite/React/TS + lint/typecheck/build + CI)
 - [ ] TWA-SC-003 SC019 이관 Sprint-1(토큰 정책/예약 API 경로/non-mock smoke)
 
 ## Current Items
@@ -45,11 +45,22 @@
     - `prj-docs/projects/ticket-web-app/rules/architecture.md`
 
 - TWA-SC-002 앱 부트스트랩(Vite/React/TS + lint/typecheck/build + CI)
-  - Status: TODO
+  - Status: DONE
   - Description:
     - 프론트 앱 런타임 골격(Vite + React + TypeScript)을 구축한다.
     - 최소 품질 게이트(`lint`, `typecheck`, `build`)와 GitHub Actions CI를 연결한다.
     - 개발 기본값(`.env.example`, API base, WS base)을 문서와 함께 고정한다.
+  - Evidence:
+    - `https://github.com/rag-cargoo/ticket-web-app/issues/1`
+    - `workspace/apps/frontend/ticket-web-app/src/App.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/styles.css`
+    - `workspace/apps/frontend/ticket-web-app/.github/workflows/ci.yml`
+    - `workspace/apps/frontend/ticket-web-app/.env.example`
+    - `workspace/apps/frontend/ticket-web-app/README.md`
+    - `npm run lint` (pass)
+    - `npm run typecheck` (pass)
+    - `npm run build` (pass)
+    - `http://127.0.0.1:5173/service` (dev route check)
 
 - TWA-SC-003 SC019 이관 Sprint-1(토큰 정책/예약 API 경로/non-mock smoke)
   - Status: TODO
@@ -59,4 +70,4 @@
     - 예약/취소/환불 API를 백엔드 단건 v7 계약으로 정렬하고 non-mock smoke 검증을 추가한다.
 
 ## Next Items
-- `TWA-SC-002` 우선 착수(앱 부트스트랩 + CI 기본 게이트)
+- `TWA-SC-003` SC019 Sprint-1 이관 항목 착수(토큰 정책/예약 API 경로/non-mock smoke)
