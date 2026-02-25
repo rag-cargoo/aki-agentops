@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-25 17:21:00`
+> - **Updated At**: `2026-02-26 00:26:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -33,6 +33,7 @@
 - [~] TWA-SC-008 실사용 예매 플로우 재구성(모달+soft-lock+결제수단 카탈로그 강제)
 - [~] TWA-SC-009 옵션별 다중 좌석 상한(`maxSeatsPerOrder`) 채택 + checkout 다중 선택
 - [~] TWA-SC-010 checkout 예약(HOLD) 후 단건/전체 취소 UX + 벌크 취소 연동
+- [~] TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
 
 ## Current Items
 - TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
@@ -185,7 +186,22 @@
     - `ticket-core-service issue #21` (backend contract tracking)
     - `npm run build` (pass)
 
+- TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
+  - Status: DOING
+  - Description:
+    - backend에 회차 좌석 전체 상태 조회 API(`seat-map`)를 추가하고 `status` 필터를 선택 지원한다.
+    - 기존 `AVAILABLE` 중심 API는 하위 호환으로 유지한다.
+    - checkout 모달은 seat-map 기준으로 렌더링하고 `AVAILABLE` 이외 좌석(`TEMP_RESERVED/RESERVED`)은 선택 비활성 처리한다.
+    - 예약(HOLD) 이후 좌석 목록/상태 라벨이 유지되도록 프론트 상태 동기화를 고정한다.
+  - Evidence:
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-seat-map-status-contract-alignment.md`
+    - `https://github.com/rag-cargoo/ticket-web-app/issues/3#issuecomment-3960096929`
+    - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3960096915`
+    - `workspace/apps/backend/ticket-core-service/**` (in progress)
+    - `workspace/apps/frontend/ticket-web-app/**` (in progress)
+
 ## Next Items
+- `TWA-SC-011` seat-map API/checkout 상태 타일 연동 구현 + compile/build 검증
 - `TWA-SC-010` HOLD 취소 단건/전체 UX 최종 문구 점검 + 모바일 회귀 확인
 - `TWA-SC-009` OAuth 실사용 경로에서 다중 좌석 선택/soft-lock/결제 결과 집계 수동 검증
 - `TWA-SC-008` paymentAction 분기 UX 미완료 구간(WAIT_WEBHOOK/RETRY_CONFIRM) 사용자 안내 고도화
