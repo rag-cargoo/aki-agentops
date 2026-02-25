@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-25 03:05:00`
+> - **Updated At**: `2026-02-25 06:22:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -29,6 +29,8 @@
 - [x] TWA-SC-004 백엔드 계약 인벤토리/프론트 설계 블루프린트 고정
 - [~] TWA-SC-005 사용자 결제복구 UX(지갑/잔액부족 복구) + Admin 정책폼 단순화
 - [x] TWA-SC-006 백엔드 기능 채택 매트릭스 문서화(채택/보류/제외 기준)
+- [x] TWA-SC-007 기획/설계 문서 재베이스라인(계약 드리프트/갭 명시)
+- [~] TWA-SC-008 실사용 예매 플로우 재구성(모달+soft-lock+결제수단 카탈로그 강제)
 
 ## Current Items
 - TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
@@ -112,6 +114,33 @@
     - `prj-docs/projects/ticket-web-app/product-docs/backend-contract-inventory.md`
     - `prj-docs/projects/ticket-web-app/product-docs/frontend-implementation-blueprint.md`
 
+- TWA-SC-007 기획/설계 문서 재베이스라인(계약 드리프트/갭 명시)
+  - Status: DONE
+  - Description:
+    - 백엔드 코드/런타임 계약을 재검증하고 제품 문서 3종을 전면 재작성한다.
+    - 기존 문서의 과장된 DONE 표기를 제거하고, 실제 미구현/리스크를 `DOING/TODO/RISK/BLOCKED`로 명시한다.
+    - 예매-결제-실시간 흐름의 실서비스 기준 IA(`메인 탐색`, `프로필 기반 계정`, `모달 기반 결제`)를 고정한다.
+  - Evidence:
+    - `prj-docs/projects/ticket-web-app/product-docs/backend-contract-inventory.md`
+    - `prj-docs/projects/ticket-web-app/product-docs/frontend-implementation-blueprint.md`
+    - `prj-docs/projects/ticket-web-app/product-docs/backend-capability-adoption-checklist.md`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-frontend-rebuild-contract-rebaseline.md`
+
+- TWA-SC-008 실사용 예매 플로우 재구성(모달+soft-lock+결제수단 카탈로그 강제)
+  - Status: DOING
+  - Description:
+    - `ServicePage`의 카드 클릭 즉시 자동 예매 체인을 제거하고 checkout modal 진입 흐름으로 변경한다.
+    - 좌석 선택 시 soft-lock(`v7/locks`)을 먼저 적용하고, 모달 종료/좌석 변경 시 lock 해제한다.
+    - 결제수단은 `GET /api/payments/methods` enabled 항목만 허용하고 fail-open(WALLET 강제 fallback)을 제거한다.
+    - `paymentAction=REDIRECT/WAIT_WEBHOOK/RETRY_CONFIRM` 분기 UX를 완성한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/payment-methods-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/realtime/**`
+
 ## Next Items
-- `TWA-SC-005` 실사용자 플로우 검증(로그인 -> 예매 실패(잔액부족) -> 충전 -> 재예매 성공)
+- `TWA-SC-008` checkout modal 연결 + soft-lock + paymentAction 분기 UX 완료
 - `TWA-SC-003` non-mock smoke 검증 및 실시간 채널 보강
+- 백엔드 `GET /api/concerts/search` 500(lower(bytea)) 재현환경 원인 확인 및 안정화
