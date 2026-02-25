@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-25 06:22:00`
+> - **Updated At**: `2026-02-25 12:32:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -132,15 +132,20 @@
     - `ServicePage`의 카드 클릭 즉시 자동 예매 체인을 제거하고 checkout modal 진입 흐름으로 변경한다.
     - 좌석 선택 시 soft-lock(`v7/locks`)을 먼저 적용하고, 모달 종료/좌석 변경 시 lock 해제한다.
     - 결제수단은 `GET /api/payments/methods` enabled 항목만 허용하고 fail-open(WALLET 강제 fallback)을 제거한다.
+    - checkout modal 좌석 선택 UI를 카드형 타일 + 상태 뱃지 + 선택 강조 스타일로 개선한다.
     - `paymentAction=REDIRECT/WAIT_WEBHOOK/RETRY_CONFIRM` 분기 UX를 완성한다.
   - Evidence:
     - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/styles.css`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/payment-methods-client.ts`
     - `workspace/apps/frontend/ticket-web-app/src/shared/realtime/**`
+    - `ticket-web-app issue #3 (cross-repo tracking)`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-modal-seat-ux-polish.md`
 
 ## Next Items
-- `TWA-SC-008` checkout modal 연결 + soft-lock + paymentAction 분기 UX 완료
+- `TWA-SC-008` paymentAction 분기 UX 미완료 구간(WAIT_WEBHOOK/RETRY_CONFIRM) 사용자 안내 고도화
+- `TWA-SC-008` checkout modal UI 접근성/모바일 사용성 회귀 점검
 - `TWA-SC-003` non-mock smoke 검증 및 실시간 채널 보강
 - 백엔드 `GET /api/concerts/search` 500(lower(bytea)) 재현환경 원인 확인 및 안정화
