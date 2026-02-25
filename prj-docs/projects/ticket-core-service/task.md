@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-25 17:21:00`
+> - **Updated At**: `2026-02-26 04:08:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,43 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
+- TCS-SC-030 `v7/me` 필터 확장 + 선점 단계 정책 가드 + 다회차 더미 생성 정렬
+  - Status: DOING
+  - Description:
+    - `GET /api/reservations/v7/me`에 `concertId`, `optionId`, `status[]` 필터를 추가해 프론트가 "해당 콘서트-회차 내 기존 예약"을 조회할 수 있게 한다.
+    - soft-lock 획득(`POST /api/reservations/v7/locks/seats/{seatId}`) 단계에서 판매정책 상한(`maxReservationsPerUser`)을 선검증해, 기존 예약 수가 상한에 도달한 사용자는 추가 선점을 차단한다.
+    - 테스트 데이터 생성에서 회차 수를 가변(`optionCount`)으로 받아 2개 이상 회차 검증이 가능하도록 정렬한다.
+  - Progress (2026-02-26):
+    - `ReservationController`:
+      - `GET /api/reservations/v7/me`에 `concertId/optionId/status` 요청 파라미터 추가
+      - 상태 문자열 파서(`parseReservationStatuses`) 추가
+    - `ReservationUseCase/ReservationServiceImpl/ReservationRepository`:
+      - 필터 기반 조회 시그니처 추가
+      - JPQL 필터 쿼리(`findByUserIdWithFilters`) 추가
+      - 응답 모델 `ReservationListItemResult` 추가(`status/concertId/optionId/seatNumber`)
+    - `SeatSoftLockServiceImpl`:
+      - `SalesPolicyService.validateHoldRequest` + `ReservationUserPort.getUser`를 선점 단계에서 호출하도록 가드 추가
+    - setup/seed:
+      - `ConcertSetupRequest.optionCount` 추가
+      - `POST /api/concerts/setup` 다회차 생성(`OptionIDs`) 지원
+      - `scripts/api/setup-test-data.sh`에 `OPTION_COUNT` 환경변수 추가
+      - `DataInitializer` 기본 회차 수를 concert당 2개로 상향
+  - TODO:
+    - [x] `v7/me` 필터 쿼리/응답 확장
+    - [x] 선점 단계 판매정책 상한 선검증
+    - [x] setup script 다회차(`optionCount`) 지원
+    - [x] backend compile 검증
+    - [ ] 프론트 실사용(OAuth) 회귀 검증 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-26-reservation-v7-me-filter-and-multi-option-setup-alignment.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#21` (comment update)
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `API_HOST=http://127.0.0.1:18080 OPTION_COUNT=3 bash ./scripts/api/setup-test-data.sh` PASS (`OptionCount=3`)
+      - `curl -sS http://127.0.0.1:18080/api/concerts/41/options` 응답 3건 확인
+
 - TCS-SC-029 HOLD 취소 단건/벌크 계약 확장 + 상태전이 정렬
   - Status: DOING
   - Description:

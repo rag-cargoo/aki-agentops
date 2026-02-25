@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-26 00:26:00`
+> - **Updated At**: `2026-02-26 04:08:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -193,15 +193,32 @@
     - 기존 `AVAILABLE` 중심 API는 하위 호환으로 유지한다.
     - checkout 모달은 seat-map 기준으로 렌더링하고 `AVAILABLE` 이외 좌석(`TEMP_RESERVED/RESERVED`)은 선택 비활성 처리한다.
     - 예약(HOLD) 이후 좌석 목록/상태 라벨이 유지되도록 프론트 상태 동기화를 고정한다.
+    - `GET /api/reservations/v7/me`를 회차(concertId+optionId+status) 범위로 조회해 기존 예약 목록을 모달에 노출한다.
+    - 기존 예약 수를 `maxSeatsPerOrder`에 반영해 잔여 선택 가능 좌석 수를 계산하고 선점 단계에서 차단한다.
+  - Progress (2026-02-26):
+    - `ServiceCheckoutModal`:
+      - `existingReservations` 상태 추가 및 회차 전환/예약 이후 재조회 동기화
+      - "해당 회차 내 기존 예약" 테이블 추가(예약번호/좌석/상태)
+      - `remainingSelectableSeats = maxSeatsPerOrder - existingActiveReservations.length` 계산으로 선택 상한 재정렬
+      - 기존 예약 좌석/비가용 좌석(`TEMP_RESERVED/RESERVED`) 타일 비활성화
+    - API client:
+      - `fetchMyReservationsV7(apiBaseUrl, accessToken, { concertId, optionId, statuses })` 필터 입력 지원
+      - `ReservationSummary`에 `status/concertId/optionId/seatNumber` 파싱 추가
+    - Runtime validation:
+      - `API_HOST=http://127.0.0.1:18080 OPTION_COUNT=3 bash ./scripts/api/setup-test-data.sh` 실행
+      - 응답 `OptionCount=3, OptionIDs=[42, 43, 44]` 확인
+      - `GET /api/concerts/41/options`에서 3개 회차 응답 확인
   - Evidence:
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-seat-map-status-contract-alignment.md`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-checkout-existing-reservations-per-option-alignment.md`
     - `https://github.com/rag-cargoo/ticket-web-app/issues/3#issuecomment-3960096929`
     - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3960096915`
-    - `workspace/apps/backend/ticket-core-service/**` (in progress)
-    - `workspace/apps/frontend/ticket-web-app/**` (in progress)
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/reservation-v7-client.ts`
+    - `npm run build` (pass)
 
 ## Next Items
-- `TWA-SC-011` seat-map API/checkout 상태 타일 연동 구현 + compile/build 검증
+- `TWA-SC-011` OAuth 실사용 계정으로 회차별 기존 예약 테이블/선택 상한(기존 예약 포함) 수동 회귀 확인
 - `TWA-SC-010` HOLD 취소 단건/전체 UX 최종 문구 점검 + 모바일 회귀 확인
 - `TWA-SC-009` OAuth 실사용 경로에서 다중 좌석 선택/soft-lock/결제 결과 집계 수동 검증
 - `TWA-SC-008` paymentAction 분기 UX 미완료 구간(WAIT_WEBHOOK/RETRY_CONFIRM) 사용자 안내 고도화
