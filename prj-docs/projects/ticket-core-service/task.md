@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-25 13:06:00`
+> - **Updated At**: `2026-02-25 17:21:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,26 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
+- TCS-SC-029 HOLD 취소 단건/벌크 계약 확장 + 상태전이 정렬
+  - Status: DOING
+  - Description:
+    - `POST /api/reservations/v7/{reservationId}/cancel`을 HOLD 취소까지 포괄하도록 상태전이를 정렬한다.
+    - 다건 취소를 위한 벌크 엔드포인트를 추가한다.
+    - 환불 경계는 결제 확정 후 취소 건에 한해 허용하도록 가드를 보강한다.
+  - TODO:
+    - [x] cancel 상태전이(HOLD 포함) + 도메인 규칙 반영
+    - [x] 벌크 취소 API/DTO/서비스 경로 반영
+    - [x] 서비스/도메인 테스트 보강
+    - [x] `reservation-api.md` 계약 업데이트
+    - [ ] 프론트 checkout 모달 연동 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-25-hold-cancel-single-bulk-contract-kickoff.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#21` (reopen target)
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.domain.reservation.entity.ReservationStateMachineTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest` PASS
+
 - TCS-SC-028 회차별 다중 좌석 상한(`maxSeatsPerOrder`) 계약 도입
   - Status: DOING
   - Description:

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-25 13:13:00`
+> - **Updated At**: `2026-02-25 17:21:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -32,6 +32,7 @@
 - [x] TWA-SC-007 기획/설계 문서 재베이스라인(계약 드리프트/갭 명시)
 - [~] TWA-SC-008 실사용 예매 플로우 재구성(모달+soft-lock+결제수단 카탈로그 강제)
 - [~] TWA-SC-009 옵션별 다중 좌석 상한(`maxSeatsPerOrder`) 채택 + checkout 다중 선택
+- [~] TWA-SC-010 checkout 예약(HOLD) 후 단건/전체 취소 UX + 벌크 취소 연동
 
 ## Current Items
 - TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
@@ -162,7 +163,30 @@
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-option-max-seats-multiselect-checkout-followup.md`
     - `ticket-web-app issue #3` (in progress)
 
+- TWA-SC-010 checkout 예약(HOLD) 후 단건/전체 취소 UX + 벌크 취소 연동
+  - Status: DOING
+  - Description:
+    - checkout 모달에서 HOLD 생성 후에도 좌석 단건 취소(`X`)를 지원한다.
+    - `전체 취소`는 벌크 API를 우선 호출해 다중 HOLD 해제를 1회 요청으로 처리한다.
+    - 취소 후 결제창 상태/좌석 리스트/선택 좌석 테이블을 즉시 동기화한다.
+  - Progress (2026-02-25):
+    - `ServiceCheckoutModal`:
+      - HOLD 이후 단건 취소(`X`)에서 `POST /api/reservations/v7/{reservationId}/cancel` 연동
+      - HOLD 이후 전체 취소에서 `POST /api/reservations/v7/cancel/bulk` 우선 연동(1건은 단건 cancel fallback)
+      - 취소 후 `holdRecords`, `selectedSeatIds`, 결제 시트(`paymentSheetOpen`) 상태 동기화
+      - 좌석 상태 라벨을 예약 상태(`HOLD/PAYING/CONFIRMED/...`) 기준으로 분기
+    - API client:
+      - `cancelReservationV7`, `cancelReservationsBulkV7` 함수 추가 및 응답 정합성 검증
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-hold-cancel-ux-followup.md`
+    - `ticket-web-app issue #3` (comment update)
+    - `ticket-core-service issue #21` (backend contract tracking)
+    - `npm run build` (pass)
+
 ## Next Items
+- `TWA-SC-010` HOLD 취소 단건/전체 UX 최종 문구 점검 + 모바일 회귀 확인
 - `TWA-SC-009` OAuth 실사용 경로에서 다중 좌석 선택/soft-lock/결제 결과 집계 수동 검증
 - `TWA-SC-008` paymentAction 분기 UX 미완료 구간(WAIT_WEBHOOK/RETRY_CONFIRM) 사용자 안내 고도화
 - `TWA-SC-008` checkout modal UI 접근성/모바일 사용성 회귀 점검
