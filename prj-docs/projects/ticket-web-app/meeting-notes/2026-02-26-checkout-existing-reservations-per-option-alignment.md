@@ -52,7 +52,7 @@
   - `GET /api/concerts/41/options`에서 3개 회차 응답 확인
 
 ## 안건 5: 이슈/태스크 동기화
-- Status: DOING
+- Status: DONE
 - 트래킹:
   - frontend issue: `https://github.com/rag-cargoo/ticket-web-app/issues/3`
   - backend issue: `https://github.com/rag-cargoo/ticket-core-service/issues/21`

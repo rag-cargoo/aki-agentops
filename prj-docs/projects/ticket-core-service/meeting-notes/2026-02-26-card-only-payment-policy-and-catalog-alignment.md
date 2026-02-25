@@ -49,7 +49,7 @@
   - `./gradlew test --no-daemon --tests 'com.ticketrush.application.payment.service.PaymentMethodCatalogServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
 
 ## 안건 5: 이슈/태스크 동기화
-- Status: DOING
+- Status: DONE
 - 트래킹:
   - backend issue: `https://github.com/rag-cargoo/ticket-core-service/issues/50`
   - frontend issue: `https://github.com/rag-cargoo/ticket-web-app/issues/3`

@@ -47,7 +47,7 @@
   - 헤더 프로필 메뉴의 `결제/지갑` 링크를 `내 예약/결제`로 대체한다.
 
 ## 안건 5: 검증/트래킹 동기화
-- Status: DOING
+- Status: DONE
 - 검증:
   - `npm run lint` PASS
   - `npm run typecheck` PASS

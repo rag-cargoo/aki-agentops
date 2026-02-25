@@ -187,7 +187,7 @@
     - `npm run build` (pass)
 
 - TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
-  - Status: DOING
+  - Status: DONE
   - Description:
     - backend에 회차 좌석 전체 상태 조회 API(`seat-map`)를 추가하고 `status` 필터를 선택 지원한다.
     - 기존 `AVAILABLE` 중심 API는 하위 호환으로 유지한다.
