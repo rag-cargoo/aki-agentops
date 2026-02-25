@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-25 03:02:00`
+> - **Updated At**: `2026-02-26 07:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,126 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
+- TCS-SC-031 카드 단일 결제 정책 고정 + 무통장 제거 + 기본 provider 전환
+  - Status: DOING
+  - Description:
+    - 결제 기본 provider를 `mock`으로 전환하고 카드 결제 시뮬레이션을 기본 경로로 고정한다.
+    - 결제수단 카탈로그에서 `BANK_TRANSFER`를 제거하고, `mock/pg-ready`는 `CARD`만 활성화한다.
+    - `MockPaymentGateway`/`PgReadyPaymentGateway` 허용 수단을 카드 단일로 정렬한다.
+  - Progress (2026-02-26):
+    - configuration:
+      - `PaymentProperties.provider` 기본값 `wallet -> mock` 변경
+      - `application*.yml`의 `APP_PAYMENT_PROVIDER` fallback을 `mock`으로 변경
+    - payment catalog/gateway:
+      - `PaymentMethodCatalogService`를 카드 중심 카탈로그로 재정렬(`BANK_TRANSFER` 제거)
+      - `MockPaymentGateway`, `PgReadyPaymentGateway`를 `CARD` 전용 검증으로 변경
+      - `PaymentMethod` enum에서 `BANK_TRANSFER` 제거
+      - `PgReadyWebhookService` 카드 전용 검증 반영
+    - compatibility:
+      - wallet provider 레거시 통합테스트 경로는 유지(테스트용 분기)
+  - TODO:
+    - [x] provider 기본값 `mock` 전환
+    - [x] 결제수단 카탈로그 카드 중심 정렬
+    - [x] gateway 허용 수단 카드 단일화
+    - [x] 타깃 테스트/컴파일 검증
+    - [ ] wallet 전용 레거시 API 폐기 범위(운영 영향 포함) 최종 확정
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-26-card-only-payment-policy-and-catalog-alignment.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#50` (comment update)
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.payment.service.PaymentMethodCatalogServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+
+- TCS-SC-030 `v7/me` 필터 확장 + 선점 단계 정책 가드 + 다회차 더미 생성 정렬
+  - Status: DOING
+  - Description:
+    - `GET /api/reservations/v7/me`에 `concertId`, `optionId`, `status[]` 필터를 추가해 프론트가 "해당 콘서트-회차 내 기존 예약"을 조회할 수 있게 한다.
+    - soft-lock 획득(`POST /api/reservations/v7/locks/seats/{seatId}`) 단계에서 판매정책 상한(`maxReservationsPerUser`)을 선검증해, 기존 예약 수가 상한에 도달한 사용자는 추가 선점을 차단한다.
+    - 테스트 데이터 생성에서 회차 수를 가변(`optionCount`)으로 받아 2개 이상 회차 검증이 가능하도록 정렬한다.
+  - Progress (2026-02-26):
+    - `ReservationController`:
+      - `GET /api/reservations/v7/me`에 `concertId/optionId/status` 요청 파라미터 추가
+      - 상태 문자열 파서(`parseReservationStatuses`) 추가
+    - `ReservationUseCase/ReservationServiceImpl/ReservationRepository`:
+      - 필터 기반 조회 시그니처 추가
+      - JPQL 필터 쿼리(`findByUserIdWithFilters`) 추가
+      - 응답 모델 `ReservationListItemResult` 추가(`status/concertId/optionId/seatNumber`)
+    - `SeatSoftLockServiceImpl`:
+      - `SalesPolicyService.validateHoldRequest` + `ReservationUserPort.getUser`를 선점 단계에서 호출하도록 가드 추가
+    - setup/seed:
+      - `ConcertSetupRequest.optionCount` 추가
+      - `POST /api/concerts/setup` 다회차 생성(`OptionIDs`) 지원
+      - `scripts/api/setup-test-data.sh`에 `OPTION_COUNT` 환경변수 추가
+      - `DataInitializer` 기본 회차 수를 concert당 2개로 상향
+  - TODO:
+    - [x] `v7/me` 필터 쿼리/응답 확장
+    - [x] 선점 단계 판매정책 상한 선검증
+    - [x] setup script 다회차(`optionCount`) 지원
+    - [x] backend compile 검증
+    - [ ] 프론트 실사용(OAuth) 회귀 검증 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-26-reservation-v7-me-filter-and-multi-option-setup-alignment.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#21` (comment update)
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `API_HOST=http://127.0.0.1:18080 OPTION_COUNT=3 bash ./scripts/api/setup-test-data.sh` PASS (`OptionCount=3`)
+      - `curl -sS http://127.0.0.1:18080/api/concerts/41/options` 응답 3건 확인
+
+- TCS-SC-029 HOLD 취소 단건/벌크 계약 확장 + 상태전이 정렬
+  - Status: DOING
+  - Description:
+    - `POST /api/reservations/v7/{reservationId}/cancel`을 HOLD 취소까지 포괄하도록 상태전이를 정렬한다.
+    - 다건 취소를 위한 벌크 엔드포인트를 추가한다.
+    - 환불 경계는 결제 확정 후 취소 건에 한해 허용하도록 가드를 보강한다.
+  - TODO:
+    - [x] cancel 상태전이(HOLD 포함) + 도메인 규칙 반영
+    - [x] 벌크 취소 API/DTO/서비스 경로 반영
+    - [x] 서비스/도메인 테스트 보강
+    - [x] `reservation-api.md` 계약 업데이트
+    - [ ] 프론트 checkout 모달 연동 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-25-hold-cancel-single-bulk-contract-kickoff.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#21` (reopen target)
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.domain.reservation.entity.ReservationStateMachineTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest` PASS
+
+- TCS-SC-028 회차별 다중 좌석 상한(`maxSeatsPerOrder`) 계약 도입
+  - Status: DOING
+  - Description:
+    - `ConcertOption`에 회차 단위 좌석 선택 상한 필드(`maxSeatsPerOrder`)를 도입한다.
+    - Admin 옵션 생성/수정 API에서 해당 값을 설정 가능하게 확장한다.
+    - 공개/관리자 옵션 조회 응답으로 상한값을 노출해 프론트 checkout 모달이 UI 상한을 강제할 수 있게 한다.
+  - Progress (2026-02-25):
+    - 백엔드 코드 반영:
+      - `concert_options.maxSeatsPerOrder` 필드 추가(기본값 `2`)
+      - 범위 검증 추가(`1..10`)
+      - `AdminConcertOptionCreateRequest/UpdateRequest`에 `maxSeatsPerOrder` 반영
+      - `ConcertOptionResult`/`ConcertOptionResponse`에 `maxSeatsPerOrder` 반영
+      - `ConcertService`/`ConcertUseCase` 옵션 생성/수정 시그니처 확장
+      - `AdminConcertController` 옵션 생성/수정 경로 파라미터 연결
+      - 도메인 테스트 추가: `ConcertOptionTest`
+    - 문서 반영:
+      - `concert-api.md` 옵션 조회/관리자 옵션 CRUD 계약에 `maxSeatsPerOrder` 명시
+      - 회의록 추가:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-25-option-max-seats-per-order-contract-alignment.md`
+  - TODO:
+    - [x] `ConcertOption` + DTO/응답 계약 확장
+    - [x] Admin 옵션 생성/수정 요청 필드 확장
+    - [x] 기본값/검증 규칙 적용(최소 1, 최대 10)
+    - [x] 백엔드 컴파일/도메인 테스트 검증
+    - [ ] 프론트(`ticket-web-app`) 다중 좌석 선택 상한 UI 연동 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#20` (reopened, in progress)
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.domain.concert.entity.ConcertOptionTest --no-daemon` PASS
+
 - TCS-SC-027 결제수단 선택 + 결제결과 응답 계약 고도화(백엔드 우선)
   - Status: DOING
   - Description:

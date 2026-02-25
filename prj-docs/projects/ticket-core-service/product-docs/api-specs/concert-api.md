@@ -192,6 +192,13 @@
 | :--- | :--- | :--- |
 | `id` | Long | 날짜 옵션 고유 ID |
 | `concertDate` | DateTime | 공연 시작 일시 |
+| `ticketPriceAmount` | Long | 옵션 단위 티켓 가격(KRW) |
+| `maxSeatsPerOrder` | Integer | 옵션 단위 1회 주문 최대 좌석수(최소 1, 기본 2) |
+| `venueId` | Long | 공연장 ID (없으면 `null`) |
+| `venueName` | String | 공연장 이름 (없으면 `null`) |
+| `venueCity` | String | 공연장 도시 (없으면 `null`) |
+| `venueCountryCode` | String | 공연장 국가코드 (없으면 `null`) |
+| `venueAddress` | String | 공연장 주소 (없으면 `null`) |
 
 **Response Example**
 
@@ -199,7 +206,14 @@
 [
   {
     "id": 1,
-    "concertDate": "2026-02-15T19:00:00"
+    "concertDate": "2026-02-15T19:00:00",
+    "ticketPriceAmount": 132000,
+    "maxSeatsPerOrder": 4,
+    "venueId": 10,
+    "venueName": "KSPO DOME",
+    "venueCity": "Seoul",
+    "venueCountryCode": "KR",
+    "venueAddress": "Olympic-ro 424, Songpa-gu"
   }
 ]
 ```
@@ -373,8 +387,8 @@
 | GET | `/api/admin/concerts/{concertId}` | 콘서트 단건 조회 |
 | PUT | `/api/admin/concerts/{concertId}` | 콘서트 수정 |
 | DELETE | `/api/admin/concerts/{concertId}` | 콘서트 삭제 |
-| POST | `/api/admin/concerts/{concertId}/options` | 회차 생성 (`concertDate`, `seatCount`, `venueId`, `ticketPriceAmount`) |
-| PUT | `/api/admin/concerts/options/{optionId}` | 회차 수정 (`concertDate`, `venueId`, `ticketPriceAmount`) |
+| POST | `/api/admin/concerts/{concertId}/options` | 회차 생성 (`concertDate`, `seatCount`, `venueId`, `ticketPriceAmount`, `maxSeatsPerOrder`) |
+| PUT | `/api/admin/concerts/options/{optionId}` | 회차 수정 (`concertDate`, `venueId`, `ticketPriceAmount`, `maxSeatsPerOrder`) |
 | DELETE | `/api/admin/concerts/options/{optionId}` | 회차 삭제 |
 | POST | `/api/admin/concerts/{concertId}/thumbnail` | 썸네일 업로드 (multipart `image`) |
 | DELETE | `/api/admin/concerts/{concertId}/thumbnail` | 썸네일 삭제 |
@@ -383,7 +397,7 @@
 
 **Response 확장 필드**
 - `ConcertResponse`: `promoterId`, `promoterName`, `promoterCountryCode`, `promoterHomepageUrl`, `youtubeVideoUrl`, `thumbnailUrl`
-- `ConcertOptionResponse`: `ticketPriceAmount`, `venueId`, `venueName`, `venueCity`, `venueCountryCode`, `venueAddress`
+- `ConcertOptionResponse`: `ticketPriceAmount`, `maxSeatsPerOrder`, `venueId`, `venueName`, `venueCity`, `venueCountryCode`, `venueAddress`
 
 ## 2. 캐싱 정책/무효화 규칙
 

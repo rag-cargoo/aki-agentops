@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-25 12:32:00`
+> - **Updated At**: `2026-02-26 07:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -27,10 +27,14 @@
 - [x] TWA-SC-002 앱 부트스트랩(Vite/React/TS + lint/typecheck/build + CI)
 - [~] TWA-SC-003 SC019 이관 Sprint-1(토큰 정책/예약 API 경로/non-mock smoke)
 - [x] TWA-SC-004 백엔드 계약 인벤토리/프론트 설계 블루프린트 고정
-- [~] TWA-SC-005 사용자 결제복구 UX(지갑/잔액부족 복구) + Admin 정책폼 단순화
+- [~] TWA-SC-005 사용자 결제복구 UX(카드/결제상태 복구) + Admin 정책폼 단순화
 - [x] TWA-SC-006 백엔드 기능 채택 매트릭스 문서화(채택/보류/제외 기준)
 - [x] TWA-SC-007 기획/설계 문서 재베이스라인(계약 드리프트/갭 명시)
 - [~] TWA-SC-008 실사용 예매 플로우 재구성(모달+soft-lock+결제수단 카탈로그 강제)
+- [~] TWA-SC-009 옵션별 다중 좌석 상한(`maxSeatsPerOrder`) 채택 + checkout 다중 선택
+- [~] TWA-SC-010 checkout 예약(HOLD) 후 단건/전체 취소 UX + 벌크 취소 연동
+- [~] TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
+- [~] TWA-SC-012 카드 단일 결제(가상 테스트카드) 고정 + 월렛/무통장 제거
 
 ## Current Items
 - TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
@@ -84,10 +88,10 @@
     - `prj-docs/projects/ticket-web-app/product-docs/backend-contract-inventory.md`
     - `prj-docs/projects/ticket-web-app/product-docs/frontend-implementation-blueprint.md`
 
-- TWA-SC-005 사용자 결제복구 UX(지갑/잔액부족 복구) + Admin 정책폼 단순화
+- TWA-SC-005 사용자 결제복구 UX(카드/결제상태 복구) + Admin 정책폼 단순화
   - Status: DOING
   - Description:
-    - 서비스 화면에 지갑 잔액/충전/최근거래를 추가해 `409 Insufficient wallet balance` 복구 동선을 제공한다.
+    - 서비스 화면 결제 상태 복구 동선을 카드 결제 기준으로 정렬한다.
     - Admin 판매정책 폼을 백엔드 실필드(`maxReservationsPerUser`) 기준으로 단순화한다.
     - 콘서트 목록 파서에 필드 드리프트 대응(`agency*`, `entertainment*`)을 반영한다.
     - `confirm` 응답의 `paymentAction/paymentRedirectUrl`를 파싱해 `확정완료/승인대기/외부결제` 분기 UX를 제공한다.
@@ -96,7 +100,6 @@
     - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/reservation-v7-client.ts`
-    - `workspace/apps/frontend/ticket-web-app/src/shared/api/wallet-client.ts`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/admin-concert-client.ts`
     - `workspace/apps/frontend/ticket-web-app/src/pages/AdminPage.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/styles.css`
@@ -144,7 +147,110 @@
     - `ticket-web-app issue #3 (cross-repo tracking)`
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-modal-seat-ux-polish.md`
 
+- TWA-SC-009 옵션별 다중 좌석 상한(`maxSeatsPerOrder`) 채택 + checkout 다중 선택
+  - Status: DOING
+  - Description:
+    - 백엔드 `ConcertOption.maxSeatsPerOrder` 계약을 프론트 API 모델에 반영한다.
+    - Admin Option CRUD에서 `maxSeatsPerOrder`를 입력/조회 가능하게 확장한다.
+    - checkout modal 좌석 선택을 단일 선택에서 다중 선택으로 확장하고, 옵션 상한값을 UI에서 강제한다.
+    - 결제 결과는 다중 reservation 집계 기준으로 `CONFIRMED/PARTIAL/WAIT_WEBHOOK/REDIRECT/RETRY_CONFIRM`를 처리한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/admin-concert-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/AdminPage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/styles.css`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-option-max-seats-multiselect-checkout-followup.md`
+    - `ticket-web-app issue #3` (in progress)
+
+- TWA-SC-010 checkout 예약(HOLD) 후 단건/전체 취소 UX + 벌크 취소 연동
+  - Status: DOING
+  - Description:
+    - checkout 모달에서 HOLD 생성 후에도 좌석 단건 취소(`X`)를 지원한다.
+    - `전체 취소`는 벌크 API를 우선 호출해 다중 HOLD 해제를 1회 요청으로 처리한다.
+    - 취소 후 결제창 상태/좌석 리스트/선택 좌석 테이블을 즉시 동기화한다.
+  - Progress (2026-02-25):
+    - `ServiceCheckoutModal`:
+      - HOLD 이후 단건 취소(`X`)에서 `POST /api/reservations/v7/{reservationId}/cancel` 연동
+      - HOLD 이후 전체 취소에서 `POST /api/reservations/v7/cancel/bulk` 우선 연동(1건은 단건 cancel fallback)
+      - 취소 후 `holdRecords`, `selectedSeatIds`, 결제 시트(`paymentSheetOpen`) 상태 동기화
+      - 좌석 상태 라벨을 예약 상태(`HOLD/PAYING/CONFIRMED/...`) 기준으로 분기
+    - API client:
+      - `cancelReservationV7`, `cancelReservationsBulkV7` 함수 추가 및 응답 정합성 검증
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-hold-cancel-ux-followup.md`
+    - `ticket-web-app issue #3` (comment update)
+    - `ticket-core-service issue #21` (backend contract tracking)
+    - `npm run build` (pass)
+
+- TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
+  - Status: DONE
+  - Description:
+    - backend에 회차 좌석 전체 상태 조회 API(`seat-map`)를 추가하고 `status` 필터를 선택 지원한다.
+    - 기존 `AVAILABLE` 중심 API는 하위 호환으로 유지한다.
+    - checkout 모달은 seat-map 기준으로 렌더링하고 `AVAILABLE` 이외 좌석(`TEMP_RESERVED/RESERVED`)은 선택 비활성 처리한다.
+    - 예약(HOLD) 이후 좌석 목록/상태 라벨이 유지되도록 프론트 상태 동기화를 고정한다.
+    - `GET /api/reservations/v7/me`를 회차(concertId+optionId+status) 범위로 조회해 기존 예약 목록을 모달에 노출한다.
+    - 기존 예약 수를 `maxSeatsPerOrder`에 반영해 잔여 선택 가능 좌석 수를 계산하고 선점 단계에서 차단한다.
+  - Progress (2026-02-26):
+    - `ServiceCheckoutModal`:
+      - `existingReservations` 상태 추가 및 회차 전환/예약 이후 재조회 동기화
+      - "해당 회차 내 기존 예약" 테이블 추가(예약번호/좌석/상태)
+      - `remainingSelectableSeats = maxSeatsPerOrder - existingActiveReservations.length` 계산으로 선택 상한 재정렬
+      - 기존 예약 좌석/비가용 좌석(`TEMP_RESERVED/RESERVED`) 타일 비활성화
+    - API client:
+      - `fetchMyReservationsV7(apiBaseUrl, accessToken, { concertId, optionId, statuses })` 필터 입력 지원
+      - `ReservationSummary`에 `status/concertId/optionId/seatNumber` 파싱 추가
+    - Runtime validation:
+      - `API_HOST=http://127.0.0.1:18080 OPTION_COUNT=3 bash ./scripts/api/setup-test-data.sh` 실행
+      - 응답 `OptionCount=3, OptionIDs=[42, 43, 44]` 확인
+      - `GET /api/concerts/41/options`에서 3개 회차 응답 확인
+  - Evidence:
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-seat-map-status-contract-alignment.md`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-checkout-existing-reservations-per-option-alignment.md`
+    - `https://github.com/rag-cargoo/ticket-web-app/issues/3#issuecomment-3960096929`
+    - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3960096915`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/reservation-v7-client.ts`
+    - `npm run build` (pass)
+
+- TWA-SC-012 카드 단일 결제(가상 테스트카드) 고정 + 월렛/무통장 제거
+  - Status: DOING
+  - Description:
+    - checkout 결제 단계를 카드 단일 흐름으로 고정하고, 사용자에게 가상 테스트카드 선택 UI를 제공한다.
+    - 프론트 결제수단 타입에서 `WALLET/BANK_TRANSFER`를 제거하고 기본 fallback을 `CARD`로 통일한다.
+    - 계정 화면의 지갑 원장/잔액 UX를 제거하고 `내 예약/결제` 단일 진입으로 정리한다.
+  - Progress (2026-02-26):
+    - `ServiceCheckoutModal`:
+      - 결제시트에 `가상 테스트 카드 선택` 패널 추가
+      - 테스트카드 미선택 시 결제확정 비활성
+      - 결제 성공 메시지에 선택 카드 번호(마스킹) 표시
+    - `AccountPage/HeaderNav`:
+      - `/account/wallet` 흐름 제거 및 `내 예약/결제`로 단일화
+      - `ServiceWalletSection`, `wallet-client` 삭제
+    - API client:
+      - `PaymentMethod` 타입에서 `WALLET/BANK_TRANSFER` 제거
+      - 결제수단/예약 플로우 fallback을 `CARD`로 고정
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/AccountPage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/components/HeaderNav.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/payment-methods-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-card-only-checkout-and-wallet-removal-alignment.md`
+    - `ticket-web-app issue #3` (comment update)
+    - `npm run lint` (pass)
+    - `npm run typecheck` (pass)
+    - `npm run build` (pass)
+
 ## Next Items
+- `TWA-SC-012` OAuth 실사용 계정 기준 카드 단일 결제 + 가상 테스트카드 선택 UX 수동 회귀 검증
+- `TWA-SC-011` OAuth 실사용 계정으로 회차별 기존 예약 테이블/선택 상한(기존 예약 포함) 수동 회귀 확인
+- `TWA-SC-010` HOLD 취소 단건/전체 UX 최종 문구 점검 + 모바일 회귀 확인
+- `TWA-SC-009` OAuth 실사용 경로에서 다중 좌석 선택/soft-lock/결제 결과 집계 수동 검증
 - `TWA-SC-008` paymentAction 분기 UX 미완료 구간(WAIT_WEBHOOK/RETRY_CONFIRM) 사용자 안내 고도화
 - `TWA-SC-008` checkout modal UI 접근성/모바일 사용성 회귀 점검
 - `TWA-SC-003` non-mock smoke 검증 및 실시간 채널 보강
