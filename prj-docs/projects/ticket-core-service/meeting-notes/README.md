@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-25 03:02:00`
+> - **Updated At**: `2026-02-25 13:05:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-02-25 Option-Level maxSeatsPerOrder Contract Alignment](./2026-02-25-option-max-seats-per-order-contract-alignment.md)
 - [2026-02-24 Payment Method Selection and Payment Outcome Contract Kickoff](./2026-02-24-payment-method-selection-and-payment-outcome-contract-kickoff.md)
 - [2026-02-24 DDD SC026 Closeout and Frontend Reset Gate](./2026-02-24-ddd-sc026-closeout-and-frontend-reset-gate.md)
 - [2026-02-23 DDD Phase6-A Messaging Infrastructure Relocation Kickoff](./2026-02-23-ddd-phase6a-messaging-infrastructure-relocation-kickoff.md)

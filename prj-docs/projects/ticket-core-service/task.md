@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-25 03:02:00`
+> - **Updated At**: `2026-02-25 13:06:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,37 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
+- TCS-SC-028 회차별 다중 좌석 상한(`maxSeatsPerOrder`) 계약 도입
+  - Status: DOING
+  - Description:
+    - `ConcertOption`에 회차 단위 좌석 선택 상한 필드(`maxSeatsPerOrder`)를 도입한다.
+    - Admin 옵션 생성/수정 API에서 해당 값을 설정 가능하게 확장한다.
+    - 공개/관리자 옵션 조회 응답으로 상한값을 노출해 프론트 checkout 모달이 UI 상한을 강제할 수 있게 한다.
+  - Progress (2026-02-25):
+    - 백엔드 코드 반영:
+      - `concert_options.maxSeatsPerOrder` 필드 추가(기본값 `2`)
+      - 범위 검증 추가(`1..10`)
+      - `AdminConcertOptionCreateRequest/UpdateRequest`에 `maxSeatsPerOrder` 반영
+      - `ConcertOptionResult`/`ConcertOptionResponse`에 `maxSeatsPerOrder` 반영
+      - `ConcertService`/`ConcertUseCase` 옵션 생성/수정 시그니처 확장
+      - `AdminConcertController` 옵션 생성/수정 경로 파라미터 연결
+      - 도메인 테스트 추가: `ConcertOptionTest`
+    - 문서 반영:
+      - `concert-api.md` 옵션 조회/관리자 옵션 CRUD 계약에 `maxSeatsPerOrder` 명시
+      - 회의록 추가:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-25-option-max-seats-per-order-contract-alignment.md`
+  - TODO:
+    - [x] `ConcertOption` + DTO/응답 계약 확장
+    - [x] Admin 옵션 생성/수정 요청 필드 확장
+    - [x] 기본값/검증 규칙 적용(최소 1, 최대 10)
+    - [x] 백엔드 컴파일/도메인 테스트 검증
+    - [ ] 프론트(`ticket-web-app`) 다중 좌석 선택 상한 UI 연동 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#20` (reopened, in progress)
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.domain.concert.entity.ConcertOptionTest --no-daemon` PASS
+
 - TCS-SC-027 결제수단 선택 + 결제결과 응답 계약 고도화(백엔드 우선)
   - Status: DOING
   - Description:

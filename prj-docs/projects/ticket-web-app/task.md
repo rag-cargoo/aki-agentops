@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-25 12:32:00`
+> - **Updated At**: `2026-02-25 13:13:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -31,6 +31,7 @@
 - [x] TWA-SC-006 백엔드 기능 채택 매트릭스 문서화(채택/보류/제외 기준)
 - [x] TWA-SC-007 기획/설계 문서 재베이스라인(계약 드리프트/갭 명시)
 - [~] TWA-SC-008 실사용 예매 플로우 재구성(모달+soft-lock+결제수단 카탈로그 강제)
+- [~] TWA-SC-009 옵션별 다중 좌석 상한(`maxSeatsPerOrder`) 채택 + checkout 다중 선택
 
 ## Current Items
 - TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
@@ -144,7 +145,25 @@
     - `ticket-web-app issue #3 (cross-repo tracking)`
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-modal-seat-ux-polish.md`
 
+- TWA-SC-009 옵션별 다중 좌석 상한(`maxSeatsPerOrder`) 채택 + checkout 다중 선택
+  - Status: DOING
+  - Description:
+    - 백엔드 `ConcertOption.maxSeatsPerOrder` 계약을 프론트 API 모델에 반영한다.
+    - Admin Option CRUD에서 `maxSeatsPerOrder`를 입력/조회 가능하게 확장한다.
+    - checkout modal 좌석 선택을 단일 선택에서 다중 선택으로 확장하고, 옵션 상한값을 UI에서 강제한다.
+    - 결제 결과는 다중 reservation 집계 기준으로 `CONFIRMED/PARTIAL/WAIT_WEBHOOK/REDIRECT/RETRY_CONFIRM`를 처리한다.
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/admin-concert-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/AdminPage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/styles.css`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-option-max-seats-multiselect-checkout-followup.md`
+    - `ticket-web-app issue #3` (in progress)
+
 ## Next Items
+- `TWA-SC-009` OAuth 실사용 경로에서 다중 좌석 선택/soft-lock/결제 결과 집계 수동 검증
 - `TWA-SC-008` paymentAction 분기 UX 미완료 구간(WAIT_WEBHOOK/RETRY_CONFIRM) 사용자 안내 고도화
 - `TWA-SC-008` checkout modal UI 접근성/모바일 사용성 회귀 점검
 - `TWA-SC-003` non-mock smoke 검증 및 실시간 채널 보강
