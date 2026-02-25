@@ -141,7 +141,7 @@
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/payment-methods-client.ts`
     - `workspace/apps/frontend/ticket-web-app/src/shared/realtime/**`
-    - `https://github.com/rag-cargoo/ticket-web-app/issues/3`
+    - `ticket-web-app issue #3 (cross-repo tracking)`
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-modal-seat-ux-polish.md`
 
 ## Next Items
