@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-26 04:08:00`
+> - **Updated At**: `2026-02-26 07:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,38 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
+- TCS-SC-031 카드 단일 결제 정책 고정 + 무통장 제거 + 기본 provider 전환
+  - Status: DOING
+  - Description:
+    - 결제 기본 provider를 `mock`으로 전환하고 카드 결제 시뮬레이션을 기본 경로로 고정한다.
+    - 결제수단 카탈로그에서 `BANK_TRANSFER`를 제거하고, `mock/pg-ready`는 `CARD`만 활성화한다.
+    - `MockPaymentGateway`/`PgReadyPaymentGateway` 허용 수단을 카드 단일로 정렬한다.
+  - Progress (2026-02-26):
+    - configuration:
+      - `PaymentProperties.provider` 기본값 `wallet -> mock` 변경
+      - `application*.yml`의 `APP_PAYMENT_PROVIDER` fallback을 `mock`으로 변경
+    - payment catalog/gateway:
+      - `PaymentMethodCatalogService`를 카드 중심 카탈로그로 재정렬(`BANK_TRANSFER` 제거)
+      - `MockPaymentGateway`, `PgReadyPaymentGateway`를 `CARD` 전용 검증으로 변경
+      - `PaymentMethod` enum에서 `BANK_TRANSFER` 제거
+      - `PgReadyWebhookService` 카드 전용 검증 반영
+    - compatibility:
+      - wallet provider 레거시 통합테스트 경로는 유지(테스트용 분기)
+  - TODO:
+    - [x] provider 기본값 `mock` 전환
+    - [x] 결제수단 카탈로그 카드 중심 정렬
+    - [x] gateway 허용 수단 카드 단일화
+    - [x] 타깃 테스트/컴파일 검증
+    - [ ] wallet 전용 레거시 API 폐기 범위(운영 영향 포함) 최종 확정
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-26-card-only-payment-policy-and-catalog-alignment.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#50` (comment update)
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.payment.service.PaymentMethodCatalogServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+
 - TCS-SC-030 `v7/me` 필터 확장 + 선점 단계 정책 가드 + 다회차 더미 생성 정렬
   - Status: DOING
   - Description:

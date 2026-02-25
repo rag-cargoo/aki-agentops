@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-26 04:08:00`
+> - **Updated At**: `2026-02-26 07:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -27,13 +27,14 @@
 - [x] TWA-SC-002 앱 부트스트랩(Vite/React/TS + lint/typecheck/build + CI)
 - [~] TWA-SC-003 SC019 이관 Sprint-1(토큰 정책/예약 API 경로/non-mock smoke)
 - [x] TWA-SC-004 백엔드 계약 인벤토리/프론트 설계 블루프린트 고정
-- [~] TWA-SC-005 사용자 결제복구 UX(지갑/잔액부족 복구) + Admin 정책폼 단순화
+- [~] TWA-SC-005 사용자 결제복구 UX(카드/결제상태 복구) + Admin 정책폼 단순화
 - [x] TWA-SC-006 백엔드 기능 채택 매트릭스 문서화(채택/보류/제외 기준)
 - [x] TWA-SC-007 기획/설계 문서 재베이스라인(계약 드리프트/갭 명시)
 - [~] TWA-SC-008 실사용 예매 플로우 재구성(모달+soft-lock+결제수단 카탈로그 강제)
 - [~] TWA-SC-009 옵션별 다중 좌석 상한(`maxSeatsPerOrder`) 채택 + checkout 다중 선택
 - [~] TWA-SC-010 checkout 예약(HOLD) 후 단건/전체 취소 UX + 벌크 취소 연동
 - [~] TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
+- [~] TWA-SC-012 카드 단일 결제(가상 테스트카드) 고정 + 월렛/무통장 제거
 
 ## Current Items
 - TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
@@ -87,10 +88,10 @@
     - `prj-docs/projects/ticket-web-app/product-docs/backend-contract-inventory.md`
     - `prj-docs/projects/ticket-web-app/product-docs/frontend-implementation-blueprint.md`
 
-- TWA-SC-005 사용자 결제복구 UX(지갑/잔액부족 복구) + Admin 정책폼 단순화
+- TWA-SC-005 사용자 결제복구 UX(카드/결제상태 복구) + Admin 정책폼 단순화
   - Status: DOING
   - Description:
-    - 서비스 화면에 지갑 잔액/충전/최근거래를 추가해 `409 Insufficient wallet balance` 복구 동선을 제공한다.
+    - 서비스 화면 결제 상태 복구 동선을 카드 결제 기준으로 정렬한다.
     - Admin 판매정책 폼을 백엔드 실필드(`maxReservationsPerUser`) 기준으로 단순화한다.
     - 콘서트 목록 파서에 필드 드리프트 대응(`agency*`, `entertainment*`)을 반영한다.
     - `confirm` 응답의 `paymentAction/paymentRedirectUrl`를 파싱해 `확정완료/승인대기/외부결제` 분기 UX를 제공한다.
@@ -99,7 +100,6 @@
     - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/reservation-v7-client.ts`
-    - `workspace/apps/frontend/ticket-web-app/src/shared/api/wallet-client.ts`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/admin-concert-client.ts`
     - `workspace/apps/frontend/ticket-web-app/src/pages/AdminPage.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/styles.css`
@@ -217,7 +217,37 @@
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/reservation-v7-client.ts`
     - `npm run build` (pass)
 
+- TWA-SC-012 카드 단일 결제(가상 테스트카드) 고정 + 월렛/무통장 제거
+  - Status: DOING
+  - Description:
+    - checkout 결제 단계를 카드 단일 흐름으로 고정하고, 사용자에게 가상 테스트카드 선택 UI를 제공한다.
+    - 프론트 결제수단 타입에서 `WALLET/BANK_TRANSFER`를 제거하고 기본 fallback을 `CARD`로 통일한다.
+    - 계정 화면의 지갑 원장/잔액 UX를 제거하고 `내 예약/결제` 단일 진입으로 정리한다.
+  - Progress (2026-02-26):
+    - `ServiceCheckoutModal`:
+      - 결제시트에 `가상 테스트 카드 선택` 패널 추가
+      - 테스트카드 미선택 시 결제확정 비활성
+      - 결제 성공 메시지에 선택 카드 번호(마스킹) 표시
+    - `AccountPage/HeaderNav`:
+      - `/account/wallet` 흐름 제거 및 `내 예약/결제`로 단일화
+      - `ServiceWalletSection`, `wallet-client` 삭제
+    - API client:
+      - `PaymentMethod` 타입에서 `WALLET/BANK_TRANSFER` 제거
+      - 결제수단/예약 플로우 fallback을 `CARD`로 고정
+  - Evidence:
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/AccountPage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/components/HeaderNav.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/payment-methods-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-card-only-checkout-and-wallet-removal-alignment.md`
+    - `ticket-web-app issue #3` (comment update)
+    - `npm run lint` (pass)
+    - `npm run typecheck` (pass)
+    - `npm run build` (pass)
+
 ## Next Items
+- `TWA-SC-012` OAuth 실사용 계정 기준 카드 단일 결제 + 가상 테스트카드 선택 UX 수동 회귀 검증
 - `TWA-SC-011` OAuth 실사용 계정으로 회차별 기존 예약 테이블/선택 상한(기존 예약 포함) 수동 회귀 확인
 - `TWA-SC-010` HOLD 취소 단건/전체 UX 최종 문구 점검 + 모바일 회귀 확인
 - `TWA-SC-009` OAuth 실사용 경로에서 다중 좌석 선택/soft-lock/결제 결과 집계 수동 검증
