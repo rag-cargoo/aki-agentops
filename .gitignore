@@ -37,3 +37,4 @@ management/task.md
 # External project clones (managed in their own Git repositories)
 workspace/apps/backend/ticket-core-service/
 workspace/apps/frontend/ticket-web-client/
+workspace/apps/frontend/ticket-web-app/

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-24 06:33:00`
+> - **Updated At**: `2026-02-26 07:18:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,34 +24,12 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
-- [2026-02-24 DDD Post Ops-Hardening Completion and Frontend Gate](./2026-02-24-ddd-post-ops-hardening-completion-and-frontend-gate.md)
-- [2026-02-24 DDD Post Ops-Hardening and Frontend Kickoff](./2026-02-24-ddd-post-ops-hardening-and-frontend-kickoff.md)
-- [2026-02-24 DDD Phase8-I Inbound Port Domain-Leak Hardening](./2026-02-24-ddd-phase8i-inbound-port-domain-leak-hardening.md)
-- [2026-02-24 DDD Phase8-H Remaining API DTO Domain-Model Decoupling Completion](./2026-02-24-ddd-phase8h-remaining-api-dto-domain-model-decoupling-completion.md)
-- [2026-02-24 DDD Phase8-G Catalog API Domain-Model Decoupling](./2026-02-24-ddd-phase8g-catalog-api-domain-model-decoupling.md)
-- [2026-02-24 DDD Phase8-F User API Domain-Model Decoupling](./2026-02-24-ddd-phase8f-user-api-domain-model-decoupling.md)
-- [2026-02-24 DDD Phase8-E Auth API Domain-Model Decoupling](./2026-02-24-ddd-phase8e-auth-api-domain-model-decoupling.md)
-- [2026-02-24 DDD Phase8-D Auth Filter UseCase Decoupling](./2026-02-24-ddd-phase8d-auth-filter-usecase-decoupling.md)
-- [2026-02-24 DDD Phase8-C Runtime Adapter Inbound-Port Decoupling](./2026-02-24-ddd-phase8c-runtime-adapter-inbound-port-decoupling.md)
-- [2026-02-24 DDD Phase8-B API Controller Inbound Port Expansion](./2026-02-24-ddd-phase8b-api-controller-inbound-port-expansion.md)
-- [2026-02-23 DDD Phase8-A Inbound Port Application-Service Decoupling](./2026-02-23-ddd-phase8a-inbound-port-application-service-decoupling.md)
-- [2026-02-23 DDD Phase7-C API Outbound Port Decoupling](./2026-02-23-ddd-phase7c-api-outbound-port-decoupling.md)
-- [2026-02-23 DDD Phase7-B Realtime Queue Observability Hardening](./2026-02-23-ddd-phase7b-realtime-queue-observability-hardening.md)
-- [2026-02-23 DDD Phase7-A Realtime Port Removal and Selector Split](./2026-02-23-ddd-phase7a-realtime-port-removal-and-selector-split.md)
-- [2026-02-23 DDD Phase6-O Push Broad Port Final Segregation](./2026-02-23-ddd-phase6o-push-broad-port-final-segregation.md)
-- [2026-02-23 DDD Phase6-N Push Capability Port Segregation](./2026-02-23-ddd-phase6n-push-capability-port-segregation.md)
-- [2026-02-23 DDD Phase6-M Queue Runtime Port Segregation](./2026-02-23-ddd-phase6m-queue-runtime-port-segregation.md)
-- [2026-02-23 DDD Phase6-L Queue EventName Enum Hardening](./2026-02-23-ddd-phase6l-queue-eventname-enum-hardening.md)
-- [2026-02-23 DDD Phase6-K Kafka Notifier Concrete Decoupling](./2026-02-23-ddd-phase6k-kafka-notifier-concrete-decoupling.md)
-- [2026-02-23 DDD Phase6-J Queue Event Dispatch Typed Hardening](./2026-02-23-ddd-phase6j-queue-event-dispatch-typed-hardening.md)
-- [2026-02-23 DDD Phase6-I Queue Payload Typed Port Hardening](./2026-02-23-ddd-phase6i-queue-payload-typed-port-hardening.md)
-- [2026-02-23 DDD Phase6-H Realtime Push Port Unification](./2026-02-23-ddd-phase6h-realtime-push-port-unification.md)
-- [2026-02-23 DDD Phase6-G WaitingQueue Config Port Hardening](./2026-02-23-ddd-phase6g-waitingqueue-config-port-hardening.md)
-- [2026-02-23 DDD Phase6-F Infrastructure-Global Decoupling Kickoff](./2026-02-23-ddd-phase6f-infrastructure-global-decoupling-kickoff.md)
-- [2026-02-23 DDD Phase6-E API-Global Port Decoupling Kickoff](./2026-02-23-ddd-phase6e-api-global-port-decoupling-kickoff.md)
-- [2026-02-23 DDD Phase6-D Application-Global Port Decoupling Kickoff](./2026-02-23-ddd-phase6d-application-global-port-decoupling-kickoff.md)
-- [2026-02-23 DDD Phase6-C Global Boundary Decoupling Kickoff](./2026-02-23-ddd-phase6c-global-boundary-decoupling-kickoff.md)
-- [2026-02-23 DDD Phase6-B Messaging Port Decoupling Kickoff](./2026-02-23-ddd-phase6b-messaging-port-decoupling-kickoff.md)
+- [2026-02-26 Card-Only Payment Policy and Catalog Alignment](./2026-02-26-card-only-payment-policy-and-catalog-alignment.md)
+- [2026-02-26 Reservation v7/me Filter + Multi-Option Setup Alignment](./2026-02-26-reservation-v7-me-filter-and-multi-option-setup-alignment.md)
+- [2026-02-25 HOLD Cancel Single/Bulk Contract Kickoff](./2026-02-25-hold-cancel-single-bulk-contract-kickoff.md)
+- [2026-02-25 Option-Level maxSeatsPerOrder Contract Alignment](./2026-02-25-option-max-seats-per-order-contract-alignment.md)
+- [2026-02-24 Payment Method Selection and Payment Outcome Contract Kickoff](./2026-02-24-payment-method-selection-and-payment-outcome-contract-kickoff.md)
+- [2026-02-24 DDD SC026 Closeout and Frontend Reset Gate](./2026-02-24-ddd-sc026-closeout-and-frontend-reset-gate.md)
 - [2026-02-23 DDD Phase6-A Messaging Infrastructure Relocation Kickoff](./2026-02-23-ddd-phase6a-messaging-infrastructure-relocation-kickoff.md)
 - [2026-02-23 DDD Phase5-B Global Redis Port/Adapter Kickoff](./2026-02-23-ddd-phase5b-global-redis-port-adapter-kickoff.md)
 - [2026-02-23 DDD Phase5-A Application Redis Port/Adapter Kickoff](./2026-02-23-ddd-phase5a-application-redis-port-adapter-kickoff.md)

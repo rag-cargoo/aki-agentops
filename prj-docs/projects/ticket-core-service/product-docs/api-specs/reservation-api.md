@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-21 06:30:00`
+> - **Updated At**: `2026-02-25 17:20:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -381,6 +381,7 @@ data: SUCCESS
 | :--- | :--- | :--- | :--- | :--- |
 | Path | `reservationId` | Long | Yes | 대상 예약 ID |
 | Body | `userId` | Long | Yes | 예약 소유자 유저 ID |
+| Body | `paymentMethod` | String | No | 기본값 `WALLET`. 허용값: `WALLET`, `CARD`, `KAKAOPAY`, `NAVERPAY`, `BANK_TRANSFER` |
 
 **Response Summary (200 OK)**
 
@@ -388,6 +389,12 @@ data: SUCCESS
 | :--- | :--- | :--- |
 | `status` | String | `CONFIRMED` 또는 `PAYING` |
 | `confirmedAt` | DateTime | 최종 확정 시각 (`status=CONFIRMED`일 때) |
+| `paymentMethod` | String | 실제 요청 결제수단 (`WALLET` 기본) |
+| `paymentProvider` | String | 처리 provider (`wallet`, `mock`, `pg-ready`) |
+| `paymentStatus` | String | 결제 트랜잭션 상태 (`SUCCESS`, `PENDING`, `FAILED`) |
+| `paymentTransactionId` | Long | 생성/조회된 결제 원장 트랜잭션 ID |
+| `paymentAction` | String | 프론트 후속 액션 (`NONE`, `REDIRECT`, `WAIT_WEBHOOK`, `RETRY_CONFIRM`) |
+| `paymentRedirectUrl` | String | `paymentAction=REDIRECT`일 때 외부 결제창 URL (그 외 `null`) |
 
 ---
 
@@ -408,9 +415,9 @@ data: SUCCESS
 
 ---
 
-### 1.12. Step 10: 예약 취소 + 재판매 대기열 연계 (CONFIRMED -> CANCELLED)
+### 1.12. Step 10: 예약 취소 + 재판매 대기열 연계 (HOLD/CONFIRMED -> CANCELLED)
 - **Endpoint**: `POST /api/reservations/v6/{reservationId}/cancel`
-- **Description**: 확정 예약을 취소하고 좌석을 `AVAILABLE`로 복구한 뒤, 같은 콘서트 대기열 상위 1명을 `ACTIVE`로 승격합니다.
+- **Description**: HOLD 또는 확정 예약을 취소하고 좌석을 `AVAILABLE`로 복구한 뒤, 같은 콘서트 대기열 상위 1명을 `ACTIVE`로 승격합니다.
 
 **Parameters**
 
@@ -580,6 +587,7 @@ data: SUCCESS
   - `POST /api/reservations/v7/{reservationId}/paying`
   - `POST /api/reservations/v7/{reservationId}/confirm`
   - `POST /api/reservations/v7/{reservationId}/cancel`
+  - `POST /api/reservations/v7/cancel/bulk`
   - `POST /api/reservations/v7/{reservationId}/refund`
   - `POST /api/reservations/v7/admin/{reservationId}/refund` (`ADMIN` 전용, cutoff override)
   - `GET /api/reservations/v7/{reservationId}`
@@ -588,6 +596,15 @@ data: SUCCESS
   - `GET /api/reservations/v7/audit/admin-refunds` (`ADMIN` 전용)
 - **Auth Contract**: `Authorization: Bearer {accessToken}` 필수
 - **Rule**: v7에서는 `userId`를 body/query로 받지 않고 서버 인증 컨텍스트를 사용합니다.
+- **Confirm Request Body (Optional)**:
+  - `POST /api/reservations/v7/{reservationId}/confirm` 는 선택적으로 `{ "paymentMethod": "WALLET|CARD|KAKAOPAY|NAVERPAY|BANK_TRANSFER" }` body를 받을 수 있습니다.
+  - body가 없으면 기본 결제수단은 `WALLET`입니다.
+- **Cancel Rule**:
+  - `POST /api/reservations/v7/{reservationId}/cancel` 는 `HOLD` 또는 `CONFIRMED` 상태 예약을 `CANCELLED`로 전이합니다.
+  - `POST /api/reservations/v7/cancel/bulk` body는 `{ "reservationIds": [101, 102] }` 형식이며, 응답은 `{ "cancelled": ReservationLifecycleResponse[] }`입니다.
+- **Refund Rule**:
+  - `POST /api/reservations/v7/{reservationId}/refund` 는 결제 확정(`confirmedAt` 존재) 후 취소된 건만 허용합니다.
+  - 결제 미확정 HOLD 취소 건은 환불 전이할 수 없습니다.
 - **Admin Refund Audit Contract**:
   - 강제 환불 감사로그 결과값: `SUCCESS`, `DENIED`, `FAILED`
   - `DENIED`/`FAILED` 로그는 호출 트랜잭션 롤백 여부와 무관하게 별도 트랜잭션으로 보존됩니다.
@@ -601,10 +618,10 @@ data: SUCCESS
 | HTTP Status | Trigger | Response Body Shape | Example |
 | :--- | :--- | :--- | :--- |
 | `400 Bad Request` | `IllegalArgumentException` | Plain text | `User not found: 999` |
-| `409 Conflict` | `IllegalStateException` | Plain text | `Only CONFIRMED reservation can transition to CANCELLED.` |
+| `409 Conflict` | `IllegalStateException` | Plain text | `Only HOLD or CONFIRMED reservation can transition to CANCELLED.` |
 | `500 Internal Server Error` | 기타 예외 | Plain text | `...` |
 | `400 Bad Request` | JSON 파싱 실패 | Plain text (prefix 포함) | `JSON Parsing Error: ...` |
 
 ```text
-Only CANCELLED reservation can transition to REFUNDED.
+Refund requires confirmed reservation cancellation. reservationId=123
 ```
