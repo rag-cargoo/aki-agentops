@@ -186,8 +186,7 @@
     - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-hold-cancel-ux-followup.md`
-    - `ticket-web-app issue #3` (comment update)
-    - `ticket-core-service issue #21` (backend contract tracking)
+    - `prj-docs/projects/ticket-web-app/meeting-notes/README.md` (sidecar tracking)
     - `npm run build` (pass)
 
 - TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
@@ -220,8 +219,6 @@
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-seat-map-status-contract-alignment.md`
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-checkout-existing-reservations-per-option-alignment.md`
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-checkout-realtime-urgency-ux-alignment.md`
-    - `https://github.com/rag-cargoo/ticket-web-app/issues/3#issuecomment-3960096929`
-    - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3960096915`
     - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/reservation-v7-client.ts`
     - `npm run build` (pass)
