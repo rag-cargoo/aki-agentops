@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-26 07:18:00`
+> - **Updated At**: `2026-02-26 23:58:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -137,6 +137,10 @@
     - 결제수단은 `GET /api/payments/methods` enabled 항목만 허용하고 fail-open(WALLET 강제 fallback)을 제거한다.
     - checkout modal 좌석 선택 UI를 카드형 타일 + 상태 뱃지 + 선택 강조 스타일로 개선한다.
     - `paymentAction=REDIRECT/WAIT_WEBHOOK/RETRY_CONFIRM` 분기 UX를 완성한다.
+  - Progress (2026-02-26 PM update):
+    - `ServiceCheckoutModal`에서 회차별 진행중 예약(`HOLD/PAYING`) 기준으로 결제/버튼 상태를 재정렬했다.
+    - 홀딩 직후 `seat-map + v7/me`를 즉시 재조회해 타일 상태/색상 반영 지연을 줄였다.
+    - `ServiceUrgencyBannerSection`의 중복 CTA 버튼(`오픈 대기만 보기`, `예매 가능만 보기`)을 제거해 필터/탐색 UX 중복을 정리했다.
   - Evidence:
     - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
@@ -182,12 +186,11 @@
     - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/run-reservation-v7-flow.ts`
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-hold-cancel-ux-followup.md`
-    - `ticket-web-app issue #3` (comment update)
-    - `ticket-core-service issue #21` (backend contract tracking)
+    - `prj-docs/projects/ticket-web-app/meeting-notes/README.md` (sidecar tracking)
     - `npm run build` (pass)
 
 - TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
-  - Status: DONE
+  - Status: DOING
   - Description:
     - backend에 회차 좌석 전체 상태 조회 API(`seat-map`)를 추가하고 `status` 필터를 선택 지원한다.
     - 기존 `AVAILABLE` 중심 API는 하위 호환으로 유지한다.
@@ -208,11 +211,14 @@
       - `API_HOST=http://127.0.0.1:18080 OPTION_COUNT=3 bash ./scripts/api/setup-test-data.sh` 실행
       - 응답 `OptionCount=3, OptionIDs=[42, 43, 44]` 확인
       - `GET /api/concerts/41/options`에서 3개 회차 응답 확인
+  - Progress (2026-02-26 PM update):
+    - `existingReservations` 집계를 `selectedOptionId` 범위로 재스코프해 "다른 회차 HOLD가 현재 회차 상한에 섞이는 문제"를 완화했다.
+    - 백엔드 응답에 `optionId` 누락이 있어도 seat-map 범위 기반 fallback 필터를 적용했다.
+    - 회차 전환 차단 조건에서 임시 로컬 상태 의존을 제거해 다회차 이동/선점 시나리오를 복구했다.
   - Evidence:
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-seat-map-status-contract-alignment.md`
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-checkout-existing-reservations-per-option-alignment.md`
-    - `https://github.com/rag-cargoo/ticket-web-app/issues/3#issuecomment-3960096929`
-    - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3960096915`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-26-checkout-realtime-urgency-ux-alignment.md`
     - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceCheckoutModal.tsx`
     - `workspace/apps/frontend/ticket-web-app/src/shared/api/reservation-v7-client.ts`
     - `npm run build` (pass)
