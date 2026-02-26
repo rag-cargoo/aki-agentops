@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 17:03:13`
-> - **Updated At**: `2026-02-23 06:31:07`
+> - **Updated At**: `2026-02-24 04:23:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -37,6 +37,9 @@
 > - 20. 프론트 릴리즈 계약 체크리스트
 > - 21. v15 콘서트 판매상태 계약 검증 실행
 > - 22. 포트폴리오 더미 시드 스모크 검증
+> - 23. Runtime Integration Test Guide
+> - 24. Performance Baseline Guide
+> - 25. Release Gate Governance Guide
 <!-- DOC_TOC_END -->
 
 ## Source
@@ -52,6 +55,11 @@
 
 
 `scripts/api/*.sh`와 `scripts/perf/*` 실행 검증과 결과 기록 규칙입니다.
+
+운영/고도화 선행 가이드:
+- [Runtime Integration Test Guide](./runtime-integration-test-guide.md)
+- [Performance Baseline Guide](./performance-baseline-guide.md)
+- [Release Gate Governance Guide](./release-gate-governance-guide.md)
 
 ---
 
