@@ -130,7 +130,7 @@
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-frontend-rebuild-contract-rebaseline.md`
 
 - TWA-SC-008 실사용 예매 플로우 재구성(모달+soft-lock+결제수단 카탈로그 강제)
-  - Status: DOING
+  - Status: DOING (코드 구현 완료, 실사용 회귀 검증 대기)
   - Description:
     - `ServicePage`의 카드 클릭 즉시 자동 예매 체인을 제거하고 checkout modal 진입 흐름으로 변경한다.
     - 좌석 선택 시 soft-lock(`v7/locks`)을 먼저 적용하고, 모달 종료/좌석 변경 시 lock 해제한다.
@@ -152,7 +152,7 @@
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-checkout-modal-seat-ux-polish.md`
 
 - TWA-SC-009 옵션별 다중 좌석 상한(`maxSeatsPerOrder`) 채택 + checkout 다중 선택
-  - Status: DOING
+  - Status: DOING (코드 구현 완료, 실사용 회귀 검증 대기)
   - Description:
     - 백엔드 `ConcertOption.maxSeatsPerOrder` 계약을 프론트 API 모델에 반영한다.
     - Admin Option CRUD에서 `maxSeatsPerOrder`를 입력/조회 가능하게 확장한다.
@@ -169,7 +169,7 @@
     - `ticket-web-app issue #3` (in progress)
 
 - TWA-SC-010 checkout 예약(HOLD) 후 단건/전체 취소 UX + 벌크 취소 연동
-  - Status: DOING
+  - Status: DOING (코드 구현 완료, 실사용 회귀 검증 대기)
   - Description:
     - checkout 모달에서 HOLD 생성 후에도 좌석 단건 취소(`X`)를 지원한다.
     - `전체 취소`는 벌크 API를 우선 호출해 다중 HOLD 해제를 1회 요청으로 처리한다.
@@ -190,7 +190,7 @@
     - `npm run build` (pass)
 
 - TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
-  - Status: DOING
+  - Status: DOING (코드 구현 완료, 실사용 회귀 검증 대기)
   - Description:
     - backend에 회차 좌석 전체 상태 조회 API(`seat-map`)를 추가하고 `status` 필터를 선택 지원한다.
     - 기존 `AVAILABLE` 중심 API는 하위 호환으로 유지한다.
@@ -224,7 +224,7 @@
     - `npm run build` (pass)
 
 - TWA-SC-012 카드 단일 결제(가상 테스트카드) 고정 + 월렛/무통장 제거
-  - Status: DOING
+  - Status: DOING (코드 구현 완료, 실사용 회귀 검증 대기)
   - Description:
     - checkout 결제 단계를 카드 단일 흐름으로 고정하고, 사용자에게 가상 테스트카드 선택 UI를 제공한다.
     - 프론트 결제수단 타입에서 `WALLET/BANK_TRANSFER`를 제거하고 기본 fallback을 `CARD`로 통일한다.
@@ -253,6 +253,7 @@
     - `npm run build` (pass)
 
 ## Next Items
+- 아래 항목은 신규 구현이 아니라 OAuth 실사용 계정 기준 수동 회귀/운영 검증 작업이다.
 - `TWA-SC-012` OAuth 실사용 계정 기준 카드 단일 결제 + 가상 테스트카드 선택 UX 수동 회귀 검증
 - `TWA-SC-011` OAuth 실사용 계정으로 회차별 기존 예약 테이블/선택 상한(기존 예약 포함) 수동 회귀 확인
 - `TWA-SC-010` HOLD 취소 단건/전체 UX 최종 문구 점검 + 모바일 회귀 확인
