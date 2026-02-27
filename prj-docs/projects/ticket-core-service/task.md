@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-26 07:18:00`
+> - **Updated At**: `2026-02-28 05:14:39`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,43 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
+- TCS-SC-032 Service 카드 live refresh fanout/hybrid backend hardening
+  - Status: DOING (백엔드 구현 완료, 실런타임 통합 확인 대기)
+  - Description:
+    - Service 페이지 카드 갱신 토픽(`/topic/concerts/live`)을 분산 인스턴스 환경에서도 일관되게 fanout 되도록 백엔드 전파 경로를 정렬한다.
+    - cache evict와 카드 refresh 이벤트 발행을 통합해 좌석/판매정책/공연 메타 변경 시 카드 재동기화 누락을 제거한다.
+    - 프론트 전략은 `초기 HTTP 스냅샷 + WS 실시간 + 장애 시 fallback polling`을 유지하고, 이번 단계에서는 백엔드 전파 경로를 우선 완료한다.
+  - Progress (2026-02-28):
+    - kickoff:
+      - 제품 이슈 생성: `rag-cargoo/ticket-core-service#55`
+      - 회의록 생성: `2026-02-28-service-card-live-hybrid-kickoff.md`
+      - 구현 브랜치 생성: `feat/issue-55-service-card-live-hybrid-backend`
+    - backend implementation:
+      - push event 계약(`PushEvent`, `KafkaPushEvent`)에 `CONCERTS_REFRESH` 타입 추가
+      - `ConcertRefreshPushPort` 추가 + `PushNotifierConfig` mode selector 확장
+      - `KafkaPushEventConsumer` -> `WebSocketEventDispatchPort`에 concerts refresh dispatch 추가
+      - `WebSocketPushNotifier`에 `/topic/concerts/live` publish 경로 추가
+      - `ConcertReadCacheEvictor`를 cache clear + push publish(예외 안전 처리)로 확장
+      - `SalesPolicyServiceImpl`, `ConcertServiceImpl` 쓰기 경로에서 카드 cache evict/refresh 연계 추가
+    - verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.global.cache.ConcertReadCacheEvictorTest'` PASS
+  - TODO:
+    - [x] 카드 refresh 이벤트 타입(`CONCERTS_REFRESH`)을 push event 계약에 추가
+    - [x] Kafka producer/consumer/websocket dispatch 경로에 카드 refresh fanout 처리 추가
+    - [x] cache evict 구현을 Kafka fanout 경로로 정렬(`SimpMessagingTemplate` 직발행 제거)
+    - [x] 판매정책/공연 메타 변경 시 카드 refresh 이벤트 누락 지점 보강
+    - [x] 타깃 테스트 + 컴파일 검증
+    - [ ] frontend 통합 런타임에서 WS + fallback polling 동작 최종 확인
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-28-service-card-live-hybrid-kickoff.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#55`
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.global.cache.ConcertReadCacheEvictorTest'` PASS
+
 - TCS-SC-031 카드 단일 결제 정책 고정 + 무통장 제거 + 기본 provider 전환
   - Status: DOING
   - Description:
