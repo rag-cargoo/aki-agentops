@@ -136,6 +136,7 @@
     * **Meeting Notes**
       * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-rush-deploy/meeting-notes/README.md)
       * [2026-03-01 Ticket Rush Deploy Sidecar Bootstrap and Keyless SSM Deploy Alignment](/prj-docs/projects/ticket-rush-deploy/meeting-notes/2026-03-01-ticket-rush-deploy-sidecar-bootstrap-and-keyless-ssm-deploy-alignment.md)
+    * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-rush-deploy)
 
 ---
 

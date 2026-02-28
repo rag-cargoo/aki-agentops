@@ -19,7 +19,7 @@
 
 ## Source of Truth
 - Local Root: `workspace/ticket-rush-deploy`
-- Repository: `TBD` (repo remote 확정 후 업데이트)
+- Repository: [rag-cargoo/ticket-rush-deploy](https://github.com/rag-cargoo/ticket-rush-deploy)
 
 ## Sidecar Docs
 - [Task Dashboard](./task.md)

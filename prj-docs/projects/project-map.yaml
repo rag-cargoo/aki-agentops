@@ -36,7 +36,7 @@ projects:
     display_name: Ticket Rush Deploy
     code_root: workspace/ticket-rush-deploy
     docs_root: prj-docs/projects/ticket-rush-deploy
-    repo_remote: ""
+    repo_remote: https://github.com/rag-cargoo/ticket-rush-deploy.git
     default_branch: main
     runtime:
       type: mono_repo_workspace
