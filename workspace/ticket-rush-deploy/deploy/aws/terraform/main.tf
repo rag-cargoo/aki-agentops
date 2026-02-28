@@ -32,6 +32,7 @@ locals {
   name_prefix     = "${var.project_name}-${var.environment}"
   subnet_id       = tolist(data.aws_subnets.default.ids)[0]
   use_profile_new = trimspace(var.instance_profile_name) == ""
+  use_key_name    = trimspace(var.key_name) != ""
 }
 
 resource "aws_security_group" "ec2" {
@@ -39,12 +40,15 @@ resource "aws_security_group" "ec2" {
   description = "Security group for ticket-rush deploy host"
   vpc_id      = data.aws_vpc.default.id
 
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.allowed_ssh_cidr]
+  dynamic "ingress" {
+    for_each = var.enable_ssh ? [1] : []
+    content {
+      description = "SSH"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = [var.allowed_ssh_cidr]
+    }
   }
 
   ingress {
@@ -113,7 +117,7 @@ resource "aws_instance" "deploy_host" {
   ami                         = data.aws_ami.amazon_linux_2023.id
   instance_type               = var.instance_type
   subnet_id                   = local.subnet_id
-  key_name                    = var.key_name
+  key_name                    = local.use_key_name ? var.key_name : null
   vpc_security_group_ids      = [aws_security_group.ec2.id]
   associate_public_ip_address = true
 

@@ -23,8 +23,15 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  description = "Existing EC2 key pair name"
+  description = "Optional existing EC2 key pair name (blank = no key pair)"
   type        = string
+  default     = ""
+}
+
+variable "enable_ssh" {
+  description = "Whether to open SSH port 22"
+  type        = bool
+  default     = false
 }
 
 variable "allowed_ssh_cidr" {
