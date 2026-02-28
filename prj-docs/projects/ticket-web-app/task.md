@@ -285,7 +285,7 @@
     - [ ] frontend: 모드별 네트워크/실시간 증빙 수집
   - Evidence:
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-28-service-card-server-time-realtime-ws-alignment.md`
-    - `https://github.com/rag-cargoo/ticket-core-service/issues/3` (reopened/comment update)
+    - `ticket-core-service issue #3` (reopened/comment update)
     - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/push/WebSocketPushNotifier.java`
     - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/application/concert/port/inbound/ConcertCardRuntimeUseCase.java`
     - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/application/concert/model/ConcertLiveCardPayload.java`
