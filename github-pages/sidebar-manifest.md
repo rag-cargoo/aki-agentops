@@ -126,6 +126,16 @@
       * [2026-02-24 TWA-SC-002 Bootstrap and Service-First Dark Neon IA](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-24-twa-sc002-bootstrap-service-first-dark-neon.md)
       * [2026-02-25 Backend Contract-First Planning and Front Alignment](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-backend-contract-first-planning-and-front-alignment.md)
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-web-app)
+  * **Ticket Rush Deploy**
+    * [Project Sidecar Index](/prj-docs/projects/README.md)
+    * [Sidecar README](/prj-docs/projects/ticket-rush-deploy/README.md)
+    * [Project Agent](/prj-docs/projects/ticket-rush-deploy/PROJECT_AGENT.md)
+    * [Architecture Rule](/prj-docs/projects/ticket-rush-deploy/rules/architecture.md)
+    * **Tasks**
+      * [Sidecar Task](/prj-docs/projects/ticket-rush-deploy/task.md)
+    * **Meeting Notes**
+      * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-rush-deploy/meeting-notes/README.md)
+      * [2026-03-01 Ticket Rush Deploy Sidecar Bootstrap and Keyless SSM Deploy Alignment](/prj-docs/projects/ticket-rush-deploy/meeting-notes/2026-03-01-ticket-rush-deploy-sidecar-bootstrap-and-keyless-ssm-deploy-alignment.md)
 
 ---
 
