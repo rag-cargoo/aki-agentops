@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-26 23:58:00`
+> - **Updated At**: `2026-02-28 07:08:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -35,6 +35,7 @@
 - [~] TWA-SC-010 checkout 예약(HOLD) 후 단건/전체 취소 UX + 벌크 취소 연동
 - [~] TWA-SC-011 회차 seat-map(전체 상태) 계약 도입 + checkout 선택 가능 좌석 게이트
 - [~] TWA-SC-012 카드 단일 결제(가상 테스트카드) 고정 + 월렛/무통장 제거
+- [~] TWA-SC-013 서비스 카드 실시간 상태(서버시간 기준) WS 채널 + fallback 계약 도입
 
 ## Current Items
 - TWA-SC-001 신규 프론트 레포 생성 + sidecar 등록 + active project 전환
@@ -252,8 +253,52 @@
     - `npm run typecheck` (pass)
     - `npm run build` (pass)
 
+- TWA-SC-013 서비스 카드 실시간 상태(서버시간 기준) WS 채널 + fallback 계약 도입
+  - Status: DOING
+  - Description:
+    - 서비스 카드의 `오픈 남은시간/오픈 카운트다운/오픈 시점 상태`를 서버시간 기준으로 계산/전달하도록 백엔드 실시간 채널을 확장한다.
+    - 카드 payload에 `serverNow`를 포함해 클라이언트 시간 오차로 인한 표시 불일치를 제거한다.
+    - 멀티 인스턴스 환경에서 Redis/Kafka 전파 + 분산락 기반 스케줄링으로 동일 이벤트를 브로드캐스트한다.
+    - 프론트는 초기 스냅샷 HTTP + WS 실시간 + 장애 시 저주기 poll fallback 계약으로 정렬한다.
+    - 모드 정책은 `websocket(default)`, `hybrid(optional)`, `polling(emergency)`로 고정한다.
+  - Progress (2026-02-28):
+    - 런타임 점검 결과, 현재 카드는 `CONCERTS_REFRESH` 중심이며 오픈 카운트다운/상태 전환 실시간 발행은 미구현임을 확인했다.
+    - WS 실수신(`CONNECTED`, `MESSAGE`) 및 Redis 대기열 키 증빙은 완료했고, 카드 시간 상태 채널 확장이 후속 핵심 범위로 확정됐다.
+  - Progress (2026-02-28 backend update):
+    - `GET /api/concerts/search` 응답에 실시간 카드 필드(`saleStatus`, `saleOpensAt`, `saleOpensInSeconds`, `reservationButton*`, `seat count`, `serverNow`)를 추가했다.
+    - `ConcertSaleStatusScheduler`를 도입해 판매 상태 전환 감지 시 `/topic/concerts/live` refresh 이벤트를 발행하도록 반영했다.
+    - 런타임 시나리오에서 `OPEN_SOON_5M -> OPEN` 전환과 WS `CONCERTS_REFRESH` 수신을 확인했다.
+  - Progress (2026-02-28 backend update-2):
+    - `/topic/concerts/live` `CONCERTS_REFRESH` payload에 카드 전체 `items` + `realtimeMode` + `hybridPollIntervalMillis` + `serverNow`를 포함하도록 확장했다.
+    - ArchUnit 경계 준수를 위해 `ConcertCardRuntimeUseCase`(application inbound port) 경유로 controller/global `application..service` 직참조를 제거했다.
+    - `ConcertExplorerIntegrationTest`, `WebSocketPushNotifierTest`, `LayerDependencyArchTest`를 통과했다.
+  - Execution Checklist (2026-02-28 reconfirm):
+    - [x] backend: 검색 응답 실시간 카드 필드 + `serverNow` 반영
+    - [x] backend: 검색 응답 `realtimeMode`, `hybridPollIntervalMillis` 반영
+    - [x] backend: 판매 상태 전환 감지 스케줄러 + 분산락 반영
+    - [x] backend: 전환 이벤트 WS refresh 발행 검증
+    - [x] backend: WS refresh payload에 카드 `items` 직접 포함(WS 수신만으로 카드 갱신 가능)
+    - [x] backend: ArchUnit 경계 규칙(`global/api -> application port`) 준수
+    - [ ] frontend: `websocket` 모드에서 상시 30초 polling 제거
+    - [ ] frontend: `hybrid` 모드에서만 저주기 polling 동작 보장
+    - [ ] frontend: 모드값(백엔드 설정) 기반 자동 전환 반영
+    - [ ] frontend: 모드별 네트워크/실시간 증빙 수집
+  - Evidence:
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-28-service-card-server-time-realtime-ws-alignment.md`
+    - `ticket-core-service issue #3` (reopened/comment update)
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/push/WebSocketPushNotifier.java`
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/application/concert/port/inbound/ConcertCardRuntimeUseCase.java`
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/application/concert/model/ConcertLiveCardPayload.java`
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/application/concert/service/ConcertCardRuntimeService.java`
+    - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/scheduler/ConcertSaleStatusScheduler.java`
+    - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/application/concert/service/ConcertExplorerIntegrationTest.java`
+    - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/global/push/WebSocketPushNotifierTest.java`
+
 ## Next Items
-- 아래 항목은 신규 구현이 아니라 OAuth 실사용 계정 기준 수동 회귀/운영 검증 작업이다.
+- 아래 항목은 신규 구현 + OAuth 실사용 계정 기준 수동 회귀/운영 검증을 함께 포함한다.
+- `TWA-SC-013` 프론트 서비스 카드 모드 분기(`websocket` 기본, `hybrid` 선택, `polling` 비상) 반영
+- `TWA-SC-013` `websocket` 모드 상시 polling 제거 + `hybrid` 모드 저주기 보정 폴링 제한
+- `TWA-SC-013` 프론트 `serverNow` 기준 카운트다운 보정 및 모드별 증빙 수집
 - `TWA-SC-012` OAuth 실사용 계정 기준 카드 단일 결제 + 가상 테스트카드 선택 UX 수동 회귀 검증
 - `TWA-SC-011` OAuth 실사용 계정으로 회차별 기존 예약 테이블/선택 상한(기존 예약 포함) 수동 회귀 확인
 - `TWA-SC-010` HOLD 취소 단건/전체 UX 최종 문구 점검 + 모바일 회귀 확인
