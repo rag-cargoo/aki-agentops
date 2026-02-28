@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-03-01 01:28:00`
+> - **Updated At**: `2026-03-01 02:33:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-03-01 KPOP20 Startup Seed Mode and Marker Governance](./2026-03-01-kpop20-startup-seed-mode-and-marker-governance.md)
 - [2026-03-01 KPOP20 Seed JSON Dataset Externalization Kickoff](./2026-03-01-kpop20-seed-json-dataset-externalization-kickoff.md)
 - [2026-03-01 Demo Rebalancer Deterministic Dataset and Arch Guard Alignment](./2026-03-01-demo-rebalancer-deterministic-dataset-and-arch-guard-alignment.md)
 - [2026-02-28 Seat Layout Template Kickoff](./2026-02-28-seat-layout-template-kickoff.md)

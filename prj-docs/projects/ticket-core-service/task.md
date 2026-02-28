@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-03-01 01:28:00`
+> - **Updated At**: `2026-03-01 02:33:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,11 +21,11 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
-- TCS-SC-034 KPOP20 더미 시드 JSON 외부화 + env dataset source 표준화
-  - Status: DOING
+- TCS-SC-034 KPOP20 더미 시드 JSON 외부화 + startup seed 전환
+  - Status: DONE
   - Description:
-    - `setup-kpop20-demo-data.sh` 내 heredoc 하드코딩 데이터를 JSON 파일로 외부화한다.
-    - URL 변경/콘서트 추가를 JSON 편집만으로 처리 가능하게 만든다.
+    - KPOP20 더미 데이터셋을 JSON 파일로 외부화하고, 백엔드 기동 시 플래그 기반 startup seed 경로를 도입한다.
+    - 분산 환경에서 한 인스턴스만 `APP_SEED_KPOP20_ENABLED=true`로 기동해 초기 데이터를 생성할 수 있게 한다.
     - 운영 로직(예약/실시간/결제)에는 영향 없이 데모 시드 경로만 정리한다.
   - Progress (2026-03-01):
     - kickoff:
@@ -33,27 +33,45 @@
       - 회의록 생성: `2026-03-01-kpop20-seed-json-dataset-externalization-kickoff.md`
       - 구현 브랜치 생성: `feat/issue-59-seed-json-dataset`
     - implementation:
-      - 신규 데이터셋 파일: `scripts/api/data/kpop20-demo-dataset.json` (24건)
+      - 신규 데이터셋 파일: `src/main/resources/seed/kpop20-demo-dataset.json` (24건)
       - `setup-kpop20-demo-data.sh` heredoc 제거 + `DATASET_FILE` 기반 JSON 로딩으로 전환
       - 필수 필드 검증(`artist/entertainment/youtubeUrl/seatCount/saleBucket`) 추가
       - LE SSERAFIM/TOMORROW X TOGETHER 최신 URL 반영
+    - startup-seed extension:
+      - 이슈 #59 재오픈 후 startup seed 범위로 확장
+      - 구현 브랜치 생성: `feat/issue-59-kpop20-startup-seed`
+      - `DataInitializer`에 KPOP20 JSON 로딩 + marker idempotent seed + profile 가드(local/demo) 추가
+      - 신규 설정: `APP_SEED_KPOP20_ENABLED` 외 6개 seed env 추가
+      - 리밸런서 대상 식별을 `KPOP20` 키워드로 보강해 기존/신규 타이틀 동시 호환
+      - 제품 PR 생성: `rag-cargoo/ticket-core-service#61`
+    - release:
+      - PR: `rag-cargoo/ticket-core-service#61` merged
+      - merge commit: `5a50a79`
+      - issue: `rag-cargoo/ticket-core-service#59` closed
     - verification:
       - `bash -n scripts/api/setup-kpop20-demo-data.sh` PASS
       - `jq` 데이터셋 스키마 검증 PASS
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.DataInitializerDataJpaTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest'` PASS
   - TODO:
     - [x] JSON dataset 파일 신규 도입
     - [x] 시드 스크립트 JSON 로딩/검증 반영
     - [x] 요청 URL 최신화 반영
-    - [ ] 시드 실행 smoke 증빙(로컬/docker) 추가
-    - [ ] sidecar 문서 + issue progress 최종 동기화 후 PR
+    - [x] startup seed 플래그/마커/idempotent 경로 반영
+    - [x] 타깃 테스트/컴파일 검증
+    - [x] PR #61 머지 후 이슈 close + sidecar 최종 동기화
   - Evidence:
     - Meeting Note:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-03-01-kpop20-seed-json-dataset-externalization-kickoff.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-03-01-kpop20-startup-seed-mode-and-marker-governance.md`
     - Product Issue:
       - `rag-cargoo/ticket-core-service#59`
+    - Product PR:
+      - `rag-cargoo/ticket-core-service#61`
     - Code:
       - `workspace/apps/backend/ticket-core-service/scripts/api/setup-kpop20-demo-data.sh`
-      - `workspace/apps/backend/ticket-core-service/scripts/api/data/kpop20-demo-dataset.json`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/seed/kpop20-demo-dataset.json`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
 
 - TCS-SC-033 좌석 템플릿/존 기반 생성 모델 도입 (`seatCount` 하드코딩 제거)
   - Status: DONE
