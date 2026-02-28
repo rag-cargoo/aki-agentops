@@ -43,7 +43,7 @@ services:
       - kafka
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:h2:file:/data/ticketrush;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/data/ticketrush;DB_CLOSE_ON_EXIT=FALSE
       SPRING_DATASOURCE_USERNAME: sa
       SPRING_DATASOURCE_PASSWORD: ""
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
@@ -56,6 +56,7 @@ services:
       APP_DEMO_REBALANCER_ENABLED: "true"
       APP_SEED_KPOP20_ENABLED: ${APP_SEED_KPOP20_ENABLED}
       APP_SEED_KPOP20_MARKER_KEY: ${APP_SEED_KPOP20_MARKER_KEY}
+      APP_SEED_KPOP20_PROFILES: local,demo,docker
       JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m"
     volumes:
       - h2-data:/data
