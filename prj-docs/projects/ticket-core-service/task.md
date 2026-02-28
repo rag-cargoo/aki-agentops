@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-28 05:14:39`
+> - **Updated At**: `2026-02-28 13:29:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -21,6 +21,30 @@
 - 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
 
 ## Current Items
+- TCS-SC-033 좌석 템플릿/존 기반 생성 모델 도입 (`seatCount` 하드코딩 제거)
+  - Status: DOING (kickoff)
+  - Description:
+    - 옵션 좌석 생성을 `A-1..A-N` 단일 규칙에서 템플릿/존 기반(`section/row/seat`) 모델로 확장한다.
+    - 기존 `seatCount` 입력 경로는 하위호환으로 유지하고, 신규 `seatLayout` 입력을 병행 지원한다.
+    - seat-map 정렬을 문자열 정렬이 아닌 natural sort(구역/열/번호)로 보정한다.
+  - Progress (2026-02-28):
+    - kickoff:
+      - 제품 이슈 생성: `rag-cargoo/ticket-core-service#57`
+      - 회의록 생성: `2026-02-28-seat-layout-template-kickoff.md`
+      - 구현 브랜치 계획: `feat/issue-57-seat-layout-template`
+  - TODO:
+    - [ ] `seatLayout` 요청 모델/검증 추가
+    - [ ] 좌석 생성 서비스에서 템플릿 기반 생성 로직 추가
+    - [ ] `seatCount` fallback 하위호환 유지
+    - [ ] seat-map natural sort 보장
+    - [ ] setup/seed 스크립트 존 기반 시나리오 반영
+    - [ ] 단위/통합 테스트 추가 및 통과
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-28-seat-layout-template-kickoff.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#57`
+
 - TCS-SC-032 Service 카드 live refresh fanout/hybrid backend hardening
   - Status: DOING (백엔드 구현 완료, 실런타임 통합 확인 대기)
   - Description:
