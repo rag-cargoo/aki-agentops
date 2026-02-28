@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-28 13:29:00`
+> - **Updated At**: `2026-03-01 00:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-03-01 Demo Rebalancer Deterministic Dataset and Arch Guard Alignment](./2026-03-01-demo-rebalancer-deterministic-dataset-and-arch-guard-alignment.md)
 - [2026-02-28 Seat Layout Template Kickoff](./2026-02-28-seat-layout-template-kickoff.md)
 - [2026-02-28 Service Card Live Hybrid Backend Hardening](./2026-02-28-service-card-live-hybrid-kickoff.md)
 - [2026-02-26 Card-Only Payment Policy and Catalog Alignment](./2026-02-26-card-only-payment-policy-and-catalog-alignment.md)
