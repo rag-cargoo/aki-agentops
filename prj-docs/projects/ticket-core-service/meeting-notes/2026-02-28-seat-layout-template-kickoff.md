@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-28 13:28:30`
-> - **Updated At**: `2026-02-28 13:28:30`
+> - **Updated At**: `2026-02-28 22:04:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -16,6 +16,7 @@
 > - Scope
 > - Decisions
 > - Next Steps
+> - Closeout
 <!-- DOC_TOC_END -->
 
 ## Summary
@@ -41,6 +42,12 @@
 4. cross-repo 링크는 doc-state-sync 정책에 따라 URL 대신 shorthand(`owner/repo#num`)로 표기한다.
 
 ## Next Steps
-1. 백엔드 브랜치에서 설계/마이그레이션 초안 반영
-2. 단위/통합 테스트 케이스 추가(정렬/하위호환 포함)
-3. 구현 완료 후 sidecar task와 product issue 진행상태 동기화
+1. PR `rag-cargoo/ticket-core-service#58` 머지 반영 확인
+2. sidecar task/issue 동기화
+
+## Closeout
+- Product PR `rag-cargoo/ticket-core-service#58`가 `main`에 머지되었다.
+- Product issue `rag-cargoo/ticket-core-service#57`가 closed 상태로 정리되었다.
+- 검증:
+  - `./gradlew compileJava compileTestJava --no-daemon` PASS
+  - `./gradlew test --no-daemon --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS

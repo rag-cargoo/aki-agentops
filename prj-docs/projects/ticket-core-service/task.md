@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-28 13:29:00`
+> - **Updated At**: `2026-02-28 22:04:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -22,7 +22,7 @@
 
 ## Current Items
 - TCS-SC-033 좌석 템플릿/존 기반 생성 모델 도입 (`seatCount` 하드코딩 제거)
-  - Status: DOING (kickoff)
+  - Status: DONE
   - Description:
     - 옵션 좌석 생성을 `A-1..A-N` 단일 규칙에서 템플릿/존 기반(`section/row/seat`) 모델로 확장한다.
     - 기존 `seatCount` 입력 경로는 하위호환으로 유지하고, 신규 `seatLayout` 입력을 병행 지원한다.
@@ -31,19 +31,35 @@
     - kickoff:
       - 제품 이슈 생성: `rag-cargoo/ticket-core-service#57`
       - 회의록 생성: `2026-02-28-seat-layout-template-kickoff.md`
-      - 구현 브랜치 계획: `feat/issue-57-seat-layout-template`
+      - 구현 브랜치 생성: `feat/issue-57-seat-layout-template`
+    - implementation:
+      - `seatLayout` 요청 DTO(`sections/rows/capacity`) 및 application command 모델 추가
+      - `POST /api/admin/concerts/{concertId}/options`, `POST /api/concerts/setup`에서 `seatLayout` optional 처리
+      - `ConcertUseCase`/`ConcertServiceImpl`에 `createSeats(optionId, seatLayout)` 경로 추가
+      - 기존 `seatCount` 경로는 `A-1..A-N` fallback으로 유지
+      - `seat-map`/`available seats` 조회 정렬을 natural sort로 보정
+      - `setup-test-data.sh`에 `USE_SEAT_LAYOUT=1` 시나리오 추가
+    - verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
+    - release:
+      - PR: `rag-cargoo/ticket-core-service#58` merged
+      - merge commit: `85a21a0`
+      - issue: `rag-cargoo/ticket-core-service#57` closed
   - TODO:
-    - [ ] `seatLayout` 요청 모델/검증 추가
-    - [ ] 좌석 생성 서비스에서 템플릿 기반 생성 로직 추가
-    - [ ] `seatCount` fallback 하위호환 유지
-    - [ ] seat-map natural sort 보장
-    - [ ] setup/seed 스크립트 존 기반 시나리오 반영
-    - [ ] 단위/통합 테스트 추가 및 통과
+    - [x] `seatLayout` 요청 모델/검증 추가
+    - [x] 좌석 생성 서비스에서 템플릿 기반 생성 로직 추가
+    - [x] `seatCount` fallback 하위호환 유지
+    - [x] seat-map natural sort 보장
+    - [x] setup/seed 스크립트 존 기반 시나리오 반영
+    - [x] 단위/통합 테스트 추가 및 통과
   - Evidence:
     - Meeting Note:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-28-seat-layout-template-kickoff.md`
     - Product Issue:
       - `rag-cargoo/ticket-core-service#57`
+    - Product PR:
+      - `rag-cargoo/ticket-core-service#58`
 
 - TCS-SC-032 Service 카드 live refresh fanout/hybrid backend hardening
   - Status: DOING (백엔드 구현 완료, 실런타임 통합 확인 대기)
