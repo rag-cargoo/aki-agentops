@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-28 06:33:00`
+> - **Updated At**: `2026-03-01 00:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -24,6 +24,7 @@
 - 파일명 규칙: `YYYY-MM-DD-topic.md`
 
 ## Current Notes
+- [2026-03-01 Service Urgency Video Playback Stabilization and Demo Rebalancer Ops Sync](./2026-03-01-service-urgency-video-playback-and-demo-rebalancer-ops-sync.md)
 - [2026-02-28 Service Card Server-Time Realtime WS Alignment](./2026-02-28-service-card-server-time-realtime-ws-alignment.md)
 - [2026-02-26 Checkout Realtime and Urgency UX Alignment](./2026-02-26-checkout-realtime-urgency-ux-alignment.md)
 - [2026-02-26 Card-Only Checkout and Wallet Removal Alignment](./2026-02-26-card-only-checkout-and-wallet-removal-alignment.md)

@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-17 05:11:38`
-> - **Updated At**: `2026-02-28 22:04:00`
+> - **Updated At**: `2026-03-01 00:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -82,21 +82,39 @@
     - verification:
       - `./gradlew compileJava compileTestJava --no-daemon` PASS
       - `./gradlew test --no-daemon --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.global.cache.ConcertReadCacheEvictorTest'` PASS
+  - Progress (2026-03-01 backend ops update):
+    - demo rebalancer:
+      - `app.demo-rebalancer.enabled` 조건부 활성화 기반으로 dev API(`status/run`)를 추가하고 비동기 실행 상태를 노출했다.
+      - 리밸런싱 버킷을 아티스트 기준으로 결정론적으로 고정해 재실행 후에도 상태 분포/우선순위를 유지하도록 정렬했다.
+      - `OPEN` 그룹 좌석 점유율을 고정해 매진 임박 Top3가 `BTS -> Saja Boys -> BLACKPINK` 순으로 일관되게 계산되도록 보강했다.
+    - dataset script:
+      - `setup-kpop20-demo-data.sh`를 24개 데이터셋 + `UNSCHEDULED` 버킷 포함 형태로 확장했다.
+      - 썸네일 미노출/재생 불가를 줄이기 위해 일부 YouTube 링크를 유효 ID 기준으로 교정했다.
+    - architecture guardrail:
+      - `DemoRebalancerUseCase`(application inbound port) 도입으로 controller의 `application..service` 직참조를 제거했다.
+      - `DemoRebalancerProperties`를 `application.demo.config`로 이동해 `application -> global` 의존을 해소했다.
+    - verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
   - TODO:
     - [x] 카드 refresh 이벤트 타입(`CONCERTS_REFRESH`)을 push event 계약에 추가
     - [x] Kafka producer/consumer/websocket dispatch 경로에 카드 refresh fanout 처리 추가
     - [x] cache evict 구현을 Kafka fanout 경로로 정렬(`SimpMessagingTemplate` 직발행 제거)
     - [x] 판매정책/공연 메타 변경 시 카드 refresh 이벤트 누락 지점 보강
+    - [x] demo rebalancer endpoint + deterministic bucket/seat rebalance 정렬
+    - [x] ArchUnit 경계(`controller -> inbound port`, `application -> global` 제거) 보정
     - [x] 타깃 테스트 + 컴파일 검증
     - [ ] frontend 통합 런타임에서 WS + fallback polling 동작 최종 확인
   - Evidence:
     - Meeting Note:
       - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-28-service-card-live-hybrid-kickoff.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-03-01-demo-rebalancer-deterministic-dataset-and-arch-guard-alignment.md`
     - Product Issue:
       - `rag-cargoo/ticket-core-service#55`
     - Verification:
       - `./gradlew compileJava compileTestJava --no-daemon` PASS
       - `./gradlew test --no-daemon --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.global.cache.ConcertReadCacheEvictorTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
 
 - TCS-SC-031 카드 단일 결제 정책 고정 + 무통장 제거 + 기본 provider 전환
   - Status: DOING

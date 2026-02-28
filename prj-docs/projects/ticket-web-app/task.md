@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-02-24 08:27:00`
-> - **Updated At**: `2026-02-28 07:08:00`
+> - **Updated At**: `2026-03-01 00:55:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -272,6 +272,11 @@
     - `/topic/concerts/live` `CONCERTS_REFRESH` payload에 카드 전체 `items` + `realtimeMode` + `hybridPollIntervalMillis` + `serverNow`를 포함하도록 확장했다.
     - ArchUnit 경계 준수를 위해 `ConcertCardRuntimeUseCase`(application inbound port) 경유로 controller/global `application..service` 직참조를 제거했다.
     - `ConcertExplorerIntegrationTest`, `WebSocketPushNotifierTest`, `LayerDependencyArchTest`를 통과했다.
+  - Progress (2026-03-01 frontend update):
+    - highlights `openingSoon`가 비는 경우 queue 섹션 계산값으로 오픈 임박 히어로를 fallback 하도록 보강했다.
+    - 오픈 임박 영상 재생 제어를 `play`와 `mute/unMute`로 분리해 스크롤 중 영상 재시작 체감 이슈를 완화했다.
+    - 사용자 상호작용 감지 범위를 `wheel/scroll`까지 확장하고, 한 번 오디오 unlock 조건을 만족하면 세션 내 재음소거를 방지하도록 정렬했다.
+    - Demo Rebalancer UI를 env flag(`VITE_DEMO_REBALANCER_ENABLED`)로 게이트해 운영환경 기본 비노출을 유지했다.
   - Execution Checklist (2026-02-28 reconfirm):
     - [x] backend: 검색 응답 실시간 카드 필드 + `serverNow` 반영
     - [x] backend: 검색 응답 `realtimeMode`, `hybridPollIntervalMillis` 반영
@@ -285,14 +290,23 @@
     - [ ] frontend: 모드별 네트워크/실시간 증빙 수집
   - Evidence:
     - `prj-docs/projects/ticket-web-app/meeting-notes/2026-02-28-service-card-server-time-realtime-ws-alignment.md`
+    - `prj-docs/projects/ticket-web-app/meeting-notes/2026-03-01-service-urgency-video-playback-and-demo-rebalancer-ops-sync.md`
     - `ticket-core-service issue #3` (reopened/comment update)
+    - `ticket-web-app issue #9` (comment update)
     - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/push/WebSocketPushNotifier.java`
     - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/application/concert/port/inbound/ConcertCardRuntimeUseCase.java`
     - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/application/concert/model/ConcertLiveCardPayload.java`
     - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/application/concert/service/ConcertCardRuntimeService.java`
     - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/scheduler/ConcertSaleStatusScheduler.java`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/ServicePage.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/pages/service/ServiceUrgencyBannerSection.tsx`
+    - `workspace/apps/frontend/ticket-web-app/src/shared/api/demo-rebalancer-client.ts`
+    - `workspace/apps/frontend/ticket-web-app/src/styles.css`
     - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/application/concert/service/ConcertExplorerIntegrationTest.java`
     - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/global/push/WebSocketPushNotifierTest.java`
+    - `npm run lint` (pass)
+    - `npm run typecheck` (pass)
+    - `npm run build` (pass)
 
 ## Next Items
 - 아래 항목은 신규 구현 + OAuth 실사용 계정 기준 수동 회귀/운영 검증을 함께 포함한다.
