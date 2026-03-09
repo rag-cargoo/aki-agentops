@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AKI AgentOps | Neon Docs</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  
+  <!-- Base Dark Theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
+  
+  <style>
+    :root {
+      --theme-color: #00d4ff !important;
+      --background: #050505 !important;
+      --surface-1: #0a0a0a !important;
+      --surface-2: #111111 !important;
+      --border: #2c2f3a !important;
+      --text-main: #ffffff !important;
+      --text-muted: #b9c3d6 !important;
+      --accent-red: #ff2e63 !important;
+      --accent-blue: #00d4ff !important;
+      --accent-green: #08ffc8 !important;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 15% 0%, rgba(0, 212, 255, 0.11), transparent 42%),
+        radial-gradient(circle at 85% 12%, rgba(8, 255, 200, 0.08), transparent 40%),
+        var(--background) !important;
+      color: var(--text-main) !important;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #0f0f10 0%, #09090a 100%) !important;
+      border-right: 1px solid var(--border) !important;
+    }
+
+    .sidebar ul li a {
+      color: var(--text-muted) !important;
+    }
+
+    .sidebar ul li a:hover {
+      color: #e6f8ff !important;
+      text-shadow: 0 0 7px rgba(0, 212, 255, 0.45);
+    }
+
+    .sidebar-nav li.active > a {
+      color: var(--theme-color) !important;
+      font-weight: 800 !important;
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.75);
+    }
+
+    .markdown-section {
+      color: var(--text-main) !important;
+      line-height: 1.72;
+      letter-spacing: 0.003em;
+      max-width: 980px;
+    }
+
+    .markdown-section h1,
+    .markdown-section h2,
+    .markdown-section h3,
+    .markdown-section h4 {
+      margin-top: 1.55em !important;
+      margin-bottom: 0.62em !important;
+      line-height: 1.33;
+      letter-spacing: 0.015em;
+    }
+
+    .markdown-section h1 {
+      color: #ffffff !important;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.33);
+      text-shadow: 0 0 16px rgba(0, 212, 255, 0.48);
+    }
+
+    .markdown-section h2 {
+      color: var(--accent-blue) !important;
+      border-left: 4px solid rgba(0, 212, 255, 0.8);
+      padding: 0.14rem 0 0.14rem 0.6rem;
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.13), transparent 54%);
+      text-shadow: 0 0 13px rgba(0, 212, 255, 0.44);
+    }
+
+    .markdown-section h3 {
+      color: #d4fff2 !important;
+      text-shadow: 0 0 8px rgba(8, 255, 200, 0.34);
+    }
+
+    .markdown-section h4 {
+      color: #d6e3ff !important;
+      text-shadow: 0 0 6px rgba(0, 212, 255, 0.28);
+    }
+
+    .markdown-section p,
+    .markdown-section li,
+    .markdown-section blockquote {
+      color: #eef3ff !important;
+    }
+
+    .markdown-section a {
+      color: var(--accent-blue) !important;
+      text-decoration-color: rgba(0, 212, 255, 0.5);
+    }
+
+    .markdown-section a:hover {
+      color: #9fefff !important;
+      text-decoration-color: #9fefff;
+      text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+    }
+
+    .markdown-section hr {
+      border: none !important;
+      border-top: 1px solid rgba(0, 212, 255, 0.35) !important;
+    }
+
+    .markdown-section blockquote {
+      margin: 1rem 0 !important;
+      padding: 0.8rem 1rem !important;
+      border-left: 4px solid rgba(0, 212, 255, 0.7) !important;
+      background: rgba(0, 212, 255, 0.08) !important;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.35) !important;
+    }
+
+    .callout {
+      border-left-width: 6px !important;
+      background-color: var(--surface-2) !important;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .callout.note {
+      border-left-color: var(--accent-blue) !important;
+      filter: drop-shadow(0 0 5px var(--accent-blue));
+    }
+
+    .callout.tip {
+      border-left-color: var(--accent-green) !important;
+      filter: drop-shadow(0 0 5px var(--accent-green));
+    }
+
+    .callout.warning {
+      border-left-color: var(--accent-red) !important;
+      filter: drop-shadow(0 0 5px var(--accent-red));
+    }
+
+    .markdown-section table {
+      border-collapse: collapse !important;
+      width: 100% !important;
+      border: 1px solid var(--border) !important;
+      background-color: var(--surface-1) !important;
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.32);
+    }
+
+    .markdown-section th {
+      background: linear-gradient(180deg, #1a1a1b 0%, #131416 100%) !important;
+      color: var(--accent-blue) !important;
+      border: 1px solid var(--border) !important;
+      padding: 12px !important;
+      text-shadow: 0 0 8px rgba(0, 212, 255, 0.38);
+    }
+
+    .markdown-section td {
+      border: 1px solid var(--border) !important;
+      color: #ffffff !important;
+      padding: 12px !important;
+    }
+
+    .markdown-section tr:nth-child(2n) {
+      background-color: #0d0d0d !important;
+    }
+
+    .markdown-section tr:hover {
+      background-color: #161b22 !important;
+    }
+
+    .markdown-section pre,
+    .markdown-section pre[data-lang] {
+      background: linear-gradient(180deg, #17181c 0%, #101114 100%) !important;
+      border: 1px solid var(--border) !important;
+      box-shadow: inset 0 0 0 1px rgba(0, 212, 255, 0.07);
+    }
+
+    .markdown-section p code,
+    .markdown-section li code,
+    .markdown-section td code {
+      color: var(--accent-green) !important;
+      background: rgba(8, 255, 200, 0.1) !important;
+      border: 1px solid rgba(8, 255, 200, 0.35);
+      border-radius: 4px;
+      padding: 0.1rem 0.32rem;
+      font-weight: 600;
+    }
+
+    /* callout이 없는 섹션(H2 단위)에 적용되는 기본 NOTE 박스 */
+    .markdown-section .auto-section-box {
+      margin: 1.1rem 0 1.6rem;
+      padding: 0.65rem 1rem 0.95rem;
+      border-left: 4px solid rgba(0, 212, 255, 0.72);
+      border: 1px solid rgba(0, 212, 255, 0.24);
+      background: linear-gradient(180deg, rgba(0, 212, 255, 0.08), rgba(0, 212, 255, 0.03));
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.42);
+      border-radius: 8px;
+    }
+
+    .markdown-section .auto-section-box > h2:first-child {
+      margin-top: 0.1rem !important;
+    }
+
+    .markdown-section .auto-section-box > :last-child {
+      margin-bottom: 0.2rem !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    function resolveDocsSurface() {
+      try {
+        var params = new URLSearchParams(window.location.search || '');
+        var surface = (params.get('surface') || '').toLowerCase();
+        if (surface === 'agent') return 'agent';
+      } catch (e) {
+        /* no-op: fallback to public */
+      }
+      return 'public';
+    }
+
+    var docsSurface = resolveDocsSurface();
+    var sidebarManifestFile = docsSurface === 'agent'
+      ? 'github-pages/sidebar-agent-manifest.md'
+      : 'github-pages/sidebar-manifest.md';
+    var sidebarManifestPath = sidebarManifestFile + '?v=' + Date.now();
+    window.$docsify = {
+      name: docsSurface === 'agent' ? 'AKI AgentOps (Agent Nav)' : 'AKI AgentOps',
+      repo: 'https://github.com/rag-cargoo/aki-agentops',
+      loadSidebar: sidebarManifestPath,
+      auto2top: true,
+      maxLevel: 1,
+      subMaxLevel: 0,
+      search: 'auto',
+      'flexible-alerts': {
+        style: 'callout'
+      },
+      plugins: [
+        function(hook) {
+          function hasCalloutInSegment(nodes) {
+            for (var i = 0; i < nodes.length; i++) {
+              var el = nodes[i];
+              if (!(el instanceof HTMLElement)) continue;
+              if (el.classList.contains('callout')) return true;
+              if (el.matches('blockquote.callout, blockquote.note, blockquote.tip, blockquote.warning, blockquote.important')) return true;
+              if (el.querySelector('.callout, blockquote.callout, blockquote.note, blockquote.tip, blockquote.warning, blockquote.important')) return true;
+              if (el.tagName === 'BLOCKQUOTE') {
+                var text = (el.textContent || '').trim();
+                if (text.indexOf('[!') === 0) return true;
+              }
+            }
+            return false;
+          }
+
+          function unwrapExisting(section) {
+            var boxes = section.querySelectorAll('.auto-section-box');
+            boxes.forEach(function(box) {
+              var parent = box.parentNode;
+              while (box.firstChild) parent.insertBefore(box.firstChild, box);
+              parent.removeChild(box);
+            });
+          }
+
+          function wrapNeutralSections() {
+            var section = document.querySelector('.markdown-section');
+            if (!section) return;
+
+            unwrapExisting(section);
+
+            var children = Array.prototype.slice.call(section.children);
+            for (var i = 0; i < children.length; i++) {
+              var node = children[i];
+              if (!node || node.tagName !== 'H2') continue;
+
+              var end = i + 1;
+              while (end < children.length && children[end].tagName !== 'H2') end++;
+              var segment = children.slice(i, end);
+
+              if (hasCalloutInSegment(segment)) continue;
+
+              var box = document.createElement('div');
+              box.className = 'auto-section-box callout note';
+              section.insertBefore(box, segment[0]);
+              segment.forEach(function(el) { box.appendChild(el); });
+            }
+          }
+
+          hook.doneEach(function() {
+            wrapNeutralSections();
+          });
+        }
+      ]
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://unpkg.com/docsify-plugin-flexible-alerts"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-java.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+</body>
+</html>

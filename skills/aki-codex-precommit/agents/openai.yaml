@@ -1,0 +1,3 @@
+interface:
+  display_name: "Aki Codex Precommit"
+  short_description: "Manage quick/strict pre-commit validation chain and policy coverage"

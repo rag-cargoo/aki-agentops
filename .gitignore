@@ -1,0 +1,41 @@
+.env
+.env.local
+.DS_Store
+workspace/**/.env
+workspace/**/.env.local
+
+# 개인 작업 진행 상황 (다른 사람과 공유하지 않음)
+management/task.md
+**/prj-docs/task.md
+!workspace/agent-skills/codex-runtime-engine/prj-docs/task.md
+!prj-docs/task.md
+**/prj-docs/TODO.md
+
+# Gemini CLI runtime
+.gemini/
+
+# Skills CLI local links
+.agent/
+
+# Codex runtime snapshots
+.codex/runtime/
+.codex/state/
+.codex/tmp/
+
+# Build artifacts
+**/build/
+**/out/
+.gradle/
+
+# Root-level temp outputs (keep runtime artifacts under .codex/tmp/)
+/*.log
+/*.out
+/*.tmp
+/*.pid
+/*.err
+
+# External project clones (managed in their own Git repositories)
+workspace/apps/backend/ticket-core-service/
+workspace/apps/frontend/ticket-web-client/
+workspace/apps/frontend/ticket-web-app/
+workspace/ticket-rush-deploy/

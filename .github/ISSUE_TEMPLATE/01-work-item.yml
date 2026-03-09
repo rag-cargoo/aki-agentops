@@ -1,0 +1,73 @@
+name: Work Item (Reopen-First)
+description: 같은 작업 축이면 기존 이슈 갱신/재오픈을 우선하는 작업 템플릿
+title: "[Work] "
+labels:
+  - status:todo
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Reopen-First Rule
+        - 같은 범위/목적이면 기존 이슈를 갱신하거나 재오픈하세요.
+        - 새 이슈 생성은 **범위가 달라진 경우**에만 허용됩니다.
+  - type: dropdown
+    id: lifecycle_decision
+    attributes:
+      label: Lifecycle Decision
+      description: 기존 이슈 갱신/재오픈을 기본값으로 선택하세요.
+      options:
+        - Reopen/Update Existing Issue (Recommended)
+        - New Issue (Different Scope Only)
+    validations:
+      required: true
+  - type: input
+    id: related_issue
+    attributes:
+      label: Related Existing Issue
+      description: 관련 기존 이슈 번호를 입력하세요. (예: #12, #34)
+      placeholder: "#12"
+    validations:
+      required: true
+  - type: textarea
+    id: duplicate_search
+    attributes:
+      label: Duplicate Search Evidence
+      description: 중복 탐색 결과(키워드/조회 범위/후보 링크)를 남기세요.
+      placeholder: |
+        - search query:
+        - checked issues:
+          - #12 ...
+          - #34 ...
+    validations:
+      required: true
+  - type: textarea
+    id: scope_reason
+    attributes:
+      label: Scope Decision Reason
+      description: 왜 재오픈/갱신인지, 또는 왜 새 이슈가 필요한지 근거를 적으세요.
+      placeholder: |
+        - same scope because ...
+        - or
+        - different scope because ...
+    validations:
+      required: true
+  - type: textarea
+    id: execution_plan
+    attributes:
+      label: Execution Plan (Stages)
+      description: 진행 단계를 번호로 작성하세요.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: checkboxes
+    id: agreement
+    attributes:
+      label: Governance Checks
+      options:
+        - label: 기존 본문은 보존하고, 추가 내용은 코멘트/진행로그로 누적한다.
+          required: true
+        - label: 같은 범위 작업은 기존 이슈 재오픈/갱신을 우선한다.
+          required: true

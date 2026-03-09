@@ -1,0 +1,1453 @@
+# Task Dashboard (ticket-core-service sidecar)
+
+<!-- DOC_META_START -->
+> [!NOTE]
+> - **Created At**: `2026-02-17 05:11:38`
+> - **Updated At**: `2026-03-01 02:33:00`
+> - **Target**: `BOTH`
+> - **Surface**: `PUBLIC_NAV`
+<!-- DOC_META_END -->
+
+<!-- DOC_TOC_START -->
+## 문서 목차 (Quick Index)
+---
+> [!TIP]
+> - Scope
+> - Current Items
+<!-- DOC_TOC_END -->
+
+## Scope
+- 이 문서는 `ticket-core-service` 운영 sidecar 태스크를 관리한다.
+- 구현 상세 태스크는 제품 레포 이슈/PR에서 관리한다.
+
+## Current Items
+- TCS-SC-034 KPOP20 더미 시드 JSON 외부화 + startup seed 전환
+  - Status: DONE
+  - Description:
+    - KPOP20 더미 데이터셋을 JSON 파일로 외부화하고, 백엔드 기동 시 플래그 기반 startup seed 경로를 도입한다.
+    - 분산 환경에서 한 인스턴스만 `APP_SEED_KPOP20_ENABLED=true`로 기동해 초기 데이터를 생성할 수 있게 한다.
+    - 운영 로직(예약/실시간/결제)에는 영향 없이 데모 시드 경로만 정리한다.
+  - Progress (2026-03-01):
+    - kickoff:
+      - 제품 이슈 생성: `rag-cargoo/ticket-core-service#59`
+      - 회의록 생성: `2026-03-01-kpop20-seed-json-dataset-externalization-kickoff.md`
+      - 구현 브랜치 생성: `feat/issue-59-seed-json-dataset`
+    - implementation:
+      - 신규 데이터셋 파일: `src/main/resources/seed/kpop20-demo-dataset.json` (24건)
+      - `setup-kpop20-demo-data.sh` heredoc 제거 + `DATASET_FILE` 기반 JSON 로딩으로 전환
+      - 필수 필드 검증(`artist/entertainment/youtubeUrl/seatCount/saleBucket`) 추가
+      - LE SSERAFIM/TOMORROW X TOGETHER 최신 URL 반영
+    - startup-seed extension:
+      - 이슈 #59 재오픈 후 startup seed 범위로 확장
+      - 구현 브랜치 생성: `feat/issue-59-kpop20-startup-seed`
+      - `DataInitializer`에 KPOP20 JSON 로딩 + marker idempotent seed + profile 가드(local/demo) 추가
+      - 신규 설정: `APP_SEED_KPOP20_ENABLED` 외 6개 seed env 추가
+      - 리밸런서 대상 식별을 `KPOP20` 키워드로 보강해 기존/신규 타이틀 동시 호환
+      - 제품 PR 생성: `rag-cargoo/ticket-core-service#61`
+    - release:
+      - PR: `rag-cargoo/ticket-core-service#61` merged
+      - merge commit: `5a50a79`
+      - issue: `rag-cargoo/ticket-core-service#59` closed
+    - verification:
+      - `bash -n scripts/api/setup-kpop20-demo-data.sh` PASS
+      - `jq` 데이터셋 스키마 검증 PASS
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.DataInitializerDataJpaTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest'` PASS
+  - TODO:
+    - [x] JSON dataset 파일 신규 도입
+    - [x] 시드 스크립트 JSON 로딩/검증 반영
+    - [x] 요청 URL 최신화 반영
+    - [x] startup seed 플래그/마커/idempotent 경로 반영
+    - [x] 타깃 테스트/컴파일 검증
+    - [x] PR #61 머지 후 이슈 close + sidecar 최종 동기화
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-03-01-kpop20-seed-json-dataset-externalization-kickoff.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-03-01-kpop20-startup-seed-mode-and-marker-governance.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#59`
+    - Product PR:
+      - `rag-cargoo/ticket-core-service#61`
+    - Code:
+      - `workspace/apps/backend/ticket-core-service/scripts/api/setup-kpop20-demo-data.sh`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/seed/kpop20-demo-dataset.json`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
+
+- TCS-SC-033 좌석 템플릿/존 기반 생성 모델 도입 (`seatCount` 하드코딩 제거)
+  - Status: DONE
+  - Description:
+    - 옵션 좌석 생성을 `A-1..A-N` 단일 규칙에서 템플릿/존 기반(`section/row/seat`) 모델로 확장한다.
+    - 기존 `seatCount` 입력 경로는 하위호환으로 유지하고, 신규 `seatLayout` 입력을 병행 지원한다.
+    - seat-map 정렬을 문자열 정렬이 아닌 natural sort(구역/열/번호)로 보정한다.
+  - Progress (2026-02-28):
+    - kickoff:
+      - 제품 이슈 생성: `rag-cargoo/ticket-core-service#57`
+      - 회의록 생성: `2026-02-28-seat-layout-template-kickoff.md`
+      - 구현 브랜치 생성: `feat/issue-57-seat-layout-template`
+    - implementation:
+      - `seatLayout` 요청 DTO(`sections/rows/capacity`) 및 application command 모델 추가
+      - `POST /api/admin/concerts/{concertId}/options`, `POST /api/concerts/setup`에서 `seatLayout` optional 처리
+      - `ConcertUseCase`/`ConcertServiceImpl`에 `createSeats(optionId, seatLayout)` 경로 추가
+      - 기존 `seatCount` 경로는 `A-1..A-N` fallback으로 유지
+      - `seat-map`/`available seats` 조회 정렬을 natural sort로 보정
+      - `setup-test-data.sh`에 `USE_SEAT_LAYOUT=1` 시나리오 추가
+    - verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
+    - release:
+      - PR: `rag-cargoo/ticket-core-service#58` merged
+      - merge commit: `85a21a0`
+      - issue: `rag-cargoo/ticket-core-service#57` closed
+  - TODO:
+    - [x] `seatLayout` 요청 모델/검증 추가
+    - [x] 좌석 생성 서비스에서 템플릿 기반 생성 로직 추가
+    - [x] `seatCount` fallback 하위호환 유지
+    - [x] seat-map natural sort 보장
+    - [x] setup/seed 스크립트 존 기반 시나리오 반영
+    - [x] 단위/통합 테스트 추가 및 통과
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-28-seat-layout-template-kickoff.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#57`
+    - Product PR:
+      - `rag-cargoo/ticket-core-service#58`
+
+- TCS-SC-032 Service 카드 live refresh fanout/hybrid backend hardening
+  - Status: DOING (백엔드 구현 완료, 실런타임 통합 확인 대기)
+  - Description:
+    - Service 페이지 카드 갱신 토픽(`/topic/concerts/live`)을 분산 인스턴스 환경에서도 일관되게 fanout 되도록 백엔드 전파 경로를 정렬한다.
+    - cache evict와 카드 refresh 이벤트 발행을 통합해 좌석/판매정책/공연 메타 변경 시 카드 재동기화 누락을 제거한다.
+    - 프론트 전략은 `초기 HTTP 스냅샷 + WS 실시간 + 장애 시 fallback polling`을 유지하고, 이번 단계에서는 백엔드 전파 경로를 우선 완료한다.
+  - Progress (2026-02-28):
+    - kickoff:
+      - 제품 이슈 생성: `rag-cargoo/ticket-core-service#55`
+      - 회의록 생성: `2026-02-28-service-card-live-hybrid-kickoff.md`
+      - 구현 브랜치 생성: `feat/issue-55-service-card-live-hybrid-backend`
+    - backend implementation:
+      - push event 계약(`PushEvent`, `KafkaPushEvent`)에 `CONCERTS_REFRESH` 타입 추가
+      - `ConcertRefreshPushPort` 추가 + `PushNotifierConfig` mode selector 확장
+      - `KafkaPushEventConsumer` -> `WebSocketEventDispatchPort`에 concerts refresh dispatch 추가
+      - `WebSocketPushNotifier`에 `/topic/concerts/live` publish 경로 추가
+      - `ConcertReadCacheEvictor`를 cache clear + push publish(예외 안전 처리)로 확장
+      - `SalesPolicyServiceImpl`, `ConcertServiceImpl` 쓰기 경로에서 카드 cache evict/refresh 연계 추가
+    - verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.global.cache.ConcertReadCacheEvictorTest'` PASS
+  - Progress (2026-03-01 backend ops update):
+    - demo rebalancer:
+      - `app.demo-rebalancer.enabled` 조건부 활성화 기반으로 dev API(`status/run`)를 추가하고 비동기 실행 상태를 노출했다.
+      - 리밸런싱 버킷을 아티스트 기준으로 결정론적으로 고정해 재실행 후에도 상태 분포/우선순위를 유지하도록 정렬했다.
+      - `OPEN` 그룹 좌석 점유율을 고정해 매진 임박 Top3가 `BTS -> Saja Boys -> BLACKPINK` 순으로 일관되게 계산되도록 보강했다.
+    - dataset script:
+      - `setup-kpop20-demo-data.sh`를 24개 데이터셋 + `UNSCHEDULED` 버킷 포함 형태로 확장했다.
+      - 썸네일 미노출/재생 불가를 줄이기 위해 일부 YouTube 링크를 유효 ID 기준으로 교정했다.
+    - architecture guardrail:
+      - `DemoRebalancerUseCase`(application inbound port) 도입으로 controller의 `application..service` 직참조를 제거했다.
+      - `DemoRebalancerProperties`를 `application.demo.config`로 이동해 `application -> global` 의존을 해소했다.
+    - verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
+  - TODO:
+    - [x] 카드 refresh 이벤트 타입(`CONCERTS_REFRESH`)을 push event 계약에 추가
+    - [x] Kafka producer/consumer/websocket dispatch 경로에 카드 refresh fanout 처리 추가
+    - [x] cache evict 구현을 Kafka fanout 경로로 정렬(`SimpMessagingTemplate` 직발행 제거)
+    - [x] 판매정책/공연 메타 변경 시 카드 refresh 이벤트 누락 지점 보강
+    - [x] demo rebalancer endpoint + deterministic bucket/seat rebalance 정렬
+    - [x] ArchUnit 경계(`controller -> inbound port`, `application -> global` 제거) 보정
+    - [x] 타깃 테스트 + 컴파일 검증
+    - [ ] frontend 통합 런타임에서 WS + fallback polling 동작 최종 확인
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-28-service-card-live-hybrid-kickoff.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-03-01-demo-rebalancer-deterministic-dataset-and-arch-guard-alignment.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#55`
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.config.PushNotifierConfigTest' --tests 'com.ticketrush.global.cache.ConcertReadCacheEvictorTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
+
+- TCS-SC-031 카드 단일 결제 정책 고정 + 무통장 제거 + 기본 provider 전환
+  - Status: DOING
+  - Description:
+    - 결제 기본 provider를 `mock`으로 전환하고 카드 결제 시뮬레이션을 기본 경로로 고정한다.
+    - 결제수단 카탈로그에서 `BANK_TRANSFER`를 제거하고, `mock/pg-ready`는 `CARD`만 활성화한다.
+    - `MockPaymentGateway`/`PgReadyPaymentGateway` 허용 수단을 카드 단일로 정렬한다.
+  - Progress (2026-02-26):
+    - configuration:
+      - `PaymentProperties.provider` 기본값 `wallet -> mock` 변경
+      - `application*.yml`의 `APP_PAYMENT_PROVIDER` fallback을 `mock`으로 변경
+    - payment catalog/gateway:
+      - `PaymentMethodCatalogService`를 카드 중심 카탈로그로 재정렬(`BANK_TRANSFER` 제거)
+      - `MockPaymentGateway`, `PgReadyPaymentGateway`를 `CARD` 전용 검증으로 변경
+      - `PaymentMethod` enum에서 `BANK_TRANSFER` 제거
+      - `PgReadyWebhookService` 카드 전용 검증 반영
+    - compatibility:
+      - wallet provider 레거시 통합테스트 경로는 유지(테스트용 분기)
+  - TODO:
+    - [x] provider 기본값 `mock` 전환
+    - [x] 결제수단 카탈로그 카드 중심 정렬
+    - [x] gateway 허용 수단 카드 단일화
+    - [x] 타깃 테스트/컴파일 검증
+    - [ ] wallet 전용 레거시 API 폐기 범위(운영 영향 포함) 최종 확정
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-26-card-only-payment-policy-and-catalog-alignment.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#50` (comment update)
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.payment.service.PaymentMethodCatalogServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+
+- TCS-SC-030 `v7/me` 필터 확장 + 선점 단계 정책 가드 + 다회차 더미 생성 정렬
+  - Status: DOING
+  - Description:
+    - `GET /api/reservations/v7/me`에 `concertId`, `optionId`, `status[]` 필터를 추가해 프론트가 "해당 콘서트-회차 내 기존 예약"을 조회할 수 있게 한다.
+    - soft-lock 획득(`POST /api/reservations/v7/locks/seats/{seatId}`) 단계에서 판매정책 상한(`maxReservationsPerUser`)을 선검증해, 기존 예약 수가 상한에 도달한 사용자는 추가 선점을 차단한다.
+    - 테스트 데이터 생성에서 회차 수를 가변(`optionCount`)으로 받아 2개 이상 회차 검증이 가능하도록 정렬한다.
+  - Progress (2026-02-26):
+    - `ReservationController`:
+      - `GET /api/reservations/v7/me`에 `concertId/optionId/status` 요청 파라미터 추가
+      - 상태 문자열 파서(`parseReservationStatuses`) 추가
+    - `ReservationUseCase/ReservationServiceImpl/ReservationRepository`:
+      - 필터 기반 조회 시그니처 추가
+      - JPQL 필터 쿼리(`findByUserIdWithFilters`) 추가
+      - 응답 모델 `ReservationListItemResult` 추가(`status/concertId/optionId/seatNumber`)
+    - `SeatSoftLockServiceImpl`:
+      - `SalesPolicyService.validateHoldRequest` + `ReservationUserPort.getUser`를 선점 단계에서 호출하도록 가드 추가
+    - setup/seed:
+      - `ConcertSetupRequest.optionCount` 추가
+      - `POST /api/concerts/setup` 다회차 생성(`OptionIDs`) 지원
+      - `scripts/api/setup-test-data.sh`에 `OPTION_COUNT` 환경변수 추가
+      - `DataInitializer` 기본 회차 수를 concert당 2개로 상향
+  - TODO:
+    - [x] `v7/me` 필터 쿼리/응답 확장
+    - [x] 선점 단계 판매정책 상한 선검증
+    - [x] setup script 다회차(`optionCount`) 지원
+    - [x] backend compile 검증
+    - [ ] 프론트 실사용(OAuth) 회귀 검증 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-26-reservation-v7-me-filter-and-multi-option-setup-alignment.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#21` (comment update)
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `API_HOST=http://127.0.0.1:18080 OPTION_COUNT=3 bash ./scripts/api/setup-test-data.sh` PASS (`OptionCount=3`)
+      - `curl -sS http://127.0.0.1:18080/api/concerts/41/options` 응답 3건 확인
+
+- TCS-SC-029 HOLD 취소 단건/벌크 계약 확장 + 상태전이 정렬
+  - Status: DOING
+  - Description:
+    - `POST /api/reservations/v7/{reservationId}/cancel`을 HOLD 취소까지 포괄하도록 상태전이를 정렬한다.
+    - 다건 취소를 위한 벌크 엔드포인트를 추가한다.
+    - 환불 경계는 결제 확정 후 취소 건에 한해 허용하도록 가드를 보강한다.
+  - TODO:
+    - [x] cancel 상태전이(HOLD 포함) + 도메인 규칙 반영
+    - [x] 벌크 취소 API/DTO/서비스 경로 반영
+    - [x] 서비스/도메인 테스트 보강
+    - [x] `reservation-api.md` 계약 업데이트
+    - [ ] 프론트 checkout 모달 연동 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Meeting Note:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-25-hold-cancel-single-bulk-contract-kickoff.md`
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#21` (reopen target)
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.domain.reservation.entity.ReservationStateMachineTest --tests com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest` PASS
+
+- TCS-SC-028 회차별 다중 좌석 상한(`maxSeatsPerOrder`) 계약 도입
+  - Status: DOING
+  - Description:
+    - `ConcertOption`에 회차 단위 좌석 선택 상한 필드(`maxSeatsPerOrder`)를 도입한다.
+    - Admin 옵션 생성/수정 API에서 해당 값을 설정 가능하게 확장한다.
+    - 공개/관리자 옵션 조회 응답으로 상한값을 노출해 프론트 checkout 모달이 UI 상한을 강제할 수 있게 한다.
+  - Progress (2026-02-25):
+    - 백엔드 코드 반영:
+      - `concert_options.maxSeatsPerOrder` 필드 추가(기본값 `2`)
+      - 범위 검증 추가(`1..10`)
+      - `AdminConcertOptionCreateRequest/UpdateRequest`에 `maxSeatsPerOrder` 반영
+      - `ConcertOptionResult`/`ConcertOptionResponse`에 `maxSeatsPerOrder` 반영
+      - `ConcertService`/`ConcertUseCase` 옵션 생성/수정 시그니처 확장
+      - `AdminConcertController` 옵션 생성/수정 경로 파라미터 연결
+      - 도메인 테스트 추가: `ConcertOptionTest`
+    - 문서 반영:
+      - `concert-api.md` 옵션 조회/관리자 옵션 CRUD 계약에 `maxSeatsPerOrder` 명시
+      - 회의록 추가:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-25-option-max-seats-per-order-contract-alignment.md`
+  - TODO:
+    - [x] `ConcertOption` + DTO/응답 계약 확장
+    - [x] Admin 옵션 생성/수정 요청 필드 확장
+    - [x] 기본값/검증 규칙 적용(최소 1, 최대 10)
+    - [x] 백엔드 컴파일/도메인 테스트 검증
+    - [ ] 프론트(`ticket-web-app`) 다중 좌석 선택 상한 UI 연동 완료 후 상태 `DONE` 전환
+  - Evidence:
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#20` (reopened, in progress)
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.domain.concert.entity.ConcertOptionTest --no-daemon` PASS
+
+- TCS-SC-027 결제수단 선택 + 결제결과 응답 계약 고도화(백엔드 우선)
+  - Status: DOING
+  - Description:
+    - `confirm(v6/v7)`에서 결제수단(`paymentMethod`) 선택을 수신하고 provider별 지원 가능 여부를 검증한다.
+    - 프론트가 실결제/가결제 진행 상태를 분기할 수 있도록 `confirm` 응답에 결제결과 필드를 포함한다.
+    - 향후 카드/간편결제 확장을 고려해 Payment 경계는 유지하고, 수단 검증/실행은 gateway 쪽에서 관리한다.
+  - Progress (2026-02-24):
+    - 백엔드 코드 반영:
+      - `PaymentMethod` enum 추가
+      - `PaymentGateway`/`ReservationPaymentPort` 계약에 결제수단 인자 반영
+      - `ReservationLifecycleServiceImpl.confirm`에서 `paymentMethod` 파싱/검증 및 응답 메타(`paymentMethod/paymentProvider/paymentStatus/paymentTransactionId`) 반영
+      - `ReservationController` v6/v7 `confirm`에서 결제수단 body 수신(v7은 optional)
+      - gateway별 결제수단 지원 제약 반영(`wallet`은 `WALLET`만 허용)
+      - `GET /api/payments/methods` 결제수단 상태 API 추가(provider/default/method/status/message)
+      - `ReservationLifecycleServiceImpl.confirm`에서 `paymentMethodCatalogUseCase.assertMethodAvailable` 선검증 추가
+      - `app.payment.method-status-overrides`, `app.payment.method-message-overrides` 운영 override 도입
+      - `PaymentMethodCatalogServiceTest` 추가(기본/override/차단 케이스)
+      - `PaymentTransaction` 영속 보강(`payment_method`, `payment_provider`, `provider_transaction_id`)
+      - gateway별 결제/환불 원장에 결제수단/provider 저장 반영
+      - `PgReadyWebhookService`에서 `providerEventId -> provider_transaction_id` 매핑 및 provider 정합성 검증 추가
+      - 결제수단 상태 API 응답에 `providerMode`, `externalLiveEnabled` 추가
+      - `confirm(v6/v7)` 응답에 `paymentAction`, `paymentRedirectUrl` 추가 (`pg-ready + externalLiveEnabled=true`면 REDIRECT URL 제공)
+      - `ReservationLifecycleServicePgReadyIntegrationTest` 추가 (`externalLiveEnabled=true/false`에서 `REDIRECT`/`WAIT_WEBHOOK` 분기 검증)
+      - `paymentRedirectUrl` URL 인코딩 안정화(`UriComponentsBuilder.build().encode()`)
+    - 문서 반영:
+      - `reservation-api.md`, `wallet-payment-api.md` 결제수단/응답 필드 계약 갱신
+  - TODO:
+    - [x] 프론트 연동용 결제수단 가용성 조회 API(`GET /api/payments/methods`) 추가 및 계약 고정
+    - [x] `PaymentTransaction`에 결제수단/provider 저장 컬럼 도입 및 refund 경로 추적 고도화
+    - [ ] `pg-ready`를 실제 외부 PG 리다이렉트/승인콜백 계약으로 승격(현재는 webhook ready 단계)
+  - Evidence:
+    - Product Issue:
+      - `rag-cargoo/ticket-core-service#50` (cross-repo shorthand)
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-payment-method-selection-and-payment-outcome-contract-kickoff.md`
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.payment.service.PaymentMethodCatalogServiceTest' --tests 'com.ticketrush.application.payment.service.PaymentServiceIntegrationTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServicePgReadyIntegrationTest' --tests 'com.ticketrush.infrastructure.payment.gateway.MockPaymentGatewayIntegrationTest' --tests 'com.ticketrush.infrastructure.payment.gateway.PgReadyPaymentGatewayIntegrationTest'` PASS
+
+- TCS-SC-001 외부 레포 분리 전환 운영 확인
+  - Status: DONE
+  - Description: code_root, docs_root, repo_remote가 `project-map.yaml`과 일치하는지 점검
+  - Evidence:
+    - `project-map.yaml`에 `workspace/apps/backend/ticket-core-service` + `prj-docs/projects/ticket-core-service` + `https://github.com/rag-cargoo/ticket-core-service`
+    - `session_start.sh` 출력에서 Active Project `Docs Root: prj-docs/projects/ticket-core-service` 확인
+    - PR `#65` merged (`2026-02-16`) 및 연계 이슈 `#66` closed
+
+- TCS-SC-002 sidecar 분리 이후 제품 레포 문서 SoT 중복 정리
+  - Status: DONE
+  - Description:
+    - 제품 레포(`ticket-core-service`)의 `prj-docs`를 제거하고 sidecar 문서 SoT 단일화 전환 완료
+    - 제품 README/스크립트 기본 경로를 sidecar 운영 모델에 맞게 정렬
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md`
+    - AKI AgentOps 이슈 재오픈: `https://github.com/rag-cargoo/aki-agentops/issues/66`
+    - 제품 레포 이슈: `rag-cargoo/ticket-core-service#1` (cross-repo shorthand)
+    - 제품 레포 PR: `rag-cargoo/ticket-core-service PR #2` (merged, cross-repo shorthand)
+    - 제품 레포 머지 커밋: `f0f798b0dfee0428b1d807acd0f4c25206f3e94a`
+    - 제품 레포 이슈 상태: `#1 CLOSED`
+    - 동기화 코멘트(AgentOps): `https://github.com/rag-cargoo/aki-agentops/issues/66#issuecomment-3914421398`
+    - 동기화 코멘트(AgentOps 최신): `https://github.com/rag-cargoo/aki-agentops/issues/66#issuecomment-3914681986`
+    - 동기화 코멘트(ticket-core-service): `rag-cargoo/ticket-core-service#1 comment 3914422354`
+    - 동기화 코멘트(ticket-core-service 최신): `rag-cargoo/ticket-core-service#1 comment 3914680685`
+    - 비고: `doc-state-sync`가 동일 저장소 기준으로 URL 이슈 번호를 해석하므로, cross-repo 이슈는 shorthand 표기로 유지
+
+- TCS-SC-003 Pages 문서 라벨/Source 안내 정합화
+  - Status: DONE
+  - Description:
+    - `product-docs`가 더 이상 mirror가 아님에 따라 제목/정책/링크 라벨을 `Pages Docs` 기준으로 정렬
+    - 삭제된 upstream(`ticket-core-service/prj-docs/**`) 참조를 sidecar SoT 기준으로 교체
+  - Evidence:
+    - sidecar docs 갱신 PR: `https://github.com/rag-cargoo/aki-agentops/pull/92` (merged)
+    - `github-pages/sidebar-manifest.md`의 Ticket Core Service 라벨을 `(Pages Docs)`로 정렬
+    - `prj-docs/projects/ticket-core-service/product-docs/**` 상단 정책을 `Publication Policy`로 정렬
+
+- TCS-SC-004 실시간 전송(SSE/WS) 전환 안건 정리 및 트래킹 동기화
+  - Status: DONE
+  - Description:
+    - SSE 유지 + WebSocket 병행 + 설정 스위칭 전략을 회의록/이슈/태스크 기준으로 정렬
+    - 구현 착수 전 관리 순서(회의록 -> task -> 제품 이슈)를 확정
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-18-realtime-transport-sse-ws-switching-plan.md`
+    - 제품 레포 이슈: `rag-cargoo/ticket-core-service#3` (cross-repo shorthand)
+
+- TCS-SC-005 실시간 전송 채널 추상화 및 WebSocket 병행 구현
+  - Status: DONE
+  - Description:
+    - `ticket-core-service` 제품 레포에서 notifier 인터페이스 + SSE/WS 구현체 분리
+    - 설정값 기반 모드 스위칭(`sse`, `websocket`)과 채널별 컨트롤러 분리 적용
+    - 기존 SSE 경로 하위호환 유지 + 채널별 테스트/문서 정합화
+  - Evidence:
+    - Tracking Issue: `rag-cargoo/ticket-core-service#3` (closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #4` (merged, cross-repo shorthand)
+    - Merge Commit: `72f57d7a0dfedf08305d4d6ed73af41d97800359`
+    - Included:
+      - `PushNotifier` + `SsePushNotifier` + `WebSocketPushNotifier`
+      - `app.push.mode` (`APP_PUSH_MODE=sse|websocket`)
+      - WebSocket endpoint `/ws` + subscription APIs
+      - `./gradlew clean test` pass
+
+- TCS-SC-006 결제/환불/보유머니 원장 구현 및 예약 연동
+  - Status: DONE
+  - Description:
+    - 지갑 잔액(wallet) + 결제 원장(ledger) 최소 구현 도입
+    - 예약 `confirm/refund` 흐름에 결제 차감/환불 복구 연동
+    - 지갑 충전/조회/거래내역 API 및 테스트 스크립트 추가
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-18-wallet-payment-ledger-implementation-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#5` (closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #6` (merged, cross-repo shorthand)
+    - Merge Commit: `34033788d38c51ed43205856d9d6f752335e1cbb`
+    - Verification: `./gradlew test` pass
+
+- TCS-SC-007 OAuth/JWT 만료/재발급/로그아웃 무효화 고도화
+  - Status: DONE
+  - Description:
+    - Access/Refresh 만료/재발급 계약을 API/문서 기준으로 명확화
+    - 로그아웃 이후 토큰 무효화 경계와 예외 응답 규약 보강
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-session-hardening-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#7` (closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #8` (merged, cross-repo shorthand)
+    - Merge Commit: `f3cd910632bddf266bda904a382b977d20538b05`
+    - Verification: `./gradlew test` pass
+
+- TCS-SC-008 프론트 출시 계약(에러코드/시간대/권한 경계) 보강
+  - Status: DONE
+  - Description:
+    - 예약/결제/대기열 API의 오류 응답 표준 및 시간대 규칙(UTC/KST) 정리
+    - 공개/인증/관리자 권한 경계 계약을 문서/테스트 케이스로 고정
+  - Evidence:
+    - 공통 계약 문서 추가:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/api-contract-conventions.md`
+    - 도메인 명세 보강:
+      - `wallet-payment-api.md` 신규 추가
+      - `realtime-push-api.md` 신규 추가
+      - `reservation-api.md` v4 경로/결제 side effect/v7 인증 경계 보강
+      - `waiting-queue-api.md` WS 구독 등록/해제 계약 보강
+      - `user-api.md` `walletBalanceAmount` 필드 반영
+    - 테스트 가이드 보강:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-test/README.md`
+      - `run-api-script-tests` 기본 세트(`v1~v14 + a*`) 및 `v13/v14` 검증 절차 반영
+
+- TCS-SC-009 인증 세션 후속 회귀(로그아웃 경계/e2e) 보강
+  - Status: DONE
+  - Description:
+    - 로그아웃 헤더 누락/토큰 재사용 실패 경계를 통합테스트로 고정
+    - 프론트 연동 기준으로 auth-social 스크립트/명세 예외 케이스를 보강
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-session-regression-followup-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#7` (reopened -> closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #9` (merged, cross-repo shorthand)
+    - Merge Commit: `68c08e990f28a1e96f9f13daf29ee9a03f4f57f6`
+    - Verification: `./gradlew test` pass
+
+- TCS-SC-010 프론트 e2e 파이프라인 auth-social 자동 검증 연결
+  - Status: DONE
+  - Description:
+    - auth-social 핵심 시나리오(로그인/재발급/로그아웃/재사용 차단)를 e2e 파이프라인에 자동 연결
+    - CI 실행 시 필수/선택 구간 분리를 정의해 외부 OAuth 의존성 리스크를 관리
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-social-e2e-pipeline-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#10` (closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #11` (merged, cross-repo shorthand)
+    - Merge Commit: `b3343bd97b470ecbd1ee11848bc4554ad9f2c8f0`
+    - Verification:
+      - `./scripts/api/run-auth-social-e2e-pipeline.sh` pass
+      - `make test-auth-social-pipeline` pass
+      - `./gradlew test` pass
+
+- TCS-SC-011 운영 auth 예외코드 집계/모니터링 기준 정리
+  - Status: DONE
+  - Description:
+    - 로그아웃 실패/토큰 만료/무효 토큰 등 auth 예외코드 집계 기준 정의
+    - 운영 대시보드 및 알람 임계치 기준을 문서화
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-error-monitoring-criteria-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#7` (reopened -> closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #12` (merged, cross-repo shorthand)
+    - Merge Commit: `cae3a9df6ef36e6fe0e9b41f6b5e554c7849851d`
+    - Included:
+      - `AUTH_*` 예외코드 표준화(`SecurityConfig`, `GlobalExceptionHandler`, `JwtAuthenticationFilter`)
+      - auth 예외 응답 `errorCode` 필드 도입 + `AUTH_MONITOR` 로그 키 추가
+      - `a2-auth-track-session-guard.sh`/`AuthSecurityIntegrationTest` 회귀 보강
+      - API 명세/운영 임계치 문서 반영
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.api.controller.AuthSecurityIntegrationTest` pass
+      - `./scripts/api/run-auth-social-e2e-pipeline.sh` pass
+
+- TCS-SC-012 외부 OAuth real provider E2E 경로 분리 운영
+  - Status: DONE
+  - Description:
+    - CI-safe auth-social 파이프라인과 real provider E2E 경로를 분리해 선택 실행으로 운영
+    - `application.yml` 플래그(`APP_AUTH_SOCIAL_REAL_E2E_ENABLED`) 기반으로 실운영 검증 절차를 명시
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-social-real-provider-e2e-split-completion.md`
+    - Product Issue: `rag-cargoo/ticket-core-service#10` (reopened -> closed)
+    - Product PR: `rag-cargoo/ticket-core-service PR #14` (merged, cross-repo shorthand)
+    - Merge Commit: `181088803826d0b235c5c15e320e21d9274594e6`
+    - Included:
+      - `scripts/api/run-auth-social-real-provider-e2e.sh` 신규(prepare-only + real code exchange 검증)
+      - `app.social.real-e2e.enabled` 설정값 도입
+      - `Makefile`/`README` real provider 선택 실행 절차 반영
+    - Verification:
+      - `bash -n scripts/api/run-auth-social-real-provider-e2e.sh` pass
+      - `./gradlew test --tests com.ticketrush.api.controller.SocialAuthControllerIntegrationTest --tests com.ticketrush.domain.auth.service.SocialAuthServiceTest` pass
+
+- TCS-SC-013 프론트 릴리즈 계약 체크리스트 고정 및 회의록 TODO 정합화
+  - Status: DONE
+  - Description:
+    - 과거 완료 회의록의 잔존 `Status: TODO`를 완료 근거와 함께 정합화
+    - `API Specs + API Test Guide + auth-social.http` 기준 프론트 릴리즈 계약 체크리스트 1장을 공개 문서로 고정
+  - Evidence:
+    - 회의록: `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-release-handoff-checklist-completion.md`
+    - 정합화 대상:
+      - `2026-02-18-realtime-transport-implementation-completion.md`
+      - `2026-02-18-wallet-payment-ledger-implementation-completion.md`
+      - `2026-02-19-auth-session-hardening-completion.md`
+      - `2026-02-19-auth-session-regression-followup-completion.md`
+      - `2026-02-19-api-spec-front-readiness-sync.md`
+    - 신규 체크리스트:
+      - `prj-docs/projects/ticket-core-service/product-docs/frontend-release-contract-checklist.md`
+    - 이슈 동기화:
+      - `rag-cargoo/aki-agentops#101` (reopened -> closed)
+
+- TCS-SC-014 Playwright OAuth HITL + callback preflight 운영 규칙 고정
+  - Status: DONE
+  - Description:
+    - 사용자 로그인/동의가 필요한 OAuth 요청에서 Playwright HITL을 기본으로 사용하도록 규칙을 고정
+    - callback redirect 대상이 로컬 백엔드인 경우 인증 페이지 오픈 전 포트/헬스 preflight를 필수화
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-playwright-oauth-hitl-preflight-governance-completion.md`
+    - 반영 문서:
+      - `AGENTS.md`
+      - `skills/aki-mcp-playwright/SKILL.md`
+      - `skills/aki-mcp-playwright/references/troubleshooting.md`
+      - `skills/aki-mcp-playwright/references/setup-linux-wsl.md`
+    - 신규 스크립트:
+      - `skills/aki-mcp-playwright/scripts/preflight_callback_health.sh`
+    - 이슈/PR 동기화:
+      - `rag-cargoo/aki-agentops#114` (closed)
+      - `https://github.com/rag-cargoo/aki-agentops/pull/115` (merged)
+
+- TCS-SC-015 프론트 구현 사전준비 패키지 고정(오류/시간/실시간/핸드오프 증빙)
+  - Status: DONE
+  - Description:
+    - 프론트 오류 파서를 `status/errorCode/message` 고정 스키마로 확정하고 에러코드 매핑 상수 테이블을 고정
+    - `LocalDateTime` + `Instant(UTC)` 혼재 응답을 공통 시간 파싱 유틸 1개로 정리
+    - 실시간 클라이언트 전략을 `WS 기본 + SSE 폴백`으로 확정(재연결/백오프/구독복구 포함)
+    - 프론트 핸드오프 직전 `make test-suite` 1회 실행 + 리포트 최신화로 계약 증빙 고정
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-preflight-preparation-plan.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-api-script-mode-aware-followup.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/aki-agentops/issues/118`
+      - `https://github.com/rag-cargoo/aki-agentops/issues/118#issuecomment-3925573862`
+    - Baseline PR:
+      - `https://github.com/rag-cargoo/aki-agentops/pull/119` (merged)
+    - Baseline Product Commit:
+      - `rag-cargoo/ticket-core-service@1988f2c`
+    - Latest Verification:
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/api-test/latest.md` (`Result: PASS`, `Push Mode: websocket`, `Skipped: v7-sse`)
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/step7/20260219T084701Z/step7-regression.log` (`run-step7-regression.sh` completed, `PASS`)
+
+- TCS-SC-016 프론트 앱 워크스페이스 생성 및 부트스트랩 시작
+  - Status: DONE
+  - Description:
+    - 프론트 앱 서비스명을 `ticket-web-client`로 확정하고 작업 경로를 `workspace/apps/frontend/ticket-web-client`로 고정
+    - 프론트 시작용 최소 골격(에러 파서/시간 유틸/실시간 어댑터) 생성으로 구현 착수 기반 확보
+    - sidecar 문서/트래킹(회의록, task, issue)을 동기화하여 후속 화면 구현 단위를 이어서 진행 가능하도록 정리
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-workspace-bootstrap-kickoff.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/aki-agentops/issues/118` (closed)
+      - `https://github.com/rag-cargoo/aki-agentops/issues/118#issuecomment-3925996197`
+    - Workspace Path:
+      - `workspace/apps/frontend/ticket-web-client`
+      - `.gitignore`에 `workspace/apps/frontend/ticket-web-client/` 등록
+
+- TCS-SC-017 콘서트 목록 판매상태/카운트다운 계약 + API probe 커버리지 보강
+  - Status: DONE
+  - Description:
+    - 콘서트 목록/검색 응답에 `saleStatus` + 카운트다운 + 예매 CTA 제어 필드를 추가해 프론트 즉시 반응 기반을 제공
+    - API 수동 검증(`scripts/http/concert.http`)과 자동 검증(`scripts/api/v15-concert-sale-status-contract.sh`) 커버리지를 보강
+    - API 명세/테스트 가이드 문서를 새 계약 기준으로 동기화
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-concert-sale-status-contract-and-probe-coverage.md`
+    - Product Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/15` (closed)
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/15#issuecomment-3929234804`
+    - Backend Contract:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ConcertResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/repository/ConcertRepository.java`
+    - Probe Coverage:
+      - `workspace/apps/backend/ticket-core-service/scripts/http/concert.http`
+      - `workspace/apps/backend/ticket-core-service/scripts/api/v15-concert-sale-status-contract.sh`
+    - Verification:
+      - `./gradlew test --tests com.ticketrush.domain.concert.service.ConcertExplorerIntegrationTest` PASS
+      - `API_HOST=http://127.0.0.1:18081 bash scripts/api/v15-concert-sale-status-contract.sh` PASS
+
+- TCS-SC-018 포트폴리오 더미 시드 + 프론트 개발 연결 기본값 정렬
+  - Status: DONE
+  - Description:
+    - `DataInitializer`에 포트폴리오 더미 시드 토글(`APP_PORTFOLIO_SEED_ENABLED`)을 추가
+    - CORS/WS 기본 허용 오리진에 `5173`, `4173`을 포함해 프론트 개발 연결 기본값을 정렬
+    - 문서(`concert-api.md`, `api-test/README.md`, `social-auth-api.md`)를 새 런타임 기준으로 동기화
+  - Evidence:
+    - Backend Runtime:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/SecurityConfig.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/WebSocketConfig.java`
+      - `workspace/apps/backend/ticket-core-service/docker-compose.yml`
+    - Sidecar Docs:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/social-auth-api.md`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-test/README.md`
+
+- TCS-SC-019 예약 한도 정책 옵션화 + 결제확인 단계 계약 정렬
+  - Status: DONE
+  - Description:
+    - Sales Policy를 콘서트별 CRUD 정책으로 확장한다.
+      - `maxTicketsPerOrder`
+      - `maxTicketsPerUserPerConcert`
+      - `maxConcurrentHoldsPerUser`
+    - 기본값은 `application.yml` fallback, 콘서트별 값은 override로 동작하도록 설계
+    - 프론트 결제확인 단계 선행 후 hold/paying/confirm 체인 실행 계약에 맞춰 API/검증 로직 정렬
+    - 단, 본 항목은 `seatId` 단건 계약 기준 1차 정렬이며 다중 좌석 주문(`seatIds[]`)은 후속 범위로 분리
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-reservation-limit-policy-optionization-and-checkout-contract.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3937779070`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3937787703`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3937894030`
+    - Implementation:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/entity/SalesPolicy.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/SalesPolicyServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/SalesPolicyUpsertRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/SalesPolicyResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/SalesPolicyLimitProperties.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application-local.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application-docker.yml`
+    - Verification:
+      - `./gradlew test --tests '*ReservationLifecycleServiceIntegrationTest' --tests '*ConcertExplorerIntegrationTest'` PASS
+
+- TCS-SC-020 다중 좌석 주문 API 계약(`seatIds[]`) + 주문 단위 상태전이 확장
+  - Status: DONE
+  - Description:
+    - 예약 API를 단건 `seatId`에서 다중 `seatIds[]` 주문 계약으로 확장한다.
+    - 주문당 최대 매수(`maxTicketsPerOrder`)를 실요청 단위로 검증한다.
+    - hold/paying/confirm/cancel/refund를 주문 단위 상태전이로 재정렬한다.
+    - 주문 단위 `confirm` 정책은 부분 성공 허용(실패 건 `PAYING` 유지)으로 고정한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-reservation-limit-policy-optionization-and-checkout-contract.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20` (closed)
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3939522960`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/20#issuecomment-3939533794`
+    - Implementation (1차):
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ReservationController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/AuthenticatedBatchHoldRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/ReservationBatchStateRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/reservation/ReservationBatchLifecycleResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/repository/ReservationRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/SalesPolicyServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceIntegrationTest.java`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/reservation-api.md`
+    - Verification:
+      - `./gradlew test --tests '*ReservationLifecycleServiceIntegrationTest'` PASS
+    - Policy:
+      - 기본 한도 운영값: `default-max-tickets-per-order=1`, `default-max-tickets-per-user-per-concert=4`, `default-max-concurrent-holds-per-user=2`
+      - 절대 상한값은 본 항목 범위에서 별도 도입하지 않음(운영 설정값 + 도메인 제약으로 관리)
+
+- TCS-SC-022 #21 선행 Stage 0 사전작업 게이트(WS 인증/원자화/스케줄러 분산락)
+  - Status: DONE
+  - Description:
+    - #21 본 구현 착수 전에 분산환경 필수 안전장치(보안/원자성/중복실행 방지)를 선행 적용한다.
+    - WebSocket 구독 인증 경계 강화, 대기열 활성화 원자화(Lua), 스케줄러 분산락 적용을 Stage 0으로 고정한다.
+    - Stage 0 결과를 API spec/realtime spec/task에 동기화한 뒤 #21 본 구현으로 전환한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
+    - Tracking Issue:
+      - `rag-cargoo/ticket-core-service#22` (closed, cross-repo shorthand)
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #23` (merged, cross-repo shorthand)
+    - Dependency Link:
+      - `rag-cargoo/ticket-core-service#21 comment 3939683402` (cross-repo shorthand)
+    - Completion Link:
+      - `rag-cargoo/ticket-core-service#21 comment 3939821886` (cross-repo shorthand)
+
+- TCS-SC-021 대규모 매진 트래픽 대응 좌석 실시간 선점(soft lock) + 좌석확정(HOLD) 상태머신 정렬
+  - Status: DONE
+  - Description:
+    - 대형 공연(`10만+` 좌석) + 짧은 시간대 대량 동시접속 + 오토스케일링 분산 배포를 전제로 좌석 상태머신 운영 기준을 고정한다.
+    - 클릭 단계는 Redis soft lock(`SET NX EX`) + WebSocket fan-out으로 처리하고, DB는 좌석 확정(HOLD) 및 결제 확정(CONFIRMED) 원장으로 유지한다.
+    - 장애/폴백 시나리오(SSE fallback, 재동기화, idempotency)까지 포함한 운영 계약을 문서/이슈/task 기준으로 동기화한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-21-distributed-backend-readiness-code-review-kickoff.md`
+    - Tracking Issue:
+      - `rag-cargoo/ticket-core-service#21` (closed, cross-repo shorthand)
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #24` (merged, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service PR #25` (merged, cross-repo shorthand)
+    - Runbook Sync:
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/realtime-push-api.md`
+      - 섹션 `6. 장애/폴백 운영 Runbook (WS->SSE + DB 재동기화)` 반영
+    - k6 Evidence:
+      - Run Stamp: `20260222T023602Z` (UTC)
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-latest.md` (PASS)
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-summary.json`
+      - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/20260222T023602Z/k6-latest.log`
+      - Strict Distributed Recheck:
+        - Run Stamp: `20260222T050404Z` (UTC)
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-distributed-latest.md` (PASS)
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/latest/k6-distributed-summary.json`
+        - `workspace/apps/backend/ticket-core-service/.codex/tmp/ticket-core-service/k6/distributed/20260222T050404Z/k6-distributed.log`
+    - Progress Link:
+      - `rag-cargoo/ticket-core-service#21 comment 3939905567` (cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#21 comment 3939919828` (cross-repo shorthand, 2차 트랙 재개)
+      - `rag-cargoo/ticket-core-service#21 comment 3939932628` (cross-repo shorthand, phase2-a 진행)
+      - `rag-cargoo/ticket-core-service#21 comment 3939981513` (cross-repo shorthand, phase2-b 완료)
+      - `rag-cargoo/ticket-core-service#21 comment 3940744518` (cross-repo shorthand, 분산 런타임 기본값/compose root 정렬 follow-up)
+    - Follow-up (2026-02-22):
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-distributed-runtime-defaults-and-compose-root-alignment.md`
+      - Runtime Alignment:
+        - `workspace/apps/backend/ticket-core-service/docker-compose.distributed.yml` (루트 배치 + relay 기본 주입)
+        - `workspace/apps/backend/ticket-core-service/scripts/perf/run-k6-waiting-queue-distributed.sh` (기본 compose 경로 보정)
+        - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml` (`APP_RESERVATION_SOFT_LOCK_TTL_SECONDS`, `APP_PAYMENT_PROVIDER` override 반영)
+        - `workspace/apps/backend/ticket-core-service/src/main/resources/application-local.yml` (동일 override 반영)
+        - `workspace/apps/backend/ticket-core-service/src/main/resources/application-docker.yml` (동일 override 반영)
+        - `workspace/apps/backend/ticket-core-service/README.md` (분산 운영 기본값/override 문서화)
+      - Verification:
+        - `bash -n workspace/apps/backend/ticket-core-service/scripts/perf/run-k6-waiting-queue-distributed.sh` PASS
+        - `docker-compose -f workspace/apps/backend/ticket-core-service/docker-compose.distributed.yml config` PASS
+    - Precondition:
+      - `rag-cargoo/ticket-core-service#22` 완료 (cross-repo shorthand)
+  - Next:
+    - 없음 (완료)
+
+- TCS-SC-023 compose 단일화(distributed-first) + `--scale app=N` 운영 통합
+  - Status: DONE
+  - Description:
+    - `docker-compose.yml` 단일 파일에 분산 런타임 구성(`ws-relay`, `nginx-lb`, `app`)을 통합한다.
+    - 기존 `app-node-1/2/3` 고정 서비스 모델을 제거하고, `app` 단일 서비스 스케일(`--scale app=N`)로 전환한다.
+    - `docker-compose.distributed.yml` 분기 참조를 제거하고 스크립트/README를 단일 compose 기준으로 정렬한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-compose-single-file-scale-unification-kickoff.md`
+    - Tracking Issue:
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/21` (reopened -> closed)
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3940924556`
+      - `https://github.com/rag-cargoo/ticket-core-service/issues/21#issuecomment-3940943019`
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #28` (merged)
+      - merge commit: `fa194740f97cebb0a0a8b03872b425bbb6caf4f1`
+    - Runtime/Script:
+      - `workspace/apps/backend/ticket-core-service/docker-compose.yml`
+      - `workspace/apps/backend/ticket-core-service/scripts/perf/run-k6-waiting-queue-distributed.sh`
+      - `workspace/apps/backend/ticket-core-service/scripts/perf/nginx/k6-distributed-lb.conf`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/WebSocketBrokerProperties.java`
+      - `workspace/apps/backend/ticket-core-service/README.md`
+      - `workspace/apps/backend/ticket-core-service/Makefile`
+    - Verification:
+      - `docker-compose -f docker-compose.yml config` PASS
+      - `bash -n scripts/perf/run-k6-waiting-queue-distributed.sh` PASS
+      - `./gradlew test --tests '*WebSocketConfigTest'` PASS
+
+- TCS-SC-024 Kafka-only 실시간 브로커 전환(WS relay 제거 + 전달 경로 재정렬)
+  - Status: DONE
+  - Description:
+    - runtime broker dependency를 Kafka-only로 정렬하기 위해 `ws-relay`(RabbitMQ STOMP relay) 의존을 제거한다.
+    - WebSocket 전달 경로를 relay 중심이 아닌 Kafka-only 아키텍처 기준으로 재정렬한다.
+    - compose/설정/문서를 통합 갱신해 운영 기본값과 실제 런타임 구성을 일치시킨다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-kafka-only-realtime-broker-migration-kickoff.md`
+    - Product Tracking:
+      - `ticket-core-service Issue #3` (reopened -> closed)
+      - `ticket-core-service Issue #3 comment 3941035224`
+      - `ticket-core-service Issue #3 comment 3941042057`
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #29` (merged)
+      - merge commit: `20e84d94cd7ddb22f7c157b4c1040ae127386f57`
+      - `rag-cargoo/ticket-core-service PR #30` (merged)
+      - merge commit: `bc484e923eade47661544f0c4440c15c9961290e`
+    - Sidecar Tracking:
+      - `https://github.com/rag-cargoo/aki-agentops/issues/136` (reopened, in progress)
+      - `https://github.com/rag-cargoo/aki-agentops/issues/136#issuecomment-3941036228`
+      - `https://github.com/rag-cargoo/aki-agentops/issues/136#issuecomment-3941045490`
+    - Phase-2 Kafka Fanout:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/push/KafkaWebSocketPushNotifier.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/messaging/KafkaPushEventProducer.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/messaging/KafkaPushEventConsumer.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/PushNotifierConfig.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+    - Phase-1 Runtime Alignment:
+      - `workspace/apps/backend/ticket-core-service/docker-compose.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/global/config/WebSocketBrokerProperties.java`
+      - `workspace/apps/backend/ticket-core-service/README.md`
+    - Phase-1 Verification:
+      - `docker-compose -f docker-compose.yml config` PASS
+      - `./gradlew test --tests '*WebSocketConfigTest'` PASS
+    - Phase-2 Verification:
+      - `./gradlew test --tests '*PushNotifierConfigTest' --tests '*WebSocketPushNotifierTest' --tests '*KafkaWebSocketPushNotifierTest' --tests '*KafkaPushEventConsumerTest' --tests '*WebSocketConfigTest'` PASS
+      - `./gradlew test --tests '*WaitingQueueSchedulerTest' --tests '*SeatSoftLockServiceImplTest' --tests '*ReservationLifecycleServiceIntegrationTest'` PASS
+  - Next:
+    - `docker-compose.yml`에서 `ws-relay` 및 relay env 제거
+    - WS broker 기본값/설정 재정렬(`application.yml`, `WebSocketBrokerProperties`, `README`)
+    - 최소 회귀 검증(`compose config`, 관련 테스트) 후 제품 PR 생성
+
+- TCS-SC-025 Admin CRUD/카탈로그 조회/초기시드 정합 복구(#16 재오픈)
+  - Status: DONE
+  - Description:
+    - `main` 기준 `/api/admin/concerts/**` 운영 CRUD 경로 부재를 복구한다(콘서트/회차/가격/판매정책/썸네일 포함).
+    - `Entertainment/Artist` 도메인에 Admin 보드용 `find/search/paging` 조회 경로를 추가한다.
+    - 도메인 의미를 `Entertainment(소속사)`/`Promoter(기획사)`로 분리하고 `Venue` 도메인 도입 경계를 설계한다.
+    - `DataInitializer`/seed 전략을 dev/demo profile 분리 + idempotent 시드 방식으로 정렬한다.
+    - 프론트 관리자 계약(`admin-concert-client.ts`)과 실백엔드 런타임 계약을 일치시킨다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md`
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-domain-association-and-querydsl-admin-crud-plan.md`
+    - Product Tracking:
+      - `rag-cargoo/ticket-core-service#16` (closed)
+      - `rag-cargoo/ticket-core-service#16 comment 3941319649`
+      - `rag-cargoo/ticket-core-service#16 comment 3941623654`
+      - `rag-cargoo/ticket-core-service#16 comment 3941631467`
+      - `rag-cargoo/ticket-core-service#16 comment 3941655066`
+      - `rag-cargoo/ticket-core-service PR #31` (merged, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service PR #32` (merged, cross-repo shorthand)
+    - Code Baseline:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/EntertainmentCatalogController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ArtistController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
+      - `workspace/apps/frontend/ticket-web-client/src/shared/api/admin-concert-client.ts`
+      - `workspace/apps/frontend/ticket-web-client/tests/e2e/landing.spec.ts`
+    - Phase B 1차 구현:
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/entertainment/EntertainmentSearchRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/entertainment/EntertainmentSearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/artist/ArtistSearchRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/artist/ArtistSearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/EntertainmentSearchPageResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ArtistSearchPageResponse.java`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md`
+    - Phase B 2차 구현(도메인 분리 + Admin CRUD 골격):
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/promoter/Promoter.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/promoter/PromoterRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/promoter/PromoterSearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/venue/Venue.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/venue/VenueRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/venue/VenueSearchRepositoryImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/EntertainmentController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/PromoterController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/VenueController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AdminConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/entity/Concert.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/entity/ConcertOption.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ConcertResponse.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/ConcertOptionResponse.java`
+      - `prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md`
+    - Phase B 3차 구현(프론트 계약 정합: 썸네일/가격/미디어):
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/AdminConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/controller/ConcertController.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/admin/AdminConcertUpsertRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/admin/AdminConcertOptionCreateRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/api/dto/admin/AdminConcertOptionUpdateRequest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/entity/Concert.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/entity/ConcertOption.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertService.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/concert/service/ConcertServiceImpl.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/reservation/service/ReservationLifecycleServiceImpl.java`
+    - Phase B 4차 구현(초기시드 전략: dev/demo + idempotent marker):
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/DataInitializer.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/seed/SeedMarker.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/java/com/ticketrush/domain/seed/SeedMarkerRepository.java`
+      - `workspace/apps/backend/ticket-core-service/src/test/java/com/ticketrush/DataInitializerDataJpaTest.java`
+      - `workspace/apps/backend/ticket-core-service/src/main/resources/application.yml`
+      - `workspace/apps/backend/ticket-core-service/README.md`
+    - Verification:
+      - `./gradlew clean compileJava` PASS
+      - `./gradlew test --tests '*DataInitializerDataJpaTest'` PASS
+      - `./gradlew test --tests '*ReservationStateMachineTest' --tests '*SeatSoftLockServiceImplTest'` PASS
+      - `./gradlew test --tests '*ReservationStateMachineTest' --tests '*SeatSoftLockServiceImplTest' --tests '*ReservationLifecycleServiceIntegrationTest'` PASS
+    - Candidate Previous Work:
+      - branch: `feat/admin-ops-crud-media-20260220`
+      - commits: `eec88b0`, `732c6be`
+  - Next:
+    - 1) 프론트 Admin 게시판 셀렉트 플로우(Entertainment -> Artist, Promoter, Venue) 연동
+    - 2) 프론트 E2E 계약 검증(관리자 CRUD + 공개 조회 계약) 확장
+
+- TCS-SC-026 Clean DDD/Hexagonal 1차 경계 정리(스킬 적용)
+  - Status: DONE
+  - Description:
+    - `clean-ddd-hexagonal` 스킬을 적용해 DDD 경계 위반을 단계적으로 제거한다.
+    - 대공사 진행 순서를 `회의록 -> task -> 제품 이슈 -> 코드 변경`으로 고정한다.
+    - 1차 범위는 `domain 엔티티 -> api 의존 제거`, `controller -> repository 직접 참조 제거`, `아키텍처 테스트(ArchUnit) 도입`으로 제한한다.
+    - 2차(Phase2-A) 범위는 `reservation` 서비스 계층의 `domain -> api dto` 의존 제거를 우선 수행한다.
+  - Evidence:
+    - 회의록:
+      - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-clean-ddd-hexagonal-governance-kickoff.md`
+    - Tracking Issue:
+      - `rag-cargoo/ticket-core-service#33` (reopened, cross-repo shorthand)
+      - `rag-cargoo/ticket-core-service#33 comment 3941854946` (phase2-a kickoff)
+    - Product PR:
+      - `rag-cargoo/ticket-core-service PR #34` (merged, cross-repo shorthand)
+      - branch: `feat/ddd-hexagonal-phase1-boundary-hardening`
+      - merge commit: `bcc109f2ff117cb16bea7f5aaafdef0d6bb50457`
+    - Phase2-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase2a-reservation-application-layer-kickoff.md`
+      - Scope:
+        - `ReservationService*`, `ReservationLifecycleService*`, `SalesPolicyService*`
+      - Out-of-scope:
+        - `WaitingQueueService*`, `PgReadyWebhookService` (Phase2-B)
+    - Phase2-A Progress (2026-02-23):
+      - `reservation` 서비스 클래스 6개를 `application.reservation.service`로 이동
+      - 참조 업데이트:
+        - `api/controller/*`
+        - `global/lock/RedissonLockFacade`
+        - `global/messaging/KafkaReservationConsumer`
+        - `global/scheduler/ReservationLifecycleScheduler`
+        - reservation/concert/scheduler 관련 테스트
+    - Phase2-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase2b-waitingqueue-webhook-application-boundary-kickoff.md`
+      - Scope:
+        - `WaitingQueueService*`
+        - `PgReadyWebhookService`
+      - Goal:
+        - `domain -> api` import 잔여(`5건/3파일`)를 제거해 0건을 목표로 정리
+    - Phase2-B Progress (2026-02-23):
+      - 이동:
+        - `domain.waitingqueue.service.WaitingQueueService*` -> `application.waitingqueue.service.WaitingQueueService*`
+        - `domain.payment.webhook.PgReadyWebhookService` -> `application.payment.webhook.PgReadyWebhookService`
+      - 참조 업데이트:
+        - `api/waitingqueue/WaitingQueueController`
+        - `global/scheduler/WaitingQueueScheduler`
+        - `domain/reservation/adapter/outbound/ReservationWaitingQueuePortAdapter`
+        - `api/controller/PaymentWebhookController`
+      - 테스트 정렬:
+        - `PgReadyWebhookServiceTest` 패키지/경로를 `application.payment.webhook`으로 정렬
+        - `WaitingQueueServiceImplTest` 패키지/경로를 `application.waitingqueue.service`로 정렬
+    - Verification:
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+      - 참고:
+        - `ConcertExplorerIntegrationTest` 포함 실행은 로컬 Redis 미기동으로 실패(`RedisConnectionException`)
+    - Phase3-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase3a-application-command-result-decoupling-kickoff.md`
+      - Scope:
+        - `application.waitingqueue.service`
+        - `application.payment.webhook.PgReadyWebhookService`
+      - Goal:
+        - application 계층의 API DTO 직접 의존을 command/result 모델로 치환(컨트롤러 매핑 책임화)
+    - Phase3-A Progress (2026-02-23):
+      - waitingqueue:
+        - `WaitingQueueJoinCommand`/`WaitingQueueStatusQuery`/`WaitingQueueStatusResult`/`WaitingQueueStatusType` 도입
+        - `WaitingQueueController`, `WaitingQueueScheduler` 매핑/상태 비교를 application 모델 기준으로 전환
+      - payment webhook:
+        - `PgReadyWebhookCommand`/`PgReadyWebhookResult` 도입
+        - `PaymentWebhookController`에서 API DTO <-> application 모델 매핑 책임화
+      - 테스트 정렬:
+        - `WaitingQueueSchedulerTest`, `PgReadyWebhookServiceTest`를 application 모델 기준으로 갱신
+    - Verification (Phase3-A):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.payment.webhook.PgReadyWebhookServiceTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase3-A):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `12`건 / `6`파일 (`reservation` 서비스 범위)
+    - Phase3-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase3b-reservation-command-result-decoupling-kickoff.md`
+      - Scope:
+        - `application.reservation.service/ReservationService*`
+        - `application.reservation.service/ReservationLifecycleService*`
+        - `application.reservation.service/SalesPolicyService*`
+      - Goal:
+        - reservation application 서비스의 API DTO 직접 의존(`12건/6파일`) 제거
+        - controller/facade/consumer 매핑 책임화
+    - Phase3-B Progress (2026-02-23):
+      - application model 추가:
+        - `ReservationCreateCommand`
+        - `ReservationResult`
+        - `ReservationLifecycleResult`
+        - `SalesPolicyUpsertCommand`
+        - `SalesPolicyResult`
+      - service 시그니처 전환:
+        - `ReservationService*`
+        - `ReservationLifecycleService*`
+        - `SalesPolicyService*`
+      - 매핑 책임 전환:
+        - `api/controller/ReservationController`
+        - `api/controller/ConcertController`
+        - `api/controller/AdminConcertController`
+        - `global/lock/RedissonLockFacade`
+        - `global/messaging/KafkaReservationConsumer`
+      - 테스트 정렬:
+        - `domain/reservation/service/ReservationLifecycleServiceIntegrationTest`
+        - `domain/concert/service/ConcertExplorerIntegrationTest`
+        - `domain/reservation/service/동시성_테스트_1_낙관적_락`
+        - `domain/reservation/service/동시성_테스트_2_비관적_락`
+    - Verification (Phase3-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.domain.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.domain.concert.service.ConcertExplorerIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` FAIL
+        - 원인: 로컬 Redis 미기동(`RedisConnectionException`, `ConcertExplorerIntegrationTest`)
+    - Residual Backlog (as-is, 2026-02-23 after Phase3-B):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4a-archunit-guardrail-ci-kickoff.md`
+      - Scope:
+        - `architecture/LayerDependencyArchTest` 규칙 강화
+        - CI `verify` 워크플로 추가(ArchUnit 테스트 상시 실행)
+        - 가능 시 main required check에 `verify` 등록
+      - Goal:
+        - 경계 위반 회귀를 PR 단계에서 차단
+    - Phase4-A Progress (2026-02-23):
+      - ArchUnit 규칙 강화:
+        - `src/test/java/com/ticketrush/architecture/LayerDependencyArchTest.java`
+        - `domain -> api` 금지
+        - `application -> api` 금지
+        - `RestController -> *Repository` 직접 의존 금지
+      - CI verify 워크플로 추가:
+        - `workspace/apps/backend/ticket-core-service/.github/workflows/verify.yml`
+      - GitHub main 보호 규칙 반영:
+        - required status check: `verify` (`strict=true`)
+    - Verification (Phase4-A):
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest'` PASS
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-A):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4b-reservation-orchestration-service-relocation-kickoff.md`
+      - Scope:
+        - `ReservationQueueService*`, `SeatSoftLockService*`, `AbuseAuditService*`, `AbuseAuditWriter`, `AdminRefundAuditService`
+          를 `domain.reservation.service` -> `application.reservation.service`로 이동
+        - `ReservationController`, `ReservationLifecycleServiceImpl`, `KafkaReservationConsumer`,
+          soft-lock response DTO, 연관 테스트 참조 정렬
+        - ArchUnit: `ReservationController -> domain.reservation.service` 직접 의존 금지 규칙 추가
+      - Goal:
+        - reservation 오케스트레이션 책임의 application 계층 정렬
+    - Phase4-B Progress (2026-02-23):
+      - service relocation:
+        - `AbuseAuditService*`, `AbuseAuditWriter`, `AdminRefundAuditService`,
+          `ReservationQueueService*`, `SeatSoftLockService*`
+        - `domain.reservation.service` -> `application.reservation.service`
+      - 참조 정렬:
+        - `api/controller/ReservationController`
+        - `application/reservation/service/ReservationLifecycleServiceImpl`
+        - `global/messaging/KafkaReservationConsumer`
+        - `api/dto/reservation/SeatSoftLockAcquireResponse`
+        - `api/dto/reservation/SeatSoftLockReleaseResponse`
+        - reservation 연관 테스트 import/package 정렬
+      - ArchUnit 강화:
+        - `ReservationController -> domain.reservation.service` 직접 의존 금지 규칙 추가
+    - Verification (Phase4-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-B):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-C Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4c-reservation-controller-domain-decoupling-kickoff.md`
+      - Scope:
+        - `ReservationController`의 `domain.reservation` 직접 타입 의존 제거
+          - queue lock type
+          - abuse/admin-audit query/result 타입
+        - application model 매핑 책임화
+        - ArchUnit 규칙 강화:
+          - `ReservationController -> domain.reservation..` 직접 의존 금지
+      - Goal:
+        - reservation API 계층의 domain 타입 노출 제거
+    - Phase4-C Progress (2026-02-23):
+      - application model 추가:
+        - `ReservationQueueLockType`
+        - `AbuseAuditActionType`, `AbuseAuditResultType`, `AbuseAuditReasonType`
+        - `AbuseAuditRecord`
+        - `AdminRefundAuditResultType`, `AdminRefundAuditRecord`
+      - reservation controller/domain decoupling:
+        - `ReservationController`의 `domain.reservation` 직접 import 제거
+        - `KafkaReservationProducer`에 application lock type 기반 `send(userId, seatId, lockType)` 추가
+      - audit service 시그니처 전환:
+        - `AbuseAuditService*`, `AdminRefundAuditService` query/result를 application model 기준으로 정렬
+        - `AbuseAuditResponse`, `AdminRefundAuditResponse` 매핑 기준을 application record로 전환
+      - ArchUnit 강화:
+        - reservation controller 규칙 범위를 `domain.reservation.service..` -> `domain.reservation..`로 확장
+    - Verification (Phase4-C):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-C):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-D Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4d-reservation-event-boundary-kickoff.md`
+      - Scope:
+        - Kafka reservation 메시징 payload를 `domain.reservation.event.ReservationEvent`에서 application 모델로 분리
+        - `KafkaReservationProducer`, `KafkaReservationConsumer`의 domain event 직접 의존 제거
+        - ArchUnit 규칙 강화:
+          - `global.messaging.. -> domain.reservation.event..` 직접 의존 금지
+      - Goal:
+        - 외부 메시징 스키마와 도메인 이벤트 경계 분리
+    - Phase4-D Progress (2026-02-23):
+      - application 메시징 모델 추가:
+        - `ReservationQueueEvent`
+      - Kafka 경계 정렬:
+        - `KafkaReservationProducer` payload를 `ReservationQueueEvent`로 전환
+        - `KafkaReservationConsumer` listener payload를 `ReservationQueueEvent`로 전환
+        - lock 전략 분기를 `ReservationQueueLockType` 기준으로 정렬
+      - domain event 정리:
+        - `domain.reservation.event.ReservationEvent` 제거
+      - ArchUnit 강화:
+        - `global.messaging.. -> domain.reservation.event..` 직접 의존 금지 규칙 추가
+    - Verification (Phase4-D):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-D):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-E Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4e-reservation-outbound-adapter-relocation-kickoff.md`
+      - Scope:
+        - `domain/reservation/adapter/outbound/*`를 `infrastructure` 계층으로 이동
+        - `ReservationWaitingQueuePortAdapter`의 `domain -> application` 직접 의존 제거
+        - ArchUnit 규칙 강화:
+          - `domain.. -> application..` 직접 의존 금지
+      - Goal:
+        - domain은 포트 정의만 유지하고, adapter 구현체는 infrastructure로 정렬
+    - Phase4-E Progress (2026-02-23):
+      - adapter relocation:
+        - `domain.reservation.adapter.outbound` -> `infrastructure.reservation.adapter.outbound`
+        - 이동 클래스:
+          - `ReservationSeatPortAdapter`
+          - `ReservationUserPortAdapter`
+          - `ReservationPaymentPortAdapter`
+          - `ReservationWaitingQueuePortAdapter`
+      - 테스트 정렬:
+        - `ReservationLifecycleServiceIntegrationTest`의 adapter import를 infrastructure 경로로 갱신
+      - ArchUnit 강화:
+        - `domain.. -> application..` 직접 의존 금지 규칙 추가
+    - Verification (Phase4-E):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-E):
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-F Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4f-catalog-service-application-relocation-kickoff.md`
+      - Scope:
+        - catalog CRUD 서비스 4종(`Entertainment/Artist/Promoter/Venue`)을 application 계층으로 이동
+        - catalog controller의 service 참조를 application 경유로 정렬
+        - ArchUnit 규칙 강화:
+          - catalog controller 5종의 `domain.*.service` 직접 의존 금지
+      - Goal:
+        - catalog API 계층에서 domain service 직접 의존 제거
+    - Phase4-F Progress (2026-02-23):
+      - catalog 서비스 relocation:
+        - `EntertainmentService*`, `ArtistService*`, `PromoterService*`, `VenueService*`
+        - `domain.*.service` -> `application.catalog.service`
+      - controller 참조 정렬:
+        - `EntertainmentController`
+        - `EntertainmentCatalogController`
+        - `ArtistController`
+        - `PromoterController`
+        - `VenueController`
+      - 테스트 정렬:
+        - `EntertainmentArtistCrudDataJpaTest` package/import를 `application.catalog.service` 기준으로 정렬
+      - ArchUnit 강화:
+        - `catalog_controllers_should_not_depend_on_domain_catalog_services` 규칙 추가
+    - Verification (Phase4-F):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.catalog.service.EntertainmentArtistCrudDataJpaTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-F):
+      - catalog controller의 `domain.*.service` 직접 의존 잔여: `0`건 / `0`파일
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-G Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4g-auth-user-service-application-relocation-kickoff.md`
+      - Scope:
+        - `AuthSessionService*`, `SocialAuthService*`, `UserService*`를 application 계층으로 이동
+        - `AuthController`, `SocialAuthController`, `UserController` 의존 경계 정렬
+        - ArchUnit 규칙 강화:
+          - auth/user controller의 `domain.auth.service..`/`domain.user.service..` 직접 의존 금지
+      - Goal:
+        - auth/user API 계층에서 domain service 직접 의존 제거
+    - Phase4-G Progress (2026-02-23):
+      - 서비스 relocation:
+        - `domain.auth.service.AuthSessionService*` -> `application.auth.service.AuthSessionService*`
+        - `domain.auth.service.SocialAuthService*` -> `application.auth.service.SocialAuthService*`
+        - `domain.user.service.UserService*` -> `application.user.service.UserService*`
+      - controller 참조 정렬:
+        - `AuthController`
+        - `SocialAuthController`
+        - `UserController`
+      - 테스트 정렬:
+        - `AuthSessionServiceTest` -> `application.auth.service`
+        - `SocialAuthServiceTest` -> `application.auth.service`
+        - `UserServiceImplDataJpaTest` -> `application.user.service`
+        - `AuthSecurityIntegrationTest`, `SocialAuthControllerIntegrationTest` import 경로 갱신
+      - ArchUnit 강화:
+        - `auth_and_user_controllers_should_not_depend_on_domain_auth_user_services` 규칙 추가
+    - Verification (Phase4-G):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest' --tests 'com.ticketrush.application.auth.service.SocialAuthServiceTest' --tests 'com.ticketrush.application.user.service.UserServiceImplDataJpaTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.api.controller.SocialAuthControllerIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-G):
+      - auth/user controller의 `domain.*.service` 직접 의존 잔여: `0`건 / `0`파일
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-H Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4h-concert-service-application-relocation-kickoff.md`
+      - Scope:
+        - `ConcertService*`를 `domain.concert.service` -> `application.concert.service`로 이동
+        - `ConcertController`, `AdminConcertController` 의존 경계 정렬
+        - ArchUnit 규칙 강화:
+          - concert controller 2종의 `domain.concert.service..` 직접 의존 금지
+      - Goal:
+        - concert API 계층에서 domain service 직접 의존 제거
+    - Phase4-H Progress (2026-02-23):
+      - 서비스 relocation:
+        - `domain.concert.service.ConcertService*` -> `application.concert.service.ConcertService*`
+      - controller 참조 정렬:
+        - `ConcertController`
+        - `AdminConcertController`
+      - 테스트 정렬:
+        - reservation 동시성 테스트 4종 import 갱신
+        - `ConcertExplorerIntegrationTest` package 정렬(`application.concert.service`)
+      - ArchUnit 강화:
+        - `concert_controllers_should_not_depend_on_domain_concert_services` 규칙 추가
+    - Verification (Phase4-H):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-H):
+      - concert controller의 `domain.concert.service` 직접 의존 잔여: `0`건 / `0`파일
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-I Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4i-payment-service-gateway-relocation-kickoff.md`
+      - Scope:
+        - `PaymentService*`를 application 계층으로 이동
+        - payment gateway 구현체(`Wallet/Mock/PgReady`)를 infrastructure 계층으로 이동
+        - `WalletController` 의존 경계 정렬
+        - ArchUnit 규칙 강화:
+          - wallet controller의 `domain.payment.service..` 직접 의존 금지
+      - Goal:
+        - payment API는 application service 경유, gateway 구현체는 infrastructure로 정렬
+    - Phase4-I Progress (2026-02-23):
+      - 서비스 relocation:
+        - `domain.payment.service.PaymentService*` -> `application.payment.service.PaymentService*`
+      - gateway 구현체 relocation:
+        - `domain.payment.gateway.WalletPaymentGateway` -> `infrastructure.payment.gateway.WalletPaymentGateway`
+        - `domain.payment.gateway.MockPaymentGateway` -> `infrastructure.payment.gateway.MockPaymentGateway`
+        - `domain.payment.gateway.PgReadyPaymentGateway` -> `infrastructure.payment.gateway.PgReadyPaymentGateway`
+      - controller 참조 정렬:
+        - `WalletController`
+      - 테스트 정렬:
+        - `ReservationLifecycleServiceIntegrationTest` import/`@Import` 갱신
+        - payment integration test 3종 package 정렬
+      - ArchUnit 강화:
+        - `wallet_controller_should_not_depend_on_domain_payment_services` 규칙 추가
+    - Verification (Phase4-I):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.payment.service.PaymentServiceIntegrationTest' --tests 'com.ticketrush.infrastructure.payment.gateway.MockPaymentGatewayIntegrationTest' --tests 'com.ticketrush.infrastructure.payment.gateway.PgReadyPaymentGatewayIntegrationTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-I):
+      - wallet controller의 `domain.payment.service` 직접 의존 잔여: `0`건 / `0`파일
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+      - `application -> api dto` import 잔여: `0`건 / `0`파일
+    - Phase4-J Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase4j-auth-infra-boundary-relocation-kickoff.md`
+      - Scope:
+        - auth infra/security 구현체를 domain 밖으로 이동
+          - `KakaoOAuthClient`, `NaverOAuthClient`
+          - `JwtAuthenticationFilter`
+          - `InMemoryAccessTokenDenylistService`, `RedisAccessTokenDenylistService`
+          - `AccessTokenDenylistConfig`
+        - auth principal/token 경계 정렬
+          - `AuthUserPrincipal` -> `application.auth.model`
+          - `JwtTokenProvider` -> `application.auth.service`
+        - controller/test import 정렬
+        - ArchUnit 규칙 보강:
+          - domain 계층의 infrastructure 직접 의존 금지
+      - Goal:
+        - domain.auth에는 entity/model/repository/port(interface) 중심으로 경계 정렬
+    - Phase4-J Progress (2026-02-23):
+      - auth package relocation:
+        - `domain.auth.security.AuthUserPrincipal` -> `application.auth.model.AuthUserPrincipal`
+        - `domain.auth.service.JwtTokenProvider` -> `application.auth.service.JwtTokenProvider`
+        - `domain.auth.security.JwtAuthenticationFilter` -> `infrastructure.auth.security.JwtAuthenticationFilter`
+        - `domain.auth.oauth.(KakaoOAuthClient, NaverOAuthClient)` -> `infrastructure.auth.oauth`
+        - `domain.auth.service.(InMemoryAccessTokenDenylistService, RedisAccessTokenDenylistService)` -> `infrastructure.auth.denylist`
+        - `domain.auth.config.AccessTokenDenylistConfig` -> `infrastructure.auth.config.AccessTokenDenylistConfig`
+      - main/test 참조 정렬:
+        - auth principal 참조를 `application.auth.model`로 정렬
+        - security filter 참조를 `infrastructure.auth.security`로 정렬
+        - denylist/token provider 참조를 신규 경계로 정렬
+      - ArchUnit 강화:
+        - `domain_should_not_depend_on_infrastructure_layer` 규칙 추가
+    - Verification (Phase4-J):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.auth.service.AuthSessionServiceTest' --tests 'com.ticketrush.application.auth.service.SocialAuthServiceTest' --tests 'com.ticketrush.api.controller.AuthSecurityIntegrationTest' --tests 'com.ticketrush.api.controller.SocialAuthControllerIntegrationTest' --tests 'com.ticketrush.api.controller.WebSocketPushControllerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.api.controller.SocialAuthCallbackRedirectControllerTest' --tests 'com.ticketrush.api.controller.SocialAuthCallbackRedirectControllerExternalUrlTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase4-J):
+      - domain.auth에 남은 infra/security 구현체: `0`건 / `0`파일
+      - `domain -> infrastructure` import 잔여: `0`건 / `0`파일
+      - `domain -> api` import 잔여: `0`건 / `0`파일
+      - `domain -> application` import 잔여: `0`건 / `0`파일
+    - Phase5-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase5a-application-redis-port-adapter-kickoff.md`
+      - Scope:
+        - application 서비스의 Redis 직접 의존 제거
+          - `application.waitingqueue.service.WaitingQueueServiceImpl`
+          - `application.reservation.service.ReservationQueueServiceImpl`
+          - `application.reservation.service.SeatSoftLockServiceImpl`
+        - application outbound port + infrastructure adapter로 분리
+        - 테스트 mock 대상을 RedisTemplate -> port 기준으로 전환
+        - ArchUnit 규칙 보강:
+          - `application..`의 `org.springframework.data.redis..` 직접 의존 금지
+      - Goal:
+        - application 서비스는 port(interface)만 의존하고 Redis 연동은 infrastructure adapter가 담당
+    - Phase5-A Progress (2026-02-23):
+      - application outbound port 추가:
+        - `application.waitingqueue.port.outbound.WaitingQueueStore`
+        - `application.reservation.port.outbound.ReservationQueueStatusStore`
+        - `application.reservation.port.outbound.SeatSoftLockStore`
+      - infrastructure adapter 구현:
+        - `infrastructure.waitingqueue.adapter.outbound.RedisWaitingQueueStoreAdapter`
+        - `infrastructure.reservation.adapter.outbound.RedisReservationQueueStatusStoreAdapter`
+        - `infrastructure.reservation.adapter.outbound.RedisSeatSoftLockStoreAdapter`
+      - 서비스 의존 전환:
+        - `WaitingQueueServiceImpl`, `ReservationQueueServiceImpl`, `SeatSoftLockServiceImpl`
+          의 Redis 직접 의존 제거 및 port 의존으로 전환
+      - 테스트 정렬:
+        - `WaitingQueueServiceImplTest`, `SeatSoftLockServiceImplTest` mock 대상을 port 기준으로 전환
+      - ArchUnit 강화:
+        - `application_should_not_depend_on_spring_redis_directly` 규칙 추가
+    - Verification (Phase5-A):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest' --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase5-A):
+      - application 계층의 `org.springframework.data.redis..` 직접 의존 잔여: `0`건 / `0`파일
+      - Redis 직접 의존 잔여(비-application):
+        - `global.push.WebSocketPushNotifier`
+        - `global.interceptor.WaitingQueueInterceptor`
+    - Phase5-B Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase5b-global-redis-port-adapter-kickoff.md`
+      - Scope:
+        - `global.push.WebSocketPushNotifier`의 Redis 직접 의존 제거
+        - `global.interceptor.WaitingQueueInterceptor`의 Redis 직접 의존 제거
+        - global Redis store interface + infrastructure adapter 도입
+        - ArchUnit 규칙 보강:
+          - `global..`의 `org.springframework.data.redis..` 직접 의존 금지
+      - Goal:
+        - global 계층은 store interface만 의존하고 Redis 구현은 infrastructure adapter로 분리
+    - Phase5-B Progress (2026-02-23):
+      - global store interface 추가:
+        - `global.push.WebSocketQueueSubscriptionStore`
+      - infrastructure adapter 구현:
+        - `infrastructure.push.adapter.outbound.RedisWebSocketQueueSubscriptionStoreAdapter`
+      - global 의존 전환:
+        - `WebSocketPushNotifier` -> `WebSocketQueueSubscriptionStore`
+        - `WaitingQueueInterceptor` -> `application.waitingqueue.port.outbound.WaitingQueueStore`
+      - 테스트 정렬:
+        - `WebSocketPushNotifierTest` mock 대상을 store interface 기준으로 전환
+      - ArchUnit 강화:
+        - `global_should_not_depend_on_spring_redis_directly` 규칙 추가
+    - Verification (Phase5-B):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.global.push.WebSocketPushNotifierTest' --tests 'com.ticketrush.global.scheduler.WaitingQueueSchedulerTest' --tests 'com.ticketrush.application.waitingqueue.service.WaitingQueueServiceImplTest'` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.application.reservation.service.SeatSoftLockServiceImplTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase5-B):
+      - global 계층의 `org.springframework.data.redis..` 직접 의존 잔여: `0`건 / `0`파일
+      - Redis 직접 의존 잔여(허용 범위: infrastructure):
+        - `infrastructure.auth..`
+        - `infrastructure.reservation..`
+        - `infrastructure.waitingqueue..`
+        - `infrastructure.push..`
+    - Phase6-A Kickoff:
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase6a-messaging-infrastructure-relocation-kickoff.md`
+      - Scope:
+        - `global.messaging`의 Kafka 구현체/모델을 `infrastructure.messaging`으로 이동
+        - `ReservationController`, `KafkaWebSocketPushNotifier`, 관련 테스트 참조 정렬
+        - ArchUnit 규칙 보강:
+          - `global..`의 `org.springframework.kafka..` 직접 의존 금지
+      - Goal:
+        - Kafka 구현체를 infrastructure 계층으로 집약해 경계 명확화
+    - Phase6-A Progress (2026-02-23):
+      - messaging relocation:
+        - `global.messaging` -> `infrastructure.messaging`
+        - 이동 클래스:
+          - `KafkaPushEvent`
+          - `KafkaPushEventProducer`
+          - `KafkaPushEventConsumer`
+          - `KafkaReservationProducer`
+          - `KafkaReservationConsumer`
+      - 참조 정렬:
+        - `ReservationController`
+        - `KafkaWebSocketPushNotifier`
+        - `KafkaWebSocketPushNotifierTest`
+        - `KafkaPushEventConsumerTest` package/import 경로 정렬
+      - ArchUnit 강화:
+        - `global_should_not_depend_on_spring_kafka_directly` 규칙 추가
+        - `infrastructure_messaging_should_not_depend_on_domain_reservation_events` 규칙으로 대상 경로 정렬
+      - Product PR:
+        - `rag-cargoo/ticket-core-service PR #49` (merged, cross-repo shorthand)
+        - merge commit: `3637879eb55fb574107c6d0aadb98695ca37b994`
+    - Verification (Phase6-A):
+      - `./gradlew compileJava compileTestJava --no-daemon` PASS
+      - `./gradlew test --no-daemon --tests 'com.ticketrush.architecture.LayerDependencyArchTest' --tests 'com.ticketrush.infrastructure.messaging.KafkaPushEventConsumerTest' --tests 'com.ticketrush.global.push.KafkaWebSocketPushNotifierTest' --tests 'com.ticketrush.global.scheduler.ReservationLifecycleSchedulerTest' --tests 'com.ticketrush.application.reservation.service.ReservationLifecycleServiceIntegrationTest'` PASS
+    - Residual Backlog (as-is, 2026-02-23 after Phase6-A):
+      - global 계층의 `org.springframework.kafka..` 직접 의존 잔여: `0`건 / `0`파일
+      - Kafka 직접 의존 잔여(허용 범위: infrastructure):
+        - `infrastructure.messaging..`
+    - Closeout (2026-02-24):
+      - 경계 정리 완료:
+        - `domain -> api` 직접 의존 잔여: `0`건 / `0`파일
+        - `domain -> application` 직접 의존 잔여: `0`건 / `0`파일
+        - `application -> api dto` 직접 의존 잔여: `0`건 / `0`파일
+      - 운영/고도화 성격 항목은 별도 패키지로 분리해 완료 처리하고, 본 `TCS-SC-026`은 경계 정리 스코프 기준으로 종료한다.
+      - 회의록:
+        - `prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-sc026-closeout-and-frontend-reset-gate.md`
+      - Tracking Issue:
+        - `rag-cargoo/ticket-core-service#33` (closed)
+    - Skill Install:
+      - `.agents/skills/clean-ddd-hexagonal/SKILL.md`
+      - `skills-lock.json`

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Aki Progress Checklist"
+  short_description: "Checklist progress + GitHub issue sync"
+  default_prompt: "Present a live checklist, update status while executing, report verification results, and sync to issue comments when requested"

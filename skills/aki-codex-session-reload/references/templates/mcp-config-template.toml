@@ -1,0 +1,25 @@
+# MCP template blocks for ~/.codex/config.toml
+#
+# Security policy:
+# - Do not commit plaintext tokens.
+# - Use env references (${VAR} or $VAR) for secrets.
+
+[mcp_servers.github]
+command = "docker"
+args = ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server", "stdio", "--dynamic-toolsets"]
+
+[mcp_servers.github.env]
+GITHUB_PERSONAL_ACCESS_TOKEN = "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["@playwright/mcp@latest", "--browser", "chrome", "--cdp-endpoint", "http://127.0.0.1:9222"]
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
+
+[mcp_servers.figma-desktop]
+url = "http://127.0.0.1:3845/mcp"

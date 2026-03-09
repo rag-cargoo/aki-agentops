@@ -1,0 +1,155 @@
+* [Home](/github-pages/HOME.md)
+* [README](/README.md)
+* [Agent Navigation (Advanced)](/?surface=agent#/AGENTS.md)
+
+---
+
+* **START HERE**
+  * [Task Dashboard](/prj-docs/task.md)
+  * [Meeting Notes Index](/prj-docs/meeting-notes/README.md)
+  * [Document Target/Surface Governance](/prj-docs/references/document-target-surface-governance.md)
+  * [Target/Surface Inventory (2026-02-17)](/prj-docs/references/document-target-surface-inventory-2026-02-17.md)
+  * [Frontend Long-Gap Recall Card](/prj-docs/references/frontend-long-gap-recall-card.md)
+
+---
+
+* **REPOSITORY (AKI AgentOps)**
+  * **Tasks**
+    * [Task Dashboard](/prj-docs/task.md)
+  * **Meeting Notes**
+    * [Meeting Notes Index](/prj-docs/meeting-notes/README.md)
+    * [2026-02-17 GitHub Pages Structure Governance Planning](/prj-docs/meeting-notes/2026-02-17-github-pages-structure-governance-planning.md)
+    * [2026-02-17 Repository Architecture Refactoring Agenda](/prj-docs/meeting-notes/2026-02-17-repo-architecture-refactoring-agenda.md)
+    * [2026-02-17 Repo Rename and README Governance Planning](/prj-docs/meeting-notes/2026-02-17-repo-rename-readme-governance-planning.md)
+    * [2026-02-17 Target/Surface Governance Kickoff](/prj-docs/meeting-notes/2026-02-17-doc-target-surface-governance-kickoff.md)
+  * **References**
+    * [Repository Architecture Gap Map](/prj-docs/references/repo-architecture-gap-map.md)
+    * [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)
+    * [Legacy Label Cleanup Report (2026-02-17)](/prj-docs/references/legacy-label-cleanup-report-2026-02-17.md)
+
+---
+
+* **PROJECTS (Registered Sidecars)**
+  * **Ticket Core Service**
+    * [Project Sidecar Index](/prj-docs/projects/README.md)
+    * [Service README (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/README.md)
+    * [Architecture Knowledge Index (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/knowledge/README.md)
+    * [API Specs Index (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/README.md)
+    * **Architecture Knowledge (Pages Docs)**
+      * [DDD + Hexagonal Guide (Glossary)](/prj-docs/projects/ticket-core-service/product-docs/knowledge/ddd-hexagonal-guide.md)
+      * [DDD + Hexagonal Phase2 Completion (Human)](/prj-docs/projects/ticket-core-service/product-docs/knowledge/ddd-hexagonal-phase2-completion-human.md)
+      * [Ops Hardening + Frontend Gate Guide (Human)](/prj-docs/projects/ticket-core-service/product-docs/knowledge/ops-hardening-frontend-gate-human.md)
+    * **API Specs (Pages Docs)**
+      * [API Contract Conventions](/prj-docs/projects/ticket-core-service/product-docs/api-specs/api-contract-conventions.md)
+      * [Auth Session API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-session-api.md)
+      * [Auth Error Monitoring Guide](/prj-docs/projects/ticket-core-service/product-docs/api-specs/auth-error-monitoring-guide.md)
+      * [Realtime Queue/Push Monitoring Guide](/prj-docs/projects/ticket-core-service/product-docs/api-specs/realtime-ops-monitoring-guide.md)
+      * [Ops Observability and Alerting Guide](/prj-docs/projects/ticket-core-service/product-docs/api-specs/ops-observability-and-alerting-guide.md)
+      * [Incident Response Runbook](/prj-docs/projects/ticket-core-service/product-docs/api-specs/incident-response-runbook.md)
+      * [User API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/user-api.md)
+      * [Wallet/Payment API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/wallet-payment-api.md)
+      * [Catalog API (Entertainment/Artist)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/catalog-api.md)
+      * [Concert API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/concert-api.md)
+      * [Reservation API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/reservation-api.md)
+      * [Waiting Queue API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/waiting-queue-api.md)
+      * [Realtime Push API (SSE/WebSocket)](/prj-docs/projects/ticket-core-service/product-docs/api-specs/realtime-push-api.md)
+      * [Social Auth API](/prj-docs/projects/ticket-core-service/product-docs/api-specs/social-auth-api.md)
+      * [API Test Guide (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/api-test/README.md)
+      * [Runtime Integration Test Guide](/prj-docs/projects/ticket-core-service/product-docs/api-test/runtime-integration-test-guide.md)
+      * [Performance Baseline Guide](/prj-docs/projects/ticket-core-service/product-docs/api-test/performance-baseline-guide.md)
+      * [Release Gate Governance Guide](/prj-docs/projects/ticket-core-service/product-docs/api-test/release-gate-governance-guide.md)
+      * [Frontend Release Contract Checklist (Pages Docs)](/prj-docs/projects/ticket-core-service/product-docs/frontend-release-contract-checklist.md)
+    * [Sidecar README](/prj-docs/projects/ticket-core-service/README.md)
+    * **Tasks**
+      * [Sidecar Task](/prj-docs/projects/ticket-core-service/task.md)
+    * **Meeting Notes**
+      * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-core-service/meeting-notes/README.md)
+      * [2026-02-24 DDD Post Ops-Hardening Completion and Frontend Gate](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-24-ddd-post-ops-hardening-completion-and-frontend-gate.md)
+      * [2026-02-23 DDD Phase2-A Reservation Application Boundary Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-ddd-phase2a-reservation-application-layer-kickoff.md)
+      * [2026-02-23 Clean DDD/Hexagonal Governance Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-clean-ddd-hexagonal-governance-kickoff.md)
+      * [2026-02-23 Backend Seed Strategy Completion and Issue #16 Closeout](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-23-backend-seed-strategy-and-issue16-closeout.md)
+      * [2026-02-22 Domain Association + QueryDSL Admin CRUD Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-domain-association-and-querydsl-admin-crud-plan.md)
+      * [2026-02-22 Backend Admin CRUD + Seed Gap Reopen Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-backend-admin-crud-seed-gap-reopen-plan.md)
+      * [2026-02-22 Kafka-Only Realtime Broker Migration Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-kafka-only-realtime-broker-migration-kickoff.md)
+      * [2026-02-22 Compose Single-File + Scale Unification Kickoff](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-22-compose-single-file-scale-unification-kickoff.md)
+      * [2026-02-20 Portfolio Seed and Frontend Origin Defaults](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-portfolio-seed-and-frontend-origin-defaults.md)
+      * [2026-02-20 Concert Sale Status Contract and Probe Coverage](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-20-concert-sale-status-contract-and-probe-coverage.md)
+      * [2026-02-19 Frontend Preflight Preparation Plan](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-preflight-preparation-plan.md)
+      * [2026-02-19 Playwright OAuth HITL + Callback Preflight Governance Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-playwright-oauth-hitl-preflight-governance-completion.md)
+      * [2026-02-19 Frontend Release Handoff Checklist Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-frontend-release-handoff-checklist-completion.md)
+      * [2026-02-17 Sidecar SoT Dedup Follow-up](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-17-sidecar-sot-dedup-followup.md)
+      * [2026-02-19 Auth Error Monitoring Criteria Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-error-monitoring-criteria-completion.md)
+      * [2026-02-19 Auth-Social Real Provider E2E Split Completion](/prj-docs/projects/ticket-core-service/meeting-notes/2026-02-19-auth-social-real-provider-e2e-split-completion.md)
+    * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-core-service)
+    * [Main Test URL (U1, Local)](http://localhost:8080/ux/u1/index.html)
+  * **Ticket Web Client**
+    * [Project Sidecar Index](/prj-docs/projects/README.md)
+    * [Sidecar README](/prj-docs/projects/ticket-web-client/README.md)
+    * [Frontend Feature Spec](/prj-docs/projects/ticket-web-client/product-docs/frontend-feature-spec.md)
+    * [Playwright Suite Catalog](/prj-docs/projects/ticket-web-client/testing/playwright-suite-catalog.md)
+    * [Playwright Runbook](/prj-docs/projects/ticket-web-client/testing/playwright-runbook.md)
+    * [Playwright Execution History](/prj-docs/projects/ticket-web-client/testing/playwright-execution-history.md)
+    * **Tasks**
+      * [Sidecar Task](/prj-docs/projects/ticket-web-client/task.md)
+    * **Meeting Notes**
+      * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-client/meeting-notes/README.md)
+      * [2026-02-22 SC019 Frontend Service Contract Alignment Review](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc019-frontend-service-contract-alignment-review.md)
+      * [2026-02-22 SC018 Backend Compose LB Default Alignment](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc018-backend-compose-lb-default-alignment.md)
+      * [2026-02-22 SC017 Realtime WS URL Override and Runtime Default Alignment](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-22-sc017-realtime-ws-url-override-and-runtime-default-alignment.md)
+      * [2026-02-20 SC016 Admin CRUD Adapter and Playwright Scope](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-sc016-admin-crud-adapter-and-playwright-scope.md)
+      * [2026-02-20 SC015 Phase2 Section Navigation and Component Decomposition](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-sc015-phase2-section-nav-and-component-decomposition.md)
+      * [2026-02-20 Service/Admin/Labs Route Separation and Modular Refactor](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-service-admin-labs-route-separation-and-modular-refactor.md)
+      * [2026-02-20 STOMP/SSE Registration and Reconnect Backoff Recovery](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-stomp-sse-registration-and-reconnect-backoff-recovery.md)
+      * [2026-02-20 Queue/Reservation Realtime Merge Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-queue-reservation-realtime-merge-integration.md)
+      * [2026-02-20 My Reservations Cancel/Refund Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-my-reservations-cancel-refund-integration.md)
+      * [2026-02-20 OAuth Session and Auth Me Integration](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-oauth-session-and-auth-me-integration.md)
+      * [2026-02-20 Queue Real API Integration and Seed Handoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-queue-real-api-integration-and-seed-handoff.md)
+      * [2026-02-20 Ticket Listing Sale Status and Media Contract Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-ticket-listing-sale-status-and-media-contract-kickoff.md)
+      * [2026-02-20 Service-first Main Screen and Dev Lab Split](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-service-first-main-screen-and-dev-lab-split.md)
+      * [2026-02-20 Frontend Playwright Execution History Governance](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-frontend-playwright-execution-history-governance.md)
+      * [2026-02-20 Auth/Session E2E + CI Split Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-20-auth-session-e2e-ci-split-kickoff.md)
+      * [2026-02-19 WS/SSE Playwright Expansion Kickoff](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-19-ws-sse-playwright-expansion-kickoff.md)
+      * [2026-02-19 Frontend Governance and Playwright Baseline](/prj-docs/projects/ticket-web-client/meeting-notes/2026-02-19-frontend-governance-and-playwright-baseline.md)
+    * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-web-client)
+  * **Ticket Web App**
+    * [Project Sidecar Index](/prj-docs/projects/README.md)
+    * [Sidecar README](/prj-docs/projects/ticket-web-app/README.md)
+    * [Backend Contract Inventory](/prj-docs/projects/ticket-web-app/product-docs/backend-contract-inventory.md)
+    * [Frontend Implementation Blueprint](/prj-docs/projects/ticket-web-app/product-docs/frontend-implementation-blueprint.md)
+    * [Backend Capability Adoption Checklist](/prj-docs/projects/ticket-web-app/product-docs/backend-capability-adoption-checklist.md)
+    * **Tasks**
+      * [Sidecar Task](/prj-docs/projects/ticket-web-app/task.md)
+    * **Meeting Notes**
+      * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-web-app/meeting-notes/README.md)
+      * [2026-03-02 Demo Rebalancer Hourly Cron and Startup Trigger Fix](/prj-docs/projects/ticket-web-app/meeting-notes/2026-03-02-demo-rebalancer-hourly-cron-startup-trigger-fix.md)
+      * [2026-03-01 Opening Video Stabilization Checklist](/prj-docs/projects/ticket-web-app/meeting-notes/2026-03-01-opening-video-stabilization-checklist.md)
+      * [2026-03-01 Service Urgency YouTube Controls and Audio Unlock Fix](/prj-docs/projects/ticket-web-app/meeting-notes/2026-03-01-service-urgency-youtube-controls-and-audio-unlock-fix.md)
+      * [2026-03-01 Service Urgency Video Playback Stabilization and Demo Rebalancer Ops Sync](/prj-docs/projects/ticket-web-app/meeting-notes/2026-03-01-service-urgency-video-playback-and-demo-rebalancer-ops-sync.md)
+      * [2026-02-25 Backend Capability Adoption Checklist Governance](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-backend-capability-adoption-checklist-governance.md)
+      * [2026-02-24 Ticket Web App Kickoff and Sprint-1 Transfer Plan](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-24-ticket-web-app-kickoff-and-sprint1-transfer-plan.md)
+      * [2026-02-24 TWA-SC-002 Bootstrap and Service-First Dark Neon IA](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-24-twa-sc002-bootstrap-service-first-dark-neon.md)
+      * [2026-02-25 Backend Contract-First Planning and Front Alignment](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-backend-contract-first-planning-and-front-alignment.md)
+    * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-web-app)
+  * **Ticket Rush Deploy**
+    * [Project Sidecar Index](/prj-docs/projects/README.md)
+    * [Sidecar README](/prj-docs/projects/ticket-rush-deploy/README.md)
+    * [Project Agent](/prj-docs/projects/ticket-rush-deploy/PROJECT_AGENT.md)
+    * [Architecture Rule](/prj-docs/projects/ticket-rush-deploy/rules/architecture.md)
+    * **Tasks**
+      * [Sidecar Task](/prj-docs/projects/ticket-rush-deploy/task.md)
+    * **Meeting Notes**
+      * [Sidecar Meeting Notes Index](/prj-docs/projects/ticket-rush-deploy/meeting-notes/README.md)
+      * [2026-03-01 Ticket Rush Deploy Sidecar Bootstrap and Keyless SSM Deploy Alignment](/prj-docs/projects/ticket-rush-deploy/meeting-notes/2026-03-01-ticket-rush-deploy-sidecar-bootstrap-and-keyless-ssm-deploy-alignment.md)
+    * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-rush-deploy)
+
+---
+
+* **MCP & GUIDE**
+  * [MCP Workspace Guide](/mcp/README.md)
+  * [MCP Experience Log](/mcp/references/experience-log.md)
+
+---
+
+* **SKILLS**
+  * [Aki Skills User Prompt Guide](/prj-docs/references/aki-skills-user-prompt-guide.md)
+  * [Skills Navigation Guide](/prj-docs/references/skills-navigation-guide.md)

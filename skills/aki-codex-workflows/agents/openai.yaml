@@ -1,0 +1,3 @@
+interface:
+  display_name: "Aki Codex Workflows"
+  short_description: "Orchestrate cross-skill workflows with owner/trigger/done rules"

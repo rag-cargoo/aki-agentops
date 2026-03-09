@@ -1,0 +1,3 @@
+interface:
+  display_name: "Aki Codex Session Reload"
+  short_description: "Operate session-start, skills/project snapshots, and active-project recovery"
