@@ -130,6 +130,17 @@
       * [2026-02-24 TWA-SC-002 Bootstrap and Service-First Dark Neon IA](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-24-twa-sc002-bootstrap-service-first-dark-neon.md)
       * [2026-02-25 Backend Contract-First Planning and Front Alignment](/prj-docs/projects/ticket-web-app/meeting-notes/2026-02-25-backend-contract-first-planning-and-front-alignment.md)
     * [Repository (GitHub)](https://github.com/rag-cargoo/ticket-web-app)
+  * **Spring Boot Playground**
+    * [Project Sidecar Index](/prj-docs/projects/README.md)
+    * [Sidecar README](/prj-docs/projects/spring-boot-playground/README.md)
+    * [Project Agent](/prj-docs/projects/spring-boot-playground/PROJECT_AGENT.md)
+    * [Architecture Rule](/prj-docs/projects/spring-boot-playground/rules/architecture.md)
+    * **Tasks**
+      * [Sidecar Task](/prj-docs/projects/spring-boot-playground/task.md)
+    * **Meeting Notes**
+      * [Sidecar Meeting Notes Index](/prj-docs/projects/spring-boot-playground/meeting-notes/README.md)
+      * [2026-03-10 Spring Boot Playground Bootstrap and Integration Baseline](/prj-docs/projects/spring-boot-playground/meeting-notes/2026-03-10-bootstrap-and-integration-baseline.md)
+    * [Repository (GitHub)](https://github.com/rag-cargoo/spring-boot-playground)
   * **Ticket Rush Deploy**
     * [Project Sidecar Index](/prj-docs/projects/README.md)
     * [Sidecar README](/prj-docs/projects/ticket-rush-deploy/README.md)
