@@ -30,7 +30,7 @@
 - [ ] `k8s-master`, `k8s-worker1` 호스트명 설정
 - [ ] `/etc/hosts` 등록
 - [ ] `master + worker` Kubernetes 클러스터 구성
-- [ ] `Calico` 또는 `Flannel` 적용
+- [ ] `Calico` 적용
 - [ ] `MySQL` 또는 `MariaDB` 배포
 - [ ] `MongoDB` 배포
 - [ ] `Prometheus` 배포
@@ -69,10 +69,22 @@
   - Status: DOING
   - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/manual/03-쿠버네티스-클러스터-구성/README.md`
   - Notes: 루트 `manual/README.md`에는 전체 실행 순서를 두고, `manual/03`에는 bastion 점프, 자산 반입, preflight 스크립트 실행 순서를 둔다.
+- 03. 쿠버네티스 클러스터 구성 / common manual ansible 단계 분리와 ops-runtime 번들 정리
+  - Status: DOING
+  - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/ops/03-kubernetes-cluster/common/README.md`
+  - Notes: `03`은 `common/`, `manual-kubeadm/`, `ansible-kubeadm/`, `calico/`로 분리하고, bastion 실행 원본은 `delivery/ops-runtime.tar.gz`로 별도 번들링한다. 수동/Ansible은 같은 `01~06` 단계 번호를 공유한다.
+- 02~03. 실제 단계는 `step -> verify -> state marker` 구조로 정리
+  - Status: DOING
+  - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/ops/02-user-network/Makefile`
+  - Notes: 세부 step은 실행 후 같은 단계 verify를 즉시 호출하고, 성공하면 `.codex/runtime/airgap-k8s-state/*.done` 마커를 남긴다. `all-verify`는 이 마커 기준으로 실제 적용 여부를 표시한다.
 - 01. 인터넷 불가능 네트워크 환경 및 리눅스 기본 구성 / 다운로드 문서 매뉴얼 배치
   - Status: DOING
   - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/manual/01-인터넷-불가능-네트워크-환경-및-리눅스-기본-구성/02-쿠버네티스-설치용-자산-다운로드.md`
   - Notes: 설치용 자산 다운로드 문서는 `manual/01`에 두고, 실제 파일은 `assets/offline-assets/`, 반입 번들은 `delivery/offline-assets/`, 서버 설치 경로는 `/opt/offline-assets`로 분리한다.
+- 00. 제출 매뉴얼 개요 / 사전 조사 정보 수집 템플릿 추가
+  - Status: DOING
+  - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/manual/00-제출-매뉴얼-개요/03-사전-조사-정보-수집-템플릿.example.yaml`
+  - Notes: bastion/control node, SSH 경로, 노드 IP, 수동/Ansible 선택, `.env` 반영값을 먼저 정리하는 YAML 예시 템플릿을 추가했다. 실제 값 파일은 Git ignore 처리한다.
 - 03. 쿠버네티스 클러스터 구성 / 설치용 자산 다운로드와 검증 우선
   - Status: DOING
   - Evidence: `prj-docs/projects/airgap-k8s/tasks/03-쿠버네티스-클러스터-구성.md`

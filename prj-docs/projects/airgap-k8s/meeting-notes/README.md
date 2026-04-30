@@ -13,6 +13,7 @@
 - 공통 거버넌스와 장별 회의록을 구분해서 탐색한다.
 
 ## Common Governance
+- [2026-04-30 Kubernetes Common Manual Ansible and Ops Runtime Bundle](./2026-04-30-kubernetes-common-manual-ansible-and-ops-runtime-bundle.md)
 - [2026-04-30 Root README and Runbook Separation](./2026-04-30-root-readme-and-runbook-separation.md)
 - [2026-04-30 Root Runbook and Preflight Placement](./2026-04-30-root-runbook-and-preflight-placement.md)
 - [2026-04-29 Manual Download Document Placement](./2026-04-29-manual-download-doc-placement.md)
@@ -48,6 +49,7 @@
 - [2026-04-29 AWS Simulation and VM Execution Boundary](./2026-04-29-aws-simulation-and-vm-execution-boundary.md)
 
 ## 03. 쿠버네티스 클러스터 구성
+- [2026-04-30 Kubernetes Common Manual Ansible and Ops Runtime Bundle](./2026-04-30-kubernetes-common-manual-ansible-and-ops-runtime-bundle.md)
 - [2026-04-30 Root Runbook and Preflight Placement](./2026-04-30-root-runbook-and-preflight-placement.md)
 - [2026-04-29 AWS Simulation and VM Execution Boundary](./2026-04-29-aws-simulation-and-vm-execution-boundary.md)
 - [2026-04-29 Offline Assets Packaging and Server Path](./2026-04-29-offline-assets-packaging-and-server-path.md)

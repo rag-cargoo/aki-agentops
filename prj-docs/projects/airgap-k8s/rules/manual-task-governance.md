@@ -64,6 +64,15 @@
 23. `clear` 타깃은 재생성 가능한 산출물만 삭제한다. 인프라 삭제는 `clear`가 아니라 `destroy` 용어를 유지한다.
 24. 오프라인 자산 단계는 `다운로드/검증`과 `번들 생성/검증`을 분리한다. 전자는 작업 원본 생성, 후자는 서버 반입본 생성이다.
 25. 상위 묶음 타깃과 세부 타깃을 함께 둔다. 루트 실행순서 문서는 상위 묶음 타깃을 우선 사용하고, 상세 매뉴얼에는 세부 타깃을 함께 남긴다.
+26. Kubernetes 설치 장(`03`)은 `common/`, `manual-kubeadm/`, `ansible-kubeadm/`, `calico/` 구조를 기본으로 사용한다.
+27. `03/common`은 수동/Ansible 공통 기준, 사전점검, 반입 경로, 환경 bootstrap 기준을 담당한다.
+28. `manual-kubeadm/`과 `ansible-kubeadm/`은 같은 단계 번호를 공유한다. 예: `01-node-baseline`, `02-containerd`, `03-kubernetes-packages`, `04-control-plane-init`, `05-calico`, `06-worker-join`.
+29. bastion 실행 원본은 설치 자산과 분리해서 `delivery/ops-runtime.tar.gz`로 묶고, bastion 기준 배치 경로는 `/opt/airgap-k8s-ops`로 기록한다.
+30. `.env`는 수동/Ansible 공통 원천값 저장소로 사용하고, inventory/SSH 설정 생성은 `.env` 기반 bootstrap 단계에서 파생 생성한다.
+31. 실행 착수 전 bastion/control node/SSH 경로/IP/설치 방식 선택을 먼저 정리할 수 있도록 `manual/00-제출-매뉴얼-개요/03-사전-조사-정보-수집-템플릿.example.yaml`를 유지한다.
+32. 세부 `step` 단계는 가능하면 `실행 -> 같은 단계 verify 호출 -> 성공 시 상태 마커 기록` 구조로 구현한다.
+33. `all-verify`는 실제 작업을 다시 수행하지 않고, 독립 verify 결과나 상태 마커를 기반으로 현재 단계 상태를 표시한다.
+34. 상태 마커는 `.codex/runtime/airgap-k8s-state/` 아래에 `*.done`, `*.failed` 형식으로 기록한다.
 
 ## Task 규칙
 1. `task.md`에는 확정된 절차와 실제 착수/완료 항목만 기록한다.
