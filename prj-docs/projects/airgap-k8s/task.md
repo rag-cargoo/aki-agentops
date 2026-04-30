@@ -57,6 +57,10 @@
 - `06`: [제출](./tasks/06-제출.md)
 
 ## Current Items
+- 04. 서비스 배포 및 모니터링 설정 / 서비스별 독립 단원 구조 확정
+  - Status: DOING
+  - Evidence: `prj-docs/projects/airgap-k8s/tasks/04-서비스-배포-및-모니터링-설정.md`
+  - Notes: MySQL/MariaDB, MongoDB, Prometheus, Grafana, Grafana Alloy는 선택 실행 가능해야 하므로 서비스별 다운로드/검증/전송/import/run/verify 책임을 각 서비스 디렉터리에 둔다. 전체 묶음 target은 편의용으로만 유지한다.
 - 03. 쿠버네티스 클러스터 구성 / 환경변수 기반 실행값 정리
   - Status: DOING
   - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/.env.example`
@@ -69,10 +73,10 @@
   - Status: DOING
   - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/manual/03-쿠버네티스-클러스터-구성/README.md`
   - Notes: 루트 `manual/README.md`에는 전체 실행 순서를 두고, `manual/03`에는 bastion 점프, 자산 반입, preflight 스크립트 실행 순서를 둔다.
-- 03. 쿠버네티스 클러스터 구성 / common manual ansible 단계 분리와 ops-runtime 번들 정리
+- 03. 쿠버네티스 클러스터 구성 / manual ansible 단계 분리와 ops-runtime 번들 정리
   - Status: DOING
-  - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/ops/03-kubernetes-cluster/common/README.md`
-  - Notes: `03`은 `common/`, `manual-kubeadm/`, `ansible-kubeadm/`, `calico/`로 분리하고, bastion 실행 원본은 `delivery/ops-runtime.tar.gz`로 별도 번들링한다. 수동/Ansible은 같은 `01~06` 단계 번호를 공유한다.
+  - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/ops/03-kubernetes-cluster/manual-kubeadm/README.md`
+  - Notes: `03`은 제출 매뉴얼과 ops 모두 `manual-kubeadm/`, `ansible-kubeadm/`, `calico/`로 분리하고, bastion 실행 원본은 `delivery/ops-runtime.tar.gz`로 별도 번들링한다. 수동 kubeadm은 access/transfer, preflight, node baseline, containerd, Kubernetes packages, image import, control-plane init, Calico, worker join, cluster verify를 `01~10` 단계로 나누고 각 단원별 `NN-MM-run/verify` 스크립트와 `step-03-02-*` target을 1:1로 맞춘다.
 - 02~03. 실제 단계는 `step -> verify -> state marker` 구조로 정리
   - Status: DOING
   - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/ops/02-user-network/Makefile`
@@ -151,3 +155,7 @@
   - Status: DONE
   - Evidence: `prj-docs/projects/airgap-k8s/meeting-notes/2026-04-29-aws-simulation-and-vm-execution-boundary.md`
   - Notes: AWS는 `01` 장의 폐쇄망 시뮬레이션 용도로만 사용하고, `02` 이후 실제 설치 절차는 VM 기준으로 진행한다.
+- AIRGAP-SC-016 수동 kubeadm 클러스터 설치 검증
+  - Status: DONE
+  - Evidence: `prj-docs/projects/airgap-k8s/meeting-notes/2026-04-30-manual-kubeadm-install-verification.md`
+  - Notes: `03-02-manual-kubeadm-run`과 `03-02-manual-kubeadm-verify`가 성공했고, `k8s-master`, `k8s-worker1` 두 노드가 Kubernetes `v1.35.4` Ready 상태이며 이미지 pull 실패가 없는 상태로 확인됐다.
