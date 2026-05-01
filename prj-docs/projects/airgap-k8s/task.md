@@ -3,7 +3,7 @@
 <!-- DOC_META_START -->
 > [!NOTE]
 > - **Created At**: `2026-04-28 00:06:47`
-> - **Updated At**: `2026-04-30 00:35:00`
+> - **Updated At**: `2026-05-01 11:22:00`
 > - **Target**: `BOTH`
 > - **Surface**: `PUBLIC_NAV`
 <!-- DOC_META_END -->
@@ -31,12 +31,12 @@
 - [ ] `/etc/hosts` 등록
 - [ ] `master + worker` Kubernetes 클러스터 구성
 - [ ] `Calico` 적용
-- [ ] `MySQL` 또는 `MariaDB` 배포
-- [ ] `MongoDB` 배포
-- [ ] `Prometheus` 배포
-- [ ] `Grafana` 배포
-- [ ] `Grafana Alloy` 배포
-- [ ] `Prometheus` / `Grafana` 외부 접근 설정
+- [x] `MySQL` 또는 `MariaDB` 배포
+- [x] `MongoDB` 배포
+- [x] `Prometheus` 배포
+- [x] `Grafana` 배포
+- [x] `Grafana Alloy` 배포
+- [x] `Prometheus` / `Grafana` 외부 접근 설정
 - [ ] 단계별 매뉴얼 작성
 - [ ] 설정 파일 압축본 정리
 
@@ -57,10 +57,18 @@
 - `06`: [제출](./tasks/06-제출.md)
 
 ## Current Items
+- 03. 쿠버네티스 클러스터 구성 / 04 서비스 배포 전 기본 StorageClass 구성
+  - Status: DONE
+  - Evidence: `prj-docs/projects/airgap-k8s/meeting-notes/2026-05-01-storageclass-before-service-workloads.md`
+  - Notes: `local-path-provisioner v0.0.35`를 기본 StorageClass로 구성했고 `make 03-03-storageclass-run`, `make 03-03-storageclass-verify`가 성공했다. 세부 스크립트는 `03-03-01` 반입, `03-03-02` 이미지 import, `03-03-03` manifest apply/동적 PVC 검증 순서로 분리했다. 현재 `kubectl get storageclass`는 `local-path (default)`를 표시하며, 테스트 PVC/Pod로 동적 PV 생성과 볼륨 쓰기/읽기를 검증했다.
 - 04. 서비스 배포 및 모니터링 설정 / 서비스별 독립 단원 구조 확정
-  - Status: DOING
+  - Status: DONE
   - Evidence: `prj-docs/projects/airgap-k8s/tasks/04-서비스-배포-및-모니터링-설정.md`
-  - Notes: MySQL/MariaDB, MongoDB, Prometheus, Grafana, Grafana Alloy는 선택 실행 가능해야 하므로 서비스별 다운로드/검증/전송/import/run/verify 책임을 각 서비스 디렉터리에 둔다. 전체 묶음 target은 편의용으로만 유지한다.
+  - Notes: MariaDB, MongoDB, Prometheus, Grafana, Grafana Alloy를 서비스별 다운로드/검증/전송/import/run/verify 스크립트로 구현했고 `make 04-services-monitoring-verify`가 성공했다. master는 manifest apply 대상, worker는 서비스 이미지 import 및 workload 실행 대상으로 분리했다. 8GB root volume `DiskPressure` 이슈는 `manual/troubleshooting/04-services-diskpressure-root-volume.md`에 기록했다.
+- 05. 프로메테우스 그라파나 외부 접근 설정 / MetalLB + ingress-nginx 방식 확정
+  - Status: DONE
+  - Evidence: `prj-docs/projects/airgap-k8s/meeting-notes/2026-05-01-prometheus-grafana-external-access-metallb-ingress.md`
+  - Notes: 05는 단순 NodePort가 아니라 MetalLB가 `LoadBalancer` IP를 제공하고 ingress-nginx가 `grafana.airgap.local`, `prometheus.airgap.local` Host 기반 라우팅을 담당하는 구조로 완료했다. `ingress-nginx-controller`는 `10.10.20.240`을 할당받았고 `make 05-prometheus-grafana-external-access-verify`가 Grafana/Prometheus Host route를 검증했다. AWS private subnet 실습에서는 MetalLB L2 IP를 인터넷-facing AWS LB로 설명하지 않고, private node 경로와 SSH tunnel 보조 경로로 검증한다.
 - 03. 쿠버네티스 클러스터 구성 / 환경변수 기반 실행값 정리
   - Status: DOING
   - Evidence: `workspace/infra/airgap/kubernetes/airgap-k8s/.env.example`
@@ -159,3 +167,11 @@
   - Status: DONE
   - Evidence: `prj-docs/projects/airgap-k8s/meeting-notes/2026-04-30-manual-kubeadm-install-verification.md`
   - Notes: `03-02-manual-kubeadm-run`과 `03-02-manual-kubeadm-verify`가 성공했고, `k8s-master`, `k8s-worker1` 두 노드가 Kubernetes `v1.35.4` Ready 상태이며 이미지 pull 실패가 없는 상태로 확인됐다.
+- AIRGAP-SC-017 기본 StorageClass 구성 검증
+  - Status: DONE
+  - Evidence: `prj-docs/projects/airgap-k8s/meeting-notes/2026-05-01-storageclass-before-service-workloads.md`
+  - Notes: `local-path-provisioner v0.0.35`와 `busybox:1.37.0` 이미지를 폐쇄망 자산으로 추가하고 master/worker에 import했다. `local-path` StorageClass를 default로 지정했으며 테스트 PVC가 `Bound` 되고 테스트 Pod가 볼륨 쓰기/읽기에 성공했다.
+- AIRGAP-SC-018 04 서비스 배포 검증
+  - Status: DONE
+  - Evidence: `prj-docs/projects/airgap-k8s/tasks/04-서비스-배포-및-모니터링-설정.md`
+  - Notes: MariaDB, MongoDB, Prometheus, Grafana, Grafana Alloy 배포가 완료됐다. `make 04-services-monitoring-verify`에서 모든 workload Ready, PVC Bound, Service 존재, worker 이미지 import 검증이 성공했다.

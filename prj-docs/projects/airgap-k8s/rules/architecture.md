@@ -8,7 +8,7 @@
 ## 단계 순서
 1. 인터넷이 불가능한 네트워크 환경 및 리눅스 기본 구성
 2. 사용자 및 네트워크 설정 (`devops`, `sudo`, hostname, `/etc/hosts`)
-3. Kubernetes 클러스터 구성 (`master + worker`, Calico 또는 Flannel)
+3. Kubernetes 클러스터 구성 (`master + worker`, Calico, 기본 StorageClass)
 4. 서비스 배포 및 모니터링 설정 (`MySQL/MariaDB`, `MongoDB`, `Prometheus`, `Grafana`, `Grafana Alloy`)
 5. Prometheus + Grafana 외부 접근 설정
 6. 제출물 정리

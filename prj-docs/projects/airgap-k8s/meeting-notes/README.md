@@ -49,6 +49,7 @@
 - [2026-04-29 AWS Simulation and VM Execution Boundary](./2026-04-29-aws-simulation-and-vm-execution-boundary.md)
 
 ## 03. 쿠버네티스 클러스터 구성
+- [2026-05-01 StorageClass Before Service Workloads](./2026-05-01-storageclass-before-service-workloads.md)
 - [2026-05-01 Manual kubeadm Step Target Alignment](./2026-05-01-manual-kubeadm-step-target-alignment.md)
 - [2026-04-30 Manual kubeadm Install Verification](./2026-04-30-manual-kubeadm-install-verification.md)
 - [2026-04-30 Kubernetes Common Manual Ansible and Ops Runtime Bundle](./2026-04-30-kubernetes-common-manual-ansible-and-ops-runtime-bundle.md)
@@ -57,10 +58,12 @@
 - [2026-04-29 Offline Assets Packaging and Server Path](./2026-04-29-offline-assets-packaging-and-server-path.md)
 
 ## 04. 서비스 배포 및 모니터링 설정
+- [2026-05-01 Services Monitoring Deployment Verification](./2026-05-01-services-monitoring-deployment-verification.md)
+- [2026-05-01 StorageClass Before Service Workloads](./2026-05-01-storageclass-before-service-workloads.md)
 - [2026-05-01 Services Monitoring Service Split Strategy](./2026-05-01-services-monitoring-service-split-strategy.md)
 
 ## 05. 프로메테우스 그라파나 외부 접근 설정
-- 아직 없음
+- [2026-05-01 Prometheus Grafana External Access with MetalLB and Ingress](./2026-05-01-prometheus-grafana-external-access-metallb-ingress.md)
 
 ## 06. 제출
 - [2026-04-29 Offline Assets Packaging and Server Path](./2026-04-29-offline-assets-packaging-and-server-path.md)
