@@ -189,6 +189,7 @@ workspace/
 - [Sidecar Operations Runbook](/prj-docs/references/sidecar-operations-runbook.md)
 - [Document Target/Surface Governance](/prj-docs/references/document-target-surface-governance.md)
 - [Document Target/Surface Inventory (2026-02-17)](/prj-docs/references/document-target-surface-inventory-2026-02-17.md)
+- [External Skill Candidate: YouTube Skills](/prj-docs/references/external-skill-youtube-skills.md)
 
 ## 레거시 표기 마이그레이션 노트
 
